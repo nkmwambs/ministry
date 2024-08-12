@@ -1,0 +1,21 @@
+.main {
+    padding: 10px;
+}
+
+.page-title {
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.btn-container {
+    padding-bottom: 10px;
+}
+
+.action-icons {
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.btn {
+    color: white !important;
+}
