@@ -19,3 +19,13 @@
 .btn {
     color: white !important;
 }
+
+/* th, td {
+    white-space: nowrap;
+} */
+
+table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
