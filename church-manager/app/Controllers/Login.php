@@ -27,11 +27,16 @@ class Login extends BaseController {
         $password = $this->request->getPost('password');
 
         // Validate user credentials
-        if($email == 'john@example.com' && $password == 'password'){
+        if($email == 'johndoe@gmail.com' && $password == 'password'){
             $this->session->set('logged_in', true);
-            return redirect()->to(site_url('home'));
+            return redirect()->to(site_url('dashboard'));
         } else {
             return redirect()->to(site_url('/'));
         }
+    }
+
+    public function logout() {
+        $this->session->destroy();
+        return redirect()->to(site_url('/'));
     }
 }
