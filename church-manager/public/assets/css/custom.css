@@ -29,3 +29,7 @@ table {
     overflow-x: auto;
     white-space: nowrap;
 }
+
+.form_view_field {
+    padding-top: 9px;
+}

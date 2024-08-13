@@ -28,7 +28,7 @@ class Denomination extends BaseController
     }
 
     public function view($id): string {
-        $denomination = $this->model->find(hash_id($id,'decode'));
+        $denomination = $this->model->select('name,code,registration_date,head_office,email,phone')->first(hash_id($id,'decode'));
 
         $page_data['result'] = $denomination;
         $page_data['feature'] = 'denomination';
