@@ -14,8 +14,8 @@ $routes->get('/dashboards', 'Dashboard::index');
 
 $routes->get('/denominations', 'Denomination::index');
 $routes->get('/denominations/add', 'Denomination::add');
-$routes->get('/denominations/view', 'Denomination::view');
-$routes->get('/denominations/edit', 'Denomination::edit');
+$routes->get('/denominations/view/(:segment)', 'Denomination::view/$1');
+$routes->get('/denominations/edit/(:segment)', 'Denomination::edit/$1');
 
 $routes->get('/ministers', 'Minister::index');
 $routes->get('/churches', 'Church::index');

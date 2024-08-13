@@ -1,1 +1,3 @@
-<h1>This is view</h1>
+<?php 
+echo json_encode($result);
+?>

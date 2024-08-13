@@ -29,7 +29,7 @@ class Login extends BaseController {
         // Validate user credentials
         if($email == 'johndoe@gmail.com' && $password == 'password'){
             $this->session->set('logged_in', true);
-            return redirect()->to(site_url('dashboard'));
+            return redirect()->to(site_url('dashboards'));
         } else {
             return redirect()->to(site_url('/'));
         }
