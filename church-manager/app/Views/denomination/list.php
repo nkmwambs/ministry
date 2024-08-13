@@ -2,13 +2,17 @@
 
             <div class = "row">
                 <div class = "col-xs-12">
-                    <div class = "page-title"><i class = 'fa fa-book'></i> List Denominations</div>
+                    <div class = "page-title"><i class = 'fa fa-book'></i>
+                      <?=lang('denomination.list_denominations');?>
+                    </div>
                 </div>
             </div>
 
             <div class = "row">
                 <div class = "col-xs-12 btn-container">
-                    <a href = "<?=site_url("denominations/add");?>" class = 'btn btn-primary'>Add Denomination</a>
+                    <a href = "<?=site_url("denominations/add");?>" class = 'btn btn-primary'>
+                      <?=lang('denomination.add_denomination');?>
+                    </a>
                 </div>
             </div>
 

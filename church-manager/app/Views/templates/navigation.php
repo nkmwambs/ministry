@@ -32,7 +32,7 @@
 				<li>
 					<a href="<?=site_url("dashboards");?>" target="_blank">
 						<i class="entypo-monitor"></i>
-						<span class="title">Dashboards</span>
+						<span class="title"><?=lang("system.dashboards");?></span>
 					</a>
 				</li>
 
