@@ -28,8 +28,8 @@
                         <tbody>
                           <tr>
                             <td>
-                                <span class = 'action-icons'><a href="view.html"><i class = 'fa fa-search'></i></a></i></span>
-                                <span class = 'action-icons'><a href="edit.html"><i class = 'fa fa-pencil'></i></a></span>
+                                <span class = 'action-icons'><a href="<?=site_url("denominations/view");?>"><i class = 'fa fa-search'></i></a></i></span>
+                                <span class = 'action-icons'><a href="<?=site_url("denominations/edit");?>"><i class = 'fa fa-pencil'></i></a></span>
                                 <span class = 'action-icons'><i class = 'fa fa-trash'></i></span>
                             </td>
                             <td>Anglican Church Of Kenya</td>
