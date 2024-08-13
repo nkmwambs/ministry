@@ -10,7 +10,7 @@
 
 	<link rel="icon" href="assets/images/favicon.ico">
 
-	<title>Neon | Dashboard</title>
+	<title><?=humanize($feature);?> | <?=humanize($action);?></title>
 
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/font-icons/entypo/css/entypo.css">
@@ -114,7 +114,7 @@
 	<script src="<?php echo base_url(); ?>assets/js/morris.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/toastr.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/neon-chat.js"></script>
-
+	<script src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.js"></script>
 
 	<!-- JavaScripts initializations and stuff -->
 	<script src="<?php echo base_url(); ?>assets/js/neon-custom.js"></script>

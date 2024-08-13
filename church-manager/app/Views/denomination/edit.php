@@ -15,11 +15,12 @@
             </div>
 
             <div class="panel-body">
-                <form role="form" class="form-horizontal form-groups-bordered">
+                <form method="post" action="<?=site_url("denominations/update/".hash_id($result['name']));?>" role="form" class="form-horizontal form-groups-bordered">
+                    
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="denomination_name">Name</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="denomination_name" id="denomination_name"
+                            <input type="text" class="form-control" name="denomination_name" value="<?=$result['name'];?>" id="denomination_name"
                                 placeholder="Enter Name">
                         </div>
                     </div>
@@ -27,7 +28,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="code">Code</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="code" id="code" placeholder="Enter Code">
+                            <input type="text" class="form-control" name="code" id="code" value="<?=$result['code'];?>" placeholder="Enter Code">
                         </div>
                     </div>
 
@@ -35,14 +36,14 @@
                         <label class="control-label col-xs-4" for="registration_date">Registration Date</label>
                         <div class="col-xs-6">
                             <input type="text" onkeydown="return false;" class="form-control datepicker"
-                                name="registration_date" id="registration_date" placeholder="Enter Registration Date">
+                                name="registration_date" id="registration_date" value="<?=$result['registration_date'];?>" placeholder="Enter Registration Date">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="head_office">Head Office</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="head_office" id="head_office"
+                            <input type="text" class="form-control" name="head_office" value="<?=$result['head_office'];?>" id="head_office"
                                 placeholder="Enter Head Office">
                         </div>
                     </div>
@@ -50,22 +51,22 @@
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="email">Email</label>
                         <div class="col-xs-6">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
+                            <input type="email" class="form-control" name="email" id="email" value="<?=$result['email'];?>" placeholder="Enter Email">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="phone">Phone</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Phone">
+                            <input type="text" class="form-control" name="phone" id="phone" value="<?=$result['phone'];?>" placeholder="Enter Phone">
                         </div>
                     </div>
 
                     <div class="form-group">
                     <div class="col-xs-offset-4 col-xs-6">
                         <button type="submit" class="btn btn-primary">Update</button>
-                    <button type="submit" class="btn btn-primary">Update and Continue</button>
-                    <button type="submit" class="btn btn-primary">Refresh</button>
+                        <button type="submit" class="btn btn-primary">Update and Continue</button>
+                        <button type="submit" class="btn btn-primary">Refresh</button>
                         </div>
                     </div>
                 </form>

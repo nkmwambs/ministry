@@ -133,7 +133,7 @@
 									<li class="active">
 										<a href="#">
 											<span class="image pull-right">
-												<img src="assets/images/thumb-1@2x.png" width="44" alt="" class="img-circle" />
+												<img src="<?=base_url();?>assets/images/thumb-1@2x.png" width="44" alt="" class="img-circle" />
 											</span>
 											
 											<span class="line">
@@ -150,7 +150,7 @@
 									<li class="active">
 										<a href="#">
 											<span class="image pull-right">
-												<img src="assets/images/thumb-2@2x.png" width="44" alt="" class="img-circle" />
+												<img src="<?=base_url();?>assets/images/thumb-2@2x.png" width="44" alt="" class="img-circle" />
 											</span>
 											
 											<span class="line">
@@ -167,7 +167,7 @@
 									<li>
 										<a href="#">
 											<span class="image pull-right">
-												<img src="assets/images/thumb-3@2x.png" width="44" alt="" class="img-circle" />
+												<img src="<?=base_url();?>assets/images/thumb-3@2x.png" width="44" alt="" class="img-circle" />
 											</span>
 											
 											<span class="line">
@@ -184,7 +184,7 @@
 									<li>
 										<a href="#">
 											<span class="image pull-right">
-												<img src="assets/images/thumb-4@2x.png" width="44" alt="" class="img-circle" />
+												<img src="<?=base_url();?>assets/images/thumb-4@2x.png" width="44" alt="" class="img-circle" />
 											</span>
 											
 											<span class="line">

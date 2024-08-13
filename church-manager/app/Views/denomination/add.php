@@ -18,7 +18,7 @@
 
       <div class="panel-body">
 
-        <form role="form" class="form-horizontal form-groups-bordered">
+        <form role="form" method="post" action="<?=site_url("denominations")?>" class="form-horizontal form-groups-bordered">
           <div class="form-group">
             <label class="control-label col-xs-4" for="denomination_name">Name</label>
             <div class="col-xs-6">

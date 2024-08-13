@@ -22,6 +22,7 @@
           <tr>
             <th>Action</th>
             <th>Name</th>
+            <th>Code</th>
             <th>Registration Date</th>
             <th>Email</th>
             <th>Phome</th>
@@ -40,6 +41,7 @@
               </td>
 
               <td><?=$denomination['name'];?></td>
+              <td><?=$denomination['code'];?></td>
               <td><?=$denomination['registration_date'];?></td>
               <td><?=$denomination['email'];?></td>
               <td><?=$denomination['phone'];?></td>

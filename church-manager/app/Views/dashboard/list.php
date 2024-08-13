@@ -539,21 +539,21 @@
 						</div>
 		
 						<div class="tile-entry">
-							<img src="assets/images/sample-al.png" alt="" class="pull-right op" />
+							<img src="<?=base_url();?>assets/images/sample-al.png" alt="" class="pull-right op" />
 		
 							<h4>Albania</h4>
 							<span>25%</span>
 						</div>
 		
 						<div class="tile-entry">
-							<img src="assets/images/sample-it.png" alt="" class="pull-right op" />
+							<img src="<?=base_url();?>assets/images/sample-it.png" alt="" class="pull-right op" />
 		
 							<h4>Italy</h4>
 							<span>18%</span>
 						</div>
 		
 						<div class="tile-entry">
-							<img src="assets/images/sample-au.png" alt="" class="pull-right op" />
+							<img src="<?=base_url();?>assets/images/sample-au.png" alt="" class="pull-right op" />
 		
 							<h4>Austria</h4>
 							<span>15%</span>

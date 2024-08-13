@@ -12,7 +12,7 @@ class DenominationsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ["name","code","registration_date","head_office","email","phone"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
