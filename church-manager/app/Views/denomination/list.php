@@ -25,7 +25,7 @@
             <th>Code</th>
             <th>Registration Date</th>
             <th>Email</th>
-            <th>Phome</th>
+            <th>Phone</th>
             <th>Head Office</th>
           </tr>
         </thead>
