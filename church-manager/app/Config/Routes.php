@@ -20,7 +20,11 @@ $routes->post('/denominations', 'Denomination::post');
 $routes->post('/denominations/update/(:segment)', 'Denomination::update/$1');
 
 $routes->get('/ministers', 'Minister::index');
+$routes->get('/ministers/add', 'Minister::add');
+$routes->get('/ministers/view/(:segment)', 'Minister::view/$1');
+$routes->get('/ministers/edit/(:segment)', 'Minister::edit/$1');
+$routes->post('/ministers', 'Minister::post');
+$routes->post('/ministers/update/(:segment)', 'Minister::update/$1');
+
 $routes->get('/churches', 'Church::index');
 $routes->get('/events', 'Event::index');
-
-
