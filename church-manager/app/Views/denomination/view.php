@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="tab-pane" id="list_hierarchies">
-                        <p>Hello</p>
+                        <div class = 'info'>There are not hierarchies available</div>
                     </div>
 
                 </div>
@@ -68,8 +68,8 @@
 <script>
     $(document).ready(function(){
         $('#list_hierarchies_tab').on('click', function() {
-            var entityUrl = "<?= site_url('hierarchies/ajax_list');?>";
-            $.get(entityUrl, function(data) {
+            const hierarchyUrl = "<?= site_url('hierarchies/ajax_list/'.$id);?>";
+            $.get(hierarchyUrl, function(data) {
                 $('#list_hierarchies').html(data);
             });
             // return false; 

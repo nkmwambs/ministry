@@ -19,7 +19,7 @@ class Login extends BaseController {
     }
 
     public function index() {
-        return view('users/login');
+        return view('user/login');
     }
 
     public function userValidate(): ResponseInterface {

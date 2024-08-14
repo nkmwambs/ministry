@@ -22,7 +22,6 @@
           <tr>
             <th>Action</th>
             <th>Name</th>
-            <th>Denomination Id</th>
             <th>level</th>
           </tr>
         </thead>
@@ -38,7 +37,6 @@
               </td>
 
               <td><?=$hierarchy['name'];?></td>
-              <td><?=$hierarchy['denomination_id'];?></td>
               <td><?=$hierarchy['level'];?></td>
 
           <?php } ?>
