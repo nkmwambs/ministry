@@ -36,6 +36,7 @@ class Denomination extends BaseController
         $page_data['result'] = $denomination;
         $page_data['feature'] = 'denomination';
         $page_data['action'] = 'view';
+        $page_data['id'] = $id;
         return view('index', $page_data);
     }
 
@@ -50,11 +51,25 @@ class Denomination extends BaseController
         return view('index', $page_data);
     }
 
-    function update($id){
+    public function update(){
+
+        $id = $this->request->getVar('id');
+
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'name' => 'required|min_length[10]|max_length[255]',
+            'email'    => 'required|valid_email|max_length[255]',
+            'code' => 'required|min_length[3]',
+        ]);
+
+        if (!$this->validate($validation->getRules())) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
         $data = [
-            'name' => $this->request->getPost('denomination_name'),
+            'name' => $this->request->getPost('name'),
             'code' => $this->request->getPost('code'),
-           'registration_date' => $this->request->getPost('registration_date'),
+            'registration_date' => $this->request->getPost('registration_date'),
             'email' => $this->request->getPost('email'),
             'head_office' => $this->request->getPost('head_office'),
             'phone' => $this->request->getPost('phone'),
@@ -62,14 +77,25 @@ class Denomination extends BaseController
         
         $this->model->update(hash_id($id,'decode'), $data);
 
-        return redirect()->to(site_url("denominations/view/".$id));
+        return redirect()->to(site_url("denominations/view/".$id))->with('message', 'Denomination updated successfully!');
     }
 
     function post(){
         $insertId = 0;
 
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'name' => 'required|min_length[10]|max_length[255]',
+            'email'    => 'required|valid_email|max_length[255]',
+            'code' => 'required|min_length[3]',
+        ]);
+
+        if (!$this->validate($validation->getRules())) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
         $data = [
-            'name' => $this->request->getPost('denomination_name'),
+            'name' => $this->request->getPost('name'),
             'code' => $this->request->getPost('code'),
            'registration_date' => $this->request->getPost('registration_date'),
             'email' => $this->request->getPost('email'),
