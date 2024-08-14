@@ -45,7 +45,7 @@
           <div class = "main">
             <div class = "row">
                 <div class = "col-xs-12">
-                    <div class = "page-title"><i class = 'fa fa-search'></i> View Denomination</div>
+                    <div class = "page-title"><i class = 'fa fa-plus-circle'></i> Add Collection</div>
                 </div>
             </div>
 
@@ -55,51 +55,91 @@
                 </div>
             </div>
 
-            <div class = "row">
+          <b>  <div class = "row">
                 <div class="col-xs-12">
                     <form>
                         <div class="form-group">
-                          <label class="control-label col-xs-4" for="denomination_name">Name</label>
+                          <label class="control-label col-xs-4" for="denomination_name">Member Name</label>
                           <div class="col-xs-8">
                             <input type="text" class="form-control" name = "denomination_name" id="denomination_name" placeholder="Enter Name">
                           </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="code">Code</label>
+                            <label class="control-label col-xs-4" for="registration_date">Return Date</label>
                             <div class="col-xs-8">
-                              <input type="text" class="form-control" name = "code" id="code" placeholder="Enter Code">
+                              <input type="text" onkeydown="return false;"  class="form-control datepicker" name = "registration_date" id="registration_date" placeholder="Enter Return Date">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="registration_date">Registration Date</label>
+                            <label class="control-label col-xs-4" for="registration_date">Period Start Date</label>
                             <div class="col-xs-8">
-                              <input type="text" onkeydown="return false;"  class="form-control datepicker" name = "registration_date" id="registration_date" placeholder="Enter Registration Date">
+                              <input type="text" onkeydown="return false;"  class="form-control datepicker" name = "registration_date" id="registration_date" placeholder="Enter period start Date">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="head_office">Head Office</label>
+                            <label class="control-label col-xs-4" for="registration_date">Period End Date</label>
                             <div class="col-xs-8">
-                              <input type="text" class="form-control" name = "head_office" id="head_office" placeholder="Enter Head Office">
+                              <input type="text" onkeydown="return false;"  class="form-control datepicker" name = "registration_date" id="registration_date" placeholder="Enter period end Date">
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="email">Email</label>
+                            <label class="control-label col-xs-4" for="collection_type_id">Collection Type</label>
                             <div class="col-xs-8">
-                              <input type="email" class="form-control" name = "email" id="email" placeholder="Enter Email">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-xs-4" for="phone">Phone</label>
-                            <div class="col-xs-8">
-                              <input type="text" class="form-control" name = "phone" id="phone" placeholder="Enter Phone">
+                                <select id="collection_type_id" name="collection_type_id" required>
+                                    <!-- Options should be populated dynamically -->
+                                    <option value="default">Select Collection Type</option>
+                                    <option value="">Tithes</option>
+                                    <option value="">Special Offering</option>
+                                    <option value="">Love Offering</option>
+                                  </select>
                             </div>
                         </div>
                         
+                        <div class="form-group">
+                            <label class="control-label col-xs-4" for="registration_date">Amount</label>
+                            <div class="col-xs-8">
+                                <input type="number" step="10" id="amount" name="amount" required>
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label class="control-label col-xs-4" for="collection_type_id">Status</label>
+                            <div class="col-xs-8">
+                                <select id="status" name="status" required>
+                                    <option value="submitted">Submitted</option>
+                                    <option value="approved">Approved</option>
+                                  </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                          <div>
+                            <label for="collection_reference">Collection Reference:</label> <br>
+                            <textarea id="collection_reference" name="collection_reference" required></textarea>
+                            </div> 
+                        </div>
+                        
+                        <di>
+                            <label for="description">Description:</label> <br>
+                            <textarea id="description" name="description" required></textarea>
+
+                        </di>
+                        <br>
+                        <div>
+                            <label for="collection_method">Collection Method:</label>
+                          <br> <select id="collection_method" name="collection_method" required> 
+                              <option value="banking">Banking</option>
+                              <option value="mobile">Mobile</option>
+                              <option value="in-persion">In-Person</option>
+                            </select> 
+
+
+                        </div> <br>
+                        
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Save and New</button>
+                        <button type="submit" class="btn btn-primary">Reset</button>
                       </form>
                 </div>
             </div>
