@@ -9,4 +9,5 @@ return [
     'events' => 'Events',
     'users' => 'Users',
     'settings' => 'Settings',
+    'back' => 'Back',
 ];

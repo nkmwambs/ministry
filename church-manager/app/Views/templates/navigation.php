@@ -44,35 +44,35 @@
 				</li>
 
 				<li>
-					<a href="index.html">
+					<a href="<?=site_url("ministers");?>">
 						<i class="entypo-book"></i>
 						<span class="title"><?=lang("system.ministers");?></span>
 					</a>
 				</li>
 
 				<li>
-					<a href="index.html">
+					<a href="<?=site_url("churches");?>">
 						<i class="entypo-home"></i>
 						<span class="title"><?=lang("system.churches");?></span>
 					</a>
 				</li>
 
 				<li>
-					<a href="index.html">
+					<a href="<?=site_url("events");?>">
 						<i class="entypo-layout"></i>
 						<span class="title"><?=lang("system.events");?></span>
 					</a>
 				</li>
 
 				<li>
-					<a href="index.html">
+					<a href="<?=site_url("users");?>">
 						<i class="entypo-users"></i>
 						<span class="title"><?=lang("system.users");?></span>
 					</a>
 				</li>
 
 				<li>
-					<a href="index.html">
+					<a href="<?=site_url("settings");?>">
 						<i class="entypo-cog"></i>
 						<span class="title"><?=lang("system.settings");?></span>
 					</a>
