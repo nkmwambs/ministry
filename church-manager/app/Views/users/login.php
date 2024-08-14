@@ -4,6 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/login.css"/>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css">
 </head>
 <body>
 
@@ -15,6 +16,13 @@
         </div>
 
         <div class="container">
+
+            <?php if (session()->get('errors')): ?>
+                <div class="col-xs-12 error">
+                    <?= session()->getFlashdata('errors');?>
+                </div>
+            <?php endif ?>
+            
             <label for="uname"><b>User Email</b></label>
             <input type="email" placeholder="Enter Email" name="email" required>
 

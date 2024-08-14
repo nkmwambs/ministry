@@ -26,13 +26,29 @@ class Login extends BaseController {
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
 
-        // Validate user credentials
-        if($email == 'johndoe@gmail.com' && $password == 'password'){
-            $this->session->set('logged_in', true);
-            return redirect()->to(site_url('dashboards'));
-        } else {
-            return redirect()->to(site_url('/'));
+        $userModel = new \App\Models\UsersModel();
+        $user = $userModel->where(['email' => $email, 'password' => $password, 'is_active' => 'yes'])
+        ->first();
+
+        if (!$user) {
+            return redirect()->back()->with('errors', 'Invalid login details');
+        }else{
+            return $this->create_user_session($user);
         }
+    }
+
+    private function create_user_session($user) {
+        
+        $this->session->set('logged_in', true);
+        $this->session->set('user_id', $user['id']);
+        $this->session->set('user_fullname', $user['first_name']." ". $user['last_name']);
+        $this->session->set('user_roles', explode(',',$user['roles']));
+        $this->session->set('user_denomination_id', $user['denomination_id']);
+        $this->session->set('user_is_system_admin', $user['is_system_admin']);
+        $this->session->set('user_permitted_entities', explode(',',$user['permitted_entities']));
+        $this->session->set('user_permitted_assemblies', explode(',',$user['permitted_assemblies']));
+        
+        return redirect()->to(site_url('dashboards'));
     }
 
     public function logout() {

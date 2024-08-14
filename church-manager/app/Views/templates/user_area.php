@@ -5,7 +5,7 @@
 		
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<img src="<?=base_url();?>assets/images/thumb-1@2x.png" alt="" class="img-circle" width="44" />
-							John Henderson
+							<?=session()->get('user_fullname');?>
 						</a>
 		
 						<ul class="dropdown-menu">
