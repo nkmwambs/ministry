@@ -30,37 +30,51 @@
 			<ul id="main-menu" class="main-menu">
 				
 				<li>
-					<a href="<?=site_url("dashboards");?>" target="_blank">
-						<i class="entypo-monitor"></i>
+					<a href="<?=site_url("dashboards");?>">
+						<i class="entypo-gauge"></i>
 						<span class="title"><?=lang("system.dashboards");?></span>
 					</a>
 				</li>
 
 				<li>
-					<a href="<?=site_url("denominations");?>" target="_blank">
-						<i class="entypo-monitor"></i>
-						<span class="title">Denominations</span>
+					<a href="<?=site_url("denominations");?>">
+						<i class="entypo-trophy"></i>
+						<span class="title"><?=lang("system.denominations");?></span>
 					</a>
 				</li>
 
 				<li>
-					<a href="index.html" target="_blank">
-						<i class="entypo-monitor"></i>
-						<span class="title">Ministers</span>
+					<a href="index.html">
+						<i class="entypo-book"></i>
+						<span class="title"><?=lang("system.ministers");?></span>
 					</a>
 				</li>
 
 				<li>
-					<a href="index.html" target="_blank">
-						<i class="entypo-monitor"></i>
-						<span class="title">Churches</span>
+					<a href="index.html">
+						<i class="entypo-home"></i>
+						<span class="title"><?=lang("system.churches");?></span>
 					</a>
 				</li>
 
 				<li>
-					<a href="index.html" target="_blank">
-						<i class="entypo-monitor"></i>
-						<span class="title">Events</span>
+					<a href="index.html">
+						<i class="entypo-layout"></i>
+						<span class="title"><?=lang("system.events");?></span>
+					</a>
+				</li>
+
+				<li>
+					<a href="index.html">
+						<i class="entypo-users"></i>
+						<span class="title"><?=lang("system.users");?></span>
+					</a>
+				</li>
+
+				<li>
+					<a href="index.html">
+						<i class="entypo-cog"></i>
+						<span class="title"><?=lang("system.settings");?></span>
 					</a>
 				</li>
 			</ul>
