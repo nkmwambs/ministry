@@ -43,6 +43,13 @@ abstract class BaseController extends Controller
      */
     // protected $session;
 
+    protected $feature = '';
+    protected $action = '';
+    protected $id = 0;
+    protected $uri;
+    protected $segments;
+    protected $session;
+    protected $model = null;
     /**
      * @return void
      */
@@ -53,8 +60,23 @@ abstract class BaseController extends Controller
 
         // Preload any models, libraries, etc, here.
 
-        // E.g.: $this->session = \Config\Services::session();
+        $this->session = \Config\Services::session();
+        $this->uri = service('uri');
+        $this->segments = $this->uri->getSegments();
+        $this->feature = isset($this->segments[0]) ? singular($this->segments[0]) : 'dashboard';
+        $this->action = isset($this->segments[1]) ? $this->segments[1] : 'list';
+        $this->id = isset($this->segments[2]) ? $this->segments[2] : 0;
+
+        $this->model = new ("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")();
     }
 
-
+    public function index(): string
+    {
+        $data = $this->model->findAll();
+        $page_data['result'] = $data;
+        $page_data['feature'] = $this->feature;
+        $page_data['action'] = $this->action;
+        $page_data['content'] = view("$this->feature/list", $page_data);
+        return view('index', $page_data);
+    }
 }

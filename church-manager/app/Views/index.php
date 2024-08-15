@@ -5,7 +5,7 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Neon Admin Panel" />
+	<meta name="description" content="Church Management System" />
 	<meta name="author" content="" />
 
 	<link rel="icon" href="assets/images/favicon.ico">
@@ -41,9 +41,7 @@
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 	
 	<div class="sidebar-menu">
-		<?php 
-			include APPPATH."Views/templates/navigation.php";
-		?>
+		<?=view("templates/navigation.php");?>
 	</div>
 
 	<div class="main-content">
@@ -51,31 +49,23 @@
 		<div class="row">
 			<!-- Profile Info and Notifications -->
 			<div class="col-md-6 col-sm-8 clearfix">
-		
 				<?php 
-					include APPPATH."Views/templates/user_area.php";
-				 	include APPPATH."Views/templates/user_notification.php";
+					echo view("templates/user_area.php");
+					echo view("templates/user_notification.php");
 				?>
-		
 			</div>
-		
 		
 			<!-- Raw Links -->
 			<div class="col-md-6 col-sm-4 clearfix hidden-xs">
-				<?php 
-					include APPPATH."Views/templates/language_selector.php";
-				?>
+				<?=view("templates/language_selector.php");?>
 			</div>
 		
 		</div>
 		
 		<hr />
 		
-        <?php 
-            include APPPATH."Views/".$feature."/".$action.".php";    
-        ?>
-		
-		
+        <?=$content;?>
+	
 		<!-- Footer -->
 		<footer class="main">
 			

@@ -4,26 +4,18 @@ namespace App\Controllers;
 
 class Denomination extends BaseController
 {
-    private $model = null;
+    protected $model = null;
 
     function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger){
         parent::initController($request, $response, $logger);
         
         $this->model = new \App\Models\DenominationsModel();
     }
-    public function index(): string
-    {
-        $denominations = $this->model->select('id,name,code,registration_date,email,phone,head_office')->findAll();
-
-        $page_data['result'] = $denominations;
-        $page_data['feature'] = 'denomination';
-        $page_data['action'] = 'list';
-        return view('index', $page_data);
-    }
 
     public function add(): string {
-        $page_data['feature'] = 'denomination';
-        $page_data['action'] = 'add';
+        $page_data['feature'] = $this->feature;
+        $page_data['action'] = $this->action;
+        $page_data['content'] = view('denomination/add', $page_data);
         return view('index', $page_data);
     }
 

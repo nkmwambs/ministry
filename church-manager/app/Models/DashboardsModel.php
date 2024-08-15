@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class DenominationsModel extends Model
+class DashboardsModel extends Model
 {
-    protected $table            = 'denominations';
+    protected $table            = 'dashboards';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = true;
+    protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name","code","registration_date","head_office","email","phone"];
+    protected $allowedFields    = [];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -43,12 +43,4 @@ class DenominationsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-    public function getAll(){
-        return $this->select('id,name,code,registration_date,email,phone,head_office')->findAll();
-    }
-
-    public function getOne($id){
-        return $this->select('id,name,code,registration_date,email,phone,head_office')->where('id', $id)->first();
-    }
 }

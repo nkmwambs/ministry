@@ -1,3 +1,9 @@
+<script>
+	$(document).ready(function(){
+		
+	})
+</script>
+
 <div class="modal fade" id="sample-modal-dialog-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
