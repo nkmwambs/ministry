@@ -72,6 +72,16 @@ abstract class BaseController extends Controller
         }
     }
 
+    private function page_data($data = [], $id = 0){
+        $page_data['result'] = $data;
+        $page_data['feature'] = $this->feature;
+        $page_data['action'] = $this->action;
+        $page_data['id'] = $id;
+        $page_data['content'] = view("$this->feature/$this->action", $page_data);
+
+        return $page_data;
+    }
+
     public function index(): string
     {
         $data = [];
@@ -82,43 +92,25 @@ abstract class BaseController extends Controller
             $data = $this->model->findAll();
         }
 
-        $page_data['result'] = $data;
-        $page_data['feature'] = $this->feature;
-        $page_data['action'] = $this->action;
-        $page_data['content'] = view("$this->feature/$this->action", $page_data);
-        return view('index', $page_data);
+        return view('index', $this->page_data($data));
     }
+    
 
     public function add(): string {
-        $page_data['feature'] = $this->feature;
-        $page_data['action'] = $this->action;
-        $page_data['content'] = view("$this->feature/$this->action", $page_data);
-        return view('index', $page_data);
+        return view('index', $this->page_data());
     }
 
     public function view($id): string {
-    
         $data = $this->model->getOne(hash_id($id,'decode'));
-        
         if(array_key_exists('id',$data)){
             unset($data['id']);
         }
 
-        $page_data['result'] = $data;
-        $page_data['feature'] = $this->feature;
-        $page_data['action'] = $this->action;
-        $page_data['id'] = $id;
-        $page_data['content'] = view("$this->feature/$this->action", $page_data);
-        return view('index', $page_data);
+        return view('index', $this->page_data($data, $id));
     }
 
     public function edit($id): string {
-        $denomination = $this->model->getOne(hash_id($id,'decode'));
-
-        $page_data['result'] = $denomination;
-        $page_data['feature'] = 'denomination';
-        $page_data['action'] = 'edit';
-        $page_data['content'] = view("$this->feature/$this->action", $page_data);
-        return view('index', $page_data);
+        $data = $this->model->getOne(hash_id($id,'decode'));
+        return view('index', $this->page_data($data, $id));
     }
 }

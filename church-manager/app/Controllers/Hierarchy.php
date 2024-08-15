@@ -7,33 +7,26 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class Hierarchy extends BaseController
 {
-    private $model = null;
+    protected $model = null;
     function initController(\CodeIgniter\HTTP\RequestInterface $request, ResponseInterface $response, \Psr\Log\LoggerInterface $logger){
         parent::initController($request, $response, $logger);
         
         $this->model = new \App\Models\HierarchiesModel();
     }
-
-    function ajax_index($denomination_id){
-        $hierarchies = $this->model->select('id,name,denomination_id,level')
-        ->where('denomination_id',hash_id($denomination_id,'decode'))
-        ->findAll();
-       
-        if(!$hierarchies){
-            $page_data['result'] = [];
-        }else{
-            $page_data['result'] = $hierarchies;
-        }
-
-        $page_data['result'] = $hierarchies;
-
-        return view('hierarchy/list', $page_data);
-    }
-    public function index(): string
+    public function index($id = 0): string
     {
-        $hierarchies = $this->model->select('id,name, level')
-        ->join('denominations','denominations.id=hierarchies.denomination_id')
-        ->findAll();
+        $hierarchies = [];
+
+        if($id > 0){
+            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level')
+            ->where('denomination_id',hash_id($id,'decode'))
+            ->join('denominations','denominations.id=hierarchies.denomination_id')
+            ->findAll();
+        }else{
+            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level')
+            ->join('denominations','denominations.id=hierarchies.denomination_id')
+            ->findAll();
+        }
        
         if(!$hierarchies){
             $page_data['result'] = [];
@@ -44,6 +37,10 @@ class Hierarchy extends BaseController
         $page_data['result'] = $hierarchies;
         $page_data['feature'] = 'hierarchy';
         $page_data['action'] = 'list';
+
+        if ($this->request->isAJAX()) {
+            return view('hierarchy/list', $page_data);
+        }
 
         return view('index', $page_data);
     }

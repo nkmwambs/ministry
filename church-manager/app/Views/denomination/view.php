@@ -68,7 +68,8 @@
 <script>
     $(document).ready(function(){
         $('#list_hierarchies_tab').on('click', function() {
-            const hierarchyUrl = "<?= site_url('hierarchies/ajax_list/'.$id);?>";
+            const hierarchyUrl = "<?= site_url('hierarchies/'.$id);?>";
+            // alert(hierarchyUrl)
             $.get(hierarchyUrl, function(data) {
                 $('#list_hierarchies').html(data);
             });

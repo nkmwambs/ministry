@@ -9,38 +9,38 @@
 <body>
 
 <div class = "login_container">
-    <!-- <div> -->
-    <form action="<?=site_url('validate');?>" method="post">
-        <div class="imgcontainer">
-            <img src="images/avatar.jpeg" alt="Avatar" class="avatar">
-        </div>
+    <div class = "login_content">
+        <form action="<?=site_url('validate');?>" method="post">
+            <div class="imgcontainer">
+                <img src="images/avatar.jpeg" alt="Avatar" class="avatar">
+            </div>
 
-        <div class="container">
+            <div class="container">
 
-            <?php if (session()->get('errors')): ?>
-                <div class="col-xs-12 error">
-                    <?= session()->getFlashdata('errors');?>
-                </div>
-            <?php endif ?>
-            
-            <label for="uname"><b>User Email</b></label>
-            <input type="email" placeholder="Enter Email" name="email" required>
+                <?php if (session()->get('errors')): ?>
+                    <div class="col-xs-12 error">
+                        <?= session()->getFlashdata('errors');?>
+                    </div>
+                <?php endif ?>
+                
+                <label for="uname"><b>User Email</b></label>
+                <input type="email" placeholder="Enter Email" name="email" required>
 
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
 
-            <button type="submit">Login</button>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
-        </div>
+                <button type="submit">Login</button>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+            </div>
 
-        <div class="container" style="background-color:#f1f1f1">
-            <button type="button" class="cancelbtn">Cancel</button>
-            <span class="psw">Forgot <a href="#">password?</a></span>
-        </div>
-    </form>
-    <!-- </div> -->
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
+    </div>
 </div>
 
 </body>
