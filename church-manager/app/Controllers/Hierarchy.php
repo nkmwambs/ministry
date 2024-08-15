@@ -37,9 +37,11 @@ class Hierarchy extends BaseController
         $page_data['result'] = $hierarchies;
         $page_data['feature'] = 'hierarchy';
         $page_data['action'] = 'list';
-
+        
         if ($this->request->isAJAX()) {
             return view('hierarchy/list', $page_data);
+        }else{
+            $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
         }
 
         return view('index', $page_data);

@@ -72,6 +72,7 @@
 
             getRequest(url, function(response) {
                 $('#list_hierarchies').html(response);
+                $(".datatable").DataTable();
             });
         })
     }); 

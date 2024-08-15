@@ -76,7 +76,6 @@ abstract class BaseController extends Controller
         }
 
         if(class_exists("App\\Libraries\\" . ucfirst($this->feature) . "Library")){
-            // log_message("error", "Hello");
             $this->library = new ("App\\Libraries\\" . ucfirst($this->feature) . "Library")();
             $this->listQueryFields = $this->library->setListQueryFields();
         }

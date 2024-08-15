@@ -77,6 +77,7 @@
 						<span class="title"><?=lang("system.settings");?></span>
 					</a>
 				</li>
+
 			</ul>
 			
 		</div>

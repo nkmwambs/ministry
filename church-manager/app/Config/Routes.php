@@ -26,7 +26,6 @@ $routes->get('users/edit/(:segment)', 'User::edit/$1');
 $routes->post('users/update', 'User::update');
 $routes->post('users/save', 'User::post');
 
-// $routes->get('hierarchies/ajax_list/(:segment)', 'Hierarchy::ajax_index/$1');
 $routes->get('hierarchies', 'Hierarchy::index');
 $routes->get('hierarchies/(:segment)', 'Hierarchy::index/$1');
 $routes->get('hierarchies/add', 'Hierarchy::add');
