@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-class MinisterLibrary {
+class MinisterLibrary implements \App\Interfaces\LibraryInterface {
     function unsetListQueryFields(){
 
     }

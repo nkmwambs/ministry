@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MinistersModel extends Model
+class MinistersModel extends Model  implements \App\Interfaces\ModelInterface
 {
     protected $table            = 'ministers';
     protected $primaryKey       = 'id';

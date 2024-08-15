@@ -9,10 +9,9 @@
 
   <div class="row">
     <div class="col-xs-12 btn-container">
-      <a href="<?= site_url("denominations/add"); ?>" class='btn btn-primary'>
-      <!-- <a href="<?= site_url("modal/load/denomination/add"); ?>" class='btn btn-primary'> -->
-        <?= lang('denomination.add_denomination'); ?>
-      </a>
+        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add')">
+            <?= lang('denomination.add_denomination'); ?>
+        </div>
     </div>
   </div>
 

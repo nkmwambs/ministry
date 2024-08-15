@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UsersModel extends Model
+class UsersModel extends Model  implements \App\Interfaces\ModelInterface
 {
     protected $table            = 'users';
     protected $primaryKey       = 'id';
@@ -43,4 +43,12 @@ class UsersModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function getAll(){
+
+    }
+
+    function getOne($id){
+        
+    }
 }

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class AssembliesModel extends Model
+class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
 {
     protected $table            = 'assemblies';
     protected $primaryKey       = 'id';
@@ -43,4 +43,11 @@ class AssembliesModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function getAll(){
+
+    }
+    function getOne($id){
+        
+    }
 }

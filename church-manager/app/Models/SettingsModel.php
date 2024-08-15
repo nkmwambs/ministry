@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class SettingsModel extends Model
+class SettingsModel extends Model  implements \App\Interfaces\ModelInterface
 {
     protected $table            = 'settings';
     protected $primaryKey       = 'id';
@@ -43,4 +43,12 @@ class SettingsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function getAll(){
+
+    }
+
+    function getOne($id){
+        
+    }
 }

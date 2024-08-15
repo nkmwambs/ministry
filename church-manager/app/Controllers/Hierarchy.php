@@ -39,6 +39,7 @@ class Hierarchy extends BaseController
         $page_data['action'] = 'list';
         
         if ($this->request->isAJAX()) {
+            $page_data['id'] = $id;
             return view('hierarchy/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
@@ -47,9 +48,35 @@ class Hierarchy extends BaseController
         return view('index', $page_data);
     }
 
-    public function add(): string {
+    public function add($id = 0): string {
         $page_data['feature'] = 'hierarchy';
         $page_data['action'] = 'add';
         return view('index', $page_data);
+    }
+
+    function post(){
+        $insertId = 0;
+
+        // $validation = \Config\Services::validation();
+        // $validation->setRules([
+        //     'name' => 'required|min_length[10]|max_length[255]',
+        //     'email'    => 'required|valid_email|max_length[255]',
+        //     'code' => 'required|min_length[3]',
+        // ]);
+
+        // if (!$this->validate($validation->getRules())) {
+        //     return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        // }
+
+        $data = [
+            'name' => $this->request->getPost('name'),
+            'level' => $this->request->getPost('level'),
+            'denomination_id' => hash_id($this->request->getPost('denomination_id'),'decode'),
+        ];
+
+        $this->model->insert($data);
+        $insertId = $this->model->getInsertID();
+
+        return redirect()->to(site_url("denominations/view/".hash_id($insertId)));
     }
 }

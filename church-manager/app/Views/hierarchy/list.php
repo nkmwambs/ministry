@@ -9,9 +9,9 @@
 
   <div class="row">
     <div class="col-xs-12 btn-container">
-      <a href="<?= site_url("hierarchies/add"); ?>" class='btn btn-primary'>
-        <?= lang('hierarchy.add_hierarchy'); ?>
-      </a>
+      <div class='btn btn-primary' onclick="showAjaxModal('hierarchies','add', '<?=$id?>')">
+            <?= lang('hierarchy.add_hierarchy'); ?>
+        </div>
     </div>
   </div>
 

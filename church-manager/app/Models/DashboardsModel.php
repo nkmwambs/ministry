@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class DashboardsModel extends Model
+class DashboardsModel extends Model  implements \App\Interfaces\ModelInterface
 {
     protected $table            = 'dashboards';
     protected $primaryKey       = 'id';
@@ -43,4 +43,12 @@ class DashboardsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function getAll(){
+
+    }
+
+    function getOne($id){
+        
+    }
 }

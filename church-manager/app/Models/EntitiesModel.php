@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class EntitiesModel extends Model
+class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
 {
     protected $table            = 'entities';
     protected $primaryKey       = 'id';
@@ -43,4 +43,12 @@ class EntitiesModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function getAll(){
+
+    }
+
+    function getOne($id){
+        
+    }
 }

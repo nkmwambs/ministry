@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-class DenominationLibrary {
+class DenominationLibrary implements \App\Interfaces\LibraryInterface {
     function unsetListQueryFields(){
 
     }

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class EventsModel extends Model
+class EventsModel extends Model  implements \App\Interfaces\ModelInterface
 {
     protected $table            = 'events';
     protected $primaryKey       = 'id';
@@ -43,4 +43,12 @@ class EventsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function getAll(){
+
+    }
+
+    function getOne($id){
+        
+    }
 }

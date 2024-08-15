@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class RolesModel extends Model
+class RolesModel extends Model  implements \App\Interfaces\ModelInterface
 {
     protected $table            = 'roles';
     protected $primaryKey       = 'id';
@@ -43,4 +43,13 @@ class RolesModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function getAll(){
+
+    }
+
+    function getOne($id){
+        
+    }
+    
 }

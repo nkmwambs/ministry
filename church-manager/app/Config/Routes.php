@@ -18,6 +18,8 @@ $routes->get('denominations/view/(:segment)', 'Denomination::view/$1');
 $routes->get('denominations/edit/(:segment)', 'Denomination::edit/$1');
 $routes->post('denominations/update', 'Denomination::update');
 $routes->post('denominations/save', 'Denomination::post');
+$routes->get('denominations/modal/(:segment)/(:segment)', 'Denomination::modal/$1/$2');
+$routes->get('denominations/modal/(:segment)/(:segment)/(:segment)', 'Denomination::modal/$1/$2/$3');
 
 $routes->get('users', 'User::index');
 $routes->get('users/add', 'User::add');
@@ -33,6 +35,8 @@ $routes->get('hierarchies/view/(:segment)', 'Hierarchy::view/$1');
 $routes->get('hierarchies/edit/(:segment)', 'Hierarchy::edit/$1');
 $routes->post('hierarchies/update', 'Hierarchy::update');
 $routes->post('hierarchies/save', 'Hierarchy::post');
+$routes->get('hierarchies/modal/(:segment)/(:segment)', 'Hierarchy::modal/$1/$2');
+$routes->get('hierarchies/modal/(:segment)/(:segment)/(:segment)', 'Hierarchy::modal/$1/$2/$3');
 
 $routes->get('assemblies', 'Assembly::index');
 $routes->get('assemblies/(:segment)', 'Assembly::index/$1');

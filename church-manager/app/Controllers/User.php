@@ -29,7 +29,7 @@ class User extends BaseController
         return view('index', $page_data);
     }
 
-    public function add(): string {
+    public function add($id = 0): string {
         $page_data['feature'] = 'user';
         $page_data['action'] = 'add';
         return view('index', $page_data);

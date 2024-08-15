@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class DenominationsModel extends Model
+class DenominationsModel extends Model  implements \App\Interfaces\ModelInterface
 {
     protected $table            = 'denominations';
     protected $primaryKey       = 'id';
@@ -49,9 +49,9 @@ class DenominationsModel extends Model
         $listQueryFields = $library->setListQueryFields();
 
         if(!empty($listQueryFields)){
-            return $this->select($library->setListQueryFields())->findAll();
+            return $this->select($library->setListQueryFields())->orderBy('created_at desc')->findAll();
         }else{
-            return $this->findAll();
+            return $this->orderBy('created_at desc')->findAll();
         }
     }
 

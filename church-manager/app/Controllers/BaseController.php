@@ -148,4 +148,10 @@ abstract class BaseController extends Controller
         $data = $this->model->getOne(hash_id($id,'decode'));
         return view('index', $this->page_data($data, $id));
     }
+
+    public function modal($plural_feature, $action, $id = ''){
+        // log_message('error', json_encode(compact('action','plural_feature')));
+        $page_data['id'] = $id;
+        return view(singular($plural_feature).DS.$action, $page_data);
+    }
 }
