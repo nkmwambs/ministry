@@ -54,7 +54,7 @@
                         </form>
                     </div>
 
-                    <div class="tab-pane" id="list_hierarchies">
+                    <div class="tab-pane ajax_main" id="list_hierarchies">
                         <div class = 'info'>There are not hierarchies available</div>
                     </div>
 

@@ -25,7 +25,7 @@
 
 	<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.3.min.js"></script>
 	
-	
+	<script src="https://cdn.jsdelivr.net/npm/pluralize@8.0.0/pluralize.min.js"></script>
 	<!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 	
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

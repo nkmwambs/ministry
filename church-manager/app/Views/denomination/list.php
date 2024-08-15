@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main ajax_main">
   <div class="row">
     <div class="col-xs-12">
       <div class="page-title"><i class='fa fa-book'></i>

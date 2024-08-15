@@ -127,6 +127,12 @@ abstract class BaseController extends Controller
             $data = $this->model->findAll();
         }
 
+        if ($this->request->isAJAX()) {
+            // $page_data['id'] = $id;
+            $page_data = $this->page_data($data);
+            return view("$this->feature/list", $page_data);
+        }
+
         return view('index', $this->page_data($data));
     }
     

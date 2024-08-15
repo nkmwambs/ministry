@@ -39,14 +39,15 @@
         const plural_feature = $($this).data('feature_plural');
         const url = "<?= site_url();?>/"+plural_feature+"/" + id;
         getRequest(url, function(response) {
-            $('#list_'+plural_feature).html(response);
+            // $('#list_'+plural_feature).html(response);
+            $('.ajax_main').html(response);
             $(".datatable").DataTable();
         });
     }
 
-    function showAjaxModal(feature, action, id = ''){
+    function showAjaxModal(plural_feature, action, id = ''){
 
-        const url = `<?=site_url()?>${feature}/modal/${feature}/${action}/${id}`
+        const url = `<?=site_url()?>${plural_feature}/modal/${plural_feature}/${action}/${id}`
 
         $('#modal_ajax').on('shown.bs.modal', function() {
             $('.datepicker').css('z-index','10200');
@@ -60,8 +61,10 @@
          $.ajax({
              url,
              success: function(response) {
-                $('#modal_ajax .modal-title').html(capitalizeFirstLetter(action) + ' ' + capitalizeFirstLetter(feature));
+                $('#modal_ajax .modal-title').html(capitalizeFirstLetter(action) + ' ' + capitalizeFirstLetter(plural_feature));
                 $('#modal_ajax .modal-body').html(response);
+                $("#modal_save").data('item_id', id)
+                $("#modal_save").data('feature_plural', plural_feature)
                 $("#modal_ajax").modal("show");
              }
          });
@@ -97,7 +100,8 @@
             success: function(response){
                 $("#modal_ajax").modal("hide");
                 // childrenAjaxLists($('.modal-title a'));
-                location.reload();
+                childrenAjaxLists($("#modal_save"));
+                // location.reload();
             }
         })
 

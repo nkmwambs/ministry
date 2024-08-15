@@ -14,7 +14,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="button" id = "modal_reset" class="btn btn-danger">Reset</button>
-					<button type="button" id = "modal_save" class="btn btn-success">Save</button>
+					<button type="button" id = "modal_save" data-item_id="" data-feature_plural="" class="btn btn-success">Save</button>
 				</div>
 			</div>
 		</div>
