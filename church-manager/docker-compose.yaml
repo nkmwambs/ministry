@@ -1,0 +1,28 @@
+# version: '4.33.1'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/var/www
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Mysql.003
+      MYSQL_DATABASE: churchapp
+      MYSQL_USER: user
+      MYSQL_PASSWORD: Mysql.003
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
