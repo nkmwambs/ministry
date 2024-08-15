@@ -51,9 +51,9 @@
 				</li>
 
 				<li>
-					<a href="<?=site_url("churches");?>">
+					<a href="<?=site_url("assemblies");?>">
 						<i class="entypo-home"></i>
-						<span class="title"><?=lang("system.churches");?></span>
+						<span class="title"><?=lang("system.assemblies");?></span>
 					</a>
 				</li>
 

@@ -50,6 +50,10 @@ abstract class BaseController extends Controller
     protected $segments;
     protected $session;
     protected $model = null;
+
+    protected $library = null;
+    protected $listQueryFields = [];
+
     /**
      * @return void
      */
@@ -70,6 +74,23 @@ abstract class BaseController extends Controller
         if(class_exists("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")){
             $this->model = new ("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")();
         }
+
+        if(class_exists("App\\Libraries\\" . ucfirst($this->feature) . "Library")){
+            // log_message("error", "Hello");
+            $this->library = new ("App\\Libraries\\" . ucfirst($this->feature) . "Library")();
+            $this->listQueryFields = $this->library->setListQueryFields();
+        }
+    }
+
+    private function history_fields(){
+        return [
+            'created_at',
+            'created_by',
+            'updated_at',
+            'updated_by',
+            'deleted_at',
+            'deleted_by',
+        ];
     }
 
     private function page_data($data = [], $id = 0){
@@ -77,12 +98,27 @@ abstract class BaseController extends Controller
         $page_data['feature'] = $this->feature;
         $page_data['action'] = $this->action;
         $page_data['id'] = $id;
-        $page_data['content'] = view("$this->feature/$this->action", $page_data);
+        $view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature.DIRECTORY_SEPARATOR.$this->action.'.php';
+        $view = file_exists($view_path) ?  "$this->feature/$this->action" : "templates/$this->action";
+
+        if(!empty($this->listQueryFields)){
+            $page_data['fields'] = $this->listQueryFields;
+        }else{
+            $table_field = $this->model->getFieldNames(plural($this->feature));
+            $table_field = array_filter($table_field, function ($elem){
+                if(!in_array($elem, $this->history_fields())){
+                    return $elem;
+                }
+            });
+            $page_data['fields'] = $table_field;
+        }
+
+        $page_data['content'] = view($view, $page_data);
 
         return $page_data;
     }
 
-    public function index(): string
+    public function index()
     {
         $data = [];
 

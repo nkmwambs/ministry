@@ -68,3 +68,5 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="overlay"><img src='<?php echo base_url() . "images/loaders/preloader4.gif"; ?>' /></div>

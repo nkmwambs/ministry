@@ -68,12 +68,11 @@
 <script>
     $(document).ready(function(){
         $('#list_hierarchies_tab').on('click', function() {
-            const hierarchyUrl = "<?= site_url('hierarchies/'.$id);?>";
-            // alert(hierarchyUrl)
-            $.get(hierarchyUrl, function(data) {
-                $('#list_hierarchies').html(data);
+            const url = "<?= site_url('hierarchies/'.$id);?>";
+
+            getRequest(url, function(response) {
+                $('#list_hierarchies').html(response);
             });
-            // return false; 
         })
     }); 
 </script>

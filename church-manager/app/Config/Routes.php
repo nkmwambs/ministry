@@ -26,7 +26,7 @@ $routes->get('users/edit/(:segment)', 'User::edit/$1');
 $routes->post('users/update', 'User::update');
 $routes->post('users/save', 'User::post');
 
-$routes->get('hierarchies/ajax_list/(:segment)', 'Hierarchy::ajax_index/$1');
+// $routes->get('hierarchies/ajax_list/(:segment)', 'Hierarchy::ajax_index/$1');
 $routes->get('hierarchies', 'Hierarchy::index');
 $routes->get('hierarchies/(:segment)', 'Hierarchy::index/$1');
 $routes->get('hierarchies/add', 'Hierarchy::add');
@@ -34,6 +34,22 @@ $routes->get('hierarchies/view/(:segment)', 'Hierarchy::view/$1');
 $routes->get('hierarchies/edit/(:segment)', 'Hierarchy::edit/$1');
 $routes->post('hierarchies/update', 'Hierarchy::update');
 $routes->post('hierarchies/save', 'Hierarchy::post');
+
+$routes->get('assemblies', 'Assembly::index');
+$routes->get('assemblies/(:segment)', 'Assembly::index/$1');
+$routes->get('assemblies/add', 'Assembly::add');
+$routes->get('assemblies/view/(:segment)', 'Assembly::view/$1');
+$routes->get('assemblies/edit/(:segment)', 'Assembly::edit/$1');
+$routes->post('assemblies/update', 'Assembly::update');
+$routes->post('assemblies/save', 'Assembly::post');
+
+$routes->get('events', 'Event::index');
+$routes->get('events/(:segment)', 'Event::index/$1');
+$routes->get('events/add', 'Event::add');
+$routes->get('events/view/(:segment)', 'Event::view/$1');
+$routes->get('events/edit/(:segment)', 'Event::edit/$1');
+$routes->post('events/update', 'Event::update');
+$routes->post('events/save', 'Event::post');
 
 $routes->get('entities', 'Entity::index');
 $routes->get('entities/add', 'Entity::add');

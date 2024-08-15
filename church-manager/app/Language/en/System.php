@@ -5,7 +5,7 @@ return [
     'logout' => "Log Out",
     'denominations' => 'Denominations',
     'ministers' => 'Ministers',
-    'churches' => 'Churches',
+    'assemblies' => 'Assemblies',
     'events' => 'Events',
     'users' => 'Users',
     'settings' => 'Settings',
