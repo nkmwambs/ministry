@@ -67,16 +67,58 @@ abstract class BaseController extends Controller
         $this->action = isset($this->segments[1]) ? $this->segments[1] : 'list';
         $this->id = isset($this->segments[2]) ? $this->segments[2] : 0;
 
-        $this->model = new ("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")();
+        if(class_exists("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")){
+            $this->model = new ("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")();
+        }
     }
 
     public function index(): string
     {
-        $data = $this->model->findAll();
+        $data = [];
+
+        if(method_exists($this->model, 'getAll')){
+            $data = $this->model->getAll();
+        }else{
+            $data = $this->model->findAll();
+        }
+
         $page_data['result'] = $data;
         $page_data['feature'] = $this->feature;
         $page_data['action'] = $this->action;
-        $page_data['content'] = view("$this->feature/list", $page_data);
+        $page_data['content'] = view("$this->feature/$this->action", $page_data);
+        return view('index', $page_data);
+    }
+
+    public function add(): string {
+        $page_data['feature'] = $this->feature;
+        $page_data['action'] = $this->action;
+        $page_data['content'] = view("$this->feature/$this->action", $page_data);
+        return view('index', $page_data);
+    }
+
+    public function view($id): string {
+    
+        $data = $this->model->getOne(hash_id($id,'decode'));
+        
+        if(array_key_exists('id',$data)){
+            unset($data['id']);
+        }
+
+        $page_data['result'] = $data;
+        $page_data['feature'] = $this->feature;
+        $page_data['action'] = $this->action;
+        $page_data['id'] = $id;
+        $page_data['content'] = view("$this->feature/$this->action", $page_data);
+        return view('index', $page_data);
+    }
+
+    public function edit($id): string {
+        $denomination = $this->model->getOne(hash_id($id,'decode'));
+
+        $page_data['result'] = $denomination;
+        $page_data['feature'] = 'denomination';
+        $page_data['action'] = 'edit';
+        $page_data['content'] = view("$this->feature/$this->action", $page_data);
         return view('index', $page_data);
     }
 }

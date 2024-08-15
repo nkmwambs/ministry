@@ -45,10 +45,24 @@ class DenominationsModel extends Model
     protected $afterDelete    = [];
 
     public function getAll(){
-        return $this->select('id,name,code,registration_date,email,phone,head_office')->findAll();
+        $library = new \App\Libraries\DenominationLibrary();
+        $listQueryFields = $library->setListQueryFields();
+
+        if(!empty($listQueryFields)){
+            return $this->select($library->setListQueryFields())->findAll();
+        }else{
+            return $this->findAll();
+        }
     }
 
     public function getOne($id){
-        return $this->select('id,name,code,registration_date,email,phone,head_office')->where('id', $id)->first();
+        $library = new \App\Libraries\DenominationLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())->where('id', $id)->first();
+        }else{
+            return $this->where('id', $id)->first();
+        }
     }
 }

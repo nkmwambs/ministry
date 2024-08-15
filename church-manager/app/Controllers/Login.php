@@ -8,7 +8,7 @@ use Psr\Log\LoggerInterface;
 
 class Login extends BaseController {
 
-    private $session = null;
+    protected $session = null;
 
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
@@ -18,7 +18,7 @@ class Login extends BaseController {
         $this->session = \Config\Services::session();
     }
 
-    public function index() {
+    public function index(): string {
         return view('user/login');
     }
 

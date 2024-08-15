@@ -12,37 +12,6 @@ class Denomination extends BaseController
         $this->model = new \App\Models\DenominationsModel();
     }
 
-    public function add(): string {
-        $page_data['feature'] = $this->feature;
-        $page_data['action'] = $this->action;
-        $page_data['content'] = view('denomination/add', $page_data);
-        return view('index', $page_data);
-    }
-
-    public function view($id): string {
-    
-        $denomination = $this->model->select('name,code,registration_date,head_office,email,phone')
-        ->where('id', hash_id($id,'decode'))
-        ->first();
-     
-        $page_data['result'] = $denomination;
-        $page_data['feature'] = 'denomination';
-        $page_data['action'] = 'view';
-        $page_data['id'] = $id;
-        return view('index', $page_data);
-    }
-
-    public function edit($id): string {
-        $denomination = $this->model->select('id,name,code,registration_date,head_office,email,phone')
-        ->where('id', hash_id($id,'decode'))
-        ->first();
-
-        $page_data['result'] = $denomination;
-        $page_data['feature'] = 'denomination';
-        $page_data['action'] = 'edit';
-        return view('index', $page_data);
-    }
-
     public function update(){
 
         $id = $this->request->getVar('id');
