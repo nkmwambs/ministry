@@ -9,7 +9,7 @@ if(!function_exists('hash_id')){
         if($dir == 'encode'){
             return $hashids->encode($id);
         }else{
-           return $hashids->decode($id);
+            return $hashids->decode($id);
         }
     }
 }
