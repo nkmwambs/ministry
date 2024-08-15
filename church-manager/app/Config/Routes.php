@@ -26,5 +26,12 @@ $routes->get('/ministers/edit/(:segment)', 'Minister::edit/$1');
 $routes->post('/ministers', 'Minister::post');
 $routes->post('/ministers/update/(:segment)', 'Minister::update/$1');
 
+$routes->get('/events', 'Event::index');
+$routes->get('/events/add', 'Event::add');
+$routes->get('/events/view/(:segment)', 'Event::view/$1');
+$routes->get('/events/edit/(:segment)', 'Event::edit/$1');
+$routes->post('/events', 'Event::post');
+$routes->post('/events/update/(:segment)', 'Event::update/$1');
+
 $routes->get('/churches', 'Church::index');
 $routes->get('/events', 'Event::index');

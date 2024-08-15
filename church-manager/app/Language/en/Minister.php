@@ -8,10 +8,10 @@ return [
     'delete_minister' => 'Delete Minister',
 
     'minister_action_col' => 'Action',
-    'minister_name' => 'Minister Number',
+    'minister_name' => 'Minister Name',
     'minister_number' => 'Minister Number',
-    'minister_assembly_id' => 'Minister Id',
-    'minister_designation_id' => 'Designation Id',
+    'minister_assembly_id' => 'Minister Name',
+    'minister_designation_id' => 'Designation Name',
     'minister_phone' => 'Phone',
 
     'save_minister' => 'Save',
