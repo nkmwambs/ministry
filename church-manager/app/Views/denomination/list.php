@@ -33,11 +33,15 @@
           <?php foreach($result as $denomination){?>
             <tr>
               <td>
-                <span class='action-icons'><a href="<?= site_url("denominations/view/".hash_id($denomination['id'])); ?>"><i
-                      class='fa fa-search'></i></a></i></span>
-                <span class='action-icons'><a href="<?= site_url("denominations/edit/".hash_id($denomination['id'])); ?>"><i
-                      class='fa fa-pencil'></i></a></span>
-                <span class='action-icons'><i class='fa fa-trash'></i></span>
+                <span class='action-icons'>
+                  <a href="<?= site_url("denominations/view/".hash_id($denomination['id'])); ?>"><i class='fa fa-search'></i></a></i>
+                </span>
+                <span class='action-icons'>
+                  <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($denomination['id']);?>')" class='fa fa-pencil'></i>
+                </span>
+                <span class='action-icons'>
+                  <i class='fa fa-trash'></i>
+                </span>
               </td>
 
               <td><?=$denomination['name'];?></td>

@@ -46,7 +46,7 @@
 
 	<div class="main-content">
 				
-		<div class="row">
+		<div class="row header">
 			<!-- Profile Info and Notifications -->
 			<div class="col-md-6 col-sm-8 clearfix">
 				<?php 
@@ -67,9 +67,9 @@
         <?=$content;?>
 	
 		<!-- Footer -->
-		<footer class="main">
+		<footer class="main footer">
 			
-			&copy; 2024 <strong>Church Management System</strong> Admin Theme by <a href="http://laborator.co" target="_blank">Laborator</a>
+			&copy; 2024 <strong>Church Management System</strong> by <a href="#" target="_blank">Techsys</a>
 		
 		</footer>
 	</div>

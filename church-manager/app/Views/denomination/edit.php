@@ -1,10 +1,4 @@
 <div class="row">
-    <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("denominations"); ?>" class="btn btn-info">Back</a>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary" data-collapsed="0">
             <div class="panel-heading">
@@ -74,14 +68,6 @@
                         <label class="control-label col-xs-4" for="phone">Phone</label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="phone" id="phone" value="<?=$result['phone'];?>" placeholder="Enter Phone">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                    <div class="col-xs-offset-4 col-xs-6">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                        <button type="submit" class="btn btn-primary">Update and Continue</button>
-                        <button type="submit" class="btn btn-primary">Refresh</button>
                         </div>
                     </div>
                 </form>
