@@ -24,6 +24,8 @@
                   </div>
               </div>
           <?php endif ?>
+
+          <input type="hidden" name="denomination_id" value="<?=$id;?>" />
         
           <div class="form-group">
             <label class="control-label col-xs-4" for="hierarchy_id">Hierarchy Level</label>
@@ -47,7 +49,7 @@
           </div>
 
           <div class="form-group hidden">
-            <label class="control-label col-xs-4" for="denomination_name">Name</label>
+            <label class="control-label col-xs-4" for="name">Name</label>
             <div class="col-xs-6">
               <input type="text" class="form-control" name="name" id="name"
                 placeholder="Enter Name" required>

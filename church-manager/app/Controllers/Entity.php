@@ -44,6 +44,7 @@ class Entity extends BaseController
 
     function post(){
         $insertId = 0;
+        $hashed_denomination_id = $this->request->getVar('denomination_id');
 
         // $validation = \Config\Services::validation();
         // $validation->setRules([
@@ -56,24 +57,27 @@ class Entity extends BaseController
         //     return redirect()->back()->withInput()->with('errors', $validation->getErrors());
         // }
 
-        $denomination_id = hash_id($this->request->getPost('denomination_id'),'decode');
-
         $data = [
             'name' => $this->request->getPost('name'),
-            'denomination_id' => $denomination_id,
-            'description' => $this->request->getPost('description'),
+            'hierarchy_id' => $this->request->getPost('hierarchy_id'),
+            'entity_number' => $this->request->getPost('entity_number'),
+            'parent_id' => $this->request->getPost('parent_id'),
         ];
 
         $this->model->insert($data);
         $insertId = $this->model->getInsertID();
 
         if($this->request->isAJAX()){
+            $hierarchyModel = new \App\Models\HierarchiesModel();
             $this->feature = 'hierarchy';
             $this->action = 'list';
-            $records = $this->model->orderBy("created_at desc")->where('denomination_id', $denomination_id)->findAll();
+            $records = $hierarchyModel
+            ->orderBy("created_at desc")
+            ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))->findAll();
+            
             $page_data = parent::page_data($records);
-            $page_data['id'] = hash_id($denomination_id,'encode');
-            // log_message('error', json_encode($page_data));
+            $page_data['id'] = $hashed_denomination_id;
+            
             return view("hierarchy/list", $page_data);
         }
 
