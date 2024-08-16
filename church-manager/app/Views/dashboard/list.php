@@ -465,42 +465,42 @@
 		
 					<div class="tile-content">
 		
-						<input type="text" class="form-control" placeholder="Add Task" />
+						<input type="text" id="add_task" class="form-control" placeholder="Add Task" />
 		
 		
 						<ul class="todo-list">
 							<li>
 								<div class="checkbox checkbox-replace color-white">
-									<input type="checkbox" />
-									<label>Website Design</label>
+									<input id="task-1" type="checkbox" />
+									<label for="task-1">Website Design</label>
 								</div>
 							</li>
 		
 							<li>
 								<div class="checkbox checkbox-replace color-white">
 									<input type="checkbox" id="task-2" checked />
-									<label>Slicing</label>
+									<label for="task-2">Slicing</label>
 								</div>
 							</li>
 		
 							<li>
 								<div class="checkbox checkbox-replace color-white">
 									<input type="checkbox" id="task-3" />
-									<label>WordPress Integration</label>
+									<label for="task-3">WordPress Integration</label>
 								</div>
 							</li>
 		
 							<li>
 								<div class="checkbox checkbox-replace color-white">
 									<input type="checkbox" id="task-4" />
-									<label>SEO Optimize</label>
+									<label for="task-4">SEO Optimize</label>
 								</div>
 							</li>
 		
 							<li>
 								<div class="checkbox checkbox-replace color-white">
 									<input type="checkbox" id="task-5" checked="" />
-									<label>Minify &amp; Compress</label>
+									<label for="task-5">Minify &amp; Compress</label>
 								</div>
 							</li>
 						</ul>
