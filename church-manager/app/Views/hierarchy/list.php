@@ -12,9 +12,9 @@
             <?= lang('hierarchy.add_hierarchy'); ?>
       </div>
       <?php if(!empty($result)) {?>
-        <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?=$id;?>')">
+        <!-- <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?=$id;?>')">
               <?= lang('entity.add_entity'); ?>
-        </div>
+        </div> -->
       <?php }?>
     </div>
   </div>

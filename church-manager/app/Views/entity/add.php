@@ -1,3 +1,6 @@
+<?php 
+// echo json_encode($lookup_items);
+?>
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-primary" data-collapsed="0">
@@ -25,25 +28,16 @@
               </div>
           <?php endif ?>
 
-          <input type="hidden" name="denomination_id" value="<?=$id;?>" />
+          <input type="hidden" name="hierarchy_id" value="<?=$id;?>" />
         
           <div class="form-group">
-            <label class="control-label col-xs-4" for="hierarchy_id">Hierarchy Level</label>
-            <div class="col-xs-6">
-              <select class="form-control" name="hierarchy_id" id="hierarchy_id">
-                <option value="">Select Hierarchy Level</option>
-                <?php foreach($lookup_items['hierarchy_id'] as $hierarchy){?>
-                    <option value = "<?=$hierarchy['id'];?>"><?=$hierarchy['name'];?></option>
-                <?php }?>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group hidden">
             <label class="control-label col-xs-4" for="parent_id">Parent Entity</label>
             <div class="col-xs-6">
               <select class="form-control" name="parent_id" id="parent_id">
-                <option value="">Select Parent Entity</option>
+                <option value="">Select Hierarchy Level</option>
+                <?php foreach($lookup_items['parent_id'] as $entity){?>
+                    <option value = "<?=$entity['id'];?>"><?=$entity['name'];?></option>
+                <?php }?>
               </select>
             </div>
           </div>
@@ -83,30 +77,12 @@
 
 
 <script>
-$("#hierarchy_id").on("change", function(){
-    const hierarchy_id = $(this).val();
+$("#parent_id").on("change", function(){
+    const parent_id = $(this).val();
     const form_groups = $('.form-group');
-    const denomination_id = '<?=$id;?>'; 
    
-    if(hierarchy_id > 0){
-        $.ajax({
-            url: `<?=site_url("entities/items/")?>/${denomination_id}/${hierarchy_id}`,
-            type: 'GET',
-            data: {hierarchy_id: hierarchy_id},
-            success: function(response){
-                // alert(response)
-                const parent_entities = JSON.parse(response);
-                form_groups.filter('.hidden').removeClass('hidden');
-                $('#parent_id').empty();
-                $('#parent_id').append('<option value="">Select Parent Entity</option>');
-                parent_entities.forEach(function(entity){
-                    $('#parent_id').append('<option value="' + entity.id + '">' + entity.name + '</option>');
-                });
-            },
-            error: function(xhr, status, error){
-                // console.log(xhr.responseText);
-            }
-        });
+    if(parent_id > 0){
+      form_groups.filter('.hidden').removeClass('hidden');
     }
 })
 </script>

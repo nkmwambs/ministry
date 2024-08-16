@@ -40,10 +40,12 @@
         const id = $($this).data('item_id');
         const plural_feature = $($this).data('feature_plural');
         const url = "<?= site_url();?>/"+plural_feature+"/" + id;
+        const link_id = $($this).data('link_id');
+
         getRequest(url, function(response) {
-            // $('#list_'+plural_feature).html(response);
-            $('.ajax_main').html(response);
-            $(".datatable").DataTable({
+            // alert(plural_feature);
+            $('#'+link_id).html(response);
+            $('#'+link_id + " .datatable").DataTable({
                 stateSave: true
             });
             

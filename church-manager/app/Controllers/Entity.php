@@ -46,7 +46,7 @@ class Entity extends BaseController
 
     function post(){
         $insertId = 0;
-        $hashed_denomination_id = $this->request->getVar('denomination_id');
+        $hashed_hierarchy_id = $this->request->getVar('hierarchy_id');
 
         // $validation = \Config\Services::validation();
         // $validation->setRules([
@@ -61,7 +61,7 @@ class Entity extends BaseController
 
         $data = [
             'name' => $this->request->getPost('name'),
-            'hierarchy_id' => $this->request->getPost('hierarchy_id'),
+            'hierarchy_id' => hash_id($hashed_hierarchy_id, 'decode'),
             'entity_number' => $this->request->getPost('entity_number'),
             'parent_id' => $this->request->getPost('parent_id'),
         ];
@@ -70,15 +70,14 @@ class Entity extends BaseController
         $insertId = $this->model->getInsertID();
 
         if($this->request->isAJAX()){
-            $hierarchyModel = new \App\Models\HierarchiesModel();
             $this->feature = 'hierarchy';
             $this->action = 'list';
-            $records = $hierarchyModel
+            $records = $this->model
             ->orderBy("created_at desc")
-            ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))->findAll();
+            ->where('hierarchy_id', hash_id($hashed_hierarchy_id,'decode'))->findAll();
             
             $page_data = parent::page_data($records);
-            $page_data['id'] = $hashed_denomination_id;
+            $page_data['id'] = $hashed_hierarchy_id;
             
             return view("hierarchy/list", $page_data);
         }
@@ -86,20 +85,22 @@ class Entity extends BaseController
         return redirect()->to(site_url("denominations/view/".hash_id($insertId)));
     }
 
-    function getParentEntitiesByDenomination($hashed_denomination_id, $hierarchy_id){
+    function getParentEntitiesByDenomination($hashed_hierarchy_id, $parent_entity_id){
 
         $hierarchyModel = new \App\Models\HierarchiesModel();
-        $hierarchyLevelObj = $hierarchyModel->where('id',$hierarchy_id)->first();
+        $hierarchyLevelObj = $hierarchyModel->where('id',hash_id($hashed_hierarchy_id,'decode'))->first();
         
         $upper_hierarchy_level = 1;
+        $denomination_id = 0;
 
         if($hierarchyLevelObj){
             $upper_hierarchy_level = $hierarchyLevelObj['level'] - 1;
+            $denomination_id = $hierarchyLevelObj['denomination_id'];
         }
 
         $parent_entities = $this->model
         ->where('level', $upper_hierarchy_level)
-        ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))
+        ->where('denomination_id', $denomination_id)
         ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
         ->select('entities.id,hierarchy_id,entity_number,entities.name,parent_id,entity_leader')
         ->findAll();

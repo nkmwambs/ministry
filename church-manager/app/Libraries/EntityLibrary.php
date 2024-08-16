@@ -27,15 +27,23 @@ class EntityLibrary implements \App\Interfaces\LibraryInterface {
         return $fields;
     }
 
-    public function getLookUpItems($denomination_id = 0){
+    public function getLookUpItems($hierarchy_id = 0){
         $hierarchyModel = new \App\Models\HierarchiesModel();
-        $hierarchies = $hierarchyModel->select('id,name,level')->where('denomination_id', $denomination_id)->where('level <> ', 1)->findAll();
+        $hierarchy = $hierarchyModel->where('id', $hierarchy_id)->first();
 
-        if($hierarchies){
-            $lookUpItems['hierarchy_id'] = $hierarchies;
-        }
+        $hierarchy_id = $hierarchy['id'];
+        $upper_hierarchy_level = $hierarchy['level'] - 1;
+        $denomination_id = $hierarchy['denomination_id'];
 
+        $entities = $this->model->where('level', $upper_hierarchy_level)
+        ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
+        ->where('hierarchies.denomination_id', $denomination_id)->findAll();
         
+        $lookUpItems['hierarchy_id'] = [];
+
+        if($entities){
+            $lookUpItems['parent_id'] = $entities;
+        }
 
         return $lookUpItems;
     }
