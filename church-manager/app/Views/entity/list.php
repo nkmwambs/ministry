@@ -6,13 +6,13 @@
     </div>
   </div> -->
 
-  <!-- <div class="row">
+  <div class="row">
     <div class="col-xs-12 btn-container">
-      <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?=$id;?>')">
-            <?= lang('entity.add_entity'); ?>
+        <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?=$id;?>')">
+              <?= lang('entity.add_entity'); ?>
         </div>
     </div>
-  </div> -->
+  </div>
 
   <div class="row">
     <div class="col-xs-12">
