@@ -41,4 +41,22 @@ class Entity extends BaseController
         }
         return view('index', $page_data);
     }
+
+    function getParentEntitiesByDenomination($denomination_id, $upper_hierarchy_level){
+        // log_message('error', json_encode(compact('denomination_id', 'upper_hierarchy_level')));
+        $parent_entities = $this->model
+        ->where('level', $upper_hierarchy_level)
+        ->where('denomination_id', $denomination_id)
+        ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
+        ->select('entities.id,hierarchy_id,entity_number,entities.name,parent_id,entity_leader')
+        ->findAll();
+
+        $rst = [];
+
+        if($parent_entities){
+            $rst = $parent_entities; 
+        }
+
+        return json_encode($rst);
+    }
 }

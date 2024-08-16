@@ -158,15 +158,15 @@ abstract class BaseController extends Controller
     public function modal($plural_feature, $action, $id = ''){
         $page_data['id'] = $id;
         if($action == 'add'){
+            
+            if(method_exists($this->library, 'getLookUpItems')){
+                $page_data['lookup_items'] = $this->library->getLookUpItems(hash_id($id,'decode'));
+            }
+
             return view(singular($plural_feature).DS.$action, $page_data);
         }elseif($action == 'list'){
-            $page_data['result'] = $this->model
-            ->where('hierarchy_id', hash_id($id,'decode'))
-            ->select('id,hierarchy_id,entity_number,name,parent_id,entity_leader')
-            ->findAll();
-
+            $page_data['result'] = $this->model->getItemsByParentId(hash_id($id,'decode'));
             $page_data['feature'] = singular($plural_feature);
-
             return view(singular($plural_feature).DS.$action, $page_data);
         }else{
             $page_data['result'] = $this->model->getOne(hash_id($id,'decode'));

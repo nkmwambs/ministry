@@ -51,4 +51,12 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
     function getOne($id){
         
     }
+
+    function getItemsByParentId($hierarchy_id){
+        $entities = $this->where('hierarchy_id', $hierarchy_id)
+            ->select('id,hierarchy_id,entity_number,name,parent_id,entity_leader')
+            ->findAll();
+
+        return $entities;
+    }
 }
