@@ -25,7 +25,7 @@
 		<?php include "components/site_stats.php"; ?>
 	</div>
 	<div class="col-sm-4">
-		<?php include "components/real_time_stats.php" ?>
+		<!-- <?php include "components/real_time_stats.php" ?> -->
 	</div>
 </div>
 
