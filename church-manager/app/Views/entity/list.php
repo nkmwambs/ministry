@@ -1,10 +1,10 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col-xs-12">
       <div class="page-title"><i class='fa fa-book'></i>
         <?= lang('entity.list_entities'); ?>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- <div class="row">
     <div class="col-xs-12 btn-container">
@@ -16,7 +16,7 @@
 
   <div class="row">
     <div class="col-xs-12">
-      <table class="table table-striped modal_datatable">
+      <table class="table table-striped datatable">
         <thead>
           <tr>
             <th>Action</th>

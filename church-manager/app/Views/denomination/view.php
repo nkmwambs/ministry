@@ -1,3 +1,6 @@
+<?php 
+$hierarchy_sections = array_pop($result);
+?>
 <div class="row">
     <div class="col-xs-12 btn-container">
         <a href="<?= site_url("denominations"); ?>" class="btn btn-info">Back</a>
@@ -28,7 +31,10 @@
 							<ul class="nav nav-tabs" id ="myTabs">
 								<li class="active"><a href="#view_denomination" id="view_denomination_tab" data-toggle="tab"><?= lang('denomination.view_denomination'); ?></a></li>
 								<li><a href="#list_hierarchies" data-item_id = "<?=$id;?>" data-feature_plural="hierarchies" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li>
-							</ul>
+                                <?php foreach($hierarchy_sections as $hierarchy){?>
+                                    <li><a href="#list_<?=plural(underscore($hierarchy['name']));?>" data-item_id = "<?=hash_id($hierarchy['id'],'encode');?>" data-feature_plural="entities" onclick="childrenAjaxLists(this)" id="list_<?=plural(underscore($hierarchy['name']));?>_tab" data-toggle="tab"><?=plural(ucfirst($hierarchy['name'])); ?></a></li>
+                                <?php }?>
+                            </ul>
 					</div>
                 </div>
             </div>
@@ -55,8 +61,14 @@
                     </div>
 
                     <div class="tab-pane ajax_main" id="list_hierarchies">
-                        <div class = 'info'>There are not hierarchies available</div>
+                        <div class = 'info'>There are no hierarchies available</div>
                     </div>
+
+                    <?php foreach($hierarchy_sections as $hierarchy){?>
+                        <div class="tab-pane ajax_main" id="list_<?=plural(underscore($hierarchy['name']));?>">
+                            <div class = 'info'>There are no <?=plural($hierarchy['name']);?> available</div>
+                        </div>
+                    <?php }?>
 
                 </div>
             </div>

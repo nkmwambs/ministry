@@ -36,7 +36,7 @@
 
 
     function childrenAjaxLists($this){
-        console.log($this);
+        // console.log($this);
         const id = $($this).data('item_id');
         const plural_feature = $($this).data('feature_plural');
         const url = "<?= site_url();?>/"+plural_feature+"/" + id;

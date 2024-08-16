@@ -16,6 +16,8 @@ class Entity extends BaseController
     }
     public function index($hashed_id = ''): string
     {
+        // log_message('error', json_encode(hash_id($hashed_id,'decode')));
+
         $entities = [];
         $hierarchy_id = hash_id($hashed_id,'decode');
 

@@ -12,6 +12,20 @@ class Denomination extends BaseController
         $this->model = new \App\Models\DenominationsModel();
     }
 
+    public function view($id): string {
+        $data = $this->model->getOne(hash_id($id,'decode'));
+        if(array_key_exists('id',$data)){
+            unset($data['id']);
+        }
+
+        $hierarchyModel = new \App\Models\HierarchiesModel();
+        $data['other_details'] = $hierarchyModel->where('denomination_id', hash_id($id,'decode'))->where('level <>', 1)->findAll();
+
+        $page_data = parent::page_data($data, $id);
+    
+        return view('index', $page_data);
+    }
+
     public function update(){
 
         $hashed_id = $this->request->getVar('id');
