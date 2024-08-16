@@ -1,5 +1,6 @@
 <script>
 
+
     function getRequest(url, on_success){
         $.ajax({
             url: url,
@@ -45,6 +46,7 @@
             $(".datatable").DataTable({
                 stateSave: true
             });
+            
         });
     }
 
@@ -72,6 +74,36 @@
              }
          });
     }
+
+
+    function showAjaxListModal(plural_feature, action, id = ''){
+
+        const url = `<?=site_url()?>${plural_feature}/modal/${plural_feature}/${action}/${id}`
+
+        $('#modal_list_ajax').on('shown.bs.modal', function() {
+            $('.datepicker').css('z-index','10200');
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                container: '#modal_ajax modal-body'
+            })
+        });
+                
+
+        $.ajax({
+            url,
+            success: function(response) {
+                // $('.datatable').destroy();
+                $('#modal_list_ajax .modal-title').html(capitalizeFirstLetter(action) + ' ' + capitalizeFirstLetter(plural_feature));
+                $('#modal_list_ajax .modal-body').html(response);
+                $("#modal_list_ajax").modal("show");
+                
+                $('.modal_datatable').DataTable({
+                    stateSave: true
+                })
+                
+            }
+        });
+}
 
 
     function capitalizeFirstLetter(word){

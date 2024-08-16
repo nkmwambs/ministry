@@ -36,7 +36,7 @@
                 </span>
                 <span class='action-icons' title = "Delete <?=singular($hierarchy['name']);?> hierarchy"><i class='fa fa-trash'></i></span>
                 <?php if($hierarchy['level'] != 1) {?>
-                  <span class='action-icons' title = "List <?=plural($hierarchy['name']);?>"><i class='fa fa-plus'></i></span>
+                  <span onclick="showAjaxListModal('entities','list', '<?=hash_id($hierarchy['id'], 'encode');?>')" class='action-icons' title = "List <?=plural($hierarchy['name']);?>"><i class='fa fa-plus'></i></span>
                 <?php }?>
               </td>
 

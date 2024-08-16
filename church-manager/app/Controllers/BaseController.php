@@ -156,9 +156,17 @@ abstract class BaseController extends Controller
     }
 
     public function modal($plural_feature, $action, $id = ''){
-        // log_message('error', json_encode(compact('action','plural_feature')));
         $page_data['id'] = $id;
         if($action == 'add'){
+            return view(singular($plural_feature).DS.$action, $page_data);
+        }elseif($action == 'list'){
+            $page_data['result'] = $this->model
+            ->where('hierarchy_id', hash_id($id,'decode'))
+            ->select('id,hierarchy_id,entity_number,name,parent_id,entity_leader')
+            ->findAll();
+
+            $page_data['feature'] = singular($plural_feature);
+
             return view(singular($plural_feature).DS.$action, $page_data);
         }else{
             $page_data['result'] = $this->model->getOne(hash_id($id,'decode'));

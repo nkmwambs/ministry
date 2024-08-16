@@ -7,20 +7,38 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class Entity extends BaseController
 {
-    private $model = null;
+    protected $model = null;
 
     function initController(\CodeIgniter\HTTP\RequestInterface $request, ResponseInterface $response, \Psr\Log\LoggerInterface $logger){
         parent::initController($request, $response, $logger);
         
         $this->model = new \App\Models\EntitiesModel();
     }
-    public function index(): string
+    public function index($hashed_id = ''): string
     {
-        $entities = $this->model->select('id,name,code,registration_date,email,phone,head_office')->findAll();
+        $entities = [];
+        $hierarchy_id = hash_id($hashed_id,'decode');
+
+        if($hashed_id != ''){
+            $entities = $this->model
+            ->where('hierarchy_id', $hierarchy_id)
+            ->select('id,hierarchy_id,entity_number,name,parent_id,entity_leader')
+            ->findAll();
+        }else{
+            $entities = $this->model
+            ->where('hierarchy_id', $hierarchy_id)
+            ->select('id,hierarchy_id,entity_number,name,parent_id,entity_leader')
+            ->findAll();
+        }
 
         $page_data['result'] = $entities;
-        $page_data['feature'] = 'denomination';
+        $page_data['feature'] = 'entity';
         $page_data['action'] = 'list';
+
+        if($this->request->isAJAX()){
+            $page_data['id'] = $hashed_id;
+            return view('entity/list', $page_data);
+        }
         return view('index', $page_data);
     }
 }
