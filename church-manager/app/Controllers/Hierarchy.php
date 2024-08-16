@@ -18,13 +18,13 @@ class Hierarchy extends BaseController
         $hierarchies = [];
 
         if($id > 0){
-            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level')
+            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level, description')
             ->where('denomination_id',hash_id($id,'decode'))
             ->join('denominations','denominations.id=hierarchies.denomination_id')
             ->orderBy('hierarchies.created_at desc')
             ->findAll();
         }else{
-            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level')
+            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level, description')
             ->join('denominations','denominations.id=hierarchies.denomination_id')
             ->orderBy('hierarchies.created_at desc')
             ->findAll();
@@ -93,6 +93,44 @@ class Hierarchy extends BaseController
         }
 
         return redirect()->to(site_url("denominations/view/".hash_id($insertId)));
+    }
+
+    public function update(){
+
+        $hashed_id = $this->request->getVar('id');
+        $hashed_denomination_id = $this->request->getVar('denomination_id');
+
+        // $validation = \Config\Services::validation();
+        // $validation->setRules([
+        //     'name' => 'required|min_length[10]|max_length[255]',
+        //     'email'    => 'required|valid_email|max_length[255]',
+        //     'code' => 'required|min_length[3]',
+        // ]);
+
+        // if (!$this->validate($validation->getRules())) {
+        //     return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        // }
+
+        $update_data = [
+            'name' => $this->request->getPost('name'),
+            'description' => $this->request->getPost('description'),
+        ];
+        
+        $this->model->update(hash_id($hashed_id,'decode'), $update_data);
+
+        if($this->request->isAJAX()){
+            $this->feature = 'hierarchy';
+            $this->action = 'list';
+
+            $records = $this->model
+            ->select('hierarchies.id,hierarchies.name,description,level')
+            ->orderBy("hierarchies.created_at desc")
+            ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))
+            ->findAll();
+            return view("hierarchy/list", parent::page_data($records));
+        }
+        
+        return redirect()->to(site_url("hierarchy/view/".$hashed_id))->with('message', 'Hierarchy updated successfully!');
     }
 
     private function computeNextHierarchicalLevel($denomination_id){

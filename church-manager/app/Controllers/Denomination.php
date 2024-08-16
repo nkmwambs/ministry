@@ -14,7 +14,7 @@ class Denomination extends BaseController
 
     public function update(){
 
-        $id = $this->request->getVar('id');
+        $hashed_id = $this->request->getVar('id');
 
         $validation = \Config\Services::validation();
         $validation->setRules([
@@ -36,7 +36,7 @@ class Denomination extends BaseController
             'phone' => $this->request->getPost('phone'),
         ];
         
-        $this->model->update(hash_id($id,'decode'), $update_data);
+        $this->model->update(hash_id($hashed_id,'decode'), $update_data);
 
         if($this->request->isAJAX()){
             $this->feature = 'denomination';
@@ -51,7 +51,7 @@ class Denomination extends BaseController
             return view("denomination/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url("denominations/view/".$id))->with('message', 'Denomination updated successfully!');
+        return redirect()->to(site_url("denominations/view/".$hashed_id))->with('message', 'Denomination updated successfully!');
     }
 
     function post(){

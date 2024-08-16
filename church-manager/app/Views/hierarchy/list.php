@@ -21,7 +21,8 @@
           <tr>
             <th>Action</th>
             <th>Name</th>
-            <th>level</th>
+            <th>Description</th>
+            <th>Level</th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +39,7 @@
               </td>
 
               <td><?=$hierarchy['name'];?></td>
+              <td><?=$hierarchy['description'];?></td>
               <td><?=$hierarchy['level'];?></td>
 
           <?php } ?>

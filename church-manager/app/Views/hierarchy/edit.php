@@ -13,6 +13,7 @@
                 <form id = "frm_edit_denomination" method="post" action="<?=site_url('hierarchies/update/');?>" role="form" class="form-horizontal form-groups-bordered">
                     
                     <input type="hidden" name="id" value="<?=hash_id($result['id']);?>" />
+                    <input type="hidden" name="denomination_id" value="<?=hash_id($result['denomination_id']);?>" />
 
                     <?php if (session()->get('errors')): ?>
                         <div class="form-group">
