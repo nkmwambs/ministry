@@ -36,6 +36,7 @@ class EntityLibrary implements \App\Interfaces\LibraryInterface {
         $denomination_id = $hierarchy['denomination_id'];
 
         $entities = $this->model->where('level', $upper_hierarchy_level)
+        ->select('entities.id,entities.name')
         ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
         ->where('hierarchies.denomination_id', $denomination_id)->findAll();
         

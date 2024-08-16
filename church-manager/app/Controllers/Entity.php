@@ -25,11 +25,13 @@ class Entity extends BaseController
             $entities = $this->model
             ->where('hierarchy_id', $hierarchy_id)
             ->select('id,hierarchy_id,entity_number,name,parent_id,entity_leader')
+            ->orderBy('created_at desc')
             ->findAll();
         }else{
             $entities = $this->model
             ->where('hierarchy_id', $hierarchy_id)
             ->select('id,hierarchy_id,entity_number,name,parent_id,entity_leader')
+            ->orderBy('created_at desc')
             ->findAll();
         }
 
