@@ -10,7 +10,7 @@
 
             <div class="panel-body">
             
-                <form method="post" action="<?=site_url('denominations/update/');?>" role="form" class="form-horizontal form-groups-bordered">
+                <form id = "frm_edit_denomination" method="post" action="<?=site_url('denominations/update/');?>" role="form" class="form-horizontal form-groups-bordered">
                     
                     <input type="hidden" name="id" value="<?=hash_id($result['id']);?>" />
 

@@ -1,4 +1,3 @@
-<div class="main ajax_main">
   <div class="row">
     <div class="col-xs-12">
       <div class="page-title"><i class='fa fa-book'></i>
@@ -9,7 +8,7 @@
 
   <div class="row">
     <div class="col-xs-12 btn-container">
-      <div class='btn btn-primary' onclick="showAjaxModal('hierarchies','add', '<?=$id?>')">
+      <div class='btn btn-primary' onclick="showAjaxModal('hierarchies','add', '<?=$id;?>')">
             <?= lang('hierarchy.add_hierarchy'); ?>
         </div>
     </div>
@@ -44,4 +43,3 @@
       </table>
     </div>
   </div>
-</div>

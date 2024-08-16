@@ -63,11 +63,12 @@
 		</div>
 		
 		<hr />
-		
-        <?=$content;?>
+		<div class="main">
+        	<?=$content;?>
+		</div>
 	
 		<!-- Footer -->
-		<footer class="main footer">
+		<footer class="footer">
 			
 			&copy; 2024 <strong>Church Management System</strong> by <a href="#" target="_blank">Techsys</a>
 		

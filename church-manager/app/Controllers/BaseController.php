@@ -92,7 +92,7 @@ abstract class BaseController extends Controller
         ];
     }
 
-    private function page_data($data = [], $id = 0){
+    protected function page_data($data = [], $id = 0){
         $page_data['result'] = $data;
         $page_data['feature'] = $this->feature;
         $page_data['action'] = $this->action;

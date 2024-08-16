@@ -35,13 +35,16 @@
 
 
     function childrenAjaxLists($this){
+        console.log($this);
         const id = $($this).data('item_id');
         const plural_feature = $($this).data('feature_plural');
         const url = "<?= site_url();?>/"+plural_feature+"/" + id;
         getRequest(url, function(response) {
             // $('#list_'+plural_feature).html(response);
             $('.ajax_main').html(response);
-            $(".datatable").DataTable();
+            $(".datatable").DataTable({
+                stateSave: true
+            });
         });
     }
 
@@ -78,7 +81,9 @@
         return capitalized;
     }
 
-    $('.datatable').DataTable();
+    $('.datatable').DataTable({
+        stateSave: true
+    });
 
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd'
@@ -91,17 +96,27 @@
         const data = frm.serializeArray()
         const url = frm.attr('action')
 
-        // console.log(data);
-
         $.ajax({
             url,
             type: 'POST',
             data,
+            beforeSend: function() {
+                $("#overlay").css("display", "block");
+            },
             success: function(response){
                 $("#modal_ajax").modal("hide");
-                // childrenAjaxLists($('.modal-title a'));
-                childrenAjaxLists($("#modal_save"));
-                // location.reload();
+
+                if($('.ajax_main').length > 0){
+                    $('.ajax_main').html(response);
+                }else{
+                    $('.main').html(response);
+                }
+                
+                $(".datatable").DataTable({
+                    stateSave: true
+                });
+
+                $("#overlay").css("display", "none");
             }
         })
 

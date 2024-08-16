@@ -27,7 +27,7 @@ class Denomination extends BaseController
             return redirect()->back()->withInput()->with('errors', $validation->getErrors());
         }
 
-        $data = [
+        $update_data = [
             'name' => $this->request->getPost('name'),
             'code' => $this->request->getPost('code'),
             'registration_date' => $this->request->getPost('registration_date'),
@@ -36,8 +36,21 @@ class Denomination extends BaseController
             'phone' => $this->request->getPost('phone'),
         ];
         
-        $this->model->update(hash_id($id,'decode'), $data);
+        $this->model->update(hash_id($id,'decode'), $update_data);
 
+        if($this->request->isAJAX()){
+            $this->feature = 'denomination';
+            $this->action = 'list';
+            $records = [];
+
+            if(method_exists($this->model, 'getAll')){
+                $records = $this->model->getAll();
+            }else{
+                $records = $this->model->findAll();
+            }
+            return view("denomination/list", parent::page_data($records));
+        }
+        
         return redirect()->to(site_url("denominations/view/".$id))->with('message', 'Denomination updated successfully!');
     }
 
@@ -66,6 +79,19 @@ class Denomination extends BaseController
 
         $this->model->insert($data);
         $insertId = $this->model->getInsertID();
+
+        if($this->request->isAJAX()){
+            $this->feature = 'denomination';
+            $this->action = 'list';
+            $records = [];
+
+            if(method_exists($this->model, 'getAll')){
+                $records = $this->model->getAll();
+            }else{
+                $records = $this->model->findAll();
+            }
+            return view("denomination/list", parent::page_data($records));
+        }
 
         return redirect()->to(site_url("denominations/view/".hash_id($insertId)));
     }
