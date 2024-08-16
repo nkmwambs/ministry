@@ -57,14 +57,9 @@
           
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="level">Hierarchy Level</label>
+            <label class="control-label col-xs-4" for="description">Description</label>
             <div class="col-xs-6">
-              <select class="form-control" name="level" id="level">
-                <option value="">Select Level</option>
-                  <?php for($i=1; $i<=10; $i++):?>
-                  <option value="<?php echo $i;?>">Level <?php echo $i;?></option>
-                <?php endfor;?>
-              </select>  
+              <textarea class="form-control" name="description" id="description" placeholder="Enter description"></textarea>
             </div>
           </div>
         </form>

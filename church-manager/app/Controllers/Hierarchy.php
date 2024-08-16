@@ -21,10 +21,12 @@ class Hierarchy extends BaseController
             $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level')
             ->where('denomination_id',hash_id($id,'decode'))
             ->join('denominations','denominations.id=hierarchies.denomination_id')
+            ->orderBy('hierarchies.created_at desc')
             ->findAll();
         }else{
             $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level')
             ->join('denominations','denominations.id=hierarchies.denomination_id')
+            ->orderBy('hierarchies.created_at desc')
             ->findAll();
         }
        
@@ -72,8 +74,9 @@ class Hierarchy extends BaseController
 
         $data = [
             'name' => $this->request->getPost('name'),
-            'level' => $this->request->getPost('level'),
+            'level' => $this->computeNextHierarchicalLevel($denomination_id),
             'denomination_id' => $denomination_id,
+            'description' => $this->request->getPost('description'),
         ];
 
         $this->model->insert($data);
@@ -90,5 +93,10 @@ class Hierarchy extends BaseController
         }
 
         return redirect()->to(site_url("denominations/view/".hash_id($insertId)));
+    }
+
+    private function computeNextHierarchicalLevel($denomination_id){
+        $maxLevel = $this->model->selectMax('level')->where('denomination_id', $denomination_id)->first();
+        return $maxLevel['level'] + 1;
     }
 }
