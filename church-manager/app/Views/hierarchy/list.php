@@ -30,8 +30,10 @@
               <td>
                 <span class='action-icons'><a href="<?= site_url("hierarchies/view/".hash_id($hierarchy['id'])); ?>"><i
                       class='fa fa-search'></i></a></i></span>
-                <span class='action-icons'><a href="<?= site_url("hierarchies/edit/".hash_id($hierarchy['id'])); ?>"><i
-                      class='fa fa-pencil'></i></a></span>
+                <span class='action-icons'>
+                  <!-- <a href="<?= site_url("hierarchies/edit/".hash_id($hierarchy['id'])); ?>"><i class='fa fa-pencil'></i></a> -->
+                  <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($hierarchy['id']);?>')" class='fa fa-pencil'></i>
+                </span>
                 <span class='action-icons'><i class='fa fa-trash'></i></span>
               </td>
 

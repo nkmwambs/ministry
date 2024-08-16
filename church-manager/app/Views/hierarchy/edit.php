@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary" data-collapsed="0">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <div class="page-title"><i class='fa fa-pencil'></i> Edit Hierarchy</div>
+                </div>
+
+            </div>
+
+            <div class="panel-body">
+            
+                <form id = "frm_edit_denomination" method="post" action="<?=site_url('hierarchies/update/');?>" role="form" class="form-horizontal form-groups-bordered">
+                    
+                    <input type="hidden" name="id" value="<?=hash_id($result['id']);?>" />
+
+                    <?php if (session()->get('errors')): ?>
+                        <div class="form-group">
+                            <div class="col-xs-12 error">
+                                <ul>
+                                    <?php foreach (session()->get('errors') as $error): ?>
+                                        <li><?= esc($error) ?></li>
+                                    <?php endforeach ?>
+                                </ul>
+                            </div>
+                        </div>
+                    <?php endif ?>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="denomination_name">Name</label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="name" value="<?=$result['name'];?>" id="name"
+                                placeholder="Enter Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="description">Description</label>
+                        <div class="col-xs-6">
+                            <textarea class="form-control" name="description" id="description" placeholder="Enter Description"><?=$result['description'];?></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

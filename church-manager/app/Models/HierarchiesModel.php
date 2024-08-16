@@ -12,7 +12,7 @@ class HierarchiesModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name","level","denomination_id"];
+    protected $allowedFields    = ["name","level","denomination_id","description"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

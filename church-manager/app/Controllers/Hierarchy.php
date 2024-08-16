@@ -85,7 +85,7 @@ class Hierarchy extends BaseController
         if($this->request->isAJAX()){
             $this->feature = 'hierarchy';
             $this->action = 'list';
-            $records = $this->model->where('denomination_id', $denomination_id)->findAll();
+            $records = $this->model->orderBy("created_at desc")->where('denomination_id', $denomination_id)->findAll();
             $page_data = parent::page_data($records);
             $page_data['id'] = hash_id($denomination_id,'encode');
             // log_message('error', json_encode($page_data));
