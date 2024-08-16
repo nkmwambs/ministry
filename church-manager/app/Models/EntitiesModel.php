@@ -12,7 +12,7 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ["hierarchy_id","entity_number","name","parent_id","entity_leader"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

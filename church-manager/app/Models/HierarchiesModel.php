@@ -36,7 +36,7 @@ class HierarchiesModel extends Model  implements \App\Interfaces\ModelInterface
     // Callbacks
     protected $allowCallbacks = true;
     protected $beforeInsert   = [];
-    protected $afterInsert    = [];
+    protected $afterInsert    = ["createHeadOfficeEntity"];
     protected $beforeUpdate   = [];
     protected $afterUpdate    = [];
     protected $beforeFind     = [];
@@ -64,5 +64,21 @@ class HierarchiesModel extends Model  implements \App\Interfaces\ModelInterface
         }else{
             return $this->where('id', $id)->first();
         }
+    }
+
+
+    function createHeadOfficeEntity(array $data){
+        if($data['data']['level'] == 1){
+            $headOfficeEntityData = [
+                'hierarchy_id' => $data['id'],
+                'name' => 'Head Office',
+                'entity_number' => 'H001',
+                'parent_id' => null,
+            ];
+    
+            $entityModel = new EntitiesModel();
+            $entityModel->insert($headOfficeEntityData);
+        }
+        return true;
     }
 }

@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-primary" data-collapsed="0">
@@ -27,12 +26,12 @@
           <?php endif ?>
         
           <div class="form-group">
-            <label class="control-label col-xs-4" for="description">Hierarchy Level</label>
+            <label class="control-label col-xs-4" for="hierarchy_id">Hierarchy Level</label>
             <div class="col-xs-6">
-              <select class="form-control" name="hierarchy_level" id="hierarchy_level">
+              <select class="form-control" name="hierarchy_id" id="hierarchy_id">
                 <option value="">Select Hierarchy Level</option>
                 <?php foreach($lookup_items['hierarchy_id'] as $hierarchy){?>
-                    <option value = "<?=$hierarchy['level'];?>"><?=$hierarchy['name'];?></option>
+                    <option value = "<?=$hierarchy['id'];?>"><?=$hierarchy['name'];?></option>
                 <?php }?>
               </select>
             </div>
@@ -80,17 +79,18 @@
   </div>
 </div>
 
+
 <script>
-$("#hierarchy_level").on("change", function(){
-    const hierarchy_level = $(this).val();
+$("#hierarchy_id").on("change", function(){
+    const hierarchy_id = $(this).val();
     const form_groups = $('.form-group');
-    const denomination_id = 1; 
-    
-    if(hierarchy_level > 0){
+    const denomination_id = '<?=$id;?>'; 
+   
+    if(hierarchy_id > 0){
         $.ajax({
-            url: `<?=site_url("entities/items/")?>/${denomination_id}/${parseInt(hierarchy_level) - 1}`,
+            url: `<?=site_url("entities/items/")?>/${denomination_id}/${hierarchy_id}`,
             type: 'GET',
-            data: {hierarchy_level: hierarchy_level},
+            data: {hierarchy_id: hierarchy_id},
             success: function(response){
                 // alert(response)
                 const parent_entities = JSON.parse(response);

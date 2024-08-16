@@ -85,12 +85,14 @@
 
 	<script src="<?php echo base_url(); ?>assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
-
-
-
+	<script src="<?php echo base_url(); ?>assets/js/neon-api.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/resizeable.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/joinable.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/gsap/TweenMax.min.js"></script>
+	
 	<!-- Imported scripts on this page -->
 	<script src="<?php echo base_url(); ?>assets/js/toastr.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/neon-chat.js"></script>
+	<!-- <script src="<?php echo base_url(); ?>assets/js/neon-chat.js"></script> -->
 	<script src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.js"></script>
 
 	<!-- JavaScripts initializations and stuff -->
