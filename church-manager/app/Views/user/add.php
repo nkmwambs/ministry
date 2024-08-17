@@ -12,7 +12,7 @@
       <div class="panel-heading">
         <div class="panel-title">
           <div class="page-title"><i class='fa fa-users'></i><?=lang('user.add_user')?></div>
-        </div>
+        </div> 
 
       </div>
 

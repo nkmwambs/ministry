@@ -43,10 +43,10 @@
             }else{
           ?>
             <div class="form-group">
-              <label class="control-label col-xs-4" for="denomination_id">Demonination Name</label>
+              <label class="control-label col-xs-4" for="denomination_id">Denomination Name</label>
               <div class="col-xs-6">
                 <select class="form-control" name="denomination_id" id="denomination_id">
-                  <option value="">Select Demonination</option>
+                  <option value="">Select Denomination</option>
                   
                 </select>
               </div>
