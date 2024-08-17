@@ -79,6 +79,7 @@ abstract class BaseController extends Controller
             $this->library = new ("App\\Libraries\\" . ucfirst($this->feature) . "Library")();
             $this->listQueryFields = $this->library->setListQueryFields();
         }
+
     }
 
     private function history_fields(){
