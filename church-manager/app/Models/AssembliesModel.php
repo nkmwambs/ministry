@@ -12,7 +12,7 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['id','name','planted_at','location','entity_id','assembly_leader','is_active'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,10 +44,25 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    function getAll(){
+    public function getAll(){
+        $library = new \App\Libraries\AssemblyLibrary();
+        $listQueryFields = $library->setListQueryFields();
 
+        if(!empty($listQueryFields)){
+            return $this->select($library->setListQueryFields())->orderBy('created_at desc')->findAll();
+        }else{
+            return $this->orderBy('created_at desc')->findAll();
+        }
     }
-    function getOne($id){
-        
+
+    public function getOne($id){
+        $library = new \App\Libraries\AssemblyLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())->where('id', $id)->first();
+        }else{
+            return $this->where('id', $id)->first();
+        }
     }
 }
