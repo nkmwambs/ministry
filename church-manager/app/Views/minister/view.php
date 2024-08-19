@@ -29,7 +29,7 @@
 
                         <ul class="nav nav-tabs" id="myTabs">
                             <li class="active"><a href="#view_minister" id="view_minister_tab" data-toggle="tab"><?= lang('minister.view_minister'); ?></a></li>
-                            <li><a href="#list_hierarchies" data-item_id="<?= $id; ?>" data-feature_plural="hierarchies" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li>
+                            <!-- <li><a href="#list_hierarchies" data-item_id="<?= $id; ?>" data-feature_plural="hierarchies" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li> -->
                         </ul>
                     </div>
                 </div>

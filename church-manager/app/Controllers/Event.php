@@ -14,7 +14,7 @@ class Event extends BaseController
     function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger){
         parent::initController($request, $response, $logger);
         
-        $this->model = new \App\Models\MinistersModel();
+        $this->model = new \App\Models\EventsModel();
     }
 
     public function view($id): string {
@@ -23,8 +23,8 @@ class Event extends BaseController
             unset($data['id']);
         }
 
-        $hierarchyModel = new \App\Models\HierarchiesModel();
-        $data['other_details'] = $hierarchyModel->where('denomination_id', hash_id($id,'decode'))->where('level <>', 1)->findAll();
+        $participantModel = new \App\Models\ParticipantsModel();
+        $data['other_details'] = $participantModel->where('event_id', hash_id($id,'decode'))->findAll();
 
         $page_data = parent::page_data($data, $id);
     
@@ -65,7 +65,7 @@ class Event extends BaseController
         $this->model->update(hash_id($hashed_id, 'decode'), $update_data);
 
         if ($this->request->isAJAX()) {
-            $this->feature = 'minister';
+            $this->feature = 'event';
             $this->action = 'list';
 
             $records = [];
@@ -96,22 +96,25 @@ class Event extends BaseController
             return redirect()->back()->withInput()->with('errors', $validation->getErrors());
         }
 
+        $denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
+        $gatheringtype_id = hash_id($this->request->getPost('gatheringtype_id'), 'decode');
+
         $data = [
-            'name'=> $this->request->getPost('name'),
-            'gatheringtype_id'=> $this->request->getPost('gatheringtype_id'),
-            'start_date'=> $this->request->getPost('start_date'),
-            'end_date'=> $this->request->getPost('end_date'),
-            'location'=> $this->request->getPost('location'),
-            'description'=> $this->request->getPost('description'),
-            'denomination_id'=> $this->request->getPost('denomination_id'),
-            'registration_fees'=> $this->request->getPost('registration_fees'),
+            'name' => $this->request->getPost('name'),
+            'gatheringtype_id' => $gatheringtype_id,
+            'start_date' => $this->request->getPost('start_date'),
+            'end_date' => $this->request->getPost('end_date'),
+            'location' => $this->request->getPost('location'),
+            'description' => $this->request->getPost('description'),
+            'denomination_id' => $denomination_id,
+            'registration_fees' => $this->request->getPost('registration_fees'),
         ];
 
         $this->model->insert($data);
         $insertId = $this->model->getInsertID();
 
         if ($this->request->isAJAX()) {
-            $this->feature = 'minister';
+            $this->feature = 'event';
             $this->action = 'list';
             $records = [];
 
@@ -121,7 +124,9 @@ class Event extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('event/list', parent::page_data($records));
+            $page_data = parent::page_data($records);
+
+            return view('event/list', $page_data);
         }
 
         return redirect()->to(site_url('events/view'.hash_id($insertId)));

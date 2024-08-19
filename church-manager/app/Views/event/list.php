@@ -35,7 +35,7 @@
                     <tr>
                         <td>
                             <span class='action-icons'>
-                                <a href="<?= site_url("event$events/view/" . hash_id($event['id'])); ?>"><i class='fa fa-search'></i></a></i>
+                                <a href="<?= site_url("events/view/" . hash_id($event['id'])); ?>"><i class='fa fa-search'></i></a></i>
                             </span>
                             <span class='action-icons'>
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($event['id']); ?>')" class='fa fa-pencil'></i>
@@ -46,7 +46,6 @@
                         </td>
 
                         <td><?= $event['name']; ?></td>
-                        <td><?= $event['code']; ?></td>
                         <td><?= $event['gatheringtype_id']; ?></td>
                         <td><?= $event['start_date']; ?></td>
                         <td><?= $event['end_date']; ?></td>

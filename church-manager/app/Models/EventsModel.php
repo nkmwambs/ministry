@@ -12,7 +12,7 @@ class EventsModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['id','name','gatheringtype_id','start_date','end_date','location','description','denomination_id','registration_fees'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -45,7 +45,7 @@ class EventsModel extends Model  implements \App\Interfaces\ModelInterface
     protected $afterDelete    = [];
 
     public function getAll(){
-        $library = new \App\Libraries\EntityLibrary();
+        $library = new \App\Libraries\EventLibrary();
         $listQueryFields = $library->setListQueryFields();
 
         if (!empty($listQueryFields)) {
@@ -56,7 +56,7 @@ class EventsModel extends Model  implements \App\Interfaces\ModelInterface
     }
 
     public function getOne($id){
-        $library = new \App\Libraries\EntityLibrary();
+        $library = new \App\Libraries\EventLibrary();
         $viewQueryFields = $library->setListQueryFields();
 
         if (!empty($viewQueryFields)) {

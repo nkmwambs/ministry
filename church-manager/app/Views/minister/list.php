@@ -20,6 +20,7 @@
             <thead>
                 <tr>
                     <th><?= lang('minister.minister_action_col') ?></th>
+                    <th><?= lang('minister.minister_name') ?></th>
                     <th><?= lang('minister.minister_number') ?></th>
                     <th><?= lang('minister.minister_assembly_id') ?></th>
                     <th><?= lang('minister.minister_designation_id') ?></th>
@@ -43,7 +44,7 @@
                         </td>
 
                         <td><?= $minister['name']; ?></td>
-                        <td><?= $minister['number']; ?></td>
+                        <td><?= $minister['minister_number']; ?></td>
                         <td><?= $minister['assembly_id']; ?></td>
                         <td><?= $minister['designation_id']; ?></td>
                         <td><?= $minister['phone']; ?></td>

@@ -19,7 +19,7 @@ class Minister extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'name' => 'required|min_length[10]|max_length[255]',
-            'number' => 'required|min_length[3]',
+            'minister_number' => 'required|min_length[3]',
             'assembly_id'    => 'required|max_length[255]',
             'designation_id' => 'required|max_length[255]',
             'phone' => 'required|max_length[50]',
@@ -32,7 +32,7 @@ class Minister extends BaseController
 
         $update_data = [
             'name' => $this->request->getPost('name'),
-            'number' => $this->request->getPost('number'),
+            'minister_number' => $this->request->getPost('minister_number'),
             'assembly_id' => $this->request->getPost('assembly_id'),
             'designation_id' => $this->request->getPost('designation_id'),
             'phone' => $this->request->getPost('phone'),
@@ -63,7 +63,7 @@ class Minister extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'name' => 'required|min_length[10]|max_length[255]',
-            'number'    => 'required|min_length[3]',
+            'minister_number'    => 'required|min_length[3]',
             'assembly_id' => 'required|max_length[255]',
             'designation_id' => 'required|max_length[255]',
         ]);
@@ -74,7 +74,7 @@ class Minister extends BaseController
 
         $data = [
             'name' => $this->request->getPost('name'),
-            'number' => $this->request->getPost('number'),
+            'minister_number' => $this->request->getPost('minister_number'),
             'assembly_id' => $this->request->getPost('assembly_id'),
             'designation_id' => $this->request->getPost('designation_id'),
             'phone' => $this->request->getPost('phone'),

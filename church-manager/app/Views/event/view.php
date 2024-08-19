@@ -7,14 +7,14 @@
 </div>
 
 <div class = "row">
-    <?php if(session()->getFlashdata('message') ){?>
+    <?php if(session()->getFlashdata('message') ) { ?>
         <div class = "col-xs-12 info">
             <p><?= session()->getFlashdata('message');?></p>
             <a href="<?= site_url(plural($feature).'/edit/' . $id) ?>">
                 <?= lang('event.edit_again_button') ?>
             </a>
         </div>
-    <?php }?>
+    <?php } ?>
 </div>
 
 <div class="row">
@@ -28,53 +28,61 @@
                         <i class='fa fa-eye'></i><?= lang('event.view_event'); ?>
                     </div>
                     <div class="panel-options">
-							
-							<ul class="nav nav-tabs" id ="myTabs">
-								<li class="active"><a href="#view_event" id="view_event_tab" data-toggle="tab"><?= lang('event.view_event'); ?></a></li>
-								<li><a href="#list_participants" data-item_id = "<?=$id;?>" data-feature_plural="participants" onclick="childrenAjaxLists(this)" id="list_participants_tab" data-toggle="tab"><?= lang('participant.list_participants'); ?></a></li>
-                                <li><a href="#list_visitors" data-item_id = "<?=$id;?>" data-feature_plural="visitors" onclick="childrenAjaxLists(this)" id="list_visitors_tab" data-toggle="tab"><?= lang('visitor.list_visitors'); ?></a></li>
-                                <!-- <?php foreach($hierarchy_sections as $participant){?>
-                                    <li><a href="#list_<?=plural(underscore($participant['name']));?>" data-link_id="list_<?=plural(underscore($participant['name']));?>" data-item_id = "<?=hash_id($participant['id'],'encode');?>" data-feature_plural="entities" onclick="childrenAjaxLists(this)" id="list_<?=plural(underscore($participant['name']));?>_tab" data-toggle="tab"><?=plural(ucfirst($participant['name'])); ?></a></li>
-                                <?php }?> -->
-							</ul>
-					</div>
+
+                        <ul class="nav nav-tabs" id="myTabs">
+                            <li class="active"><a href="#view_event" id="view_event_tab" data-toggle="tab"><?= lang('minister.view_minister'); ?></a></li>
+                            <li><a href="#list_participants" data-item_id="<?= $id; ?>" data-feature_plural="participants" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="panel-body">
-                
+
                 <div class="tab-content">
                     <div class="tab-pane active" id="view_event">
                         <form class="form-horizontal form-groups-bordered" role="form">
-                            <?php foreach($result as $field_name => $field_value){ ?>
-                                <div class = "form-group">
-                                    <label for="" class = "control-label col-xs-4"><?=humanize($field_name);?></label>
-                                    <div class = "col-xs-6">
-                                        <div class = "form_view_field"><?=$field_value;?></div>
+                            <!-- <?php foreach ($result as $field_name => $field_value) { ?>
+                                <div class="form-group">
+                                    <label for="" class="control-label col-xs-4"><?= humanize($field_name); ?></label>
+                                    <div class="col-xs-6">
+                                        <div class="form_view_field"><?= $field_value; ?></div>
+                                    </div>
+                                </div>
+                            <?php } ?> -->
+
+                            <?php foreach ($result as $field_name => $field_value) { ?>
+                                <div class="form-group">
+                                    <label for="" class="control-label col-xs-4"><?= humanize($field_name); ?></label>
+                                    <div class="col-xs-6">
+                                        <div class="form_view_field">
+                                            <?php 
+                                            if (is_array($field_value)) {
+                                                // You can format the array as a string, e.g., join elements with a comma
+                                                echo implode(', ', $field_value); 
+                                                // Alternatively, if you need a more complex representation, handle it here
+                                            } else {
+                                                echo $field_value;
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
                                 </div>
                             <?php } ?>
-            
-                            <div class = "form-group">
-                                <div class = "col-xs-offset-4 col-xs-6">
-                                    <a href="<?= site_url(plural($feature).'/edit/' . $id) ?>" class="btn btn-primary">Edit</a>
+
+
+                            <div class="form-group">
+                                <div class="col-xs-offset-4 col-xs-6">
+                                    <a href="<?= site_url(plural($feature) . '/edit/' . $id) ?>" class="btn btn-primary">
+                                        <?= lang('event.edit_button') ?>
+                                    </a>
                                 </div>
-                            </div> 
+                            </div>
                         </form>
                     </div>
 
                     <div class="tab-pane ajax_main" id="list_participants">
-                        <div class = 'info'><?= lang('participant.no_participants_message') ?></div>
+                        <div class='info'><?= lang('hierarchy.no_participants_message') ?></div>
                     </div>
-
-                    <div class="tab-pane ajax_main" id="list_visitors">
-                        <div class = 'info'><?= lang('visitor.no_visitors_message') ?></div>
-                    </div>
-
-                    <!-- <?php foreach($hierarchy_sections as $participant){?>
-                        <div class="tab-pane" id="list_<?=plural(underscore($participant['name']));?>">
-                            <div class = 'info'>There are no <?=plural($participant['name']);?> available</div>
-                        </div>
-                    <?php }?> -->
 
                 </div>
             </div>
@@ -82,4 +90,3 @@
         </div>
     </div>
 </div>
-
