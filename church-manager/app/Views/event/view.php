@@ -31,8 +31,11 @@
 							
 							<ul class="nav nav-tabs" id ="myTabs">
 								<li class="active"><a href="#view_event" id="view_event_tab" data-toggle="tab"><?= lang('event.view_event'); ?></a></li>
-								<li><a href="#list_participants" data-item_id = "<?=$id;?>" data-feature_plural="participants" onclick="childrenAjaxLists(this)" id="list_participants_tab" data-toggle="tab"><?= lang('hierarchy.list_participants'); ?></a></li>
-                                <li><a href="#list_visitors" data-item_id = "<?=$id;?>" data-feature_plural="visitors" onclick="childrenAjaxLists(this)" id="list_visitors_tab" data-toggle="tab"><?= lang('hierarchy.list_visitors'); ?></a></li>
+								<li><a href="#list_participants" data-item_id = "<?=$id;?>" data-feature_plural="participants" onclick="childrenAjaxLists(this)" id="list_participants_tab" data-toggle="tab"><?= lang('participant.list_participants'); ?></a></li>
+                                <li><a href="#list_visitors" data-item_id = "<?=$id;?>" data-feature_plural="visitors" onclick="childrenAjaxLists(this)" id="list_visitors_tab" data-toggle="tab"><?= lang('visitor.list_visitors'); ?></a></li>
+                                <!-- <?php foreach($hierarchy_sections as $participant){?>
+                                    <li><a href="#list_<?=plural(underscore($participant['name']));?>" data-link_id="list_<?=plural(underscore($participant['name']));?>" data-item_id = "<?=hash_id($participant['id'],'encode');?>" data-feature_plural="entities" onclick="childrenAjaxLists(this)" id="list_<?=plural(underscore($participant['name']));?>_tab" data-toggle="tab"><?=plural(ucfirst($participant['name'])); ?></a></li>
+                                <?php }?> -->
 							</ul>
 					</div>
                 </div>
@@ -66,6 +69,12 @@
                     <div class="tab-pane ajax_main" id="list_visitors">
                         <div class = 'info'><?= lang('visitor.no_visitors_message') ?></div>
                     </div>
+
+                    <!-- <?php foreach($hierarchy_sections as $participant){?>
+                        <div class="tab-pane" id="list_<?=plural(underscore($participant['name']));?>">
+                            <div class = 'info'>There are no <?=plural($participant['name']);?> available</div>
+                        </div>
+                    <?php }?> -->
 
                 </div>
             </div>

@@ -43,4 +43,26 @@ class ParticipantsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getAll(){
+        $library = new \App\Libraries\ParticipantLibrary();
+        $listQueryFields = $library->setListQueryFields();
+
+        if(!empty($listQueryFields)){
+            return $this->select($library->setListQueryFields())->orderBy('created_at desc')->findAll();
+        }else{
+            return $this->orderBy('created_at desc')->findAll();
+        }
+    }
+
+    public function getOne($id){
+        $library = new \App\Libraries\ParticipantLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())->where('id', $id)->first();
+        }else{
+            return $this->where('id', $id)->first();
+        }
+    }
 }

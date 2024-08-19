@@ -5,7 +5,9 @@ return [
     'add_participant' => 'Add Participant',
     'edit_participant' => 'Edit Participant',
     'view_participant' => 'View Participant',
+    'select_participant' => 'Select Participant',
 
+    'participant_action' => 'Action',
     'participant_member_id' => 'Member Name',
     'participant_event_id' => 'Event Name',
     'participant_payment_id' => 'Payment Name',
