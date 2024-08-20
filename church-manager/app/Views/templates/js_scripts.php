@@ -138,7 +138,32 @@
                 $("#overlay").css("display", "block");
             },
             success: function(response){
-                $("#modal_ajax").modal("hide");
+                // console.log(response);
+                // $("#modal_ajax").modal("hide");
+                // const response=jQuery.parseJSON(response);
+                if(typeof response =='object')
+                {
+                    // It is JSON
+
+                    if (response.hasOwnProperty('errors')) {
+                        const error_container = $('.error_container')
+
+                        if(error_container.hasClass('hidden')) {
+                            error_container.removeClass('hidden');
+                            let ul = "<ul>";
+                            $.each(response.errors, function(index, value) {
+                                ul += "<li>" + value + "</li>";
+                            })
+                            ul += "</ul>";
+                            error_container.find('.error').html(ul);
+                        }else{
+                            error_container.addClass('hidden');
+                        }
+                    }
+                    
+                    $("#overlay").css("display", "none");
+                    return false;
+                }
 
                 if($('.ajax_main').length > 0){
                     $('.ajax_main').html(response);

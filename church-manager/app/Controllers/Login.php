@@ -31,7 +31,7 @@ class Login extends BaseController {
         ->first();
 
         if (!$user || !password_verify($user_password, $user['password'])) {
-            return redirect()->back()->with('errors', 'Invalid login details');
+            return redirect()->back()->withInput()->with('errors', 'Invalid login details');
         }else{
             return $this->create_user_session($user);
         }

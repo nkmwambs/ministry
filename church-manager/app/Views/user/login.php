@@ -10,7 +10,8 @@
 
 <div class = "login_container">
     <div class = "login_content">
-        <form action="<?=site_url('validate');?>" method="post">
+        <!-- <form action="<?=site_url('validate');?>" method="post"> -->
+        <?= form_open(site_url('validate')) ?>
             <div class="imgcontainer">
                 <img src="images/avatar.jpeg" alt="Avatar" class="avatar">
             </div>
@@ -24,10 +25,10 @@
                 <?php endif ?>
                 
                 <label for="uname"><b>User Email</b></label>
-                <input type="email" placeholder="Enter Email" name="email" required>
+                <input type="email" placeholder="Enter Email" value="<?= set_value('email') ?>" name="email" required>
 
                 <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="password" required>
+                <input type="password" placeholder="Enter Password" value="<?= set_value('password') ?>" name="password" required>
 
                 <button type="submit">Login</button>
                 <label>
@@ -39,7 +40,8 @@
                 <button type="button" class="cancelbtn">Cancel</button>
                 <span class="psw">Forgot <a href="#">password?</a></span>
             </div>
-        </form>
+        <!-- </form> -->
+        <?= form_close() ?>
     </div>
 </div>
 

@@ -14,17 +14,12 @@
 
         <form role="form" id = "frm_add_denomination" method="post" action="<?=site_url("denominations/save")?>" class="form-horizontal form-groups-bordered">
           
-          <?php if (session()->get('errors')): ?>
-              <div class="form-group">
+              <div class="form-group hidden error_container">
                   <div class="col-xs-12 error">
-                    <ul>
-                        <?php foreach (session()->get('errors') as $error): ?>
-                          <li><?= esc($error) ?></li>
-                        <?php endforeach ?>
-                    </ul>
+                    
                   </div>
               </div>
-          <?php endif ?>
+          
         
           <div class="form-group">
             <label class="control-label col-xs-4" for="name">Name</label>

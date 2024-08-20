@@ -37,8 +37,11 @@ class Denomination extends BaseController
             'code' => 'required|min_length[3]',
         ]);
 
+        // log_message('error', json_encode($this->request->getPost()));
+
         if (!$this->validate($validation->getRules())) {
-            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
         $update_data = [
@@ -78,8 +81,11 @@ class Denomination extends BaseController
             'code' => 'required|min_length[3]',
         ]);
 
+        
         if (!$this->validate($validation->getRules())) {
-            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            // log_message('error', json_encode($validation->getErrors()));
+            return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
         $data = [
