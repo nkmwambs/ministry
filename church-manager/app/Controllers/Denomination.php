@@ -76,7 +76,7 @@ class Denomination extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'name' => 'required|min_length[10]|max_length[255]',
+            'name' => 'required|min_length[10]',
             'email'    => 'required|valid_email|max_length[255]',
             'code' => 'required|min_length[3]',
         ]);
@@ -84,7 +84,6 @@ class Denomination extends BaseController
         
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-            // log_message('error', json_encode($validation->getErrors()));
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 

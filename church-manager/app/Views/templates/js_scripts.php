@@ -129,7 +129,7 @@
         const frm = $('#' + frm_id)
         const data = frm.serializeArray()
         const url = frm.attr('action')
-
+        // alert(url)
         $.ajax({
             url,
             type: 'POST',
@@ -165,9 +165,12 @@
                     return false;
                 }
 
+                $("#modal_ajax").modal("hide");
+                
                 if($('.ajax_main').length > 0){
                     $('.ajax_main').html(response);
                 }else{
+                    alert('Hello')
                     $('.main').html(response);
                 }
                 

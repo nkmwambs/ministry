@@ -14,17 +14,11 @@
                     
                     <input type="hidden" name="id" value="<?=hash_id($result['id']);?>" />
 
-                    <?php if (session()->get('errors')): ?>
-                        <div class="form-group">
-                            <div class="col-xs-12 error">
-                                <ul>
-                                    <?php foreach (session()->get('errors') as $error): ?>
-                                        <li><?= esc($error) ?></li>
-                                    <?php endforeach ?>
-                                </ul>
-                            </div>
+                    <div class="form-group hidden error_container">
+                        <div class="col-xs-12 error">
+                            
                         </div>
-                    <?php endif ?>
+                    </div>
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="denomination_name">Name</label>

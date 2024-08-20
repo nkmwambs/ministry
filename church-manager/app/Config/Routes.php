@@ -18,6 +18,7 @@ foreach ($features as $featureObj) {
     $feature = $featureObj['name'];
     $ucfirst = ucfirst($feature);
     $group = plural($feature);
+    // log_message('error', json_encode($group));
     $routes->group($group, function ($routes) use ($ucfirst) {
             $routes->get('/', "$ucfirst::index");
             $routes->get('(:segment)', "$ucfirst::index/$1");

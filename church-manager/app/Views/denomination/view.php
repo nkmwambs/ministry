@@ -60,7 +60,7 @@ $hierarchy_sections = array_pop($result);
                         </form>
                     </div>
 
-                    <div class="tab-pane" id="list_hierarchies">
+                    <div class="tab-pane ajax_main" id="list_hierarchies">
                         <div class = 'info'>There are no hierarchies available</div>
                     </div>
 

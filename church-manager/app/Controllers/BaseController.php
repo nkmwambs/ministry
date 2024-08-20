@@ -158,6 +158,7 @@ abstract class BaseController extends Controller
 
     public function modal($plural_feature, $action, $id = ''){
         $page_data['id'] = $id;
+        // log_message('error',json_encode($this->request->getPost()));
         if($action == 'add'){
             
             if(method_exists($this->library, 'getLookUpItems')){
