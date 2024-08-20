@@ -10,7 +10,6 @@
 
 <div class = "login_container">
     <div class = "login_content">
-        <!-- <form action="<?=site_url('validate');?>" method="post"> -->
         <?= form_open(site_url('validate')) ?>
             <div class="imgcontainer">
                 <img src="images/avatar.jpeg" alt="Avatar" class="avatar">
@@ -40,7 +39,6 @@
                 <button type="button" class="cancelbtn">Cancel</button>
                 <span class="psw">Forgot <a href="#">password?</a></span>
             </div>
-        <!-- </form> -->
         <?= form_close() ?>
     </div>
 </div>
