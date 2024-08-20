@@ -89,7 +89,7 @@
                 <?= lang('event.event_denomination_id') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="denomination_id" id="denomination_id" placeholder="Enter Denomination">
+              <input type="text" class="form-control" name="denomination_id" id="denomination_id" placeholder="Enter Denomination Name">
             </div>
           </div>
 

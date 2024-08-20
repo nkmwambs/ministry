@@ -96,17 +96,17 @@ class Event extends BaseController
             return redirect()->back()->withInput()->with('errors', $validation->getErrors());
         }
 
-        $denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
-        $gatheringtype_id = hash_id($this->request->getPost('gatheringtype_id'), 'decode');
+        // $denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
+        // $gatheringtype_id = hash_id($this->request->getPost('gatheringtype_id'), 'decode');
 
         $data = [
             'name' => $this->request->getPost('name'),
-            'gatheringtype_id' => $gatheringtype_id,
+            'gatheringtype_id' => $this->request->getPost('gatheringtype_id'),
             'start_date' => $this->request->getPost('start_date'),
             'end_date' => $this->request->getPost('end_date'),
             'location' => $this->request->getPost('location'),
             'description' => $this->request->getPost('description'),
-            'denomination_id' => $denomination_id,
+            'denomination_id' => $this->request->getPost('denomination_id'),
             'registration_fees' => $this->request->getPost('registration_fees'),
         ];
 
