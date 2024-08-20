@@ -147,8 +147,8 @@
 
                     if (response.hasOwnProperty('errors')) {
                         const error_container = $('.error_container')
-
-                        if(error_container.hasClass('hidden')) {
+                        
+                        if(!isEmpty(response.errors)) {
                             error_container.removeClass('hidden');
                             let ul = "<ul>";
                             $.each(response.errors, function(index, value) {
@@ -180,6 +180,16 @@
         })
 
     })
+
+    function isEmpty(obj) {
+        for (const prop in obj) {
+            if (Object.hasOwn(obj, prop)) {
+            return false;
+            }
+        }
+
+        return true;
+        }
 
 
     $(document).ready(function($)
