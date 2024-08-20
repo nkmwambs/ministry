@@ -12,7 +12,7 @@ class UsersModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ["denomination_id","first_name","last_name","email","gender","password"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

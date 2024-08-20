@@ -24,13 +24,13 @@ class Login extends BaseController {
 
     public function userValidate(): ResponseInterface {
         $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
-
+        $user_password = $this->request->getPost('password');
+        
         $userModel = new \App\Models\UsersModel();
-        $user = $userModel->where(['email' => $email, 'password' => $password, 'is_active' => 'yes'])
+        $user = $userModel->where(['email' => $email, 'is_active' => 'yes'])
         ->first();
 
-        if (!$user) {
+        if (!$user || !password_verify($user_password, $user['password'])) {
             return redirect()->back()->with('errors', 'Invalid login details');
         }else{
             return $this->create_user_session($user);
