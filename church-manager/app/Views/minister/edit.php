@@ -13,6 +13,12 @@
             <div class="panel-body">
             
                 <form id = "frm_edit_minister" method="post" action="<?=site_url('ministers/update/');?>" role="form" class="form-horizontal form-groups-bordered">
+
+                    <div class="form-group hidden error_container">
+                        <div class="col-xs-12 error">
+                        
+                        </div>
+                    </div>
                     
                     <input type="hidden" name="id" value="<?=hash_id($result['id']);?>" />
 

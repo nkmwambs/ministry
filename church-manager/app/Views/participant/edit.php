@@ -14,6 +14,12 @@
             <div class="panel-body">
 
                 <form id="frm_edit_event" method="post" action="<?= site_url('participants/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
+                    
+                    <div class="form-group hidden error_container">
+                        <div class="col-xs-12 error">
+                        
+                        </div>
+                    </div>
 
                     <input type="hidden" name="id" value="<?= hash_id($result['id']); ?>" />
                     <input type="hidden" name="event_id" value="<?= hash_id($result['event_id']); ?>" />

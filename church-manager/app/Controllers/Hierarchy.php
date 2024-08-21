@@ -105,16 +105,16 @@ class Hierarchy extends BaseController
         $hashed_id = $this->request->getVar('id');
         $hashed_denomination_id = $this->request->getVar('denomination_id');
 
-        // $validation = \Config\Services::validation();
-        // $validation->setRules([
-        //     'name' => 'required|min_length[10]|max_length[255]',
-        //     'email'    => 'required|valid_email|max_length[255]',
-        //     'code' => 'required|min_length[3]',
-        // ]);
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'name' => 'required|min_length[10]|max_length[255]',
+            'email'    => 'required|valid_email|max_length[255]',
+        ]);
 
-        // if (!$this->validate($validation->getRules())) {
-        //     return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-        // }
+        if (!$this->validate($validation->getRules())) {
+            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            return response()->setJSON(['errors' => $validation->getErrors()]);
+        }
 
         $update_data = [
             'name' => $this->request->getPost('name'),

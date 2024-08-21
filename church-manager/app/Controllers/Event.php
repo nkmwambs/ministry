@@ -48,7 +48,26 @@ class Event extends BaseController
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            $validationErrors = $validation->getErrors();
+
+            // Renaming specific keys
+            $renamedErrors = [];
+            foreach ($validationErrors as $key => $message) {
+                switch ($key) {
+                    case 'minister_number':
+                        $renamedErrors['number'] = $message;
+                        break;
+                    case 'is_active':
+                        $renamedErrors['active'] = $message;
+                        break;
+                    default:
+                        $renamedErrors[$key] = $message; // Keep other keys unchanged
+                        break;
+                }
+            }
+
+            return response()->setJSON(['errors' => $renamedErrors]);
         }
 
         $update_data = [
@@ -93,7 +112,26 @@ class Event extends BaseController
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            $validationErrors = $validation->getErrors();
+
+            // Renaming specific keys
+            $renamedErrors = [];
+            foreach ($validationErrors as $key => $message) {
+                switch ($key) {
+                    case 'minister_number':
+                        $renamedErrors['number'] = $message;
+                        break;
+                    case 'is_active':
+                        $renamedErrors['active'] = $message;
+                        break;
+                    default:
+                        $renamedErrors[$key] = $message; // Keep other keys unchanged
+                        break;
+                }
+            }
+
+            return response()->setJSON(['errors' => $renamedErrors]);
         }
 
         // $denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');

@@ -16,7 +16,7 @@
 
         <form role="form" id = "frm_add_minister" method="post" action="<?=site_url("ministers/save")?>" class="form-horizontal form-groups-bordered">
           
-          <?php if (session()->get('errors')): ?>
+          <!-- <?php if (session()->get('errors')): ?>
               <div class="form-group">
                   <div class="col-xs-12 error">
                     <ul>
@@ -26,7 +26,13 @@
                     </ul>
                   </div>
               </div>
-          <?php endif ?>
+          <?php endif ?> -->
+
+          <div class="form-group hidden error_container">
+            <div class="col-xs-12 error">
+              
+            </div>
+          </div>
         
           <div class="form-group">
             <label class="control-label col-xs-4" for="name">

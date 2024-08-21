@@ -33,11 +33,32 @@ class Assembly extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'name' => 'required|min_length[10]|max_length[255]',
-            'entity_id'    => 'required|max_length[255]',
+            'entity_id' => 'required|max_length[255]',
+            'location' => 'required',
+            'is_active' => 'required|min_length[2]|max_length[3]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            $validationErrors = $validation->getErrors();
+
+            // Renaming specific keys
+            $renamedErrors = [];
+            foreach ($validationErrors as $key => $message) {
+                switch ($key) {
+                    case 'minister_number':
+                        $renamedErrors['number'] = $message;
+                        break;
+                    case 'is_active':
+                        $renamedErrors['active'] = $message;
+                        break;
+                    default:
+                        $renamedErrors[$key] = $message; // Keep other keys unchanged
+                        break;
+                }
+            }
+
+            return response()->setJSON(['errors' => $renamedErrors]);
         }
 
         $update_data = [
@@ -74,10 +95,31 @@ class Assembly extends BaseController
         $validation->setRules([
             'name' => 'required|min_length[10]|max_length[255]',
             'entity_id'    => 'required|max_length[255]',
+            'location' => 'required',
+            'is_active' => 'required|min_length[2]|max_length[3]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            $validationErrors = $validation->getErrors();
+
+            // Renaming specific keys
+            $renamedErrors = [];
+            foreach ($validationErrors as $key => $message) {
+                switch ($key) {
+                    case 'minister_number':
+                        $renamedErrors['number'] = $message;
+                        break;
+                    case 'is_active':
+                        $renamedErrors['active'] = $message;
+                        break;
+                    default:
+                        $renamedErrors[$key] = $message; // Keep other keys unchanged
+                        break;
+                }
+            }
+
+            return response()->setJSON(['errors' => $renamedErrors]);
         }
 
         $data = [

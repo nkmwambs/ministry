@@ -78,16 +78,38 @@ class Participant extends BaseController
     function post(){
         $insertId = 0;
 
-        // $validation = \Config\Services::validation();
-        // $validation->setRules([
-        //     'name' => 'required|min_length[10]|max_length[255]',
-        //     'email'    => 'required|valid_email|max_length[255]',
-        //     'code' => 'required|min_length[3]',
-        // ]);
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'member_id' => 'required|min_length[3]',
+            'event_id' => 'required|min_length[3]',
+            'payment_id' => 'required|min_length[3]',
+            'payment_code' => 'required|min_length[10]',
+            'registration_amount' => 'required',
+            'status' => 'required',
+        ]);
 
-        // if (!$this->validate($validation->getRules())) {
-        //     return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-        // }
+        if (!$this->validate($validation->getRules())) {
+            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            $validationErrors = $validation->getErrors();
+
+            // Renaming specific keys
+            $renamedErrors = [];
+            foreach ($validationErrors as $key => $message) {
+                switch ($key) {
+                    case 'minister_number':
+                        $renamedErrors['number'] = $message;
+                        break;
+                    case 'is_active':
+                        $renamedErrors['active'] = $message;
+                        break;
+                    default:
+                        $renamedErrors[$key] = $message; // Keep other keys unchanged
+                        break;
+                }
+            }
+
+            return response()->setJSON(['errors' => $renamedErrors]);
+        }
 
         $event_id = hash_id($this->request->getPost('event_id'),'decode');
         $member_id = hash_id($this->request->getPost('member_id'), 'decode');
@@ -97,7 +119,6 @@ class Participant extends BaseController
             'member_id' => $member_id,
             'event_id' => $event_id,
             'payment_id' => $payment_id,
-            // 'level' => $this->computeNextHierarchicalLevel($event_id),
             'payment_code' => $this->request->getPost('payment_code'),
             'registration_amount' => $this->request->getPost('registration_amount'),
             'status' => $this->request->getPost('status'),
@@ -121,22 +142,44 @@ class Participant extends BaseController
 
     public function update(){
 
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'member_id' => 'required|min_length[3]',
+            'event_id' => 'required|min_length[3]',
+            'payment_id' => 'required|min_length[3]',
+            'payment_code' => 'required|min_length[10]',
+            'registration_amount' => 'required',
+            'status' => 'required',
+        ]);
+
+        if (!$this->validate($validation->getRules())) {
+            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+            $validationErrors = $validation->getErrors();
+
+            // Renaming specific keys
+            $renamedErrors = [];
+            foreach ($validationErrors as $key => $message) {
+                switch ($key) {
+                    case 'minister_number':
+                        $renamedErrors['number'] = $message;
+                        break;
+                    case 'is_active':
+                        $renamedErrors['active'] = $message;
+                        break;
+                    default:
+                        $renamedErrors[$key] = $message; // Keep other keys unchanged
+                        break;
+                }
+            }
+
+            return response()->setJSON(['errors' => $renamedErrors]);
+        }
+        
         $hashed_id = $this->request->getVar('id');
         $hashed_event_id = $this->request->getVar('event_id');
 
         $encoded_member_id = hash_id($this->request->getVar('member_id'), 'encode');
         $encoded_payment_id = hash_id($this->request->getVar('payment_id'), 'encode');
-
-        // $validation = \Config\Services::validation();
-        // $validation->setRules([
-        //     'name' => 'required|min_length[10]|max_length[255]',
-        //     'email'    => 'required|valid_email|max_length[255]',
-        //     'code' => 'required|min_length[3]',
-        // ]);
-
-        // if (!$this->validate($validation->getRules())) {
-        //     return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-        // }
 
         $update_data = [
             'member_id' => $encoded_member_id,

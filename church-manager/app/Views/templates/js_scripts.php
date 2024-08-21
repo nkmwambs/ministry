@@ -123,8 +123,8 @@
         format: 'yyyy-mm-dd'
     });
 
-    $(document).on('click', "#modal_save", function(){
-        const modal_content= $(this).closest('.modal-content');
+    $(document).on('click', "#modal_save", function() {
+        const modal_content = $(this).closest('.modal-content');
         const frm_id = modal_content.find('form').attr('id');
         const frm = $('#' + frm_id)
         const data = frm.serializeArray()
