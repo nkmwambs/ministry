@@ -3,7 +3,10 @@
         <div class="panel panel-primary" data-collapsed="0">
             <div class="panel-heading">
                 <div class="panel-title">
-                    <div class="page-title"><i class='fa fa-pencil'></i> Edit Assembly</div>
+                    <div class="page-title">
+                        <i class='fa fa-pencil'></i>
+                        <?= lang('assembly.edit_assembly') ?>
+                    </div>
                 </div>
 
             </div>
@@ -28,7 +31,9 @@
                     <?php endif ?>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="assembly_name">Name</label>
+                        <label class="control-label col-xs-4" for="assembly_name">
+                            <?= lang('assembly.assembly_name') ?>
+                        </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="name" value="<?=$result['name'];?>" id="name"
                                 placeholder="Edit Name">
@@ -36,7 +41,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="planted_at"> Planted At</label>
+                        <label class="control-label col-xs-4" for="planted_at">
+                            <?= lang('assembly.assembly_planted_at') ?>
+                        </label>
                         <div class="col-xs-6">
                             <input type="text" onkeydown="return false;" class="form-control datepicker"
                                 name="planted_at" id="planted_at" value="<?=$result['planted_at'];?>"
@@ -45,7 +52,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="location">Location</label>
+                        <label class="control-label col-xs-4" for="location">
+                            <?= lang('assembly.assembly_location') ?>
+                        </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="location" id="location"
                                 value="<?=$result['location'];?>" placeholder="Enter Location">
@@ -55,7 +64,9 @@
 
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="entity_id">Entity ID </label>
+                        <label class="control-label col-xs-4" for="entity_id">
+                            <?= lang('assembly.assembly_entity_id') ?>
+                        </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="entity_id" value="<?=$result['entity_id'];?>"
                                 id="entity_id" placeholder="Enter entity_id ">
@@ -63,7 +74,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="assembly_leader">Assembly Leader</label>
+                        <label class="control-label col-xs-4" for="assembly_leader">
+                            <?= lang('assembly.assembly_leader') ?>
+                        </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="assembly_leader" value="<?=$result['assembly_leader'];?>" id="assembly_leader"
                                 placeholder="Edit Assembly Leader">
@@ -71,7 +84,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="email">Is Active</label>
+                        <label class="control-label col-xs-4" for="is_active">
+                            <?= lang('assembly.assembly_is_active') ?>
+                        </label>
                         <div class="col-xs-6">
                             <input type="email" class="form-control" name="is_active" id="is_active"
                                 value="<?=$result['is_active'];?>" placeholder="Is Active?">

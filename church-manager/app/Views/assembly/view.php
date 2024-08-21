@@ -30,7 +30,7 @@ $member_sections = array_pop($result);
 							
 							<ul class="nav nav-tabs" id ="myTabs">
 								<li class="active"><a href="#view_assembly" id="view_assembly_tab" data-toggle="tab"><?= lang('assembly.view_assembly'); ?></a></li>
-								<li><a href="#list_hierarchies" data-item_id = "<?=$id;?>" data-link_id="list_hierarchies" data-feature_plural="members" onclick="childrenAjaxLists(this)" id="list_members_tab" data-toggle="tab"><?= lang('member.list_members'); ?></a></li>
+								<li><a href="#list_members" data-item_id = "<?=$id;?>" data-link_id="list_members" data-feature_plural="members" onclick="childrenAjaxLists(this)" id="list_members_tab" data-toggle="tab"><?= lang('member.list_members'); ?></a></li>
                                 <?php foreach($member_sections as $member){?>
                                     <li><a href="#list_<?=plural(underscore($member['name']));?>" data-link_id="list_<?=plural(underscore($member['name']));?>" data-item_id = "<?=hash_id($member['id'],'encode');?>" data-feature_plural="entities" onclick="childrenAjaxLists(this)" id="list_<?=plural(underscore($member['name']));?>_tab" data-toggle="tab"><?=plural(ucfirst($member['name'])); ?></a></li>
                                 <?php }?>
@@ -61,7 +61,7 @@ $member_sections = array_pop($result);
                     </div>
 
                     <div class="tab-pane" id="list_members">
-                        <div class = 'info'>There are no hierarchies available</div>
+                        <div class = 'info'>There are no members available</div>
                     </div>
 
                     <?php foreach($member_sections as $member){?>

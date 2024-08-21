@@ -19,13 +19,13 @@
         <table class="table table-striped datatable">
             <thead>
                 <tr>
-                    <th>Action</th>
-                    <th>Name</th>
-                    <th>Planted At</th>
-                    <th>Location </th>
-                    <th>Entity ID</th>
-                    <th>Assembly Leader</th>
-                    <th>Is active</th>
+                    <th><?= lang('assembly.assembly_action') ?></th>
+                    <th><?= lang('assembly.assembly_name') ?></th>
+                    <th><?= lang('assembly.assembly_planted_at') ?></th>
+                    <th><?= lang('assembly.assembly_location') ?> </th>
+                    <th><?= lang('assembly.assembly_entity_id') ?></th>
+                    <th><?= lang('assembly.assembly_leader') ?></th>
+                    <th><?= lang('assembly.assembly_is_active') ?></th>
                 </tr>
             </thead>
             <tbody>

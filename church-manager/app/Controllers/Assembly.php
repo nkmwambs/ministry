@@ -19,7 +19,7 @@ class Assembly extends BaseController
         }
 
         $hierarchyModel = new \App\Models\HierarchiesModel();
-        $data['other_details'] = $hierarchyModel->where('assembly_id', hash_id($id,'decode'))->where('level <>', 1)->findAll();
+        $data['other_details'] = $hierarchyModel->where('id', hash_id($id,'decode'))->where('level <>', 1)->findAll();
 
         $page_data = parent::page_data($data, $id);
     
