@@ -24,10 +24,10 @@
       <table class="table table-striped datatable">
         <thead>
           <tr>
-            <th>Action</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Level</th>
+            <th><?= lang('hierarchy.hierarchy_action') ?></th>
+            <th><?= lang('hierarchy.hierarchy_name') ?></th>
+            <th><?= lang('hierarchy.hierarchy_description') ?></th>
+            <th><?= lang('hierarchy.hierarchy_level') ?></th>
           </tr>
         </thead>
         <tbody>

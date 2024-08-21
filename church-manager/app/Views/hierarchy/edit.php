@@ -3,7 +3,10 @@
         <div class="panel panel-primary" data-collapsed="0">
             <div class="panel-heading">
                 <div class="panel-title">
-                    <div class="page-title"><i class='fa fa-pencil'></i> Edit Hierarchy</div>
+                    <div class="page-title">
+                        <i class='fa fa-pencil'></i>
+                        <?= lang('hierarchy.edit_hierarchy') ?>
+                    </div>
                 </div>
 
             </div>
@@ -28,7 +31,9 @@
                     <?php endif ?>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="denomination_name">Name</label>
+                        <label class="control-label col-xs-4" for="denomination_name">
+                            <?= lang('hierarchy.hierarchy_name') ?>
+                        </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="name" value="<?=$result['name'];?>" id="name"
                                 placeholder="Enter Name">
@@ -36,7 +41,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="description">Description</label>
+                        <label class="control-label col-xs-4" for="description">
+                            <?= lang('hierarchy.hierarchy_description') ?>
+                        </label>
                         <div class="col-xs-6">
                             <textarea class="form-control" name="description" id="description" placeholder="Enter Description"><?=$result['description'];?></textarea>
                         </div>

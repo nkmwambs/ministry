@@ -5,7 +5,10 @@
 
       <div class="panel-heading">
         <div class="panel-title">
-          <div class="page-title"><i class='fa fa-plus-circle'></i> Add Hierarchy</div>
+          <div class="page-title">
+            <i class='fa fa-plus-circle'></i>
+            <?= lang('hierarchy.add_hierarchy') ?>
+          </div>
         </div>
 
       </div>
@@ -27,7 +30,9 @@
           <?php endif ?>
         
           <div class="form-group">
-            <label class="control-label col-xs-4" for="denomination_name">Name</label>
+            <label class="control-label col-xs-4" for="denomination_name">
+              <?= lang('hierarchy.hierarchy_name') ?>
+            </label>
             <div class="col-xs-6">
               <input type="text" class="form-control" name="name" id="name"
                 placeholder="Enter Name">
@@ -43,10 +48,12 @@
             }else{
           ?>
             <div class="form-group">
-              <label class="control-label col-xs-4" for="denomination_id">Denomination Name</label>
+              <label class="control-label col-xs-4" for="denomination_id">
+                <?= lang('hierarchy.hierarchy_denomination_id') ?>
+              </label>
               <div class="col-xs-6">
                 <select class="form-control" name="denomination_id" id="denomination_id">
-                  <option value="">Select Denomination</option>
+                  <option value=""><?= lang('hierarchy.select_denomination') ?></option>
                   
                 </select>
               </div>
@@ -57,7 +64,9 @@
           
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="description">Description</label>
+            <label class="control-label col-xs-4" for="description">
+              <?= lang('hierarchy.hierarchy_description') ?>
+            </label>
             <div class="col-xs-6">
               <textarea class="form-control" name="description" id="description" placeholder="Enter description"></textarea>
             </div>
