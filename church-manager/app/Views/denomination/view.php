@@ -3,7 +3,9 @@ $hierarchy_sections = array_pop($result);
 ?>
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("denominations"); ?>" class="btn btn-info">Back</a>
+        <a href="<?= site_url("denominations"); ?>" class="btn btn-info">
+            <?= lang('denomination.back_button') ?>
+        </a>
     </div>
 </div>
 
@@ -11,7 +13,7 @@ $hierarchy_sections = array_pop($result);
     <?php if(session()->getFlashdata('message') ){?>
         <div class = "col-xs-12 info">
             <p><?= session()->getFlashdata('message');?></p>
-            <a href="<?= site_url(plural($feature).'/edit/' . $id) ?>">Edit Again</a>
+            <a href="<?= site_url(plural($feature).'/edit/' . $id) ?>"><?= lang('denomination.edit_again_buttton') ?></a>
         </div>
     <?php }?>
 </div>

@@ -5,7 +5,10 @@
 
       <div class="panel-heading">
         <div class="panel-title">
-          <div class="page-title"><i class='fa fa-plus-circle'></i> Add Denomination</div>
+          <div class="page-title">
+            <i class='fa fa-plus-circle'></i>
+            <?= lang('denomination.add_denomination') ?>
+          </div>
         </div>
 
       </div>
@@ -22,7 +25,9 @@
           
         
           <div class="form-group">
-            <label class="control-label col-xs-4" for="name">Name</label>
+            <label class="control-label col-xs-4" for="name">
+              <?= lang('denomination.denomination_name') ?>
+            </label>
             <div class="col-xs-6">
               <input type="text" class="form-control" name="name" id="name"
                 placeholder="Enter Name">
@@ -30,14 +35,18 @@
           </div>
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="code">Code</label>
+            <label class="control-label col-xs-4" for="code">
+              <?= lang('denomination.denomination_code') ?>
+            </label>
             <div class="col-xs-6">
               <input type="text" class="form-control" name="code" id="code" placeholder="Enter Code">
             </div>
           </div>
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="registration_date">Registration Date</label>
+            <label class="control-label col-xs-4" for="registration_date">
+              <?= lang('denomination.denomination_registration_date') ?>
+            </label>
             <div class="col-xs-6">
             <!-- onkeydown="return false;" -->
               <input type="text"  class="form-control datepicker" name="registration_date"
@@ -46,7 +55,9 @@
           </div>
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="head_office">Head Office</label>
+            <label class="control-label col-xs-4" for="head_office">
+              <?= lang('denomination.denomination_head_office') ?>
+            </label>
             <div class="col-xs-6">
               <input type="text" class="form-control" name="head_office" id="head_office"
                 placeholder="Enter Head Office">
@@ -54,14 +65,18 @@
           </div>
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="email">Email</label>
+            <label class="control-label col-xs-4" for="email">
+              <?= lang('denomination.denomination_email') ?>
+            </label>
             <div class="col-xs-6">
               <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
             </div>
           </div>
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="phone">Phone</label>
+            <label class="control-label col-xs-4" for="phone">
+              <?= lang('denomination.denomination_phone') ?>
+            </label>
             <div class="col-xs-6">
               <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Phone">
             </div>

@@ -20,13 +20,13 @@
       <table class="table table-striped datatable">
         <thead>
           <tr>
-            <th>Action</th>
-            <th>Name</th>
-            <th>Code</th>
-            <th>Registration Date</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Head Office</th>
+            <th><?= lang('denomination.denomination_action') ?></th>
+            <th><?= lang('denomination.denomination_name') ?></th>
+            <th><?= lang('denomination.denomination_code') ?></th>
+            <th><?= lang('denomination.denomination_registration_date') ?></th>
+            <th><?= lang('denomination.denomination_email') ?></th>
+            <th><?= lang('denomination.denomination_phone') ?></th>
+            <th><?= lang('denomination.denomination_head_office') ?></th>
           </tr>
         </thead>
         <tbody>
