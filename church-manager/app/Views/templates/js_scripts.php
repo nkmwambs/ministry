@@ -170,7 +170,7 @@
                 if($('.ajax_main').length > 0){
                     $('.ajax_main').html(response);
                 }else{
-                    alert('Hello')
+                    // alert('Hello')
                     $('.main').html(response);
                 }
                 
