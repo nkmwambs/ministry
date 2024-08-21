@@ -1,3 +1,6 @@
+<?php 
+$eventSections = array_pop($result);
+?>
 <div class="row">
     <div class="col-xs-12 btn-container">
         <a href="<?= site_url("events"); ?>" class="btn btn-info">
