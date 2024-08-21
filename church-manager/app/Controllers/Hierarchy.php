@@ -93,11 +93,11 @@ class Hierarchy extends BaseController
             $records = $this->model->orderBy("created_at desc")->where('denomination_id', $denomination_id)->findAll();
             $page_data = parent::page_data($records);
             $page_data['id'] = hash_id($denomination_id,'encode');
-            log_message('error', json_encode($page_data));
+            // log_message('error', json_encode($page_data));
             return view("hierarchy/list", $page_data);
         }
 
-        return redirect()->to(site_url("denominations/view/".hash_id($insertId)));
+        return redirect()->to(site_url("hierarchies/view/".hash_id($insertId)));
     }
 
     public function update(){
@@ -128,14 +128,14 @@ class Hierarchy extends BaseController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('hierarchies.id,hierarchies.name,description,level')
-            ->orderBy("hierarchies.created_at desc")
+            ->select('name,description')
+            ->orderBy("created_at desc")
             ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))
             ->findAll();
             return view("hierarchy/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url("hierarchy/view/".$hashed_id))->with('message', 'Hierarchy updated successfully!');
+        return redirect()->to(site_url("hierarchies/view/".$hashed_id))->with('message', 'Hierarchy updated successfully!');
     }
 
     private function computeNextHierarchicalLevel($denomination_id){

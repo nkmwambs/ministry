@@ -17,6 +17,12 @@
 
         <form role="form" id = "frm_add_hierarchy" method="post" action="<?=site_url("hierarchies/save")?>" class="form-horizontal form-groups-bordered">
           
+          <div class="form-group hidden error_container">
+              <div class="col-xs-12 error">
+              
+              </div>
+          </div>
+          
           <?php if (session()->get('errors')): ?>
               <div class="form-group">
                   <div class="col-xs-12 error">
