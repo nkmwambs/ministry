@@ -59,6 +59,22 @@ class Participant extends BaseController
         return view('index', $page_data);
     }
 
+    public function view($id): string {
+        $data = $this->model->getOne(hash_id($id,'decode'));
+        if(array_key_exists('id',$data)){
+            unset($data['id']);
+        }
+
+        $participantModel = new \App\Models\ParticipantsModel();
+        $data['other_details'] = $participantModel->select('member_id,event_id,payment_id,payment_code,registration_amount,status')
+        ->where('event_id', hash_id($id,'decode'))
+        ->findAll();
+
+        $page_data = parent::page_data($data, $id);
+    
+        return view('index', $page_data);
+    }
+
     function post(){
         $insertId = 0;
 

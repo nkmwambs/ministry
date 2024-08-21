@@ -3,11 +3,11 @@
         <div class='btn btn-primary' onclick="showAjaxModal('participants','add', '<?= $id; ?>')">
             <?= lang('participant.add_participant'); ?>
         </div>
-        <?php if (!empty($result)) { ?>
-            <!-- <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?= $id; ?>')">
-              <?= lang('entity.add_entity'); ?>
+        <!-- <?php if (!empty($result)) { ?> -->
+        <!-- <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?= $id; ?>')">
+            <?= lang('entity.add_participant'); ?>
         </div> -->
-        <?php } ?>
+        <!-- <?php } ?> -->
     </div>
 </div>
 
@@ -17,7 +17,7 @@
             <thead>
                 <tr>
                     <th><?= lang('participant.participant_action') ?></th>
-                    <th><?= lang('participant_participant_member_id') ?></th>
+                    <th><?= lang('participant.participant_member_id') ?></th>
                     <th><?= lang('participant.participant_pevent_id') ?></th>
                     <th><?= lang('participant.participant_payment_id') ?></th>
                     <th><?= lang('participant.participant_payment_code') ?></th>

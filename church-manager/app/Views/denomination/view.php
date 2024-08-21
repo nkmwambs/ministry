@@ -31,8 +31,8 @@ $hierarchy_sections = array_pop($result);
 							<ul class="nav nav-tabs" id ="myTabs">
 								<li class="active"><a href="#view_denomination" id="view_denomination_tab" data-toggle="tab"><?= lang('denomination.view_denomination'); ?></a></li>
 								<li><a href="#list_hierarchies" data-item_id = "<?=$id;?>" data-link_id="list_hierarchies" data-feature_plural="hierarchies" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li>
-                                <?php foreach($hierarchy_sections as $participant){?>
-                                    <li><a href="#list_<?=plural(underscore($participant['name']));?>" data-link_id="list_<?=plural(underscore($participant['name']));?>" data-item_id = "<?=hash_id($participant['id'],'encode');?>" data-feature_plural="entities" onclick="childrenAjaxLists(this)" id="list_<?=plural(underscore($participant['name']));?>_tab" data-toggle="tab"><?=plural(ucfirst($participant['name'])); ?></a></li>
+                                <?php foreach($hierarchy_sections as $hierarchy){?>
+                                    <li><a href="#list_<?=plural(underscore($hierarchy['name']));?>" data-link_id="list_<?=plural(underscore($hierarchy['name']));?>" data-item_id = "<?=hash_id($hierarchy['id'],'encode');?>" data-feature_plural="entities" onclick="childrenAjaxLists(this)" id="list_<?=plural(underscore($hierarchy['name']));?>_tab" data-toggle="tab"><?=plural(ucfirst($hierarchy['name'])); ?></a></li>
                                 <?php }?>
                             </ul>
 					</div>
@@ -64,9 +64,9 @@ $hierarchy_sections = array_pop($result);
                         <div class = 'info'>There are no hierarchies available</div>
                     </div>
 
-                    <?php foreach($hierarchy_sections as $participant){?>
-                        <div class="tab-pane" id="list_<?=plural(underscore($participant['name']));?>">
-                            <div class = 'info'>There are no <?=plural($participant['name']);?> available</div>
+                    <?php foreach($hierarchy_sections as $hierarchy){?>
+                        <div class="tab-pane" id="list_<?=plural(underscore($hierarchy['name']));?>">
+                            <div class = 'info'>There are no <?=plural($hierarchy['name']);?> available</div>
                         </div>
                     <?php }?>
 

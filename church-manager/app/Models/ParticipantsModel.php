@@ -18,7 +18,7 @@ class ParticipantsModel extends Model
     protected bool $updateOnlyChanged = true;
 
     protected array $casts = [];
-    protected array $castHandlers = [];
+    protected array $castHandlers = ['id','member_id','event_id','payment_id','payment_code','registration_amount','status'];
 
     // Dates
     protected $useTimestamps = false;

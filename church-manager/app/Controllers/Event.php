@@ -17,19 +17,19 @@ class Event extends BaseController
         $this->model = new \App\Models\EventsModel();
     }
 
-    public function view($id): string {
-        $data = $this->model->getOne(hash_id($id,'decode'));
-        if(array_key_exists('id',$data)){
-            unset($data['id']);
-        }
+    // public function view($id): string {
+    //     $data = $this->model->getOne(hash_id($id,'decode'));
+    //     if(array_key_exists('id',$data)){
+    //         unset($data['id']);
+    //     }
 
-        $participantModel = new \App\Models\ParticipantsModel();
-        $data['other_details'] = $participantModel->where('event_id', hash_id($id,'decode'))->findAll();
+    //     $participantModel = new \App\Models\ParticipantsModel();
+    //     $data['other_details'] = $participantModel->where('event_id', hash_id($id,'decode'))->findAll();
 
-        $page_data = parent::page_data($data, $id);
+    //     $page_data = parent::page_data($data, $id);
     
-        return view('index', $page_data);
-    }
+    //     return view('index', $page_data);
+    // }
 
     public function update(){
 

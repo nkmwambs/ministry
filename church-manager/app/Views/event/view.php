@@ -30,8 +30,9 @@
                     <div class="panel-options">
 
                         <ul class="nav nav-tabs" id="myTabs">
-                            <li class="active"><a href="#view_event" id="view_event_tab" data-toggle="tab"><?= lang('minister.view_minister'); ?></a></li>
-                            <li><a href="#list_participants" data-item_id="<?= $id; ?>" data-feature_plural="participants" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li>
+                            <li class="active"><a href="#view_event" id="view_event_tab" data-toggle="tab"><?= lang('event.view_event'); ?></a></li>
+                            <li><a href="<?=site_url("participants")?>" data-item_id="<?= $id; ?>" data-feature_plural="participants" onclick="childrenAjaxLists(this)" id="list_participants_tab" data-toggle="tab"><?= lang('participant.list_participants'); ?></a></li>
+                            <li><a href="<?=site_url("visitors")?>" data-item_id="<?= $id; ?>" data-feature_plural="visitors" onclick="childrenAjaxLists(this)" id="list_visitors_tab" data-toggle="tab">List Visitors</a></li>
                         </ul>
                     </div>
                 </div>
@@ -41,34 +42,14 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="view_event">
                         <form class="form-horizontal form-groups-bordered" role="form">
-                            <!-- <?php foreach ($result as $field_name => $field_value) { ?>
+                            <?php foreach ($result as $field_name => $field_value) { ?>
                                 <div class="form-group">
                                     <label for="" class="control-label col-xs-4"><?= humanize($field_name); ?></label>
                                     <div class="col-xs-6">
                                         <div class="form_view_field"><?= $field_value; ?></div>
                                     </div>
                                 </div>
-                            <?php } ?> -->
-
-                            <?php foreach ($result as $field_name => $field_value) { ?>
-                                <div class="form-group">
-                                    <label for="" class="control-label col-xs-4"><?= humanize($field_name); ?></label>
-                                    <div class="col-xs-6">
-                                        <div class="form_view_field">
-                                            <?php 
-                                            if (is_array($field_value)) {
-                                                // You can format the array as a string, e.g., join elements with a comma
-                                                echo implode(', ', $field_value); 
-                                                // Alternatively, if you need a more complex representation, handle it here
-                                            } else {
-                                                echo $field_value;
-                                            }
-                                            ?>
-                                        </div>
-                                    </div>
-                                </div>
                             <?php } ?>
-
 
                             <div class="form-group">
                                 <div class="col-xs-offset-4 col-xs-6">
