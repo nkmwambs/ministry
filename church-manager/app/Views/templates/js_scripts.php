@@ -138,12 +138,8 @@
                 $("#overlay").css("display", "block");
             },
             success: function(response){
-                // console.log(response);
-                // $("#modal_ajax").modal("hide");
-                // const response=jQuery.parseJSON(response);
                 if(typeof response =='object')
                 {
-                    // It is JSON
 
                     if (response.hasOwnProperty('errors')) {
                         const error_container = $('.error_container')
@@ -170,8 +166,14 @@
                 if($('.ajax_main').length > 0){
                     $('.ajax_main').html(response);
                 }else{
-                    alert('Hello')
+                    
                     $('.main').html(response);
+
+                    const list_alert_container = $('.list-alert-container');
+                    if(list_alert_container.hasClass('hidden')){
+                        list_alert_container.removeClass('hidden');
+                        list_alert_container.find('.info').html('Record created successfully')
+                    }
                 }
                 
                 $(".datatable").DataTable({
