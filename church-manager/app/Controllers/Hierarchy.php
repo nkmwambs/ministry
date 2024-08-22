@@ -78,7 +78,7 @@ class Hierarchy extends BaseController
         $data = [
             'name' => $this->request->getPost('name'),
             'level' => $this->computeNextHierarchicalLevel($denomination_id),
-            'denomination_id' => $denomination_id[0],
+            'denomination_id' => $denomination_id,
             'description' => $this->request->getPost('description'),
         ];
 

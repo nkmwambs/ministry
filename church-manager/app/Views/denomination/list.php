@@ -15,6 +15,12 @@
     </div>
   </div>
 
+  <div class = 'row list-alert-container hidden'>
+    <div class = 'col-xs-12 info'>
+
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-xs-12">
       <table class="table table-striped datatable">

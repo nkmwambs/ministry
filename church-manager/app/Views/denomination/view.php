@@ -79,3 +79,12 @@ $hierarchy_sections = array_pop($result);
     </div>
 </div>
 
+<script>
+    $(document).ajaxSuccess(function(ev) {
+        const myTabs = $('#myTabs')
+        myTabs.append('<li><a href="#list_items" id="list_items_tab" data-toggle="tab">Items</a></li>')
+
+        const tab_content = $(".tab-content")
+        tab_content.append('<div id = "list_items" class = "tab-pane"><div class = "info">There are not items available</div></div>')
+     });
+</script>
