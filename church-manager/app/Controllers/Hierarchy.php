@@ -93,7 +93,7 @@ class Hierarchy extends BaseController
             $records = $this->model->orderBy("created_at desc")->where('denomination_id', $denomination_id)->findAll();
             $page_data = parent::page_data($records);
             $page_data['id'] = hash_id($denomination_id,'encode');
-            log_message('error', json_encode($page_data));
+            // log_message('error', json_encode($page_data));
             return view("hierarchy/list", $page_data);
         }
 
