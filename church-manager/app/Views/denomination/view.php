@@ -34,7 +34,7 @@ $hierarchy_sections = array_pop($result);
 								<li class="active"><a href="#view_denomination" id="view_denomination_tab" data-toggle="tab"><?= lang('denomination.view_denomination'); ?></a></li>
 								<li><a href="#list_hierarchies" data-item_id = "<?=$id;?>" data-link_id="list_hierarchies" data-feature_plural="hierarchies" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li>
                                 <?php foreach($hierarchy_sections as $hierarchy){?>
-                                    <li><a href="#list_<?=plural(underscore($hierarchy['name']));?>" data-link_id="list_<?=plural(underscore($hierarchy['name']));?>" data-item_id = "<?=hash_id($hierarchy['id'],'encode');?>" data-feature_plural="entities" onclick="childrenAjaxLists(this)" id="list_<?=plural(underscore($hierarchy['name']));?>_tab" data-toggle="tab"><?=plural(ucfirst($hierarchy['name'])); ?></a></li>
+                                    <!-- <li><a href="#list_<?=plural(underscore($hierarchy['name']));?>" data-link_id="list_<?=plural(underscore($hierarchy['name']));?>" data-item_id = "<?=hash_id($hierarchy['id'],'encode');?>" data-feature_plural="entities" onclick="childrenAjaxLists(this)" id="list_<?=plural(underscore($hierarchy['name']));?>_tab" data-toggle="tab"><?=plural(ucfirst($hierarchy['name'])); ?></a></li> -->
                                 <?php }?>
                             </ul>
 					</div>
@@ -67,9 +67,9 @@ $hierarchy_sections = array_pop($result);
                     </div>
 
                     <?php foreach($hierarchy_sections as $hierarchy){?>
-                        <div class="tab-pane" id="list_<?=plural(underscore($hierarchy['name']));?>">
+                        <!-- <div class="tab-pane" id="list_<?=plural(underscore($hierarchy['name']));?>">
                             <div class = 'info'>There are no <?=plural($hierarchy['name']);?> available</div>
-                        </div>
+                        </div> -->
                     <?php }?>
 
                 </div>
@@ -81,10 +81,31 @@ $hierarchy_sections = array_pop($result);
 
 <script>
     $(document).ajaxSuccess(function(ev) {
-        const myTabs = $('#myTabs')
-        myTabs.append('<li><a href="#list_items" id="list_items_tab" data-toggle="tab">Items</a></li>')
-
-        const tab_content = $(".tab-content")
-        tab_content.append('<div id = "list_items" class = "tab-pane"><div class = "info">There are not items available</div></div>')
+        createEntityTabs()
      });
+
+     $(document).ready(function() {
+        createEntityTabs()
+     });
+
+
+     function createEntityTabs(){
+        const myTabs = $('#myTabs')
+        const tab_content = $(".tab-content")
+
+        const url = "<?=site_url();?>hierarchies/denomination/<?=$id;?>"
+
+        fetch(url)
+        .then(response => response.json())
+        .then(hierarchies => {
+            $.each(hierarchies, function (index, elem) {
+                const plural_name = pluralize(elem.name).replace(/\s/g, '')
+                if($('.li_'+plural_name).length == 0){
+                    myTabs.append('<li data-item_id = "'+elem.id+'" data-link_id="list_'+ plural_name +'" data-feature_plural="entities" onclick="childrenAjaxLists(this)" class = "li_'+plural_name+'"><a href="#list_'+plural_name+'" id="list_'+plural_name+'_tab" data-toggle="tab">' + pluralize(elem.name) + '</a></li>')
+                    tab_content.append('<div id = "list_'+plural_name+'" class = "tab-pane"><div class = "info">There are not ' + pluralize(elem.name) + ' available</div></div>')
+                }
+            })
+
+        })
+     }
 </script>

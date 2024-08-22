@@ -94,6 +94,7 @@ class Hierarchy extends BaseController
             $page_data = parent::page_data($records);
             $page_data['id'] = hash_id($denomination_id,'encode');
             // log_message('error', json_encode($page_data));
+            // hashed_denomination_id
             return view("hierarchy/list", $page_data);
         }
 
@@ -142,5 +143,19 @@ class Hierarchy extends BaseController
         $maxLevelObj = $this->model->selectMax('level')->where('denomination_id', $denomination_id)->first();
         $nextMaxLevel = $maxLevelObj['level'] + 1;
         return $nextMaxLevel;
+    }
+
+    public function getHierarchiesByDenominationId($hashed_denomination_id){
+        // $hashed_denomination_id = $this->request->getVar('denomination_id');
+        $denomination_id = hash_id($hashed_denomination_id,'decode');
+
+        $hierarchies = $this->model->select('id,name')->where(['denomination_id' => $denomination_id, 'level <> ' => 1])->findAll();
+        $hierarchies = array_map(function($elem){
+            $elem['id'] = hash_id($elem['id'],"encode");
+            $elem['name'] = plural($elem['name']);
+             return $elem;
+        }, $hierarchies );
+
+        return response()->setJSON($hierarchies);
     }
 }
