@@ -16,17 +16,11 @@
 
         <form role="form" id = "frm_add_entity" method="post" action="<?=site_url("entities/save")?>" class="form-horizontal form-groups-bordered">
           
-          <?php if (session()->get('errors')): ?>
-              <div class="form-group">
-                  <div class="col-xs-12 error">
-                    <ul>
-                        <?php foreach (session()->get('errors') as $error): ?>
-                          <li><?= esc($error) ?></li>
-                        <?php endforeach ?>
-                    </ul>
-                  </div>
+          <div class="form-group hidden error_container">
+              <div class="col-xs-12 error">
+                    
               </div>
-          <?php endif ?>
+          </div>
 
           <input type="hidden" name="hierarchy_id" value="<?=$id;?>" />
         
@@ -42,7 +36,7 @@
             </div>
           </div>
 
-          <div class="form-group hidden">
+          <div class="form-group content hidden">
             <label class="control-label col-xs-4" for="name">Name</label>
             <div class="col-xs-6">
               <input type="text" class="form-control" name="name" id="name"
@@ -50,14 +44,14 @@
             </div>
           </div>
               
-            <div class="form-group hidden">
+            <div class="form-group content hidden">
               <label class="control-label col-xs-4" for="entity_number">Entity Number</label>
               <div class="col-xs-6">
                 <input type="text" class="form-control" name="entity_number" id="entity_number" required/>
               </div>
             </div>
 
-          <div class="form-group hidden">
+          <div class="form-group content hidden">
             <label class="control-label col-xs-4" for="entity_leader">Entity Leader</label>
             <div class="col-xs-6">
               <select class="form-control" name="entity_leader" id="entity_leader">
@@ -79,7 +73,7 @@
 <script>
 $("#parent_id").on("change", function(){
     const parent_id = $(this).val();
-    const form_groups = $('.form-group');
+    const form_groups = $('.content');
    
     if(parent_id > 0){
       form_groups.filter('.hidden').removeClass('hidden');
