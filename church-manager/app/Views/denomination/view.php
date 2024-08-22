@@ -31,11 +31,9 @@ $hierarchy_sections = array_pop($result);
                     <div class="panel-options">
 							
 							<ul class="nav nav-tabs" id ="myTabs">
-								<li class="active"><a href="#view_denomination" id="view_denomination_tab" data-toggle="tab"><?= lang('denomination.view_denomination'); ?></a></li>
+								<li class = "active"><a href="#view_denomination" id="view_denomination_tab" data-toggle="tab"><?= lang('denomination.view_denomination'); ?></a></li>
 								<li><a href="#list_hierarchies" data-item_id = "<?=$id;?>" data-link_id="list_hierarchies" data-feature_plural="hierarchies" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li>
-                                <?php foreach($hierarchy_sections as $hierarchy){?>
-                                    <!-- <li><a href="#list_<?=plural(underscore($hierarchy['name']));?>" data-link_id="list_<?=plural(underscore($hierarchy['name']));?>" data-item_id = "<?=hash_id($hierarchy['id'],'encode');?>" data-feature_plural="entities" onclick="childrenAjaxLists(this)" id="list_<?=plural(underscore($hierarchy['name']));?>_tab" data-toggle="tab"><?=plural(ucfirst($hierarchy['name'])); ?></a></li> -->
-                                <?php }?>
+                                
                             </ul>
 					</div>
                 </div>
@@ -62,15 +60,9 @@ $hierarchy_sections = array_pop($result);
                         </form>
                     </div>
 
-                    <div class="tab-pane ajax_main" id="list_hierarchies">
+                    <div class="tab-pane" id="list_hierarchies">
                         <div class = 'info'>There are no hierarchies available</div>
                     </div>
-
-                    <?php foreach($hierarchy_sections as $hierarchy){?>
-                        <!-- <div class="tab-pane" id="list_<?=plural(underscore($hierarchy['name']));?>">
-                            <div class = 'info'>There are no <?=plural($hierarchy['name']);?> available</div>
-                        </div> -->
-                    <?php }?>
 
                 </div>
             </div>
@@ -87,7 +79,6 @@ $hierarchy_sections = array_pop($result);
      $(document).ready(function() {
         createEntityTabs()
      });
-
 
      function createEntityTabs(){
         const myTabs = $('#myTabs')
@@ -108,4 +99,18 @@ $hierarchy_sections = array_pop($result);
 
         })
      }
+
+     $("#myTabs").on('click', function(ev){
+        const tabs = $(this)
+        const target_tab = $(ev.target).attr('href')
+        const tab_content = $('.tab-content')
+
+        const tab_panes = tab_content.find('.tab-pane')
+
+        $.each(tab_panes, function (index, pane){
+            $(pane).removeClass('ajax_main')
+        })
+    
+        $(target_tab).addClass('ajax_main')
+     })
 </script>

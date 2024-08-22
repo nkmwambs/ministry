@@ -16,7 +16,7 @@
 
   <div class="row">
     <div class="col-xs-12">
-      <table class="table table-striped datatable">
+      <table class="table table-striped datatable<?=$id;?>">
         <thead>
           <tr>
             <th>Action</th>
@@ -44,3 +44,11 @@
       </table>
     </div>
   </div>
+
+  <script>
+    $(document).ready(function() {
+      $('.datatable<?=$id;?>').DataTable({
+        stateSave: true
+      });
+    });
+  </script>

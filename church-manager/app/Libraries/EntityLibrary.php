@@ -18,12 +18,12 @@ class EntityLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['id','name','minister_number','assembly_id','designation_id','phone','is_active'];
+        $fields = ['id','entity_number','hierarchy_id','name','parent_id','entity_leader'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['id','name','minister_number','assembly_id','designation_id','phone','is_active'];
+        $fields = ['id','entity_number','hierarchy_id','name','parent_id','entity_leader'];
         return $fields;
     }
 

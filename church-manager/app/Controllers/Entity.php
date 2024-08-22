@@ -94,7 +94,7 @@ class Entity extends BaseController
         $insertId = $this->model->getInsertID();
 
         if($this->request->isAJAX()){
-            $this->feature = 'hierarchy';
+            $this->feature = 'entity';
             $this->action = 'list';
             $records = $this->model
             ->orderBy("created_at desc")
@@ -103,7 +103,7 @@ class Entity extends BaseController
             $page_data = parent::page_data($records);
             $page_data['id'] = $hashed_hierarchy_id;
             
-            return view("hierarchy/list", $page_data);
+            return view("entity/list", $page_data);
         }
 
         return redirect()->to(site_url("denominations/view/".hash_id($insertId)));
