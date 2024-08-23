@@ -128,7 +128,7 @@
         const frm = $('#' + frm_id)
         const data = frm.serializeArray()
         const url = frm.attr('action')
-        // alert(url)
+        
         $.ajax({
             url,
             type: 'POST',
@@ -137,6 +137,9 @@
                 $("#overlay").css("display", "block");
             },
             success: function(response){
+                
+                // console.log(response);
+
                 if(typeof response =='object')
                 {
 

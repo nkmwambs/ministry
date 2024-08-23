@@ -15,6 +15,12 @@
             
                 <form id = "frm_edit_denomination" method="post" action="<?=site_url('hierarchies/update/');?>" role="form" class="form-horizontal form-groups-bordered">
                     
+                <div class="form-group hidden error_container">
+                    <div class="col-xs-12 error">
+                            
+                    </div>
+                </div>
+                
                     <input type="hidden" name="id" value="<?=hash_id($result['id']);?>" />
                     <input type="hidden" name="denomination_id" value="<?=hash_id($result['denomination_id']);?>" />
 

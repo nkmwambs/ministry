@@ -106,14 +106,15 @@ class Hierarchy extends BaseController
         $hashed_id = $this->request->getVar('id');
         $hashed_denomination_id = $this->request->getVar('denomination_id');
 
+        // log_message('error', json_encode($this->request->getPost()));
+
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'name' => 'required|min_length[10]|max_length[255]',
-            'email'    => 'required|valid_email|max_length[255]',
+            'name' => 'required|max_length[255]',
+            'description'    => 'required|max_length[255]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
@@ -121,6 +122,8 @@ class Hierarchy extends BaseController
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
         ];
+
+        // log_message('error', json_encode($validation->getErrors()));
         
         $this->model->update(hash_id($hashed_id,'decode'), $update_data);
 
@@ -129,11 +132,15 @@ class Hierarchy extends BaseController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('name,description')
+            ->select('id,name,description,level')
             ->orderBy("created_at desc")
             ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))
             ->findAll();
-            return view("hierarchy/list", parent::page_data($records));
+
+            $page_data = parent::page_data($records);
+            $page_data['id'] = $hashed_denomination_id;
+
+            return view("hierarchy/list", $page_data);
         }
         
         return redirect()->to(site_url("hierarchies/view/".$hashed_id))->with('message', 'Hierarchy updated successfully!');
