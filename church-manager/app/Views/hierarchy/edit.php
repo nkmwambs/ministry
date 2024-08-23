@@ -21,9 +21,6 @@
                     </div>
                 </div>
                 
-                    <input type="hidden" name="id" value="<?=hash_id($result['id']);?>" />
-                    <input type="hidden" name="denomination_id" value="<?=hash_id($result['denomination_id']);?>" />
-
                     <?php if (session()->get('errors')): ?>
                         <div class="form-group">
                             <div class="col-xs-12 error">
@@ -35,6 +32,9 @@
                             </div>
                         </div>
                     <?php endif ?>
+
+                    <input type="hidden" name="id" value="<?=hash_id($result['id']);?>" />
+                    <input type="hidden" name="denomination_id" value="<?=hash_id($result['denomination_id']);?>" />
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="denomination_name">

@@ -54,6 +54,8 @@ abstract class BaseController extends Controller
     protected $library = null;
     protected $listQueryFields = [];
 
+    protected $feature_page_data = [];
+
     /**
      * @return void
      */
@@ -115,6 +117,8 @@ abstract class BaseController extends Controller
 
         $page_data['content'] = view($view, $page_data);
 
+        $this->feature_page_data = $page_data;
+
         return $page_data;
     }
 
@@ -158,11 +162,13 @@ abstract class BaseController extends Controller
 
     public function modal($plural_feature, $action, $id = ''){
         $page_data['id'] = $id;
-        // log_message('error',json_encode($this->request->getPost()));
+        
         if($action == 'add'){
-            
-            if(method_exists($this->library, 'getLookUpItems')){
-                $page_data['lookup_items'] = $this->library->getLookUpItems(hash_id($id,'decode'));
+            $featureController = new ("App\\Controllers\\" . ucfirst($this->feature))();
+
+            if(method_exists($featureController, 'add')){
+                $this->feature_page_data['id'] = $id;
+                return $featureController->add();
             }
 
             return view(singular($plural_feature).DS.$action, $page_data);
@@ -172,6 +178,7 @@ abstract class BaseController extends Controller
             return view(singular($plural_feature).DS.$action, $page_data);
         }else{
             $page_data['result'] = $this->model->getOne(hash_id($id,'decode'));
+            
             return view(singular($plural_feature).DS.$action, $page_data);
         }
     }
