@@ -174,10 +174,12 @@
                         list_alert_container.find('.info').html('Record created successfully')
                     }
                 }
-                
-                $(".datatable").DataTable({
-                    stateSave: true
-                });
+
+                if (!DataTable.isDataTable('.datatable')) {
+                    $(".datatable").DataTable({
+                        stateSave: true
+                    });
+                }
 
                 $("#overlay").css("display", "none");
             }
