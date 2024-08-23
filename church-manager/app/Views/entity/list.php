@@ -22,22 +22,24 @@
             <th>Action</th>
             <th>Entity Number</th>
             <th>Name</th>
+            <th>Belongs To</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach($result as $entity){?>
             <tr>
               <td>
-                <span class='action-icons' title="View <?=singular($entity['name']);?> hierarchy"><a href="<?= site_url("entities/view/".hash_id($entity['id'])); ?>"><i
+                <span class='action-icons' title="View <?=singular($entity['entity_name']);?> hierarchy"><a href="<?= site_url("entities/view/".hash_id($entity['id'])); ?>"><i
                       class='fa fa-search'></i></a></i></span>
-                <span class='action-icons' title = "Edit <?=singular($entity['name']);?> hierarchy">
+                <span class='action-icons' title = "Edit <?=singular($entity['entity_name']);?> hierarchy">
                   <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($entity['id']);?>')" class='fa fa-pencil'></i>
                 </span>
-                <span class='action-icons' title = "Delete <?=singular($entity['name']);?> hierarchy"><i class='fa fa-trash'></i></span>
+                <span class='action-icons' title = "Delete <?=singular($entity['entity_name']);?> hierarchy"><i class='fa fa-trash'></i></span>
               </td>
 
               <td><?=$entity['entity_number'];?></td>
-              <td><?=$entity['name'];?></td>
+              <td><?=$entity['entity_name'];?></td>
+              <td><?=$entity['parent_name'];?></td>
 
           <?php } ?>
         </tbody>

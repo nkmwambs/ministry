@@ -23,17 +23,21 @@ class Entity extends BaseController
 
         if($hashed_id != ''){
             $entities = $this->model
-            ->where('hierarchy_id', $hierarchy_id)
-            ->select('id,hierarchy_id,entity_number,name,parent_id,entity_leader')
-            ->orderBy('created_at desc')
+            ->where('entities.hierarchy_id', $hierarchy_id)
+            ->join('entities parent','parent.id=entities.parent_id')
+            ->select('entities.id,entities.hierarchy_id,entities.entity_number,entities.name as entity_name,parent.name as parent_name,entities.entity_leader')
+            ->orderBy('entities.created_at desc')
             ->findAll();
         }else{
             $entities = $this->model
-            ->where('hierarchy_id', $hierarchy_id)
-            ->select('id,hierarchy_id,entity_number,name,parent_id,entity_leader')
-            ->orderBy('created_at desc')
+            ->where('entities.hierarchy_id', $hierarchy_id)
+            ->join('entities parent','parent.id=entities.parent_id')
+            ->select('entities.id,entities.hierarchy_id,entities.entity_number,entities.name as entity_name,parent.name as parent_name,entities.entity_leader')
+            ->orderBy('entities.created_at desc')
             ->findAll();
         }
+
+        // log_message('error', json_encode($entities));
 
         $page_data['result'] = $entities;
         $page_data['feature'] = 'entity';
@@ -67,7 +71,7 @@ class Entity extends BaseController
                 'errors' => [
                     'required' => 'Entity Number is required.',
                     'min_length' => 'Entity Number must be at least {value} characters long.',
-                    'max_length' => 'Entity Number cannot exceed {value} characters.'
+                    'max_length' => 'Entity Number cannot exceed {value} characters.',
                 ]
             ],
             'parent_id' => [
@@ -77,6 +81,13 @@ class Entity extends BaseController
                    'required' => 'Parent Entity is required.'
                 ]
             ],
+            'hierarchy_id' => [
+                'rules' => 'required',
+                'label' => 'Hierarchy Level',
+                'errors' => [
+                   'required' => 'Hierarchy Level is required.'
+                ]
+            ]
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -92,13 +103,18 @@ class Entity extends BaseController
 
         $this->model->insert($data);
         $insertId = $this->model->getInsertID();
+       
 
         if($this->request->isAJAX()){
             $this->feature = 'entity';
             $this->action = 'list';
             $records = $this->model
-            ->orderBy("created_at desc")
-            ->where('hierarchy_id', hash_id($hashed_hierarchy_id,'decode'))->findAll();
+            // ->select('entities.id, entities.name, entities.entity_number, hierarchies.name as hierarchy_name')
+            // ->join('hierarchies','hierarchies.id=entities.hierarchy_id')
+            ->join('entities parent','parent.id=entities.parent_id')
+            ->select('entities.id,entities.hierarchy_id,entities.entity_number,entities.name as entity_name,parent.name as parent_name,entities.entity_leader')
+            ->orderBy("entities.created_at desc")
+            ->where('entities.hierarchy_id', hash_id($hashed_hierarchy_id,'decode'))->findAll();
             
             $page_data = parent::page_data($records);
             $page_data['id'] = $hashed_hierarchy_id;
