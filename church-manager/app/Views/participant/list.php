@@ -3,11 +3,11 @@
         <div class='btn btn-primary' onclick="showAjaxModal('participants','add', '<?= $id; ?>')">
             <?= lang('participant.add_participant'); ?>
         </div>
-        <!-- <?php if (!empty($result)) { ?> -->
+        <?php if (!empty($result)) { ?>
         <!-- <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?= $id; ?>')">
             <?= lang('entity.add_participant'); ?>
         </div> -->
-        <!-- <?php } ?> -->
+        <?php } ?>
     </div>
 </div>
 
@@ -18,7 +18,7 @@
                 <tr>
                     <th><?= lang('participant.participant_action') ?></th>
                     <th><?= lang('participant.participant_member_id') ?></th>
-                    <th><?= lang('participant.participant_pevent_id') ?></th>
+                    <th><?= lang('participant.participant_event_id') ?></th>
                     <th><?= lang('participant.participant_payment_id') ?></th>
                     <th><?= lang('participant.participant_payment_code') ?></th>
                     <th><?= lang('participant.participant_registration_amount') ?></th>
@@ -29,15 +29,13 @@
                 <?php foreach ($result as $participant) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= singular($participant['member_id']); ?> participant"><a href="<?= site_url("participants/view/" . hash_id($participant['id'])); ?>"><i
+                            <span class='action-icons' title="View participant"><a href="<?= site_url("participants/view/" . hash_id($participant['id'])); ?>"><i
                                         class='fa fa-search'></i></a></i></span>
-                            <span class='action-icons' title="Edit <?= singular($participant['member_id']); ?> participant">
+                            <span class='action-icons' title="Edit participant"> 
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($participant['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' title="Delete <?= singular($participant['member_id']); ?> participant"><i class='fa fa-trash'></i></span>
-                            <?php if ($participant['level'] != 1) { ?>
-                                <span onclick="showAjaxListModal('entities','list', '<?= hash_id($participant['id'], 'encode'); ?>')" class='action-icons' title="List <?= plural($participant['name']); ?>"><i class='fa fa-plus'></i></span>
-                            <?php } ?>
+                            <span class='action-icons' title="Delete participant"><i class='fa fa-trash'></i></span>
+                            
                         </td>
 
                         <td><?= $participant['member_id']; ?></td>

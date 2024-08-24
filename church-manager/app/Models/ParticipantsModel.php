@@ -12,13 +12,13 @@ class ParticipantsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['member_id','event_id','payment_id','payment_code','registration_amount','status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 
     protected array $casts = [];
-    protected array $castHandlers = ['id','member_id','event_id','payment_id','payment_code','registration_amount','status'];
+    protected array $castHandlers = [];
 
     // Dates
     protected $useTimestamps = false;

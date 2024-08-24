@@ -1,5 +1,5 @@
 <?php 
-$eventSections = array_pop($result);
+$participant_sections = array_pop($result);
 ?>
 <div class="row">
     <div class="col-xs-12 btn-container">
@@ -34,8 +34,8 @@ $eventSections = array_pop($result);
 
                         <ul class="nav nav-tabs" id="myTabs">
                             <li class="active"><a href="#view_event" id="view_event_tab" data-toggle="tab"><?= lang('event.view_event'); ?></a></li>
-                            <li><a href="list_participants" data-item_id="<?= $id; ?>" data-feature_plural="participants" onclick="childrenAjaxLists(this)" id="list_participants_tab" data-toggle="tab"><?= lang('participant.list_participants'); ?></a></li>
-                            <li><a href="<?=site_url("visitors")?>" data-item_id="<?= $id; ?>" data-feature_plural="visitors" onclick="childrenAjaxLists(this)" id="list_visitors_tab" data-toggle="tab">List Visitors</a></li>
+                            <li><a href="#list_participants" data-item_id="<?= $id; ?>" data-feature_plural="participants" onclick="childrenAjaxLists(this)" id="list_participants_tab" data-toggle="tab"><?= lang('participant.list_participants'); ?></a></li>
+                            <li><a href="#list_visitors" data-item_id="<?= $id; ?>" data-feature_plural="visitors" onclick="childrenAjaxLists(this)" id="list_visitors_tab" data-toggle="tab">List Visitors</a></li>
                         </ul>
                     </div>
                 </div>
@@ -69,7 +69,7 @@ $eventSections = array_pop($result);
                     </div>
 
                     <div class="tab-pane ajax_main" id="list_visitors">
-                        <div class='info'><?= lang('participant.no_participants_message') ?></div>
+                        <div class='info'><?= lang('visitor.no_visitors_message') ?></div>
                     </div>
 
                 </div>

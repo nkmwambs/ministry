@@ -21,13 +21,13 @@ class Participant extends BaseController
         $participants = [];
 
         if($id > 0){
-            $participants = $this->model->select('participants.id,participants.member_id,participants.event_id,participants.payment_id,participants.payment_code, registration_amount, status')
+            $participants = $this->model->select('participants.id,member_id,event_id,payment_id,payment_code,registration_amount,status')
             ->where('event_id',hash_id($id,'decode'))
             ->join('events','events.id=participants.event_id')
             ->orderBy('events.created_at desc')
             ->findAll();
         }else{
-            $participants = $this->model->select('participants.id,participants.member_id,participants.event_id,participants.payment_id,participants.payment_code, registration_amount, status')
+            $participants = $this->model->select('participants.id,member_id,event_id,payment_id,payment_code,registration_amount,status')
             ->join('events','events.id=participants.event_id')
             ->orderBy('events.created_at desc')
             ->findAll();
@@ -40,7 +40,7 @@ class Participant extends BaseController
         }
 
         $page_data['result'] = $participants;
-        $page_data['feature'] = 'event';
+        $page_data['feature'] = 'participant';
         $page_data['action'] = 'list';
         
         if ($this->request->isAJAX()) {
@@ -58,32 +58,13 @@ class Participant extends BaseController
         $page_data['action'] = 'add';
         return view('index', $page_data);
     }
- 
-    public function view($id): string {
-        $data = $this->model->getOne(hash_id($id,'decode'));
-        if(array_key_exists('id',$data)){
-            unset($data['id']);
-        }
-
-        $participantModel = new \App\Models\ParticipantsModel();
-        $data['other_details'] = $participantModel->select('member_id,event_id,payment_id,payment_code,registration_amount,status')
-        ->where('event_id', hash_id($id,'decode'))
-        ->findAll();
-
-        $page_data = parent::page_data($data, $id);
-    
-        return view('index', $page_data);
-    }
 
     function post(){
         $insertId = 0;
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'member_id' => 'required|min_length[3]',
             'event_id' => 'required|min_length[3]',
-            'payment_id' => 'required|min_length[3]',
-            'payment_code' => 'required|min_length[10]',
             'registration_amount' => 'required',
             'status' => 'required',
         ]);
@@ -137,17 +118,14 @@ class Participant extends BaseController
             return view("participant/list", $page_data);
         }
 
-        return redirect()->to(site_url("events/view/".hash_id($insertId)));
+        return redirect()->to(site_url("participants/view/".hash_id($insertId)));
     }
 
     public function update(){
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'member_id' => 'required|min_length[3]',
             'event_id' => 'required|min_length[3]',
-            'payment_id' => 'required|min_length[3]',
-            'payment_code' => 'required|min_length[10]',
             'registration_amount' => 'required',
             'status' => 'required',
         ]);
@@ -200,10 +178,10 @@ class Participant extends BaseController
             ->orderBy("participants.created_at desc")
             ->where('event_id', hash_id($hashed_event_id,'decode'))
             ->findAll();
-            return view("event/list", parent::page_data($records));
+            return view("participant/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url("event/view/".$hashed_id))->with('message', 'Event updated successfully!');
+        return redirect()->to(site_url("participant/view/".$hashed_id))->with('message', 'Event updated successfully!');
     }
 
     // private function computeNextHierarchicalLevel($denomination_id){
