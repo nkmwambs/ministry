@@ -58,7 +58,7 @@ class Participant extends BaseController
         $page_data['action'] = 'add';
         return view('index', $page_data);
     }
-
+ 
     public function view($id): string {
         $data = $this->model->getOne(hash_id($id,'decode'));
         if(array_key_exists('id',$data)){
