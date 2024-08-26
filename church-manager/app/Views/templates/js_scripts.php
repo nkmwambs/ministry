@@ -51,26 +51,24 @@
         });
     }
 
-    function showAjaxModal(plural_feature, action, id = ''){
+    function showAjaxModal(routes_group, action, id_segment = 0){
 
-        const url = `<?=site_url()?>${plural_feature}/modal/${plural_feature}/${action}/${id}`
+        const url = `<?=site_url();?>${routes_group}/modal/${routes_group}/${action}/${id_segment}`
 
-        $('#modal_ajax').on('shown.bs.modal', function() {
-            $('.datepicker').css('z-index','10200');
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd',
-                container: '#modal_ajax modal-body'
-            })
-        });
-                
-        
+        alert(url)
+
          $.ajax({
              url,
              success: function(response) {
-                $('#modal_ajax .modal-title').html(capitalizeFirstLetter(action) + ' ' + capitalizeFirstLetter(plural_feature));
+                // $('#modal_ajax').on('shown.bs.modal', function() {
+                //     $('.datepicker').css('z-index','10200');
+                //     $('.datepicker').datepicker({
+                //         format: 'yyyy-mm-dd',
+                //         container: '#modal_ajax modal-body'
+                //     })
+                // });
+                
                 $('#modal_ajax .modal-body').html(response);
-                $("#modal_save").data('item_id', id)
-                $("#modal_save").data('feature_plural', plural_feature)
                 $("#modal_ajax").modal("show");
              }
          });

@@ -143,7 +143,9 @@ abstract class BaseController extends Controller
     
 
     public function add(): string {
-        return view('index', $this->page_data());
+        // return view('index', $this->page_data());
+        log_message('error', json_encode($this->feature));
+        return view("$this->feature/add", $this->page_data());
     }
 
     public function view($id): string {
@@ -160,26 +162,35 @@ abstract class BaseController extends Controller
         return view('index', $this->page_data($data, $id));
     }
 
-    public function modal($plural_feature, $action, $id = ''){
-        $page_data['id'] = $id;
+    function modal($features, $action, $id = 0): string {
         
-        if($action == 'add'){
-            $featureController = new ("App\\Controllers\\" . ucfirst($this->feature))();
+        $feature = singular($features);
+        $page_data['id'] = $id;
 
-            if(method_exists($featureController, 'add')){
-                $this->feature_page_data['id'] = $id;
-                return $featureController->add();
-            }
-
-            return view(singular($plural_feature).DS.$action, $page_data);
-        }elseif($action == 'list'){
-            $page_data['result'] = $this->model->getItemsByParentId(hash_id($id,'decode'));
-            $page_data['feature'] = singular($plural_feature);
-            return view(singular($plural_feature).DS.$action, $page_data);
-        }else{
-            $page_data['result'] = $this->model->getOne(hash_id($id,'decode'));
-            
-            return view(singular($plural_feature).DS.$action, $page_data);
-        }
+        return view("$feature/$action", $page_data);
     }
+
+
+    // public function modal($plural_feature, $action, $id = ''){
+    //     $page_data['id'] = $id;
+        
+    //     if($action == 'add'){
+    //         $featureController = new ("App\\Controllers\\" . ucfirst($this->feature))();
+
+    //         if(method_exists($featureController, 'add')){
+    //             $this->feature_page_data['id'] = $id;
+    //             return $featureController->add();
+    //         }
+
+    //         return view(singular($plural_feature).DS.$action, $page_data);
+    //     }elseif($action == 'list'){
+    //         $page_data['result'] = $this->model->getItemsByParentId(hash_id($id,'decode'));
+    //         $page_data['feature'] = singular($plural_feature);
+    //         return view(singular($plural_feature).DS.$action, $page_data);
+    //     }else{
+    //         $page_data['result'] = $this->model->getOne(hash_id($id,'decode'));
+            
+    //         return view(singular($plural_feature).DS.$action, $page_data);
+    //     }
+    // }
 }

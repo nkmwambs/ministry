@@ -9,8 +9,8 @@
 
   <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add')">
-            <?= lang('denomination.add_denomination'); ?>
+        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add')">   
+          <?= lang('denomination.add_denomination'); ?>
         </div>
     </div>
   </div>
