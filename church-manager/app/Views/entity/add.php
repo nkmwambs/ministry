@@ -29,9 +29,14 @@
             <div class="col-xs-6">
               <select class="form-control" name="parent_id" id="parent_id">
                 <option value="">Select Hierarchy Level</option>
-                <?php foreach($lookup_items['parent_id'] as $entity){?>
-                    <option value = "<?=$entity['id'];?>"><?=$entity['name'];?></option>
-                <?php }?>
+                <?php 
+                  if(isset($parent_entities)){
+                    foreach($parent_entities as $entity){?>
+                      <option value = "<?=$entity['id'];?>"><?=$entity['name'];?></option>
+                <?php 
+                    }
+                  }
+              ?>
               </select>
             </div>
           </div>
@@ -43,13 +48,6 @@
                 placeholder="Enter Name" required>
             </div>
           </div>
-              
-            <!-- <div class="form-group content hidden">
-              <label class="control-label col-xs-4" for="entity_number">Entity Number</label>
-              <div class="col-xs-6">
-                <input type="text" class="form-control" name="entity_number" id="entity_number" required/>
-              </div>
-            </div> -->
 
           <div class="form-group content hidden">
             <label class="control-label col-xs-4" for="entity_leader">Entity Leader</label>

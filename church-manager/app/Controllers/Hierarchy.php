@@ -125,8 +125,8 @@ class Hierarchy extends BaseController
             ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))
             ->findAll();
 
-            $page_data = parent::page_data($records);
-            $page_data['id'] = $hashed_denomination_id;
+            $page_data = parent::page_data($records, $hashed_denomination_id);
+            // $page_data['parent_id'] = $hashed_denomination_id;
 
             return view("hierarchy/list", $page_data);
         }

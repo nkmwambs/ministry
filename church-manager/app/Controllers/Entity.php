@@ -47,24 +47,25 @@ class Entity extends BaseController
     }
 
     public function add(): string {
-        
+        $page_data = parent::page_data(id: $this->parent_id);
         if(method_exists($this->library, 'getLookUpItems')){
-            $page_data['lookup_items'] = $this->library->getLookUpItems(hash_id($this->parent_id,'decode'));
+            $this->library->getLookUpItems($page_data);
         }
-        
-        $page_data['parent_id'] = $this->parent_id;
-        $page_data['feature'] = 'entity';
-        $page_data['action'] = 'add';
-        $page_data['parent_entities'] = $this->model->where('hierarchy_id', hash_id($this->parent_id,'decode'))->findAll();
         
         return view('entity/add', $page_data);
     }
 
-    public function edit($id): string {
-        $data = $this->model->getOne(hash_id($id,'decode'));
-        $page_data = $this->page_data($data, $id);
-        $page_data['parent_entities'] = [];
-        return view('index', $page_data);
+    public function edit(): string {
+        $data = $this->model->getOne(hash_id($this->id,'decode'));
+
+        $this->parent_id = hash_id($data['hierarchy_id'],'encode');
+        
+        $page_data = $this->page_data($data, $this->parent_id);
+        if(method_exists($this->library, 'getLookUpItems')){
+            $this->library->getLookUpItems($page_data);
+        }
+
+        return view('entity/edit', $page_data);
     }
 
     function post(){
@@ -207,8 +208,8 @@ class Entity extends BaseController
             ->orderBy("entities.created_at desc")
             ->where('entities.hierarchy_id', hash_id($hashed_hierarchy_id,'decode'))->findAll();
             
-            $page_data = parent::page_data($records);
-            $page_data['id'] = $hashed_hierarchy_id;
+            $page_data = parent::page_data($records, $hashed_hierarchy_id);
+            // $page_data['parent_id'] = $hashed_hierarchy_id;
             
             return view("entity/list", $page_data);
         }

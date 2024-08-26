@@ -1,5 +1,6 @@
 <?php 
-echo json_encode($result);
+// echo json_encode($result);
+// echo json_encode($parent_id);
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -36,7 +37,7 @@ echo json_encode($result);
                         </div>
                     <?php endif ?>
 
-                    <input type="hidden" name="hierarchy_id" value="<?=$id;?>" />
+                    <input type="hidden" name="parent_id" value="<?=$parent_id;?>" />
                     <input type="hidden" name="id" value="<?=hash_id($result['id']);?>" />
                     <input type="hidden" name="hierarchy_id" value="<?=hash_id($result['hierarchy_id']);?>" />
 
@@ -47,27 +48,34 @@ echo json_encode($result);
                         <div class="col-xs-6">
                         <select class="form-control" name="parent_id" id="parent_id">
                             <option value="">Select Hierarchy Level</option>
-                           
+                            <?php 
+                            if(isset($parent_entities)){
+                                foreach($parent_entities as $entity){?>
+                                <option value = "<?=$entity['id'];?>" <?=$entity['id'] == $result['parent_id'] ? "selected" : "";?> ><?=$entity['name'];?></option>
+                            <?php 
+                                }
+                            }
+                        ?>
                         </select>
                         </div>
                     </div>
 
-                    <div class="form-group content hidden">
+                    <div class="form-group content">
                         <label class="control-label col-xs-4" for="name">Name</label>
                         <div class="col-xs-6">
-                        <input type="text" class="form-control" name="name" id="name"
+                        <input type="text" class="form-control" name="name" value="<?=$result['name'];?>" id="name"
                             placeholder="Enter Name" required>
                         </div>
                     </div>
                         
-                        <div class="form-group content hidden">
+                        <div class="form-group content">
                         <label class="control-label col-xs-4" for="entity_number">Entity Number</label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="entity_number" id="entity_number" required/>
+                            <input type="text" class="form-control" readonly value="<?=$result['entity_number'];?>" name="entity_number" id="entity_number" required/>
                         </div>
                         </div>
 
-                    <div class="form-group content hidden">
+                    <div class="form-group content">
                         <label class="control-label col-xs-4" for="entity_leader">Entity Leader</label>
                         <div class="col-xs-6">
                         <select class="form-control" name="entity_leader" id="entity_leader">

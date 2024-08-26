@@ -101,10 +101,14 @@ abstract class BaseController extends Controller
         $page_data['feature'] = $this->feature;
         $page_data['action'] = $this->action;
         $page_data['id'] = $this->id;
-
-        if(($this->action != 'edit' && $this->action != 'delete') && $id != ""){
-            $page_data['id'] = null;
+        $page_data['parent_id'] = $this->parent_id;
+        
+        if($id != ""){
             $page_data['parent_id'] = $id;
+        }
+
+        if(($this->action != 'edit' && $this->action != 'delete')){
+            $page_data['id'] = null;
         }
 
         $view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature.DIRECTORY_SEPARATOR.$this->action.'.php';

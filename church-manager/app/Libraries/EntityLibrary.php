@@ -27,7 +27,9 @@ class EntityLibrary implements \App\Interfaces\LibraryInterface {
         return $fields;
     }
 
-    public function getLookUpItems($hierarchy_id = 0){
+    public function getLookUpItems(&$page_data){
+        $hierarchy_id = hash_id($page_data['parent_id'],'decode');
+        
         $hierarchyModel = new \App\Models\HierarchiesModel();
         $hierarchy = $hierarchyModel->where('id', $hierarchy_id)->first();
 
@@ -40,12 +42,11 @@ class EntityLibrary implements \App\Interfaces\LibraryInterface {
         ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
         ->where('hierarchies.denomination_id', $denomination_id)->findAll();
         
-        $lookUpItems['hierarchy_id'] = [];
 
         if($entities){
-            $lookUpItems['parent_id'] = $entities;
+            $page_data['parent_entities'] = $entities;
         }
 
-        return $lookUpItems;
+        return $page_data;
     }
 }
