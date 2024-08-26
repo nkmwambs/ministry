@@ -65,4 +65,9 @@ class ParticipantsModel extends Model
             return $this->where('id', $id)->first();
         }
     }
+
+    public function getParticipantsByEventId($event_id)
+    {
+        return $this->where('event_id', $event_id)->findAll();
+    }
 }

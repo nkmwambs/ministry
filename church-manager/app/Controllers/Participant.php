@@ -64,32 +64,13 @@ class Participant extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'event_id' => 'required|min_length[3]',
             'registration_amount' => 'required',
             'status' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-            $validationErrors = $validation->getErrors();
-
-            // Renaming specific keys
-            $renamedErrors = [];
-            foreach ($validationErrors as $key => $message) {
-                switch ($key) {
-                    case 'minister_number':
-                        $renamedErrors['number'] = $message;
-                        break;
-                    case 'is_active':
-                        $renamedErrors['active'] = $message;
-                        break;
-                    default:
-                        $renamedErrors[$key] = $message; // Keep other keys unchanged
-                        break;
-                }
-            }
-
-            return response()->setJSON(['errors' => $renamedErrors]);
+            return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
         $event_id = hash_id($this->request->getPost('event_id'),'decode');
@@ -133,24 +114,7 @@ class Participant extends BaseController
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             $validationErrors = $validation->getErrors();
-
-            // Renaming specific keys
-            $renamedErrors = [];
-            foreach ($validationErrors as $key => $message) {
-                switch ($key) {
-                    case 'minister_number':
-                        $renamedErrors['number'] = $message;
-                        break;
-                    case 'is_active':
-                        $renamedErrors['active'] = $message;
-                        break;
-                    default:
-                        $renamedErrors[$key] = $message; // Keep other keys unchanged
-                        break;
-                }
-            }
-
-            return response()->setJSON(['errors' => $renamedErrors]);
+            return response()->setJSON(['errors' => $validationErrors]);
         }
         
         $hashed_id = $this->request->getVar('id');

@@ -12,7 +12,7 @@ class EventsModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','name','gatheringtype_id','start_date','end_date','location','description','denomination_id','registration_fees'];
+    protected $allowedFields    = ['name','gatheringtype_id','start_date','end_date','location','description','denomination_id','registration_fees'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

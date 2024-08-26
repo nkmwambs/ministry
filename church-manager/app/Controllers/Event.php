@@ -18,18 +18,21 @@ class Event extends BaseController
     }
 
     public function view($id): string {
+        // Fetch the event details
         $data = $this->model->getOne(hash_id($id,'decode'));
-        if(array_key_exists('id',$data)){
+        if (array_key_exists('id', $data)) {
             unset($data['id']);
         }
-
-        $participantModel = new \App\Models\ParticipantsModel();
-        $data['other_details'] = $participantModel->where('event_id', hash_id($id,'decode'))->findAll();
-
-        $page_data = parent::page_data($data, $id);
     
+        // Fetch participants for the event
+        $participantModel = new \App\Models\ParticipantsModel();
+        $data['other_details'] = $participantModel->getParticipantsByEventId(hash_id($id, 'decode'));
+    
+        // Pass the data to the view
+        $page_data = parent::page_data($data, $id);
+        
         return view('index', $page_data);
-    }
+    }    
 
     public function update(){
 
@@ -46,25 +49,7 @@ class Event extends BaseController
 
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-            $validationErrors = $validation->getErrors();
-
-            // Renaming specific keys
-            $renamedErrors = [];
-            foreach ($validationErrors as $key => $message) {
-                switch ($key) {
-                    case 'minister_number':
-                        $renamedErrors['number'] = $message;
-                        break;
-                    case 'is_active':
-                        $renamedErrors['active'] = $message;
-                        break;
-                    default:
-                        $renamedErrors[$key] = $message; // Keep other keys unchanged
-                        break;
-                }
-            }
-
-            return response()->setJSON(['errors' => $renamedErrors]);
+            return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
         $update_data = [
@@ -113,24 +98,7 @@ class Event extends BaseController
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             $validationErrors = $validation->getErrors();
-
-            // Renaming specific keys
-            $renamedErrors = [];
-            foreach ($validationErrors as $key => $message) {
-                switch ($key) {
-                    case 'minister_number':
-                        $renamedErrors['number'] = $message;
-                        break;
-                    case 'is_active':
-                        $renamedErrors['active'] = $message;
-                        break;
-                    default:
-                        $renamedErrors[$key] = $message; // Keep other keys unchanged
-                        break;
-                }
-            }
-
-            return response()->setJSON(['errors' => $renamedErrors]);
+            return response()->setJSON(['errors' => $validationErrors]);
         }
 
         // $denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
