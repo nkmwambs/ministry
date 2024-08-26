@@ -93,7 +93,7 @@ $hierarchy_sections = array_pop($result);
             $.each(hierarchies, function (index, elem) {
                 const plural_name = pluralize(elem.name).replace(/\s/g, '')
                 if($('.li_'+plural_name).length == 0){
-                    myTabs.append('<li data-item_id = "'+parent_id+'" data-link_id="list_'+ plural_name +'" data-feature_plural="entities" onclick="childrenAjaxLists(this)" class = "li_'+plural_name+'"><a href="#list_'+plural_name+'" id="list_'+plural_name+'_tab" data-toggle="tab">' + pluralize(elem.name) + '</a></li>')
+                    myTabs.append('<li data-item_id = "'+elem.id+'" data-link_id="list_'+ plural_name +'" data-feature_plural="entities" onclick="childrenAjaxLists(this)" class = "li_'+plural_name+'"><a href="#list_'+plural_name+'" id="list_'+plural_name+'_tab" data-toggle="tab">' + pluralize(elem.name) + '</a></li>')
                     tab_content.append('<div id = "list_'+plural_name+'" class = "tab-pane"><div class = "info">There are not ' + pluralize(elem.name) + ' available</div></div>')
                 }
             })

@@ -22,7 +22,7 @@
               </div>
           </div>
 
-          <input type="hidden" name="hierarchy_id" value="<?=$id;?>" />
+          <input type="hidden" name="hierarchy_id" value="<?=$parent_id;?>" />
         
           <div class="form-group">
             <label class="control-label col-xs-4" for="parent_id">Parent Entity</label>
@@ -44,12 +44,12 @@
             </div>
           </div>
               
-            <div class="form-group content hidden">
+            <!-- <div class="form-group content hidden">
               <label class="control-label col-xs-4" for="entity_number">Entity Number</label>
               <div class="col-xs-6">
                 <input type="text" class="form-control" name="entity_number" id="entity_number" required/>
               </div>
-            </div>
+            </div> -->
 
           <div class="form-group content hidden">
             <label class="control-label col-xs-4" for="entity_leader">Entity Leader</label>

@@ -46,6 +46,7 @@ abstract class BaseController extends Controller
     protected $feature = '';
     protected $action = '';
     protected $id = 0;
+    protected $parent_id = 0;
     protected $uri;
     protected $segments;
     protected $session;
@@ -146,10 +147,6 @@ abstract class BaseController extends Controller
     }
     
 
-    public function add(): string {
-        return view("$this->feature/add", $this->page_data());
-    }
-
     public function view($id): string {
         $data = $this->model->getOne(hash_id($id,'decode'));
         if(array_key_exists('id',$data)){
@@ -164,22 +161,31 @@ abstract class BaseController extends Controller
         return view('index', $this->page_data($data, $id));
     }
 
+    public function add(): string {
+        $page_data = $this->page_data();
+        $page_data['parent_id'] = $this->parent_id;
+
+        return view("$this->feature/add", $page_data);
+    }
+
     function modal($features, $action, $id = ""): string {
-        
+
         // log_message('error', json_encode(compact('features', 'action', 'id')));
         
         $feature = singular($features);
-        $page_data = [];
-        
+        $this->feature = $feature;
+        $this->action = $action;
+
         if($id != ""){
             if($action == 'add'){
-                $page_data['parent_id'] = $id;
+                $this->parent_id = $id;
             }else{
-                $page_data['id'] = $id;
+                $this->id = $id;
             }
         }
-
-        return view("$feature/$action", $page_data);
+  
+        return $this->$action();
+        // return view("$feature/$action", $page_data);
     }
 
 

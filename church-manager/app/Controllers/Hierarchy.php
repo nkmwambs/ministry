@@ -52,13 +52,6 @@ class Hierarchy extends BaseController
         return view('index', $page_data);
     }
 
-    public function add($id = 0): string {
-        
-        $page_data['feature'] = 'hierarchy';
-        $page_data['action'] = 'add';
-        return view('index', $page_data);
-    }
-
     function post(){
         $insertId = 0;
 
@@ -91,7 +84,7 @@ class Hierarchy extends BaseController
             $data = $this->model->orderBy("created_at desc")->where('denomination_id', $denomination_id)->findAll();
 
             $page_data = parent::page_data($data, $hashed_denomination_id);
-            log_message('error', json_encode($page_data));
+            // log_message('error', json_encode($page_data));
             // $page_data['parent_id'] = $hashed_denomination_id;
             // $page_data['result'] = $data;
             // $page_data['feature'] = 'hierarchy';

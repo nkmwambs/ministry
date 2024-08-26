@@ -1,14 +1,10 @@
-<!-- <div class="row">
-    <div class="col-xs-12">
-      <div class="page-title"><i class='fa fa-book'></i>
-        <?= lang('entity.list_entities'); ?>
-      </div>
-    </div>
-  </div> -->
+<?php 
+// echo $parent_id;
+?>
 
   <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?=$id;?>')">
+        <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?=$parent_id;?>')">
               <?= lang('entity.add_entity'); ?>
         </div>
     </div>
@@ -16,7 +12,7 @@
 
   <div class="row">
     <div class="col-xs-12">
-      <table class="table table-striped datatable<?=$id;?>">
+      <table class="table table-striped datatable<?=$parent_id;?>">
         <thead>
           <tr>
             <th>Action</th>
@@ -48,8 +44,10 @@
   </div>
 
   <script>
+    const parent_id = "<?=$parent_id;?>"
+
     $(document).ready(function() {
-      $('.datatable<?=$id;?>').DataTable({
+      $('.datatable'+parent_id).DataTable({
         stateSave: true
       });
     });
