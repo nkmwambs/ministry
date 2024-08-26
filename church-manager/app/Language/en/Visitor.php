@@ -9,7 +9,7 @@ return [
     'visitor_action' => 'Action',
     'visitor_first_name' => 'First Name',
     'visitor_last_name' => 'Last Name',
-    'visitor_phonephone' => 'Phone',
+    'visitor_phone' => 'Phone',
     'visitor_email' => 'Email',
     'visitor_gender' => 'Gender',
     'visitor_date_of_birth' => 'Date of Birth',
@@ -19,7 +19,7 @@ return [
     'visitor_registration_amount' => 'Registration Amount',
     'visitor_status' => 'Status',
 
-    'no_visitors_message' => 'There are not visitors available',
+    'no_visitors_message' => 'There are no visitors available',
 
     'select_event' => 'Select Event',
 ];

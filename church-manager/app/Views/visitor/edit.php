@@ -31,7 +31,7 @@
                     <?php endif ?>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="event_first_name">
+                        <label class="control-label col-xs-4" for="first_name">
                             <?= lang('visitor.visitor_first_name') ?>
                         </label>
                         <div class="col-xs-6">
@@ -105,7 +105,7 @@
                             <?= lang('visitor.visitor_payment_id') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control datepicker" name="payment_id" value="<?=$result['payment_id'];?>" id="payment_id" 
+                            <input type="text" class="form-control" name="payment_id" value="<?=$result['payment_id'];?>" id="payment_id" 
                                 placeholder="Edit Payment Name">
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                             <?= lang('visitor.visitor_payment_code') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control datepicker" name="payment_code" value="<?=$result['payment_code'];?>" id="payment_code" 
+                            <input type="text" class="form-control" name="payment_code" value="<?=$result['payment_code'];?>" id="payment_code" 
                                 placeholder="Edit Payment Code">
                         </div>
                     </div>
@@ -125,7 +125,7 @@
                             <?= lang('visitor.visitor_registration_amount') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control datepicker" name="registration_amount" value="<?=$result['registration_amount'];?>" id="registration_amount" 
+                            <input type="text" class="form-control" name="registration_amount" value="<?=$result['registration_amount'];?>" id="registration_amount" 
                                 placeholder="Edit Registration Amount">
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                             <?= lang('visitor.visitor_status') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control datepicker" name="status" value="<?=$result['status'];?>" id="status" placeholder="Edit Status">
+                            <input type="text" class="form-control" name="status" value="<?=$result['status'];?>" id="status" placeholder="Edit Status">
                         </div>
                     </div>
             
