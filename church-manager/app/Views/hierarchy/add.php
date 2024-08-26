@@ -35,9 +35,9 @@
               
 
           <?php 
-            if(isset($id)){
+            if(isset($parent_id)){
           ?>
-            <input type="hidden" name="denomination_id" value="<?=$id;?>" />
+            <input type="hidden" name="denomination_id" value="<?=$parent_id;?>" />
           <?php 
             }else{
           ?>

@@ -36,7 +36,7 @@ class DenominationsModel extends Model  implements \App\Interfaces\ModelInterfac
     // Callbacks
     protected $allowCallbacks = true;
     protected $beforeInsert   = [];
-    protected $afterInsert    = [];
+    protected $afterInsert    = ["createHighestHierarchyAndEntity"];
     protected $beforeUpdate   = [];
     protected $afterUpdate    = [];
     protected $beforeFind     = [];
@@ -64,5 +64,29 @@ class DenominationsModel extends Model  implements \App\Interfaces\ModelInterfac
         }else{
             return $this->where('id', $id)->first();
         }
+    }
+
+    function createHighestHierarchyAndEntity(array $data){
+        $topHierarchy = [];
+        $topHierarchy['name'] = "Head Office";
+        $topHierarchy['denomination_id'] = $data['id'];
+        $topHierarchy['level'] = 1;
+        $topHierarchy['description'] = "Head Office";
+
+        $hierarchyModel = new HierarchiesModel();
+        $hierarchyModel->insert((object)$topHierarchy);
+        $hierarchyId = $hierarchyModel->getInsertID();
+
+        $entityData = [
+            'hierarchy_id' => $hierarchyId,
+            'name' => 'Head Office',
+            'entity_number' => 'H001',
+            'parent_id' => null,
+            'entity_leader' => null,
+        ];
+
+        $entityModel = new EntitiesModel();
+        $entityModel->insert((object)$entityData);
+        return $hierarchyId;
     }
 }

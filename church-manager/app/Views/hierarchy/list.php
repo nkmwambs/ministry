@@ -1,21 +1,8 @@
-  <!-- <div class="row">
-    <div class="col-xs-12">
-      <div class="page-title"><i class='fa fa-book'></i>
-        <?= lang('hierarchy.list_hierarchies'); ?>
-      </div>
-    </div>
-  </div> -->
-
   <div class="row">
     <div class="col-xs-12 btn-container">
-      <div class='btn btn-primary' onclick="showAjaxModal('hierarchies','add', '<?=$id;?>')">
+      <div class='btn btn-primary' onclick="showAjaxModal('hierarchies','add', '<?=$parent_id;?>')">
             <?= lang('hierarchy.add_hierarchy'); ?>
       </div>
-      <?php if(!empty($result)) {?>
-        <!-- <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?=$id;?>')">
-              <?= lang('entity.add_entity'); ?>
-        </div> -->
-      <?php }?>
     </div>
   </div>
 

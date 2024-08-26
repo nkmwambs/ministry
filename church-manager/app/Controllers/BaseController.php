@@ -95,11 +95,17 @@ abstract class BaseController extends Controller
         ];
     }
 
-    protected function page_data($data = [], $id = 0){
+    protected function page_data($data = [], $id = ''){
         $page_data['result'] = $data;
         $page_data['feature'] = $this->feature;
         $page_data['action'] = $this->action;
         $page_data['id'] = $id;
+
+        if(($this->action != 'edit' && $this->action != 'delete') && $id != ""){
+            $page_data['id'] = null;
+            $page_data['parent_id'] = $id;
+        }
+
         $view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature.DIRECTORY_SEPARATOR.$this->action.'.php';
         $view = file_exists($view_path) ?  "$this->feature/$this->action" : "templates/$this->action";
 
@@ -115,9 +121,7 @@ abstract class BaseController extends Controller
             $page_data['fields'] = $table_field;
         }
 
-        $page_data['content'] = view($view, $page_data);
-
-        $this->feature_page_data = $page_data;
+        $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
 
         return $page_data;
     }
@@ -143,8 +147,6 @@ abstract class BaseController extends Controller
     
 
     public function add(): string {
-        // return view('index', $this->page_data());
-        log_message('error', json_encode($this->feature));
         return view("$this->feature/add", $this->page_data());
     }
 
@@ -162,10 +164,20 @@ abstract class BaseController extends Controller
         return view('index', $this->page_data($data, $id));
     }
 
-    function modal($features, $action, $id = 0): string {
+    function modal($features, $action, $id = ""): string {
+        
+        // log_message('error', json_encode(compact('features', 'action', 'id')));
         
         $feature = singular($features);
-        $page_data['id'] = $id;
+        $page_data = [];
+        
+        if($id != ""){
+            if($action == 'add'){
+                $page_data['parent_id'] = $id;
+            }else{
+                $page_data['id'] = $id;
+            }
+        }
 
         return view("$feature/$action", $page_data);
     }
