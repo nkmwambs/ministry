@@ -78,6 +78,8 @@ class Hierarchy extends BaseController
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
 
+        $this->parent_id = $hashed_denomination_id;
+
         if($this->request->isAJAX()){
             $this->feature = 'hierarchy';
             $this->action = 'list';

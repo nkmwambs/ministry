@@ -102,14 +102,6 @@ abstract class BaseController extends Controller
         $page_data['action'] = $this->action;
         $page_data['id'] = $this->id;
         $page_data['parent_id'] = $this->parent_id;
-        
-        if($id != ""){
-            $page_data['parent_id'] = $id;
-        }
-
-        if(($this->action != 'edit' && $this->action != 'delete')){
-            $page_data['id'] = null;
-        }
 
         $view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature.DIRECTORY_SEPARATOR.$this->action.'.php';
         $view = file_exists($view_path) ?  "$this->feature/$this->action" : "templates/$this->action";
@@ -157,7 +149,7 @@ abstract class BaseController extends Controller
             unset($data['id']);
         }
 
-        return view('index', $this->page_data($data, $id));
+        return view('index', $this->page_data($data));
     }
 
     public function edit(): string {
@@ -167,7 +159,7 @@ abstract class BaseController extends Controller
         if(method_exists($this->library,'editExtraData')){
             // Note the editExtraData updates the $page_data by reference
             $this->library->editExtraData($page_data);
-            log_message('error', json_encode($page_data));
+            // log_message('error', json_encode($page_data));
         }
 
         return view("$this->feature/edit", $page_data);

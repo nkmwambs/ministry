@@ -20,8 +20,10 @@ class Denomination extends BaseController
 
         $hierarchyModel = new \App\Models\HierarchiesModel();
         $data['other_details'] = $hierarchyModel->where('denomination_id', hash_id($id,'decode'))->where('level <>', 1)->findAll();
+        
+        $this->parent_id = $id;
 
-        $page_data = parent::page_data($data, $id);
+        $page_data = parent::page_data($data);
     
         return view('index', $page_data);
     }

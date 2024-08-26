@@ -47,7 +47,7 @@ class Entity extends BaseController
     }
 
     public function add(): string {
-        $page_data = parent::page_data(id: $this->parent_id);
+        $page_data = parent::page_data();
         if(method_exists($this->library, 'getLookUpItems')){
             $this->library->getLookUpItems($page_data);
         }
@@ -60,7 +60,7 @@ class Entity extends BaseController
 
         $this->parent_id = hash_id($data['hierarchy_id'],'encode');
         
-        $page_data = $this->page_data($data, $this->parent_id);
+        $page_data = $this->page_data($data);
         if(method_exists($this->library, 'getLookUpItems')){
             $this->library->getLookUpItems($page_data);
         }
@@ -125,6 +125,7 @@ class Entity extends BaseController
         $this->model->insert($data);
         $insertId = $this->model->getInsertID();
        
+        $this->parent_id = $hashed_hierarchy_id;
 
         if($this->request->isAJAX()){
             $this->feature = 'entity';
@@ -135,7 +136,7 @@ class Entity extends BaseController
             ->orderBy("entities.created_at desc")
             ->where('entities.hierarchy_id', hash_id($hashed_hierarchy_id,'decode'))->findAll();
 
-            $page_data = parent::page_data($data, $hashed_hierarchy_id);
+            $page_data = parent::page_data($data);
             
             return view("entity/list", $page_data);
         }
@@ -199,6 +200,8 @@ class Entity extends BaseController
         
         $this->model->update(hash_id($hashed_id,'decode'), $update_data);
 
+        $this->parent_id = $hashed_hierarchy_id;
+
         if($this->request->isAJAX()){
             $this->feature = 'entity';
             $this->action = 'list';
@@ -208,7 +211,7 @@ class Entity extends BaseController
             ->orderBy("entities.created_at desc")
             ->where('entities.hierarchy_id', hash_id($hashed_hierarchy_id,'decode'))->findAll();
             
-            $page_data = parent::page_data($records, $hashed_hierarchy_id);
+            $page_data = parent::page_data($records);
             // $page_data['parent_id'] = $hashed_hierarchy_id;
             
             return view("entity/list", $page_data);
