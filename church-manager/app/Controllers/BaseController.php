@@ -168,10 +168,7 @@ abstract class BaseController extends Controller
         return view("$this->feature/add", $page_data);
     }
 
-    function modal($features, $action, $id = ""): string {
-
-        // log_message('error', json_encode(compact('features', 'action', 'id')));
-        
+    function modal($features, $action, $id = ""): string {        
         $feature = singular($features);
         $this->feature = $feature;
         $this->action = $action;

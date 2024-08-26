@@ -16,9 +16,6 @@ class Entity extends BaseController
     }
     public function index($hashed_id = ''): string
     {
-        // log_message('error', json_encode(hash_id($hashed_id,'decode')));
-        // log_message('error', json_encode($hashed_id));
-
         $entities = [];
         $hierarchy_id = hash_id($hashed_id,'decode');
 
@@ -37,8 +34,6 @@ class Entity extends BaseController
             ->orderBy('entities.created_at desc')
             ->findAll();
         }
-
-        // log_message('error', json_encode($entities));
 
         $page_data['result'] = $entities;
         $page_data['feature'] = 'entity';
@@ -200,8 +195,6 @@ class Entity extends BaseController
             'entity_number' => $this->request->getPost('entity_number'),
             'parent_id' => $this->request->getPost('parent_id'),
         ];
-
-        // log_message('error', json_encode($validation->getErrors()));
         
         $this->model->update(hash_id($hashed_id,'decode'), $update_data);
 

@@ -16,7 +16,7 @@ class Hierarchy extends BaseController
     public function index($parent_id = 0): string
     {
         // Parent Id the denomination primary key of hierarchies
-        log_message('error', json_encode($parent_id));
+
         $hierarchies = [];
 
         if($parent_id > 0){
@@ -84,11 +84,6 @@ class Hierarchy extends BaseController
             $data = $this->model->orderBy("created_at desc")->where('denomination_id', $denomination_id)->findAll();
 
             $page_data = parent::page_data($data, $hashed_denomination_id);
-            // log_message('error', json_encode($page_data));
-            // $page_data['parent_id'] = $hashed_denomination_id;
-            // $page_data['result'] = $data;
-            // $page_data['feature'] = 'hierarchy';
-            // $page_data['action'] = 'list';
 
             return view("hierarchy/list", $page_data);
         }
@@ -101,7 +96,6 @@ class Hierarchy extends BaseController
         $hashed_id = $this->request->getVar('id');
         $hashed_denomination_id = $this->request->getVar('denomination_id');
 
-        // log_message('error', json_encode($this->request->getPost()));
 
         $validation = \Config\Services::validation();
         $validation->setRules([
@@ -118,7 +112,6 @@ class Hierarchy extends BaseController
             'description' => $this->request->getPost('description'),
         ];
 
-        // log_message('error', json_encode($validation->getErrors()));
         
         $this->model->update(hash_id($hashed_id,'decode'), $update_data);
 
