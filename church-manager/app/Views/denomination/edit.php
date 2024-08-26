@@ -1,3 +1,6 @@
+<?php 
+echo isset($denomination_entities_count) ? $denomination_entities_count : 0;
+?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary" data-collapsed="0">
@@ -38,7 +41,7 @@
                             <?= lang('denomination.denomination_code') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="code" id="code" value="<?=$result['code'];?>" placeholder="Enter Code">
+                            <input type="text" <?=isset($denomination_entities_count) && $denomination_entities_count > 1 ? "readonly" : ""?> class="form-control" name="code" id="code" value="<?=$result['code'];?>" placeholder="Enter Code">
                         </div>
                     </div>
 

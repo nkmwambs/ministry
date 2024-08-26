@@ -174,7 +174,7 @@
                     const list_alert_container = $('.list-alert-container');
                     if(list_alert_container.hasClass('hidden')){
                         list_alert_container.removeClass('hidden');
-                        list_alert_container.find('.info').html('Record created successfully')
+                        list_alert_container.find('.info').html('Operation successfully')
                     }
                 }
 

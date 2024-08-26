@@ -100,7 +100,7 @@ abstract class BaseController extends Controller
         $page_data['result'] = $data;
         $page_data['feature'] = $this->feature;
         $page_data['action'] = $this->action;
-        $page_data['id'] = $id;
+        $page_data['id'] = $this->id;
 
         if(($this->action != 'edit' && $this->action != 'delete') && $id != ""){
             $page_data['id'] = null;
@@ -156,14 +156,27 @@ abstract class BaseController extends Controller
         return view('index', $this->page_data($data, $id));
     }
 
-    public function edit($id): string {
-        $data = $this->model->getOne(hash_id($id,'decode'));
-        return view('index', $this->page_data($data, $id));
+    public function edit(): string {
+        $data = $this->model->getOne(hash_id($this->id,'decode'));
+        $page_data = $this->page_data($data);
+        
+        if(method_exists($this->library,'editExtraData')){
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->editExtraData($page_data);
+            log_message('error', json_encode($page_data));
+        }
+
+        return view("$this->feature/edit", $page_data);
     }
 
     public function add(): string {
         $page_data = $this->page_data();
         $page_data['parent_id'] = $this->parent_id;
+
+        if(method_exists($this->library,'addExtraData')){
+            // Note the addExtraData updates the $page_data by reference
+            $this->library->addExtraData($page_data);
+        }
 
         return view("$this->feature/add", $page_data);
     }
@@ -182,30 +195,6 @@ abstract class BaseController extends Controller
         }
   
         return $this->$action();
-        // return view("$feature/$action", $page_data);
     }
 
-
-    // public function modal($plural_feature, $action, $id = ''){
-    //     $page_data['id'] = $id;
-        
-    //     if($action == 'add'){
-    //         $featureController = new ("App\\Controllers\\" . ucfirst($this->feature))();
-
-    //         if(method_exists($featureController, 'add')){
-    //             $this->feature_page_data['id'] = $id;
-    //             return $featureController->add();
-    //         }
-
-    //         return view(singular($plural_feature).DS.$action, $page_data);
-    //     }elseif($action == 'list'){
-    //         $page_data['result'] = $this->model->getItemsByParentId(hash_id($id,'decode'));
-    //         $page_data['feature'] = singular($plural_feature);
-    //         return view(singular($plural_feature).DS.$action, $page_data);
-    //     }else{
-    //         $page_data['result'] = $this->model->getOne(hash_id($id,'decode'));
-            
-    //         return view(singular($plural_feature).DS.$action, $page_data);
-    //     }
-    // }
 }
