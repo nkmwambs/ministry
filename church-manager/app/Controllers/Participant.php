@@ -106,7 +106,6 @@ class Participant extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'event_id' => 'required|min_length[3]',
             'registration_amount' => 'required',
             'status' => 'required',
         ]);
