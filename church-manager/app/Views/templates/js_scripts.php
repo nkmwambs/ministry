@@ -2,6 +2,12 @@
 
     const base_url = '<?=site_url();?>'
 
+    $(".modal").draggable({
+        handle: ".modal-header",
+    });
+    
+    $(".modal").resizable();
+
     function getRequest(url, on_success){
         $.ajax({
             url: url,

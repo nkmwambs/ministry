@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal_ajax">
+<div class="modal draggable fade" data-backdrop="static"  id="modal_ajax">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				
@@ -21,7 +21,7 @@
 	</div>
 
 
-	<div class="modal fade" id="modal_list_ajax">
+	<div class="modal draggable fade" data-backdrop="static" id="modal_list_ajax">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				
