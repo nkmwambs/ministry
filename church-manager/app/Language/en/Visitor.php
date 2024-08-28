@@ -16,7 +16,7 @@ return [
     'visitor_event_id' => 'Event Name',
     'visitor_payment_id' => 'Payment Id',
     'visitor_payment_code' => 'Payment Code',
-    'visitor_registration_amount' => 'Registration Amount',
+    'visitor_registration_amount' => 'Reg Amount',
     'visitor_status' => 'Status',
     'select_visitor' => 'Select Visitor',
 
