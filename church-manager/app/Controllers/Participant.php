@@ -57,7 +57,7 @@ class Participant extends BaseController
         $page_data['feature'] = 'participant';
         $page_data['action'] = 'add';
         return view('index', $page_data);
-    }
+    }    
 
     function post(){
         $insertId = 0;
