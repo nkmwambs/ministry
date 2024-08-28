@@ -15,15 +15,18 @@
 
       <div class="panel-body">
 
-        <fo role="form" id = "frm_add_participant" method="post" action="<?=site_url("visitor/save")?>" class="form-groups-bordered">
-          
+        <fo role="form" id="frm_add_participant" method="post" action="<?= site_url("visitor/save") ?>" class="form-groups-bordered">
+
           <div class="form-group hidden error_container">
             <div class="col-xs-12 error">
-              
+
             </div>
           </div>
-        
-          <div class="tab">Personal Information:
+
+          <div class="tab">
+            <div>
+              <?= lang("visitor.personal_information") ?>
+            </div>
             <!-- <div class="form-group"> -->
             <div class="form-group">
               <label class="control-label col-xs-4" for="first_name"><?= lang('visitor.visitor_first_name') ?></label>
@@ -58,80 +61,84 @@
             <!-- </div> -->
           </div>
 
-          </div>
-          
+      </div>
 
-          <div class="tab">Personal Information:
-            <!-- <div class="form-group"> -->
-            <div class="form-group">
-              <label class="control-label col-xs-4" for="date_of_birth"><?= lang('visitor.visitor_date_of_birth') ?></label>
-              <div class="col-xs-6">
-                <input class="text" oninput="this.className = ''" class="form-control datepicker" name="date_of_birth" id="date_of_birth" placeholder="Enter Date of Birth">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-xs-4" for="payment_id"><?= lang('visitor.visitor_payment_id') ?></label>
-              <div class="col-xs-6">
-                <input type="text" oninput="this.className = ''" class="form-control" name="payment_id" id="payment_id" placeholder="Enter Payment Name">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-xs-4" for="payment_code"><?= lang('visitor.visitor_payment_code') ?></label>
-              <div class="col-xs-6">
-                <input type="text" oninput="this.className = ''" class="form-control" name="payment_code" id="payment_code" placeholder="Enter Payment Code">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-xs-4" for="registration_amount"><?= lang('visitor.visitor_registration_amount') ?></label>
-              <div class="col-xs-6">
-                <input type="text" oninput="this.className = ''" class="form-control" name="registration_amount" id="registration_amount" placeholder="Enter Registration Amount">
-              </div>
-            </div>
-            <!-- </div> -->
+      <div class="tab">
+        <div>
+          <?= lang("visitor.personal_information") ?>
+        </div>  
+        <!-- <div class="form-group"> -->
+        <div class="form-group">
+          <label class="control-label col-xs-4" for="date_of_birth"><?= lang('visitor.visitor_date_of_birth') ?></label>
+          <div class="col-xs-6">
+            <input class="text" oninput="this.className = ''" class="form-control datepicker" name="date_of_birth" id="date_of_birth" placeholder="Enter Date of Birth">
           </div>
-
-          <div class="tab">
-            <?php 
-              if(isset($id)){
-            ?>
-              <input type="hidden" name="event_id" value="<?=$id;?>" />
-            <?php 
-              }else{
-            ?>
-              <div class="form-group tab">
-                <!-- <label class="control-label col-xs-4" for="event_id"><?= lang('event.event_name') ?></label> -->
-                <div class="col-xs-6">
-                  <select class="form-control" name="event_id" id="event_id">
-                    <option value=""><?= lang('visitor.select_event') ?></option>
-                    
-                  </select>
-                </div>
-              </div>
-            <?php 
-              }
-            ?>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-4" for="payment_id"><?= lang('visitor.visitor_payment_id') ?></label>
+          <div class="col-xs-6">
+            <input type="text" oninput="this.className = ''" class="form-control" name="payment_id" id="payment_id" placeholder="Enter Payment Name">
           </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-4" for="payment_code"><?= lang('visitor.visitor_payment_code') ?></label>
+          <div class="col-xs-6">
+            <input type="text" oninput="this.className = ''" class="form-control" name="payment_code" id="payment_code" placeholder="Enter Payment Code">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-4" for="registration_amount"><?= lang('visitor.visitor_registration_amount') ?></label>
+          <div class="col-xs-6">
+            <input type="text" oninput="this.className = ''" class="form-control" name="registration_amount" id="registration_amount" placeholder="Enter Registration Amount">
+          </div>
+        </div>
 
-          <div style="overflow:auto;">
-            <div style="float:right;">
-              <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-              <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+        <?php
+        if (isset($id)) {
+        ?>
+          <input type="hidden" name="event_id" value="<?= $id; ?>" />
+        <?php
+        } else {
+        ?>
+          <!-- <div class="tab"> -->
+          <div class="form-group">
+            <label class="control-label col-xs-4" for="event_id"><?= lang('event.event_name') ?></label>
+            <div class="col-xs-6">
+              <select class="form-control" name="event_id" id="event_id">
+                <option value=""><?= lang('visitor.select_event') ?></option>
+
+              </select>
             </div>
           </div>
-
-          <div style="text-align:center;margin-top:40px;">
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-          </div>
-    
-        </form>
-
+          <!-- </div> -->
+        <?php
+        }
+        ?>
+        <!-- </div> -->
       </div>
 
     </div>
 
+    <div style="overflow:auto;">
+      <div style="float:right;">
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+        <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:40px;">
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+    </div>
+
+    </form>
+
   </div>
+
+</div>
+
+</div>
 </div>
 
 <script>
@@ -169,7 +176,7 @@
     // if you have reached the end of the form... :
     if (currentTab >= $x.length) {
       //...the form gets submitted:
-      $("#regForm").submit();
+      $("#frm_add_participant").submit();
       return false;
     }
     // Otherwise, display the correct tab:
@@ -205,5 +212,4 @@
     //... and adds the "active" class to the current step:
     $x.eq(n).addClass("active");
   }
-
 </script>
