@@ -23,6 +23,7 @@ return [
     'save_visitor' => 'Save',
     'save_and_new_visitor' => 'Save and New',
     'reset_visitor_form' => 'Reset',
+    'personal_information' => 'Personal Information:',
 
     'update_visitor' => 'Update',
     'update_and_continue' => 'Update and Continue',
