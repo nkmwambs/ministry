@@ -15,7 +15,7 @@
 
       <div class="panel-body">
 
-        <form role="form" id="frm_add_participant" method="post" action="<?= site_url("visitor/save") ?>" class="form-groups-bordered">
+        <form role="form" id="frm_add_visitor" method="post" action="<?= site_url("visitor/save") ?>" class="form-groups-bordered">
 
           <div class="form-group hidden error_container">
             <div class="col-xs-12 error">
@@ -176,7 +176,7 @@
     // if you have reached the end of the form... :
     if (currentTab >= $x.length) {
       //...the form gets submitted:
-      $("#frm_add_participant").submit();
+      $("#frm_add_visitor").submit();
       return false;
     }
     // Otherwise, display the correct tab:
