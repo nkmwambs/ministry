@@ -1,5 +1,5 @@
 <?php
-$participant_sections = array_pop($result);
+$visitor_sections = array_pop($result);
 ?>
 <div class="row">
     <div class="col-xs-12 btn-container">
@@ -34,8 +34,8 @@ $participant_sections = array_pop($result);
 
                         <ul class="nav nav-tabs" id="myTabs">
                             <li class="active"><a href="#view_event" id="view_event_tab" data-toggle="tab"><?= lang('event.view_event'); ?></a></li>
-                            <li><a href="#list_participants" data-item_id="<?= $id; ?>" data-feature_plural="participants" onclick="childrenAjaxLists(this)" id="list_participants_tab" data-toggle="tab"><?= lang('participant.list_participants'); ?></a></li>
-                            <li><a href="#list_visitors" data-item_id="<?= $id; ?>" data-feature_plural="visitors" onclick="childrenAjaxLists(this)" id="list_visitors_tab" data-toggle="tab">List Visitors</a></li>
+                            <li><a href="#list_participants" data-item_id="<?= $id; ?>" data-link_id="list_participants" data-feature_plural="participants" onclick="childrenAjaxLists(this)" id="list_participants_tab" data-toggle="tab"><?= lang('participant.list_participants'); ?></a></li>
+                            <li><a href="#list_visitors" data-item_id="<?= $id; ?>" data-link_id="list_visitors" data-feature_plural="visitors" onclick="childrenAjaxLists(this)" id="list_visitors_tab" data-toggle="tab"><?= lang('visitor.list_visitors'); ?></a></li>
                         </ul>
                     </div>
                 </div>
@@ -64,127 +64,12 @@ $participant_sections = array_pop($result);
                         </form>
                     </div>
 
-                    <!-- <div class="tab-pane ajax_main" id="list_participants">
-                        <div class='info'><?= lang('participant.no_participants_message') ?></div>
-                    </div> -->
-
                     <div class="tab-pane ajax_main" id="list_participants">
-                        <div class="row">
-                            <div class="col-xs-12 btn-container">
-                                <div class='btn btn-primary' onclick="showAjaxModal('participants','add', '<?= $id; ?>')">
-                                    <?= lang('participant.add_participant'); ?>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <?php if (!empty($participants)) { ?>
-                                    <table class="table table-striped datatable">
-                                        <thead>
-                                            <tr>
-                                                <th><?= lang('participant.participant_action') ?></th>
-                                                <th><?= lang('participant.participant_member_id') ?></th>
-                                                <th><?= lang('participant.participant_payment_id') ?></th>
-                                                <th><?= lang('participant.participant_payment_code') ?></th>
-                                                <th><?= lang('participant.participant_registration_amount') ?></th>
-                                                <th><?= lang('participant.participant_status') ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($participants as $participant) { ?>
-                                                <tr>
-                                                    <td>
-                                                        <span class='action-icons' title="View participant">
-                                                            <a href="<?= site_url("participants/view/" . hash_id($participant['id'])); ?>"><i class='fa fa-search'></i></a>
-                                                        </span>
-                                                        <span class='action-icons' title="Edit participant">
-                                                            <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($participant['id']); ?>')" class='fa fa-pencil'></i>
-                                                        </span>
-                                                        <span class='action-icons' title="Delete participant"><i class='fa fa-trash'></i></span>
-                                                    </td>
-                                                    <td><?= $participant['member_id']; ?></td>
-                                                    <td><?= $participant['payment_id']; ?></td>
-                                                    <td><?= $participant['payment_code']; ?></td>
-                                                    <td><?= $participant['registration_amount']; ?></td>
-                                                    <td><?= $participant['status']; ?></td>
-                                                </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                <?php } else { ?>
-                                    <div class="tab-pane ajax_main" id="list_participants">
-                                        <div class='info'><?= lang('participant.no_participants_message') ?></div>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                        </div>
+                        <div class='info'><?= lang('participant.no_participants_message') ?></div>
                     </div>
 
-
-                    <div class="tab-pane" id="list_visitors">
-                        <div class="row">
-                            <div class="col-xs-12 btn-container">
-                                <div class='btn btn-primary' onclick="showAjaxModal('visitors','add', '<?= $id; ?>')">
-                                    <?= lang('visitor.add_visitor'); ?>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <?php if (!empty($visitors)) { ?>
-                                    <table class="table table-striped datatable">
-                                        <thead>
-                                            <tr>
-                                                <th><?= lang('visitor.visitor_action') ?></th>
-                                                <th><?= lang('visitor.visitor_first_name') ?></th>
-                                                <th><?= lang('visitor.visitor_last_name') ?></th>
-                                                <th><?= lang('visitor.visitor_phone') ?></th>
-                                                <th><?= lang('visitor.visitor_email') ?></th>
-                                                <th><?= lang('visitor.visitor_gender') ?></th>
-                                                <th><?= lang('visitor.visitor_date_of_birth') ?></th>
-                                                <!-- <th><?= lang('visitor.visitor_event_id') ?></th> -->
-                                                <th><?= lang('visitor.visitor_payment_id') ?></th>
-                                                <th><?= lang('visitor.visitor_payment_code') ?></th>
-                                                <th><?= lang('visitor.visitor_registration_amount') ?></th>
-                                                <th><?= lang('visitor.visitor_status') ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($visitors as $visitor) { ?>
-                                                <tr>
-                                                    <td>
-                                                        <span class='action-icons' title="View visitor">
-                                                            <a href="<?= site_url("visitors/view/" . hash_id($visitor['id'])); ?>"><i class='fa fa-search'></i></a>
-                                                        </span>
-                                                        <span class='action-icons' title="Edit visitor">
-                                                            <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($visitor['id']); ?>')" class='fa fa-pencil'></i>
-                                                        </span>
-                                                        <span class='action-icons' title="Delete visitor"><i class='fa fa-trash'></i></span>
-                                                    </td>
-                                                    <td><?= $visitor['first_name']; ?></td>
-                                                    <td><?= $visitor['last_name']; ?></td>
-                                                    <td><?= $visitor['phone']; ?></td>
-                                                    <td><?= $visitor['email']; ?></td>
-                                                    <td><?= $visitor['gender']; ?></td>
-                                                    <td><?= $visitor['date_of_birth']; ?></td>
-                                                    <!-- <td><?= $visitor['event_id']; ?></td> -->
-                                                    <td><?= $visitor['payment_id']; ?></td>
-                                                    <td><?= $visitor['payment_code']; ?></td>
-                                                    <td><?= $visitor['registration_amount']; ?></td>
-                                                    <td><?= $visitor['status']; ?></td>
-                                                </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                <?php } else { ?>
-                                    <div class="tab-pane ajax_main" id="list_visitors">
-                                        <div class='info'><?= lang('visitor.no_visitors_message') ?></div>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                        </div>
+                    <div class="tab-pane ajax_main" id="list_visitors">
+                        <div class='info'><?= lang('visitor.no_visitors_message') ?></div>
                     </div>
 
                 </div>

@@ -24,12 +24,12 @@ class Participant extends BaseController
             $participants = $this->model->select('participants.id,member_id,event_id,payment_id,payment_code,registration_amount,status')
             ->where('event_id',hash_id($id,'decode'))
             ->join('events','events.id=participants.event_id')
-            ->orderBy('events.created_at desc')
+            ->orderBy('participants.created_at desc')
             ->findAll();
         }else{
             $participants = $this->model->select('participants.id,member_id,event_id,payment_id,payment_code,registration_amount,status')
             ->join('events','events.id=participants.event_id')
-            ->orderBy('events.created_at desc')
+            ->orderBy('participants.created_at desc')
             ->findAll();
         }
        
@@ -74,13 +74,13 @@ class Participant extends BaseController
         }
 
         $event_id = hash_id($this->request->getPost('event_id'),'decode');
-        $member_id = hash_id($this->request->getPost('member_id'), 'decode');
-        $payment_id = hash_id($this->request->getPost('payment_id'), 'decode');
+        // $member_id = hash_id($this->request->getPost('member_id'), 'decode');
+        // $payment_id = hash_id($this->request->getPost('payment_id'), 'decode');
 
         $data = [
-            'member_id' => $member_id,
+            'member_id' => $this->request->getPost('member_id'),
             'event_id' => $event_id,
-            'payment_id' => $payment_id,
+            'payment_id' => $this->request->getPost('payment_id'),
             'payment_code' => $this->request->getPost('payment_code'),
             'registration_amount' => $this->request->getPost('registration_amount'),
             'status' => $this->request->getPost('status'),
@@ -119,12 +119,12 @@ class Participant extends BaseController
         $hashed_id = $this->request->getVar('id');
         $hashed_event_id = $this->request->getVar('event_id');
 
-        $encoded_member_id = hash_id($this->request->getVar('member_id'), 'encode');
-        $encoded_payment_id = hash_id($this->request->getVar('payment_id'), 'encode');
+        // $encoded_member_id = hash_id($this->request->getVar('member_id'), 'encode');
+        // $encoded_payment_id = hash_id($this->request->getVar('payment_id'), 'encode');
 
         $update_data = [
-            'member_id' => $encoded_member_id,
-            'payment_id' => $encoded_payment_id,
+            'member_id' => $this->request->getPost('member_id'),
+            'payment_id' => $this->request->getPost('payment_id'),
             'payment_code' => $this->request->getPost('payment_code'),
             'registration_amount' => $this->request->getPost('registration_amount'),
             'status' => $this->request->getPost('status'),
@@ -144,7 +144,7 @@ class Participant extends BaseController
             return view("participant/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url("participant/view/".$hashed_id))->with('message', 'Event updated successfully!');
+        return redirect()->to(site_url("participant/view/".$hashed_id))->with('message', 'Participant updated successfully!');
     }
 
     // private function computeNextHierarchicalLevel($denomination_id){

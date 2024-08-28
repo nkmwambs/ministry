@@ -1,9 +1,9 @@
 <?php 
-$participant_sections = array_pop($result);
+$visitor_sections = array_pop($result);
 ?>
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("events"); ?>" class="btn btn-info">
+        <a href="<?= site_url("events/view/".$id.'#list_participants'); ?>" class="btn btn-info">
             <?= lang('participant.back_button') ?>
         </a>
     </div>

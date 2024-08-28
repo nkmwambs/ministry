@@ -18,8 +18,20 @@ return [
     'visitor_payment_code' => 'Payment Code',
     'visitor_registration_amount' => 'Registration Amount',
     'visitor_status' => 'Status',
+    'select_visitor' => 'Select Visitor',
+
+    'save_visitor' => 'Save',
+    'save_and_new_visitor' => 'Save and New',
+    'reset_visitor_form' => 'Reset',
+
+    'update_visitor' => 'Update',
+    'update_and_continue' => 'Update and Continue',
+    'refresh_visitor_form' => 'Refresh',
+
+    'back_button' => 'Back',
+    'edit_again_button' => 'Edit Again',
+    'edit_button' => 'Edit',
 
     'no_visitors_message' => 'There are no visitors available',
 
-    'select_event' => 'Select Event',
 ];
