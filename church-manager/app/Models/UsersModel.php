@@ -12,7 +12,7 @@ class UsersModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["denomination_id","first_name","last_name","email","gender","password"];
+    protected $allowedFields    = ["id","denomination_id","first_name","last_name","phone","email","gender","password","roles","is_system_admin"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,11 +44,15 @@ class UsersModel extends Model  implements \App\Interfaces\ModelInterface
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    function getAll(){
+    public function getAll(){
 
     }
 
-    function getOne($id){
+    public function getOne($id){
         
+    }
+
+    public function findByEmail($email) {
+        return $this->where('email', $email)->first();
     }
 }

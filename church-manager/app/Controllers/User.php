@@ -34,4 +34,8 @@ class User extends BaseController
         $page_data['action'] = 'add';
         return view('index', $page_data);
     }
+
+    // public function post() {
+    //     $data = $this->request-getPost();
+    // }
 }
