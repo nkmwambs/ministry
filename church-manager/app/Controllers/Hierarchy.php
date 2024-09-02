@@ -83,11 +83,14 @@ class Hierarchy extends BaseController
         $this->parent_id = $hashed_denomination_id;
 
         if($this->request->isAJAX()){
+            $denominationsModel = new \App\Models\DenominationsModel();
+
             $this->feature = 'hierarchy';
             $this->action = 'list';
             $data = $this->model->orderBy("created_at desc")->where('denomination_id', $denomination_id)->findAll();
 
             $page_data = parent::page_data($data, $hashed_denomination_id);
+            $page_data['number_of_denomination_assemblies'] = $denominationsModel->getDenominationAssembliesCount(hash_id($hashed_denomination_id,'decode'));
 
             return view("hierarchy/list", $page_data);
         }
