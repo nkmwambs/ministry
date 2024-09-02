@@ -293,12 +293,14 @@ class Entity extends BaseController
                 $entityNumber = "$parentEntityNumber/$entityCount";
             } 
         }
-
-
         
         // If the entity number already exists, increment the count and try again
 
         return $entityNumber;
 
+    }
+
+    public function getDenominationLowestEntities($numeric_denomination_id){
+       return  $this->response->setJSON($this->model->getLowestEntities($numeric_denomination_id));
     }
 }

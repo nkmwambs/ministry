@@ -33,4 +33,5 @@ foreach ($features as $featureObj) {
 }
 
 $routes->get('entities/items/(:segment)/(:segment)', "Entity::getParentEntitiesByDenomination/$1/$2");
+$routes->get('entities/lowestEntities/(:segment)', "Entity::getDenominationLowestEntities/$1");
 $routes->get('hierarchies/denomination/(:segment)', "Hierarchy::getHierarchiesByDenominationId/$1");
