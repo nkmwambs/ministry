@@ -43,7 +43,9 @@ class Hierarchy extends BaseController
         $page_data['action'] = 'list';
         
         if ($this->request->isAJAX()) {
+            $denominationsModel = new \App\Models\DenominationsModel();
             $page_data['parent_id'] = $parent_id; 
+            $page_data['number_of_denomination_assemblies'] = $denominationsModel->getDenominationAssembliesCount(hash_id($parent_id,'decode'));
             return view('hierarchy/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);

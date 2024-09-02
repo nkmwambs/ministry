@@ -30,10 +30,12 @@ class DenominationLibrary implements \App\Interfaces\LibraryInterface {
     function editExtraData(&$page_data){
         $id = hash_id($page_data['id'], 'decode');
         
-        $countDenominationEntities = $this->model->where('denominations.id', $id)
-        ->join('hierarchies','hierarchies.denomination_id=denominations.id')
-        ->join('entities','entities.hierarchy_id=hierarchies.id')
-        ->countAllResults();
+        $countDenominationEntities = $this->model->getDenominationEntitiesCount($id);
+        
+        // $this->model->where('denominations.id', $id)
+        // ->join('hierarchies','hierarchies.denomination_id=denominations.id')
+        // ->join('entities','entities.hierarchy_id=hierarchies.id')
+        // ->countAllResults();
 
         $page_data['denomination_entities_count'] = $countDenominationEntities;
 
