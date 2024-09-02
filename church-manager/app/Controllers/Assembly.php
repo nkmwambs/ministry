@@ -93,10 +93,30 @@ class Assembly extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'name' => 'required|min_length[10]|max_length[255]',
-            'entity_id'    => 'required|max_length[255]',
-            'location' => 'required',
-            'is_active' => 'required|min_length[2]|max_length[3]',
+            'name' => [
+                'rules' =>'required|min_length[10]|max_length[255]',
+                'label' => lang('assembly.assembly_name'),
+                'errors' => [
+                   'required' => 'The {field} field is required.',
+                   'min_length' => 'The {field} field must be at least {param} characters long.',
+                   'max_length' => 'The {field} field must not exceed {param} characters long.'
+                ]
+            ],    
+            'entity_id'    => [
+                'rules' =>'required|max_length[255]',
+                'label' => lang('assembly.assembly_entity_id'),
+                'errors' => [
+                   'required' => 'The {field} field is required.',
+                   'max_length' => 'The {field} field must not exceed {param} characters long.'
+                ]
+                ],
+            'location' => [
+                'rules' =>'required',
+                'label' => lang('assembly.assembly_location'),
+                'errors' => [
+                   'required' => 'The {field} field is required.',
+                ]
+            ]
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -104,22 +124,22 @@ class Assembly extends BaseController
             $validationErrors = $validation->getErrors();
 
             // Renaming specific keys
-            $renamedErrors = [];
-            foreach ($validationErrors as $key => $message) {
-                switch ($key) {
-                    case 'minister_number':
-                        $renamedErrors['number'] = $message;
-                        break;
-                    case 'is_active':
-                        $renamedErrors['active'] = $message;
-                        break;
-                    default:
-                        $renamedErrors[$key] = $message; // Keep other keys unchanged
-                        break;
-                }
-            }
+            // $renamedErrors = [];
+            // foreach ($validationErrors as $key => $message) {
+            //     switch ($key) {
+            //         case 'minister_number':
+            //             $renamedErrors['number'] = $message;
+            //             break;
+            //         case 'is_active':
+            //             $renamedErrors['active'] = $message;
+            //             break;
+            //         default:
+            //             $renamedErrors[$key] = $message; // Keep other keys unchanged
+            //             break;
+            //     }
+            // }
 
-            return response()->setJSON(['errors' => $renamedErrors]);
+            return response()->setJSON(['errors' => $validationErrors]);
         }
 
         $data = [
@@ -128,10 +148,10 @@ class Assembly extends BaseController
             'location' => $this->request->getPost('location'),
             'entity_id' => $this->request->getPost('entity_id'),
             'assembly_leader' => $this->request->getPost('assembly_leader'),
-            'is_active' => $this->request->getPost('is_active'),
+            'is_active' => 'yes'
         ];
 
-        $this->model->insert($data);
+        $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
 
         if($this->request->isAJAX()){

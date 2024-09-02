@@ -94,7 +94,7 @@
                         </label>
                         <div class="col-xs-6">
                             <select class="form-control" name="entity_id" id="entity_id">
-                                <option value="0">Select Entity</option>
+                                <option value="">Select Entity</option>
                                 <?php 
                                 if(!empty($lowest_entities)){
                                     foreach ($lowest_entities as $entity) :
