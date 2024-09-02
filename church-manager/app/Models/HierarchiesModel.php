@@ -66,6 +66,11 @@ class HierarchiesModel extends Model  implements \App\Interfaces\ModelInterface
         }
     }
 
+    function getLowestHierarchyLevel($denomination_id){
+        $lowestHierarchyLevel = $this->where('denomination_id', $denomination_id)->orderBy('level', 'desc')->first();
+        return $lowestHierarchyLevel['level'];
+    }
+
 
     // function createHeadOfficeEntity(array $data){
     //     if($data['data']['level'] == 1){

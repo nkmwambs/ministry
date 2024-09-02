@@ -12,6 +12,30 @@ class Denomination extends BaseController
         $this->model = new \App\Models\DenominationsModel();
     }
 
+    public function index()
+    {
+        $data = [];
+
+        if(!session()->get('user_denomination_id')){
+            if(method_exists($this->model, 'getAll')){
+                $data = $this->model->getAll();
+            }else{
+                $data = $this->model->findAll();
+            }
+        }else{
+            $data = $this->model->where('id', session()->get('user_denomination_id'))->findAll();
+        }
+        
+
+        if ($this->request->isAJAX()) {
+            // $page_data['id'] = $id;
+            $page_data = $this->page_data($data);
+            return view("$this->feature/list", $page_data);
+        }
+
+        return view('index', $this->page_data($data));
+    }
+
     public function view($id): string {
         $data = $this->model->getOne(hash_id($id,'decode'));
         if(array_key_exists('id',$data)){

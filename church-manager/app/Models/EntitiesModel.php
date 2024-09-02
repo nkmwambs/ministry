@@ -45,7 +45,7 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
     protected $afterDelete    = [];
 
     public function getAll(){
-        $library = new \App\Libraries\HierarchyLibrary();
+        $library = new \App\Libraries\EntityLibrary();
         $listQueryFields = $library->setListQueryFields();
 
         if(!empty($listQueryFields)){
@@ -71,6 +71,19 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
             ->select('id,hierarchy_id,entity_number,name,parent_id,entity_leader')
             ->findAll();
 
+        return $entities;
+    }
+
+    function getLowestEntities($denomination_id){
+
+        $hierarchiesModel = new \App\Models\HierarchiesModel();
+        $lowestHierachyLevel = $hierarchiesModel->getLowestHierarchyLevel($denomination_id );
+
+        $entities = $this->where(['hierarchies.level' => $lowestHierachyLevel , 'denomination_id' => $denomination_id])
+        ->select('entities.id, CONCAT(entities.entity_number," - ", entities.name) name')
+        ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
+        ->findAll();
+        
         return $entities;
     }
 }
