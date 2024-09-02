@@ -128,12 +128,15 @@ abstract class BaseController extends Controller
     public function index()
     {
         $data = [];
-
-        if(method_exists($this->model, 'getAll')){
-            $data = $this->model->getAll();
+        
+        if(method_exists($this->model, 'getListData')){
+            $data = $this->model->getListData();
         }else{
+            method_exists($this->model, 'getAll') ?
+            $data = $this->model->getAll() :
             $data = $this->model->findAll();
         }
+        
 
         if ($this->request->isAJAX()) {
             // $page_data['id'] = $id;

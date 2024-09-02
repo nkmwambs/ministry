@@ -68,4 +68,24 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
             return $this->where('id', $id)->first();
         }
     }
+
+    public function getListData(){
+
+        $library = new \App\Libraries\AssemblyLibrary();
+        $listQueryFields = $library->setListQueryFields();
+
+        $assemblies = [];
+
+        if(session()->get('user_denomination_id')){
+            $assemblies = $this->where(['hierarchies.denomination_id' => session()->get('user_denomination_id')])
+            ->select(!empty($listQueryFields) ? $listQueryFields : '*')
+            ->join('entities', 'entities.id = assemblies.entity_id')
+            ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id')
+            ->findAll();
+        }else{
+            $assemblies = $this->getAll();
+        }
+
+        return $assemblies;
+    }
 }
