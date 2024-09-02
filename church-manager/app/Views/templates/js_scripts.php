@@ -1,5 +1,12 @@
 <script>
 
+    const base_url = '<?=site_url();?>'
+
+    $(".modal").draggable({
+        handle: ".modal-header",
+    });
+    
+    $(".modal").resizable();
 
     function getRequest(url, on_success){
         $.ajax({
@@ -38,11 +45,12 @@
     function childrenAjaxLists($this){
         const id = $($this).data('item_id');
         const plural_feature = $($this).data('feature_plural');
-        const url = "<?= site_url();?>/"+plural_feature+"/" + id;
+        const url = "<?= site_url();?>"+plural_feature+"/" + id;
         const link_id = $($this).data('link_id');
 
+        // alert(url)
+
         getRequest(url, function(response) {
-            // alert(plural_feature);
             $('#'+link_id).html(response);
             $('#'+link_id + " .datatable").DataTable({
                 stateSave: true
@@ -51,26 +59,24 @@
         });
     }
 
-    function showAjaxModal(plural_feature, action, id = ''){
+    
+    function showAjaxModal(routes_group, action, id_segment = 0){
 
-        const url = `<?=site_url()?>${plural_feature}/modal/${plural_feature}/${action}/${id}`
+        const url = `${base_url}${routes_group}/modal/${routes_group}/${action}/${id_segment}`
+        // const url = `${base_url}${routes_group}/${action}`
 
-        $('#modal_ajax').on('shown.bs.modal', function() {
-            $('.datepicker').css('z-index','10200');
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd',
-                container: '#modal_ajax modal-body'
-            })
-        });
-                
-        
          $.ajax({
              url,
              success: function(response) {
-                $('#modal_ajax .modal-title').html(capitalizeFirstLetter(action) + ' ' + capitalizeFirstLetter(plural_feature));
+                $('#modal_ajax').on('shown.bs.modal', function() {
+                    $('.datepicker').css('z-index','10200');
+                    $('.datepicker').datepicker({
+                        format: 'yyyy-mm-dd',
+                        container: '#modal_ajax modal-body'
+                    })
+                });
+                
                 $('#modal_ajax .modal-body').html(response);
-                $("#modal_save").data('item_id', id)
-                $("#modal_save").data('feature_plural', plural_feature)
                 $("#modal_ajax").modal("show");
              }
          });
@@ -104,7 +110,7 @@
                 
             }
         });
-}
+    }
 
 
     function capitalizeFirstLetter(word){
@@ -128,7 +134,7 @@
         const frm = $('#' + frm_id)
         const data = frm.serializeArray()
         const url = frm.attr('action')
-        // alert(url)
+        
         $.ajax({
             url,
             type: 'POST',
@@ -137,6 +143,9 @@
                 $("#overlay").css("display", "block");
             },
             success: function(response){
+                
+                // console.log(response);
+
                 if(typeof response =='object')
                 {
 
@@ -171,13 +180,15 @@
                     const list_alert_container = $('.list-alert-container');
                     if(list_alert_container.hasClass('hidden')){
                         list_alert_container.removeClass('hidden');
-                        list_alert_container.find('.info').html('Record created successfully')
+                        list_alert_container.find('.info').html('Operation successfully')
                     }
                 }
-                
-                $(".datatable").DataTable({
-                    stateSave: true
-                });
+
+                if (!DataTable.isDataTable('.datatable')) {
+                    $(".datatable").DataTable({
+                        stateSave: true
+                    });
+                }
 
                 $("#overlay").css("display", "none");
             }

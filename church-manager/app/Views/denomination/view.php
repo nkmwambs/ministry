@@ -32,7 +32,7 @@ $hierarchy_sections = array_pop($result);
 							
 							<ul class="nav nav-tabs" id ="myTabs">
 								<li class = "active"><a href="#view_denomination" id="view_denomination_tab" data-toggle="tab"><?= lang('denomination.view_denomination'); ?></a></li>
-								<li><a href="#list_hierarchies" data-item_id = "<?=$id;?>" data-link_id="list_hierarchies" data-feature_plural="hierarchies" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li>
+								<li><a href="#list_hierarchies" data-item_id = "<?=$parent_id;?>" data-link_id="list_hierarchies" data-feature_plural="hierarchies" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li>
                                 
                             </ul>
 					</div>
@@ -80,32 +80,32 @@ $hierarchy_sections = array_pop($result);
     createEntityTabs()
     });
 
-    function createEntityTabs(){
-    const myTabs = $('#myTabs')
-    const tab_content = $(".tab-content")
+     function createEntityTabs(){
+        const myTabs = $('#myTabs')
+        const tab_content = $(".tab-content")
+        const parent_id = "<?=$parent_id;?>"
 
-    const url = "<?=site_url();?>hierarchies/denomination/<?=$id;?>"
+        const url = "<?=site_url();?>hierarchies/denomination/" + parent_id
 
-    fetch(url)
-    .then(response => response.json())
-    .then(hierarchies => {
-        $.each(hierarchies, function (index, elem) {
-            const plural_name = pluralize(elem.name).replace(/\s/g, '')
-            if($('.li_'+plural_name).length == 0){
-                myTabs.append('<li data-item_id = "'+elem.id+'" data-link_id="list_'+ plural_name +'" data-feature_plural="entities" onclick="childrenAjaxLists(this)" class = "li_'+plural_name+'"><a href="#list_'+plural_name+'" id="list_'+plural_name+'_tab" data-toggle="tab">' + pluralize(elem.name) + '</a></li>')
-                tab_content.append('<div id = "list_'+plural_name+'" class = "tab-pane"><div class = "info">There are not ' + pluralize(elem.name) + ' available</div></div>')
-            }
-        })
+        fetch(url)
+        .then(response => response.json())
+        .then(hierarchies => {
+            $.each(hierarchies, function (index, elem) {
+                const plural_name = pluralize(elem.name).replace(/\s/g, '')
+                if($('.li_'+plural_name).length == 0){
+                    myTabs.append('<li data-item_id = "'+elem.id+'" data-link_id="list_'+ plural_name +'" data-feature_plural="entities" onclick="childrenAjaxLists(this)" class = "li_'+plural_name+'"><a href="#list_'+plural_name+'" id="list_'+plural_name+'_tab" data-toggle="tab">' + pluralize(elem.name) + '</a></li>')
+                    tab_content.append('<div id = "list_'+plural_name+'" class = "tab-pane"><div class = "info">There are not ' + pluralize(elem.name) + ' available</div></div>')
+                }
+            })
+     })}
+    
+     $("#myTabs").on('click', function(ev){
+        const tabs = $(this)
+        const target_tab = $(ev.target).attr('href')
+        const tab_content = $('.tab-content')
+        const tab_panes = tab_content.find('.tab-pane')
 
-    })
-    }
-
-    $("#myTabs").on('click', function(ev){
-    const tabs = $(this)
-    const target_tab = $(ev.target).attr('href')
-    const tab_content = $('.tab-content')
-
-    const tab_panes = tab_content.find('.tab-pane')
+    // const tab_panes = tab_content.find('.tab-pane')
 
     $.each(tab_panes, function (index, pane){
         $(pane).removeClass('ajax_main')

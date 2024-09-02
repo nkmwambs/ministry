@@ -20,8 +20,10 @@ class Denomination extends BaseController
 
         $hierarchyModel = new \App\Models\HierarchiesModel();
         $data['other_details'] = $hierarchyModel->where('denomination_id', hash_id($id,'decode'))->where('level <>', 1)->findAll();
+        
+        $this->parent_id = $id;
 
-        $page_data = parent::page_data($data, $id);
+        $page_data = parent::page_data($data);
     
         return view('index', $page_data);
     }
@@ -36,8 +38,6 @@ class Denomination extends BaseController
             'email'    => 'required|valid_email|max_length[255]',
             'code' => 'required|min_length[3]',
         ]);
-
-        // log_message('error', json_encode($this->request->getPost()));
 
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());

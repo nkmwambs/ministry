@@ -13,13 +13,15 @@ class Hierarchy extends BaseController
         
         $this->model = new \App\Models\HierarchiesModel();
     }
-    public function index($id = 0): string
+    public function index($parent_id = 0): string
     {
+        // Parent Id the denomination primary key of hierarchies
+
         $hierarchies = [];
 
-        if($id > 0){
+        if($parent_id > 0){
             $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level, description')
-            ->where('denomination_id',hash_id($id,'decode'))
+            ->where('denomination_id',hash_id($parent_id,'decode'))
             ->join('denominations','denominations.id=hierarchies.denomination_id')
             ->orderBy('hierarchies.created_at desc')
             ->findAll();
@@ -41,7 +43,7 @@ class Hierarchy extends BaseController
         $page_data['action'] = 'list';
         
         if ($this->request->isAJAX()) {
-            $page_data['id'] = $id;
+            $page_data['parent_id'] = $parent_id; 
             return view('hierarchy/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
@@ -50,14 +52,7 @@ class Hierarchy extends BaseController
         return view('index', $page_data);
     }
 
-    public function add($id = 0): string {
-        $page_data['feature'] = 'hierarchy';
-        $page_data['action'] = 'add';
-        return view('index', $page_data);
-    }
-
     function post(){
-        // log_message('error', json_encode($this->request->getPost()));
         $insertId = 0;
 
         $validation = \Config\Services::validation();
@@ -67,11 +62,9 @@ class Hierarchy extends BaseController
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
-        // log_message('error', json_encode($this->request->getPost()));
         $hashed_denomination_id = $this->request->getPost('denomination_id');
         $denomination_id = hash_id($hashed_denomination_id,'decode');
 
@@ -82,19 +75,18 @@ class Hierarchy extends BaseController
             'description' => $this->request->getPost('description'),
         ];
 
-        // log_message('error', json_encode($data));
-
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
+
+        $this->parent_id = $hashed_denomination_id;
 
         if($this->request->isAJAX()){
             $this->feature = 'hierarchy';
             $this->action = 'list';
-            $records = $this->model->orderBy("created_at desc")->where('denomination_id', $denomination_id)->findAll();
-            $page_data = parent::page_data($records);
-            $page_data['id'] = hash_id($denomination_id,'encode');
-            // log_message('error', json_encode($page_data));
-            // hashed_denomination_id
+            $data = $this->model->orderBy("created_at desc")->where('denomination_id', $denomination_id)->findAll();
+
+            $page_data = parent::page_data($data, $hashed_denomination_id);
+
             return view("hierarchy/list", $page_data);
         }
 
@@ -106,14 +98,14 @@ class Hierarchy extends BaseController
         $hashed_id = $this->request->getVar('id');
         $hashed_denomination_id = $this->request->getVar('denomination_id');
 
+
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'name' => 'required|min_length[10]|max_length[255]',
-            'email'    => 'required|valid_email|max_length[255]',
+            'name' => 'required|max_length[255]',
+            'description'    => 'required|max_length[255]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
@@ -121,6 +113,7 @@ class Hierarchy extends BaseController
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
         ];
+
         
         $this->model->update(hash_id($hashed_id,'decode'), $update_data);
 
@@ -129,11 +122,15 @@ class Hierarchy extends BaseController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('name,description')
+            ->select('id,name,description,level')
             ->orderBy("created_at desc")
             ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))
             ->findAll();
-            return view("hierarchy/list", parent::page_data($records));
+
+            $page_data = parent::page_data($records, $hashed_denomination_id);
+            // $page_data['parent_id'] = $hashed_denomination_id;
+
+            return view("hierarchy/list", $page_data);
         }
         
         return redirect()->to(site_url("hierarchies/view/".$hashed_id))->with('message', 'Hierarchy updated successfully!');

@@ -46,6 +46,7 @@ abstract class BaseController extends Controller
     protected $feature = '';
     protected $action = '';
     protected $id = 0;
+    protected $parent_id = 0;
     protected $uri;
     protected $segments;
     protected $session;
@@ -53,6 +54,8 @@ abstract class BaseController extends Controller
 
     protected $library = null;
     protected $listQueryFields = [];
+
+    protected $feature_page_data = [];
 
     /**
      * @return void
@@ -93,11 +96,13 @@ abstract class BaseController extends Controller
         ];
     }
 
-    protected function page_data($data = [], $id = 0){
+    protected function page_data($data = [], $id = ''){
         $page_data['result'] = $data;
         $page_data['feature'] = $this->feature;
         $page_data['action'] = $this->action;
-        $page_data['id'] = $id;
+        $page_data['id'] = $this->id;
+        $page_data['parent_id'] = $this->parent_id;
+
         $view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature.DIRECTORY_SEPARATOR.$this->action.'.php';
         $view = file_exists($view_path) ?  "$this->feature/$this->action" : "templates/$this->action";
 
@@ -113,7 +118,7 @@ abstract class BaseController extends Controller
             $page_data['fields'] = $table_field;
         }
 
-        $page_data['content'] = view($view, $page_data);
+        $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
 
         return $page_data;
     }
@@ -138,41 +143,54 @@ abstract class BaseController extends Controller
     }
     
 
-    public function add(): string {
-        return view('index', $this->page_data());
-    }
-
     public function view($id): string {
         $data = $this->model->getOne(hash_id($id,'decode'));
         if(array_key_exists('id',$data)){
             unset($data['id']);
         }
 
-        return view('index', $this->page_data($data, $id));
+        return view('index', $this->page_data($data));
     }
 
-    public function edit($id): string {
-        $data = $this->model->getOne(hash_id($id,'decode'));
-        return view('index', $this->page_data($data, $id));
-    }
-
-    public function modal($plural_feature, $action, $id = ''){
-        $page_data['id'] = $id;
-        // log_message('error',json_encode($this->request->getPost()));
-        if($action == 'add'){
-            
-            if(method_exists($this->library, 'getLookUpItems')){
-                $page_data['lookup_items'] = $this->library->getLookUpItems(hash_id($id,'decode'));
-            }
-
-            return view(singular($plural_feature).DS.$action, $page_data);
-        }elseif($action == 'list'){
-            $page_data['result'] = $this->model->getItemsByParentId(hash_id($id,'decode'));
-            $page_data['feature'] = singular($plural_feature);
-            return view(singular($plural_feature).DS.$action, $page_data);
-        }else{
-            $page_data['result'] = $this->model->getOne(hash_id($id,'decode'));
-            return view(singular($plural_feature).DS.$action, $page_data);
+    public function edit(): string {
+        $data = $this->model->getOne(hash_id($this->id,'decode'));
+        $page_data = $this->page_data($data);
+        
+        if(method_exists($this->library,'editExtraData')){
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->editExtraData($page_data);
+            // log_message('error', json_encode($page_data));
         }
+
+        return view("$this->feature/edit", $page_data);
     }
+
+    public function add(): string {
+        $page_data = $this->page_data();
+        $page_data['parent_id'] = $this->parent_id;
+
+        if(method_exists($this->library,'addExtraData')){
+            // Note the addExtraData updates the $page_data by reference
+            $this->library->addExtraData($page_data);
+        }
+
+        return view("$this->feature/add", $page_data);
+    }
+
+    function modal($features, $action, $id = ""): string {        
+        $feature = singular($features);
+        $this->feature = $feature;
+        $this->action = $action;
+
+        if($id != ""){
+            if($action == 'add'){
+                $this->parent_id = $id;
+            }else{
+                $this->id = $id;
+            }
+        }
+  
+        return $this->$action();
+    }
+
 }
