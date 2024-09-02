@@ -8,12 +8,13 @@ return [
     'delete_assembly' => 'Delete Assembly',
 
     'assembly_action' => 'Action',
-    'assembly_name' => 'Event Name',
+    'assembly_name' => 'Assembly Name',
     'assembly_planted_at' => 'Planted At',
     'assembly_location' => 'Location',
     'assembly_entity_id' => 'Entity Name',
     'assembly_leader' => 'Assembly Leader',
     'assembly_is_active' => 'Active',
+    'assembly_denomination_id' => 'Denomination Name',
 
     'save_assembly' => 'Save',
     'save_and_new_assembly' => 'Save and New',

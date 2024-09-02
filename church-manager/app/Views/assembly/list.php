@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add')">
+        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add', '<?=session()->get('user_denomination_id') ? hash_id(session()->get('user_denomination_id'), 'encode') : '';?>')">
             <?= lang('assembly.add_assembly'); ?>
         </div>
     </div>

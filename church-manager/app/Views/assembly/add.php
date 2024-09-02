@@ -69,10 +69,10 @@
                     ?>
                         <div class="form-group">
                             <label class="control-label col-xs-4" for="denomination_id">
-                                <?= lang('assembly.denominations') ?>
+                                <?= lang('assembly.assembly_denomination_id') ?>
                             </label>
                             <div class="col-xs-6">
-                                <select class="form-control" name="denomination_id" id="denomination_id">
+                                <select class="form-control" name="parent_id" id="denomination_id">
                                     <option value="0">Select Denomination</option>
                                     <?php foreach ($denominations as $denomination) :?>
                                     <option value="<?php echo $denomination['id'];?>"><?php echo $denomination['name'];?></option>
@@ -81,6 +81,10 @@
                             </div>
                         </div>
                     <?php 
+                        }else{
+                    ?>
+                        <input type="hidden" value="<?=session()->get('user_denomination_id');?>" name="parent_id"  id="denomination_id"/>
+                    <?php
                         }
                     ?>
 
@@ -91,9 +95,17 @@
                         <div class="col-xs-6">
                             <select class="form-control" name="entity_id" id="entity_id">
                                 <option value="0">Select Entity</option>
-                                <?php foreach ($lowest_entities as $entity) :?>
-                                <option value="<?php echo $entity['id'];?>"><?php echo $entity['name'];?></option>
-                                <?php endforeach;?>
+                                <?php 
+                                if(!empty($lowest_entities)){
+                                    foreach ($lowest_entities as $entity) :
+                                ?>
+                                    <option value="<?php echo $entity['id'];?>"><?php echo $entity['name'];?></option>
+                                <?php
+                                    endforeach;
+                                }
+                                    
+                                ?>
+                    
                             </select>
                         </div>
                     </div>
