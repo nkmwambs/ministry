@@ -12,7 +12,7 @@ class AssemblyLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['id','name','planted_at','location','entity_id','assembly_leader','is_active'];
+        $fields = ['assemblies.id','assemblies.name','assemblies.planted_at','assemblies.location','assemblies.entity_id','entities.name entity_name','assemblies.assembly_leader','assemblies.is_active'];
         return $fields;
     }
 

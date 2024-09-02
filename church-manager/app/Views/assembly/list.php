@@ -49,9 +49,9 @@
                     <td><?=$assembly['name'];?></td>
                     <td><?=$assembly['planted_at'];?></td>
                     <td><?=$assembly['location'];?></td>
-                    <td><?=$assembly['entity_id'];?></td>
-                    <td><?=$assembly['assembly_leader'];?></td>
-                    <td><?=$assembly['is_active'];?></td>
+                    <td><?=$assembly['entity_name'];?></td>
+                    <td><?=$assembly['assembly_leader'] ? $assembly['assembly_leader'] : lang('system.value_not_set');?></td>
+                    <td><?=ucfirst($assembly['is_active']);?></td>
                     <?php } ?>
             </tbody>
         </table>

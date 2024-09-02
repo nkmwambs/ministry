@@ -10,4 +10,5 @@ return [
     'users' => 'Users',
     'settings' => 'Settings',
     'back' => 'Back',
+    'value_not_set' => 'Value Not Set',
 ];

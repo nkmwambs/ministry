@@ -49,9 +49,12 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
         $listQueryFields = $library->setListQueryFields();
 
         if(!empty($listQueryFields)){
-            return $this->select($library->setListQueryFields())->orderBy('created_at desc')->findAll();
+            return $this->select($library->setListQueryFields())->orderBy('assemblies.created_at desc')
+            ->join('entities','entities.id=assemblies.entity_id')
+            ->join('ministers','ministers.id=assemblies.assembly_leader', 'left')
+            ->findAll();
         }else{
-            return $this->orderBy('created_at desc')->findAll();
+            return $this->orderBy('assemblies.created_at desc')->findAll();
         }
     }
 
