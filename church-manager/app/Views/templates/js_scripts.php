@@ -63,8 +63,7 @@
     function showAjaxModal(routes_group, action, id_segment = 0){
 
         const url = `${base_url}${routes_group}/modal/${routes_group}/${action}/${id_segment}`
-        // const url = `${base_url}${routes_group}/${action}`
-
+        // alert(url)
          $.ajax({
              url,
              success: function(response) {

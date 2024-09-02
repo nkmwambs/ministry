@@ -132,8 +132,10 @@ class Hierarchy extends BaseController
             ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))
             ->findAll();
 
+            $denominationsModel = new \App\Models\DenominationsModel();
             $page_data = parent::page_data($records, $hashed_denomination_id);
-            // $page_data['parent_id'] = $hashed_denomination_id;
+            $page_data['parent_id'] = $hashed_denomination_id;
+            $page_data['number_of_denomination_assemblies'] = $denominationsModel->getDenominationAssembliesCount(hash_id($hashed_denomination_id,'decode'));
 
             return view("hierarchy/list", $page_data);
         }
