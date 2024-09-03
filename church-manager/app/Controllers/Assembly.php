@@ -32,33 +32,46 @@ class Assembly extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'name' => 'required|min_length[10]|max_length[255]',
-            'entity_id' => 'required|max_length[255]',
-            'location' => 'required',
-            'is_active' => 'required|min_length[2]|max_length[3]',
+            'name' => [
+                'rules' => 'required|min_length[10]|max_length[255]',
+                'label' => 'Assembly Name',
+                'errors' => [
+                   'required' => 'Assembly Name is required.',
+                   'min_length' => 'Assembly Name must be at least {value} characters long.',
+                   'max_length' => 'Assembly Name cannot exceed {value} characters.'
+                ]
+            ],
+            'entity_id' => [
+                'rules' => 'required|max_length[255]',
+                'label' => 'Entity ID',
+                'errors' => [
+                   'required' => 'Entity ID is required.',
+                   'min_length' => 'Entity ID must be at least {value} characters long.',
+                ]
+            ],
+            'location' => [
+                'rules' => 'required',
+                'label' => 'Location',
+                'errors' => [
+                   'required' => 'Location is required.'
+                ]
+            ],
+            'is_active' => [
+                'rules' => 'required|min_length[2]|max_length[3]',
+                'label' => 'Is Active',
+                'errors' => [
+                   'required' => 'Is Active is required.',
+                   'min_length' => 'Is Active must be at least {value} characters long.',
+                   'max_length' => 'Is Active cannot exceed {value} characters.'
+                ]
+            ],
         ]);
 
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             $validationErrors = $validation->getErrors();
 
-            // Renaming specific keys
-            $renamedErrors = [];
-            foreach ($validationErrors as $key => $message) {
-                switch ($key) {
-                    case 'minister_number':
-                        $renamedErrors['number'] = $message;
-                        break;
-                    case 'is_active':
-                        $renamedErrors['active'] = $message;
-                        break;
-                    default:
-                        $renamedErrors[$key] = $message; // Keep other keys unchanged
-                        break;
-                }
-            }
-
-            return response()->setJSON(['errors' => $renamedErrors]);
+            return response()->setJSON(['errors' => $validationErrors]);
         }
 
         $update_data = [
@@ -122,23 +135,6 @@ class Assembly extends BaseController
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             $validationErrors = $validation->getErrors();
-
-            // Renaming specific keys
-            // $renamedErrors = [];
-            // foreach ($validationErrors as $key => $message) {
-            //     switch ($key) {
-            //         case 'minister_number':
-            //             $renamedErrors['number'] = $message;
-            //             break;
-            //         case 'is_active':
-            //             $renamedErrors['active'] = $message;
-            //             break;
-            //         default:
-            //             $renamedErrors[$key] = $message; // Keep other keys unchanged
-            //             break;
-            //     }
-            // }
-
             return response()->setJSON(['errors' => $validationErrors]);
         }
 

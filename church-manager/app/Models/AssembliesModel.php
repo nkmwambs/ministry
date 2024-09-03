@@ -69,6 +69,20 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
         }
     }
 
+    public function getViewData($numeric_id){
+        $library = new \App\Libraries\AssemblyLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())->where('assemblies.id', $numeric_id)
+            ->join('entities','entities.id = assemblies.entity_id')
+            ->join('hierarchies','hierarchies.id = entities.hierarchy_id')
+            ->first();
+        }else{
+            return $this->where('id', $this->id)->first();
+        }
+    }
+
     public function getListData(){
 
         $library = new \App\Libraries\AssemblyLibrary();

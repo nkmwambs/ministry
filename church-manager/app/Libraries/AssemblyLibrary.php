@@ -17,7 +17,7 @@ class AssemblyLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setViewQueryFields(){
-        $fields = ['id','name','planted_at','location','entity_id','assembly_leader','is_active'];
+        $fields = ['assemblies.id','assemblies.name','planted_at','location','entity_id','assembly_leader','assemblies.is_active','hierarchies.denomination_id as denomination_id'];
         return $fields;
     }
 
@@ -38,6 +38,24 @@ class AssemblyLibrary implements \App\Interfaces\LibraryInterface {
         $denominationsModel = new \App\Models\DenominationsModel();
         $denominations = $denominationsModel->findAll();
 
+        $page_data['denominations'] = $denominations;
+
+        return $page_data;
+    }
+
+    public function editExtraData(&$page_data){
+        $entities = [];
+
+        $denomination_id = $page_data['result']['denomination_id'];
+        
+        // Get lowest entities
+        $entitiesModel = new \App\Models\EntitiesModel();
+        $entities = $entitiesModel->getLowestEntities($denomination_id);
+        $page_data['lowest_entities'] = $entities;
+
+        // List of denominations
+        $denominationsModel = new \App\Models\DenominationsModel();
+        $denominations = $denominationsModel->findAll();
         $page_data['denominations'] = $denominations;
 
         return $page_data;
