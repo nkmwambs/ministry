@@ -89,4 +89,25 @@ class DenominationsModel extends Model  implements \App\Interfaces\ModelInterfac
         $entityModel->insert((object)$entityData);
         return $hierarchyId;
     }
+
+    public function getDenominationEntitiesCount($id): int {
+       
+        $countDenominationEntities = $this->where('denominations.id', $id)
+        ->join('hierarchies','hierarchies.denomination_id=denominations.id')
+        ->join('entities','entities.hierarchy_id=hierarchies.id')
+        ->countAllResults();
+
+        return $countDenominationEntities;
+    }
+
+    public function getDenominationAssembliesCount($id){
+
+        $countDenominationAssemblies = $this->where('denominations.id', $id)
+        ->join('hierarchies','hierarchies.denomination_id=denominations.id')
+        ->join('entities','entities.hierarchy_id=hierarchies.id')
+        ->join('assemblies','assemblies.entity_id=entities.id')
+        ->countAllResults();
+
+        return $countDenominationAssemblies;
+    }
 }

@@ -117,8 +117,10 @@ abstract class BaseController extends Controller
             });
             $page_data['fields'] = $table_field;
         }
-
-        $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
+       
+        if(!$this->request->isAJAX()){
+            $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
+        }
 
         return $page_data;
     }
@@ -126,12 +128,15 @@ abstract class BaseController extends Controller
     public function index()
     {
         $data = [];
-
-        if(method_exists($this->model, 'getAll')){
-            $data = $this->model->getAll();
+        
+        if(method_exists($this->model, 'getListData')){
+            $data = $this->model->getListData();
         }else{
+            method_exists($this->model, 'getAll') ?
+            $data = $this->model->getAll() :
             $data = $this->model->findAll();
         }
+        
 
         if ($this->request->isAJAX()) {
             // $page_data['id'] = $id;
@@ -143,23 +148,41 @@ abstract class BaseController extends Controller
     }
     
 
-    public function view($id): string {
-        $data = $this->model->getOne(hash_id($id,'decode'));
+    public function view($hashed_id): string {
+        $data = [];
+        $numeric_id = hash_id($hashed_id,'decode');
+        
+        if(method_exists($this->model, 'getViewData')){
+            $data = $this->model->getViewData($numeric_id);
+        }else{
+            $data = $this->model->getOne($numeric_id);
+        }
+
         if(array_key_exists('id',$data)){
             unset($data['id']);
+        }
+
+        if($this->request->isAJAX()){
+            return view("$this->feature/view", $this->page_data($data));
         }
 
         return view('index', $this->page_data($data));
     }
 
     public function edit(): string {
-        $data = $this->model->getOne(hash_id($this->id,'decode'));
+        $numeric_id = hash_id($this->id,'decode');
+
+        if(method_exists($this->model, 'getViewData')){
+            $data = $this->model->getViewData($numeric_id);
+        }else{
+            $data = $this->model->getOne($numeric_id);
+        }
+
         $page_data = $this->page_data($data);
         
         if(method_exists($this->library,'editExtraData')){
             // Note the editExtraData updates the $page_data by reference
             $this->library->editExtraData($page_data);
-            // log_message('error', json_encode($page_data));
         }
 
         return view("$this->feature/edit", $page_data);
@@ -189,7 +212,11 @@ abstract class BaseController extends Controller
                 $this->id = $id;
             }
         }
-  
+
+        if($action == 'view'){
+            return $this->$action($id);
+        }
+        
         return $this->$action();
     }
 

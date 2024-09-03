@@ -45,7 +45,7 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
     protected $afterDelete    = [];
 
     public function getAll(){
-        $library = new \App\Libraries\HierarchyLibrary();
+        $library = new \App\Libraries\EntityLibrary();
         $listQueryFields = $library->setListQueryFields();
 
         if(!empty($listQueryFields)){
@@ -72,5 +72,32 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
             ->findAll();
 
         return $entities;
+    }
+
+    function getLowestEntities($denomination_id){
+
+        $hierarchiesModel = new \App\Models\HierarchiesModel();
+        $lowestHierachyLevel = $hierarchiesModel->getLowestHierarchyLevel($denomination_id );
+
+        $entities = $this->where(['hierarchies.level' => $lowestHierachyLevel , 'denomination_id' => $denomination_id])
+        ->select('entities.id, CONCAT(entities.entity_number," - ", entities.name) name')
+        ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
+        ->findAll();
+        
+        return $entities;
+    }
+
+    function getViewData($entity_id){
+        $library = new \App\Libraries\EntityLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())
+            ->join('hierarchies','hierarchies.id=entities.hierarchy_id')
+            ->join('entities et','et.id=entities.parent_id')
+            ->where('entities.id', $entity_id)->first();
+        }else{
+            return $this->where('entities.id', $entity_id)->first();
+        }
     }
 }

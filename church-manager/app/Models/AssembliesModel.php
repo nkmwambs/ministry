@@ -49,9 +49,12 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
         $listQueryFields = $library->setListQueryFields();
 
         if(!empty($listQueryFields)){
-            return $this->select($library->setListQueryFields())->orderBy('created_at desc')->findAll();
+            return $this->select($library->setListQueryFields())->orderBy('assemblies.created_at desc')
+            ->join('entities','entities.id=assemblies.entity_id')
+            ->join('ministers','ministers.id=assemblies.assembly_leader', 'left')
+            ->findAll();
         }else{
-            return $this->orderBy('created_at desc')->findAll();
+            return $this->orderBy('assemblies.created_at desc')->findAll();
         }
     }
 
@@ -64,5 +67,38 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
         }else{
             return $this->where('id', $id)->first();
         }
+    }
+
+    public function getViewData($numeric_id){
+        $library = new \App\Libraries\AssemblyLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())->where('assemblies.id', $numeric_id)
+            ->join('entities','entities.id = assemblies.entity_id')
+            ->join('hierarchies','hierarchies.id = entities.hierarchy_id')
+            ->first();
+        }else{
+            return $this->where('id', $this->id)->first();
+        }
+    }
+
+    public function getListData(){
+
+        $library = new \App\Libraries\AssemblyLibrary();
+        $listQueryFields = $library->setListQueryFields();
+
+        $assemblies = [];
+
+        if(session()->get('user_denomination_id')){
+            $assemblies = $this->where(['hierarchies.denomination_id' => session()->get('user_denomination_id')])
+            ->select(!empty($listQueryFields) ? $listQueryFields : '*')
+            ->join('entities', 'entities.id = assemblies.entity_id')
+            ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id')
+            ->findAll();
+        }else{
+            $assemblies = $this->getAll();
+        }
+
+        return $assemblies;
     }
 }

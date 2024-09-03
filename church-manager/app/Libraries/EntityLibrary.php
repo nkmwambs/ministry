@@ -23,7 +23,7 @@ class EntityLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setViewQueryFields(){
-        $fields = ['id','entity_number','hierarchy_id','name','parent_id','entity_leader'];
+        $fields = ['entities.id','entities.entity_number','entities.hierarchy_id','hierarchies.name as hierarchy_name','entities.name','et.parent_id','et.name as parent_name','entities.entity_leader'];
         return $fields;
     }
 

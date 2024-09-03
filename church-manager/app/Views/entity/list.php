@@ -31,8 +31,11 @@
           <?php foreach($result as $entity){?>
             <tr>
               <td>
-                <span class='action-icons' title="View <?=singular($entity['entity_name']);?> hierarchy"><a href="<?= site_url("entities/view/".hash_id($entity['id'])); ?>"><i
-                      class='fa fa-search'></i></a></i></span>
+                <span class='action-icons' title="View <?=singular($entity['entity_name']);?> hierarchy">
+                  <!-- <a href="<?= site_url("entities/view/".hash_id($entity['id'])); ?>"> -->
+                    <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($entity['id']);?>')"></i>
+                  <!-- </a> -->
+                </span>
                 <span class='action-icons' title = "Edit <?=singular($entity['entity_name']);?> hierarchy">
                   <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($entity['id']);?>')" class='fa fa-pencil'></i>
                 </span>

@@ -66,6 +66,30 @@
                         </div>
                     </div>
 
+                    <?php 
+                        if(!session()->get('user_denomination_id')){
+                    ?>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4" for="denomination_id">
+                                <?= lang('assembly.assembly_denomination_id') ?>
+                            </label>
+                            <div class="col-xs-6">
+                                <select class="form-control" name="parent_id" id="denomination_id">
+                                    <option value="0">Select Denomination</option>
+                                    <?php foreach ($denominations as $denomination) :?>
+                                    <option value="<?php echo $denomination['id'];?>" <?=$result['denomination_id'] == $denomination['id'] ? 'selected': ''; ?>><?php echo $denomination['name'];?></option>
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
+                        </div>
+                    <?php 
+                        }else{
+                    ?>
+                        <input type="hidden" value="<?=$result['denomination_id'];?>" name="parent_id"  id="denomination_id"/>
+                    <?php
+                        }
+                    ?>
+
 
 
                     <div class="form-group">
@@ -73,8 +97,20 @@
                             <?= lang('assembly.assembly_entity_id') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="entity_id" value="<?=$result['entity_id'];?>"
-                                id="entity_id" placeholder="Enter entity_id ">
+                            <select class="form-control" name="entity_id" id="entity_id">
+                                <option value="">Select Entity</option>
+                                <?php 
+                                if(!empty($lowest_entities)){
+                                    foreach ($lowest_entities as $entity) :
+                                ?>
+                                    <option value="<?php echo $entity['id'];?>" <?=$result['entity_id'] == $entity['id'] ? 'selected' : '';?> ><?php echo $entity['name'];?></option>
+                                <?php
+                                    endforeach;
+                                }
+                                    
+                                ?>
+                    
+                            </select>
                         </div>
                     </div>
 
@@ -83,8 +119,9 @@
                             <?= lang('assembly.assembly_leader') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="assembly_leader" value="<?=$result['assembly_leader'];?>" id="assembly_leader"
-                                placeholder="Edit Assembly Leader">
+                            <select class="form-control" name="assembly_leader" value="<?=$result['assembly_leader'];?>" id="assembly_leader">
+                                <option value="">Select Leader</option>
+                            </select>
                         </div>
                     </div>
 
@@ -93,8 +130,10 @@
                             <?= lang('assembly.assembly_is_active') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="email" class="form-control" name="is_active" id="is_active"
-                                value="<?=$result['is_active'];?>" placeholder="Is Active?">
+                            <select class="form-control" name="is_active" id="is_active">
+                                <option value="yes" <?=$result['is_active'] == 'yes' ? 'selected' : '';?>>Yes</option>
+                                <option value="no" <?=$result['is_active'] == 'no' ? 'selected' : '';?>>No</option>
+                            </select>
                         </div>
                     </div>
 

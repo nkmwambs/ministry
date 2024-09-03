@@ -1,6 +1,5 @@
 <div class="row">
     <div class="col-md-12">
-
         <div class="panel panel-primary" data-collapsed="0">
 
             <div class="panel-heading">
@@ -65,13 +64,49 @@
                         </div>
                     </div>
 
+                    <?php 
+                        if(!session()->get('user_denomination_id')){
+                    ?>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4" for="denomination_id">
+                                <?= lang('assembly.assembly_denomination_id') ?>
+                            </label>
+                            <div class="col-xs-6">
+                                <select class="form-control" name="parent_id" id="denomination_id">
+                                    <option value="0">Select Denomination</option>
+                                    <?php foreach ($denominations as $denomination) :?>
+                                    <option value="<?php echo $denomination['id'];?>"><?php echo $denomination['name'];?></option>
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
+                        </div>
+                    <?php 
+                        }else{
+                    ?>
+                        <input type="hidden" value="<?=session()->get('user_denomination_id');?>" name="parent_id"  id="denomination_id"/>
+                    <?php
+                        }
+                    ?>
+
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="entity_id">
                             <?= lang('assembly.assembly_entity_id') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="entity_id" id="entity_id"
-                                placeholder="Enter  Entity ID">
+                            <select class="form-control" name="entity_id" id="entity_id">
+                                <option value="">Select Entity</option>
+                                <?php 
+                                if(!empty($lowest_entities)){
+                                    foreach ($lowest_entities as $entity) :
+                                ?>
+                                    <option value="<?php echo $entity['id'];?>"><?php echo $entity['name'];?></option>
+                                <?php
+                                    endforeach;
+                                }
+                                    
+                                ?>
+                    
+                            </select>
                         </div>
                     </div>
 
@@ -80,12 +115,13 @@
                             <?= lang('assembly.assembly_leader') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="assembly_leader"  id="assembly_leader"
-                                placeholder="Edit Assembly Leader">
+                            <select class="form-control" name="assembly_leader"  id="assembly_leader">
+                                <option value="">Select Leader</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="control-label col-xs-4" for="is_active">
                             <?= lang('assembly.assembly_is_active') ?>
                         </label>
@@ -93,7 +129,7 @@
                             <input type="email" class="form-control" name="is_active" id="is_active"
                                 placeholder="Enter Active?">
                         </div>
-                    </div>
+                    </div> -->
 
 
                 </form>
@@ -104,3 +140,24 @@
 
     </div>
 </div>
+
+<script>
+    $("#denomination_id").on("change", function() {
+        const numeric_denomination_id = $(this).val()
+
+        $.ajax({
+            url: "<?= site_url('entities/lowestEntities')?>/" + numeric_denomination_id,
+            type: 'GET',
+            success: function(response) {
+                let options = "<option value='0'>Select Entity</option>"
+
+                $.each(response, function(index, elem){
+                    options += "<option value='" + elem.id + "'>" + elem.name + "</option>";
+                })
+
+                $("#entity_id").html(options)
+                // console.log(response)
+            }
+        })
+    })
+</script>

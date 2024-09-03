@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add')">
+        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add', '<?=session()->get('user_denomination_id') ? hash_id(session()->get('user_denomination_id'), 'encode') : '';?>')">
             <?= lang('assembly.add_assembly'); ?>
         </div>
     </div>
@@ -49,9 +49,9 @@
                     <td><?=$assembly['name'];?></td>
                     <td><?=$assembly['planted_at'];?></td>
                     <td><?=$assembly['location'];?></td>
-                    <td><?=$assembly['entity_id'];?></td>
-                    <td><?=$assembly['assembly_leader'];?></td>
-                    <td><?=$assembly['is_active'];?></td>
+                    <td><?=$assembly['entity_name'];?></td>
+                    <td><?=$assembly['assembly_leader'] ? $assembly['assembly_leader'] : lang('system.value_not_set');?></td>
+                    <td><?=ucfirst($assembly['is_active']);?></td>
                     <?php } ?>
             </tbody>
         </table>
