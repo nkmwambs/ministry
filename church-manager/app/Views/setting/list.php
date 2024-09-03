@@ -19,11 +19,11 @@
                     <div class="panel-options">                            
                         <ul class="nav nav-tabs" id ="myTabs">
                             <li class = "active"><a href="#view_profile" id="view_profile_tab" data-toggle="tab"><?= lang('setting.view_profile'); ?></a></li>
-                            <li><a href="#list_departments"  data-link_id="list_departments" data-feature_plural="departments" onclick="childrenAjaxLists(this)" id="list_departments_tab" data-toggle="tab"><?= lang('department.list_departments'); ?></a></li>
-                            <li><a href="#list_designations"  data-link_id="list_designations" data-feature_plural="designations" onclick="childrenAjaxLists(this)" id="list_designations_tab" data-toggle="tab"><?= lang('designation.list_designations'); ?></a></li>
-                            <li><a href="#list_gatheringtypes"  data-link_id="list_gatheringtypes" data-feature_plural="gatheringtypes" onclick="childrenAjaxLists(this)" id="list_gatheringtypes_tab" data-toggle="tab"><?= lang('gatheringtypes.list_gatheringtypes'); ?></a></li>
-                            <li><a href="#list_collectiontypes"  data-link_id="list_collectiontypes" data-feature_plural="collectiontypes" onclick="childrenAjaxLists(this)" id="list_collectiontypes_tab" data-toggle="tab"><?= lang('collectiontypes.list_collectiontypes'); ?></a></li>
-                            <li><a href="#list_roles"  data-link_id="list_roles" data-feature_plural="roles" onclick="childrenAjaxLists(this)" id="list_roles_tab" data-toggle="tab"><?= lang('roles.list_roles'); ?></a></li>
+                            <li><a href="#view_departments"  data-link_id="view_departments" data-feature_plural="departments" onclick="childrenAjaxLists(this)" id="view_departments_tab" data-toggle="tab"><?= lang('setting.view_departments'); ?></a></li>
+                            <li><a href="#view_designations"  data-link_id="view_designations" data-feature_plural="designations" onclick="childrenAjaxLists(this)" id="view_designations_tab" data-toggle="tab"><?= lang('setting.view_designations'); ?></a></li>
+                            <li><a href="#view_gatheringtypes"  data-link_id="view_gatheringtypes" data-feature_plural="gatheringtypes" onclick="childrenAjaxLists(this)" id="view_gatheringtypes_tab" data-toggle="tab"><?= lang('setting.view_gatheringtypes'); ?></a></li>
+                            <li><a href="#view_collectiontypes"  data-link_id="view_collectiontypes" data-feature_plural="collectiontypes" onclick="childrenAjaxLists(this)" id="view_collectiontypes_tab" data-toggle="tab"><?= lang('setting.view_collectiontypes'); ?></a></li>
+                            <li><a href="#view_roles"  data-link_id="view_roles" data-feature_plural="roles" onclick="childrenAjaxLists(this)" id="list_roles_tab" data-toggle="tab"><?= lang('setting.view_roles'); ?></a></li>
                         </ul>
                     </div>
                 </div>
@@ -33,28 +33,29 @@
 
         <div class="panel-body">
             <div class="tab-content">
-                <div class="tab-pane active" id="view_profile">
-                    <div class = 'info'>There are no hierarchies available</div>
+                <div class="tab-pane active show" id="view_profile">
+                    <?= include('profile.php') ?>
                 </div>
 
-                <div class="tab-pane" id="list_departments">
-                    <div class = 'info'>There are no hierarchies available</div>
+
+                <div class="tab-pane" id="view_departments">
+                    <div class = 'info'>There are no departments available</div>
                 </div>
 
-                <div class="tab-pane" id="list_designations">
-                    <div class = 'info'>There are no hierarchies available</div>
+                <div class="tab-pane" id="view_designations">
+                    <div class = 'info'>There are no designations available</div>
                 </div>
 
-                <div class="tab-pane" id="list_gatheringtypes">
-                    <div class = 'info'>There are no hierarchies available</div>
+                <div class="tab-pane" id="view_gatheringtypes">
+                    <div class = 'info'>There are no gatheringtypes available</div>
                 </div>
 
-                <div class="tab-pane" id="list_collectiontypes">
-                    <div class = 'info'>There are no hierarchies available</div>
+                <div class="tab-pane" id="view_collectiontypes">
+                    <div class = 'info'>There are no collectiontypes available</div>
                 </div>
 
-                <div class="tab-pane" id="list_roles">
-                    <div class = 'info'>There are no hierarchies available</div>
+                <div class="tab-pane" id="view_roles">
+                    <div class = 'info'>There are no roles available</div>
                 </div>
             </div>
         </div>
