@@ -45,10 +45,24 @@ class SettingsModel extends Model  implements \App\Interfaces\ModelInterface
     protected $afterDelete    = [];
 
     function getAll(){
+        $library = new \App\Libraries\SettingLibrary;
+        $listQueryFields = $library->setListQueryFields();
 
+        if (!empty($listQueryFields)) {
+            return $this->select($library->setListQueryFields())->findAll();
+        } else {
+            return $this->findAll();
+        }
     }
 
     function getOne($id){
-        
+        $library = new \App\Libraries\SettingLibrary();
+        $viewQueryField = $library->setViewQueryFields();
+
+        if (!empty($viewQueryField)) {
+            return $this->select($library->setViewQueryFields())->where('id', $id)->first();
+        } else {
+            return $this->where('id', $id)->first();
+        }
     }
 }
