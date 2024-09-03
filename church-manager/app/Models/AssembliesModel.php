@@ -82,6 +82,19 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
         }
     }
 
+    public function getEditData($numeric_id){
+        $library = new \App\Libraries\AssemblyLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())->where('assemblies.id', $numeric_id)
+            ->join('entities','entities.id = assemblies.entity_id')
+            ->join('hierarchies','hierarchies.id = entities.hierarchy_id')
+            ->first();
+        }else{
+            return $this->where('id', $this->id)->first();
+        }
+    }
+
     public function getListData(){
 
         $library = new \App\Libraries\AssemblyLibrary();
@@ -96,7 +109,11 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
             ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id')
             ->findAll();
         }else{
-            $assemblies = $this->getAll();
+            // $assemblies = $this->getAll();
+            $assemblies = $this->select(!empty($listQueryFields) ? $listQueryFields : '*')
+            ->join('entities', 'entities.id = assemblies.entity_id')
+            ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id')
+            ->findAll();
         }
 
         return $assemblies;
