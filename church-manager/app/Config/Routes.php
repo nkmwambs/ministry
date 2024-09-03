@@ -36,4 +36,4 @@ $routes->get('entities/items/(:segment)/(:segment)', "Entity::getParentEntitiesB
 $routes->get('entities/lowestEntities/(:segment)', "Entity::getDenominationLowestEntities/$1");
 $routes->get('hierarchies/denomination/(:segment)', "Hierarchy::getHierarchiesByDenominationId/$1");
 $routes->get('participants/event/(:segment)', 'Participant::getParticipantsByEventId/$1');
-// $routes->get('settings', 'Setting::view');
+$routes->get('settings', 'Setting::list');
