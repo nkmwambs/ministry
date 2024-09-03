@@ -33,7 +33,7 @@
 
         <div class="panel-body">
             <div class="tab-content">
-                <div class="tab-pane active show" id="view_profile">
+                <div class="tab-pane active" id="view_profile">
                     <?= include('profile.php') ?>
                 </div>
 
