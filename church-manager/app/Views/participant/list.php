@@ -3,11 +3,6 @@
         <div class='btn btn-primary' onclick="showAjaxModal('participants','add', '<?= $id; ?>')">
             <?= lang('participant.add_participant'); ?>
         </div>
-        <?php if (!empty($result)) { ?>
-            <!-- <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?= $id; ?>')">
-              <?= lang('entity.add_entity'); ?>
-        </div> -->
-        <?php } ?>
     </div>
 </div>
 

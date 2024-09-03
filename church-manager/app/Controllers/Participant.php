@@ -16,13 +16,13 @@ class Participant extends BaseController
         $this->model = new \App\Models\ParticipantsModel();
     }
     
-    public function index($id = 0): string
+    public function index($parent_id = 0): string
     {
         $participants = [];
 
-        if($id > 0){
+        if($parent_id > 0){
             $participants = $this->model->select('participants.id,member_id,event_id,payment_id,payment_code,registration_amount,status')
-            ->where('event_id',hash_id($id,'decode'))
+            ->where('event_id',hash_id($parent_id,'decode'))
             ->join('events','events.id=participants.event_id')
             ->orderBy('participants.created_at desc')
             ->findAll();
@@ -44,7 +44,7 @@ class Participant extends BaseController
         $page_data['action'] = 'list';
         
         if ($this->request->isAJAX()) {
-            $page_data['id'] = $id;
+            $page_data['id'] = $parent_id;
             return view('participant/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
@@ -53,7 +53,7 @@ class Participant extends BaseController
         return view('index', $page_data);
     }
 
-    public function add($id = 0): string {
+    public function add($parent_id = 0): string {
         $page_data['feature'] = 'participant';
         $page_data['action'] = 'add';
         return view('index', $page_data);
@@ -73,7 +73,8 @@ class Participant extends BaseController
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
-        $event_id = hash_id($this->request->getPost('event_id'),'decode');
+        $hashed_event_id = $this->request->getPost('event_id');
+        $event_id = hash_id($hashed_event_id,'decode');
         // $member_id = hash_id($this->request->getPost('member_id'), 'decode');
         // $payment_id = hash_id($this->request->getPost('payment_id'), 'decode');
 
@@ -86,15 +87,17 @@ class Participant extends BaseController
             'status' => $this->request->getPost('status'),
         ];
 
-        $this->model->insert($data);
+        $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
+
+        $this->parent_id = $hashed_event_id;
 
         if($this->request->isAJAX()){
             $this->feature = 'participant';
             $this->action = 'list';
             $records = $this->model->orderBy("created_at desc")->where('event_id', $event_id)->findAll();
-            $page_data = parent::page_data($records);
-            $page_data['id'] = hash_id($event_id,'encode');
+            $page_data = parent::page_data($records, $hashed_event_id);
+            // $page_data['id'] = hash_id($event_id,'encode');
             return view("participant/list", $page_data);
         }
 
@@ -129,7 +132,7 @@ class Participant extends BaseController
             'status' => $this->request->getPost('status'),
         ];
         
-        $this->model->update(hash_id($hashed_id,'decode'), $update_data);
+        $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
 
         if($this->request->isAJAX()){
             $this->feature = 'participant';
@@ -140,14 +143,26 @@ class Participant extends BaseController
             ->orderBy("participants.created_at desc")
             ->where('event_id', hash_id($hashed_event_id,'decode'))
             ->findAll();
-            return view("participant/list", parent::page_data($records));
+
+            $page_data = parent::page_data($records, $hashed_event_id);
+            $page_data['parent_id'] = $hashed_event_id;
+
+            return view("participant/list", $page_data);
         }
         
-        return redirect()->to(site_url("participant/view/".$hashed_id))->with('message', 'Participant updated successfully!');
+        return redirect()->to(site_url("participants/view/".$hashed_id))->with('message', 'Participant updated successfully!');
     }
 
-    // private function computeNextHierarchicalLevel($denomination_id){
-    //     $maxLevel = $this->model->selectMax('level')->where('denomination_id', $denomination_id)->first();
-    //     return $maxLevel['level'] + 1;
-    // }
+    public function getParticipantsByEventId($hashed_event_id){
+        $event_id = hash_id($hashed_event_id,'decode');
+
+        $participants = $this->model->select('id, member_id')->where(['event_id' => $event_id])->findAll();
+        $participants = array_map(function($elem){
+            $elem['id'] = hash_id($elem['id'], 'encode');
+
+            return $elem;
+        }, $participants);
+
+        return response()->setJSON($participants);
+    }
 }
