@@ -21,13 +21,13 @@ class Collection extends BaseController
         $collections = [];
 
         if($id > 0){
-            $collections = $this->model->select('collections.id,return_date,period_start_date,assembly_id,period_end_date,collection_type_id,amount,status,collection_reference,description,collection_method')
+            $collections = $this->model->select('collections.id,return_date,period_start_date,assembly_id,period_end_date,revenue_id,amount,status,collection_reference,description,collection_method')
             ->where('assembly_id',hash_id($id,'decode'))
             ->join('assemblies','assemblies.id=collections.assembly_id')
             ->orderBy('collections.created_at desc')
             ->findAll();
         }else{
-            $collections = $this->model->select('collections.id,return_date,period_start_date,assembly_id,period_end_date,collection_type_id,amount,status,collection_reference,description,collection_method')
+            $collections = $this->model->select('collections.id,return_date,period_start_date,assembly_id,period_end_date,revenue_id,amount,status,collection_reference,description,collection_method')
             ->join('assemblies','assemblies.id=collections.assembly_id')
             ->orderBy('collections.created_at desc')
             ->findAll();
@@ -67,7 +67,7 @@ class Collection extends BaseController
             'return_date' => 'required',
             'period_start_date' => 'required',
             'period_end_date' => 'required',
-            'collection_type_id' => 'required',
+            'revenue_id' => 'required',
             'amount' => 'required',
             'status' => 'required',
             'collection_reference' => 'required',
@@ -87,7 +87,7 @@ class Collection extends BaseController
             'period_start_date' => $this->request->getPost('period_start_date'),
             'period_end_date' => $this->request->getPost('period_end_date'),
             'assembly_id' => $assembly_id,
-            'collection_type_id' => $this->request->getPost('collection_type_id'),
+            'revenue_id' => $this->request->getPost('revenue_id'),
             'amount' => $this->request->getPost('amount'),
             'status' => $this->request->getPost('status'),
             'collection_reference' => $this->request->getPost('collection_reference'),
@@ -95,7 +95,7 @@ class Collection extends BaseController
             'collection_method' => $this->request->getPost('collection_method'),
         ];
 
-        $this->model->insert($data);
+        $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
 
         if($this->request->isAJAX()){
@@ -118,7 +118,7 @@ class Collection extends BaseController
             'return_date' => 'required',
             'period_start_date' => 'required',
             'period_end_date' => 'required',
-            'collection_type_id' => 'required',
+            'revenue_id' => 'required',
             'amount' => 'required',
             'status' => 'required',
             'collection_reference' => 'required',
@@ -139,7 +139,7 @@ class Collection extends BaseController
             'return_date' => $this->request->getPost('return_date'),
             'period_start_date' => $this->request->getPost('period_start_date'),
             'period_end_date' => $this->request->getPost('period_end_date'),
-            'collection_type_id' => $this->request->getPost('collection_type_id'),
+            'revenue_id' => $this->request->getPost('revenue_id'),
             'amount' => $this->request->getPost('amount'),
             'status' => $this->request->getPost('status'),
             'collection_reference' => $this->request->getPost('collection_reference'),
@@ -147,14 +147,14 @@ class Collection extends BaseController
             'collection_method' => $this->request->getPost('collection_method'),
         ];
         
-        $this->model->update(hash_id($hashed_id,'decode'), $update_data);
+        $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
 
         if($this->request->isAJAX()){
             $this->feature = 'collection';
             $this->action = 'list';
 
             $records = $this->model
-            ->select('collections.id,collections.return_date,collections.period_start_date,collections.period_end_date,collections.assembly_id,collections.collection_type_id,collections.amount,collections.status,collections.collection_reference,collections.description,collections.collection_method')
+            ->select('collections.id,collections.return_date,collections.period_start_date,collections.period_end_date,collections.assembly_id,collections.revenue_id,collections.amount,collections.status,collections.collection_reference,collections.description,collections.collection_method')
             ->orderBy("collections.created_at desc")
             ->where('assembly_id', hash_id($hashed_assembly_id,'decode'))
             ->findAll();

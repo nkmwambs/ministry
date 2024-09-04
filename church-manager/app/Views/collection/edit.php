@@ -55,12 +55,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="collection_type_id">
-                            <?= lang('collection.collection_collection_type_id') ?> 
+                        <label class="control-label col-xs-4" for="revenue_id">
+                            <?= lang('collection.collection_revenue_id') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="email" class="form-control" name="collection_type_id" value="<?=$result['collection_type_id'];?>" id="collection_type_id" 
-                                placeholder="Edit Collection Type Name">
+                            <input type="email" class="form-control" name="revenue_id" value="<?=$result['revenue_id'];?>" id="revenue_id" 
+                                placeholder="Edit Revenue Name">
                         </div>
                     </div>
 

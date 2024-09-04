@@ -27,7 +27,7 @@
                 <tr>
                     <th><?= lang('event.event_action') ?></th>
                     <th><?= lang('event.event_name') ?></th>
-                    <th><?= lang('event.event_gatheringtype_id') ?></th>
+                    <th><?= lang('event.event_meeting_id') ?></th>
                     <th><?= lang('event.event_start_date') ?></th>
                     <th><?= lang('event.event_end_date') ?></th>
                     <th><?= lang('event.event_location') ?></th>
@@ -52,7 +52,7 @@
                         </td>
 
                         <td><?= $event['name']; ?></td>
-                        <td><?= $event['gatheringtype_id']; ?></td>
+                        <td><?= $event['meeting_id']; ?></td>
                         <td><?= $event['start_date']; ?></td>
                         <td><?= $event['end_date']; ?></td>
                         <td><?= $event['location']; ?></td>

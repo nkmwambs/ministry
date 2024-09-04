@@ -43,11 +43,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="gatheringtype_id">
-                            <?= lang('event.event_gatheringtype_id') ?>
+                        <label class="control-label col-xs-4" for="meeting_id">
+                            <?= lang('event.event_meeting_id') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="gatheringtype_id" id="gatheringtype_id" value="<?=$result['gatheringtype_id'];?>" placeholder="Edit Gathering Type">
+                            <input type="text" class="form-control" name="meeting_id" id="meeting_id" value="<?=$result['meeting_id'];?>" placeholder="Edit Meeting Name">
                         </div>
                     </div>
 

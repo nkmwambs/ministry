@@ -41,7 +41,7 @@ class Event extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'name' => 'required|min_length[10]|max_length[255]',
-            'gatheringtype_id' => 'required',
+            'meeting_id' => 'required',
             'location' => 'required|max_length[255]',
             'description' => 'required|max_length[255]',
             'denomination_id' => 'required',
@@ -54,7 +54,7 @@ class Event extends BaseController
 
         $update_data = [
             'name'=> $this->request->getPost('name'),
-            'gatheringtype_id'=> $this->request->getPost('gatheringtype_id'),
+            'meeting_id'=> $this->request->getPost('meeting_id'),
             'start_date'=> $this->request->getPost('start_date'),
             'end_date'=> $this->request->getPost('end_date'),
             'location'=> $this->request->getPost('location'),
@@ -89,7 +89,7 @@ class Event extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'name' => 'required|min_length[10]|max_length[255]',
-            'gatheringtype_id' => 'required',
+            'meeting_id' => 'required',
             'location' => 'required|max_length[255]',
             'description' => 'required|max_length[255]',
             'denomination_id' => 'required',
@@ -102,11 +102,11 @@ class Event extends BaseController
         }
 
         // $denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
-        // $gatheringtype_id = hash_id($this->request->getPost('gatheringtype_id'), 'decode');
+        // $meeting_id = hash_id($this->request->getPost('meeting_id'), 'decode');
 
         $data = [
             'name' => $this->request->getPost('name'),
-            'gatheringtype_id' => $this->request->getPost('gatheringtype_id'),
+            'meeting_id' => $this->request->getPost('meeting_id'),
             'start_date' => $this->request->getPost('start_date'),
             'end_date' => $this->request->getPost('end_date'),
             'location' => $this->request->getPost('location'),

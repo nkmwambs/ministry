@@ -47,9 +47,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-xs-4" for="collection_type_id"><?= lang('collection.collection_collection_type_id') ?></label>
+              <label class="control-label col-xs-4" for="revenue_id"><?= lang('collection.collection_revenue_id') ?></label>
               <div class="col-xs-6">
-                <input type="email" oninput="this.className = ''" class="form-control" name="collection_type_id" id="collection_type_id" placeholder="Enter Collection Type Name">
+                <input type="email" oninput="this.className = ''" class="form-control" name="revenue_id" id="revenue_id" placeholder="Enter Collection Type Name">
               </div>
             </div>
             <div class="form-group">

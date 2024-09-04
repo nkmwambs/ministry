@@ -9,7 +9,7 @@ return [
 
     'event_action' => 'Action',
     'event_name' => 'Event Name',
-    'event_gatheringtype_id' => 'Gathering Type Name',
+    'event_meeting_id' => 'Meeting Name',
     'event_start_date' => 'Start Date',
     'event_end_date' => 'End Date',
     'event_location' => 'Location',
@@ -17,7 +17,7 @@ return [
     'event_denomination_id' => 'Denomination Name',
     'event_registration_fees' => 'Registration Fees',
 
-    'select_gatheringtype' => 'Select Gathering Type',
+    'select_meeting' => 'Select Meeting Name',
     'select_denomination_name' => 'Select Denomination Name',
 
     'save_event' => 'Save',

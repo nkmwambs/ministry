@@ -12,7 +12,7 @@ return [
     'collection_period_start_date' => 'Period Start Date',
     'collection_period_end_date' => 'Period End Date',
     'collection_assembly_id' => 'Assembly Name',
-    'collection_collection_type_id' => 'Collection Type Name',
+    'collection_revenue_id' => 'Revenue Name',
     'collection_amount' => 'Amount',
     'collection_status' => 'Status',
     'collection_collection_reference' => 'Collection Reference',

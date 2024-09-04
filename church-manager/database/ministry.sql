@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `attendances`;
 CREATE TABLE `attendances` (
   `id` int NOT NULL AUTO_INCREMENT,
   `member_id` int NOT NULL,
-  `gathering_id` int NOT NULL,
+  `meeting_id` int NOT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -38,9 +38,9 @@ CREATE TABLE `attendances` (
   `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `member_id` (`member_id`),
-  KEY `gathering_id` (`gathering_id`),
+  KEY `meeting_id` (`meeting_id`),
   CONSTRAINT `attendances_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`),
-  CONSTRAINT `attendances_ibfk_2` FOREIGN KEY (`gathering_id`) REFERENCES `gatherings` (`id`)
+  CONSTRAINT `attendances_ibfk_2` FOREIGN KEY (`meeting_id`) REFERENCES `meetings` (`id`)
 );
 
 
@@ -50,7 +50,7 @@ CREATE TABLE `collections` (
   `return_date` datetime NOT NULL,
   `period_start_date` datetime NOT NULL,
   `period_end_date` datetime NOT NULL,
-  `collection_type_id` int NOT NULL,
+  `revenue_id` int NOT NULL,
   `amount` decimal(50,2) NOT NULL,
   `status` enum('submitted','approved') NOT NULL DEFAULT 'submitted',
   `collection_reference` longtext NOT NULL,
@@ -63,13 +63,13 @@ CREATE TABLE `collections` (
   `deleted_at` datetime NOT NULL,
   `deleted_by` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `collection_type_id` (`collection_type_id`),
-  CONSTRAINT `collections_ibfk_1` FOREIGN KEY (`collection_type_id`) REFERENCES `collectiontypes` (`id`)
+  KEY `revenue_id` (`revenue_id`),
+  CONSTRAINT `collections_ibfk_1` FOREIGN KEY (`revenue_id`) REFERENCES `revenues` (`id`)
 );
 
 
-DROP TABLE IF EXISTS `collectiontypes`;
-CREATE TABLE `collectiontypes` (
+DROP TABLE IF EXISTS `revenues`;
+CREATE TABLE `revenues` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int NOT NULL,
   `name` varchar(200) NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE `collectiontypes` (
   `deleted_by` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
-  CONSTRAINT `collectiontypes_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
+  CONSTRAINT `revenues_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
 );
 
 
@@ -226,7 +226,7 @@ DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
-  `gatheringtype_id` int NOT NULL DEFAULT '1',
+  `meeting_id` int NOT NULL DEFAULT '1',
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `location` varchar(100) NOT NULL,
@@ -242,9 +242,9 @@ CREATE TABLE `events` (
   `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
-  KEY `gatheringtype_id` (`gatheringtype_id`),
+  KEY `meeting_id` (`meeting_id`),
   CONSTRAINT `events_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`),
-  CONSTRAINT `events_ibfk_2` FOREIGN KEY (`gatheringtype_id`) REFERENCES `gatheringtypes` (`id`)
+  CONSTRAINT `events_ibfk_2` FOREIGN KEY (`meeting_id`) REFERENCES `meetings` (`id`)
 );
 
 
@@ -269,10 +269,10 @@ INSERT INTO `features` (`id`, `name`, `description`, `created_at`, `created_by`,
 (4,	'assembly',	'Assembly',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (5,	'denomination',	'Denomination',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (6,	'collection',	'Collection',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(7,	'collection_type',	'Collection Types',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(7,	'revenue',	'Revenue',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (8,	'designation',	'Designation',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (9,	'event',	'Events',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(10,	'gathering',	'Gatherings',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(10,	'meeting',	'Meetings',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (11,	'member',	'Members',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (12,	'participant',	'Participants',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (13,	'role',	'Roles',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
@@ -282,8 +282,8 @@ INSERT INTO `features` (`id`, `name`, `description`, `created_at`, `created_by`,
 (17,	'setting',	'Settings',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (18,	'report',	'Reports',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (19,	'report_type',	'Reports Types',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(22,	'attendance',	'Gathering Attendance',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(23,	'gathering_type',	'Gathering types',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(22,	'attendance',	'Meeting Attendance',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(23,	'meeting',	'Meeting types',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (24,	'custom_field',	'Custom Fields',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (25,	'custom_value',	'Custom values',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (26,	'department',	'Departments',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
@@ -296,7 +296,7 @@ DROP TABLE IF EXISTS `gatherings`;
 CREATE TABLE `gatherings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `assembly_id` int NOT NULL,
-  `gathering_type_id` int NOT NULL,
+  `meeting_id` int NOT NULL,
   `meeting_date` date NOT NULL,
   `description` longtext NOT NULL,
   `created_at` datetime NOT NULL,
@@ -307,14 +307,14 @@ CREATE TABLE `gatherings` (
   `deleted_by` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `assembly_id` (`assembly_id`),
-  KEY `gathering_type_id` (`gathering_type_id`),
+  KEY `meeting_id` (`meeting_id`),
   CONSTRAINT `gatherings_ibfk_1` FOREIGN KEY (`assembly_id`) REFERENCES `assemblies` (`id`),
-  CONSTRAINT `gatherings_ibfk_2` FOREIGN KEY (`gathering_type_id`) REFERENCES `gatheringtypes` (`id`)
+  CONSTRAINT `gatherings_ibfk_2` FOREIGN KEY (`meeting_id`) REFERENCES `meetings` (`id`)
 );
 
 
-DROP TABLE IF EXISTS `gatheringtypes`;
-CREATE TABLE `gatheringtypes` (
+DROP TABLE IF EXISTS `meetings`;
+CREATE TABLE `meetings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int NOT NULL,
   `description` longtext,
@@ -327,7 +327,7 @@ CREATE TABLE `gatheringtypes` (
   `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
-  CONSTRAINT `gatheringtypes_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
+  CONSTRAINT `meetings_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
 );
 
 
@@ -411,13 +411,13 @@ INSERT INTO `menus` (`id`, `name`, `icon`, `feature_id`, `parent_id`, `visible`,
 (12,	'user',	'entypo-user',	16,	0,	'yes',	12,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (13,	'report',	'entypo-print',	18,	0,	'yes',	13,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (14,	'entity',	'entypo-docs',	3,	4,	'yes',	3,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(16,	'collection_type',	'entypo-vcard',	7,	6,	'no',	52,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
+(16,	'revenue',	'entypo-vcard',	7,	6,	'no',	52,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (17,	'report_type',	'entypo-bag',	19,	4,	'yes',	53,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (18,	'subscription_type',	'entypo-list',	15,	6,	'no',	54,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (20,	'designation',	'entypo-star',	8,	4,	'yes',	54,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (21,	'participant',	'entypo-user-add',	12,	7,	'no',	7,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(22,	'gathering',	'entypo-bell',	10,	7,	'no',	7,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(23,	'gathering_type',	'entypo-tag',	23,	4,	'yes',	52,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
+(22,	'meeting',	'entypo-bell',	10,	7,	'no',	7,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
+(23,	'meeting',	'entypo-tag',	23,	4,	'yes',	52,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (24,	'custom_field',	'entypo-lamp',	24,	0,	'yes',	52,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (25,	'department',	'entypo-archive',	26,	4,	'yes',	10,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (26,	'section',	'entypo-map',	27,	13,	'yes',	10,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
@@ -567,10 +567,10 @@ INSERT INTO `permissions` (`id`, `name`, `feature_id`, `label`, `global_permissi
 (57,	'Read Designation',	8,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
 (58,	'Update Designation',	8,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
 (59,	'Delete Designation',	8,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(63,	'Create Gathering',	10,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(64,	'Read Gathering',	10,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(65,	'Update Gathering',	10,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(66,	'Delete Gathering',	10,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
+(63,	'Create Meeting',	10,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
+(64,	'Read Meeting',	10,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
+(65,	'Update Meeting',	10,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
+(66,	'Delete Meeting',	10,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
 (70,	'Create Member',	11,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
 (71,	'Read Member',	11,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
 (72,	'Update Member',	11,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
@@ -607,10 +607,10 @@ INSERT INTO `permissions` (`id`, `name`, `feature_id`, `label`, `global_permissi
 (127,	'Read Attendance',	22,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
 (128,	'Update Attendance',	22,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
 (129,	'Delete Attendance',	22,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(133,	'Create Gathering Type',	23,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(134,	'Read Gathering Type',	23,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(135,	'Update Gathering Type',	23,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(136,	'Delete Gathering Type',	23,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
+(133,	'Create Meeting Name',	23,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
+(134,	'Read Meeting Name',	23,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
+(135,	'Update Meeting Name',	23,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
+(136,	'Delete Meeting Name',	23,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
 (140,	'Create Custom Field',	24,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
 (141,	'Read Custom Field',	24,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
 (142,	'Update Custom Field',	24,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),

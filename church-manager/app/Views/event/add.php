@@ -43,12 +43,12 @@
           </div>
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="gatheringtype_id">
-                <?= lang('event.event_gatheringtype_id') ?>
+            <label class="control-label col-xs-4" for="meeting_id">
+                <?= lang('event.event_meeting_id') ?>
             </label>
             <div class="col-xs-6">
-              <select class="form-control" name="gatheringtype_id" id="gatheringtype_id">
-                <option value=""><?= lang('event.select_gatheringtype') ?></option>
+              <select class="form-control" name="meeting_id" id="meeting_id">
+                <option value=""><?= lang('event.select_meeting') ?></option>
                 <!-- <?php 
                   if(isset($parent_entities)){
                     foreach($parent_entities as $entity){?>

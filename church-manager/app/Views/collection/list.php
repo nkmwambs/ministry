@@ -28,7 +28,7 @@
                     <th><?= lang('collection.collection_return_date') ?></th>
                     <th><?= lang('collection.collection_period_start_date') ?></th>
                     <th><?= lang('collection.collection_period_end_date') ?></th>
-                    <th><?= lang('collection.collection_collection_type_id') ?></th>
+                    <th><?= lang('collection.collection_revenue_id') ?></th>
                     <th><?= lang('collection.collection_amount') ?></th>
                     <th><?= lang('collection.collection_status') ?></th>
                     <th><?= lang('collection.collection_collection_reference') ?></th>
@@ -52,7 +52,7 @@
                         <td><?= $collection['return_date']; ?></td>
                         <td><?= $collection['period_start_date']; ?></td>
                         <td><?= $collection['period_end_date']; ?></td>
-                        <td><?= $collection['collection_type_id']; ?></td>
+                        <td><?= $collection['revenue_id']; ?></td>
                         <td><?= $collection['amount']; ?></td>
                         <td><?= $collection['status']; ?></td>
                         <td><?= $collection['collection_reference']; ?></td>
