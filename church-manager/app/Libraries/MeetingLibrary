@@ -3,6 +3,7 @@
 namespace App\Libraries;
 
 class MeetingLibrary implements \App\Interfaces\LibraryInterface {
+
     function unsetListQueryFields(){
 
     }
