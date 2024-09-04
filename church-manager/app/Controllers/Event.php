@@ -41,10 +41,10 @@ class Event extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'name' => 'required|min_length[10]|max_length[255]',
-            'gatheringtype_id' => 'required|min_length[3]',
+            'gatheringtype_id' => 'required',
             'location' => 'required|max_length[255]',
             'description' => 'required|max_length[255]',
-            'denomination_id' => 'required|min_length[3]',
+            'denomination_id' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -89,10 +89,10 @@ class Event extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'name' => 'required|min_length[10]|max_length[255]',
-            'gatheringtype_id' => 'required|min_length[3]',
+            'gatheringtype_id' => 'required',
             'location' => 'required|max_length[255]',
             'description' => 'required|max_length[255]',
-            'denomination_id' => 'required|min_length[3]',
+            'denomination_id' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {

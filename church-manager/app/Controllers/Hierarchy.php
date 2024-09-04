@@ -120,7 +120,7 @@ class Hierarchy extends BaseController
         ];
 
         
-        $this->model->update(hash_id($hashed_id,'decode'), $update_data);
+        $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
 
         if($this->request->isAJAX()){
             $this->feature = 'hierarchy';

@@ -45,10 +45,24 @@ class UsersModel extends Model  implements \App\Interfaces\ModelInterface
     protected $afterDelete    = [];
 
     function getAll(){
+        $library = new \App\Libraries\UserLibrary();
+        $listQueryFields = $library->setListQueryFields();
 
+        if (!empty($listQueryFields)) {
+            return $this->select($library->setListQueryFields())->orderBy('created_at desc')->findAll();
+        } else {
+            $this->orderBy('created_at desc')->findAll();
+        }
     }
 
     function getOne($id){
-        
+        $library = new \App\Libraries\UserLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())->where('id', $id)->first();
+        } else {
+            $this->where('id', $id)->first();
+        }
     }
 }

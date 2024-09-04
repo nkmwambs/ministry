@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <div class="page-title"><i class='fa fa-book'></i>
+        <div class="page-title"><i class='fas fa-church'></i>
             <?= lang('assembly.list_assemblies'); ?>
         </div>
     </div>
