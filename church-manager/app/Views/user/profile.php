@@ -1,6 +1,6 @@
 <div class="container p-0">
     <div class="row">
-        <div class="col-md-2 col-xl-2">
+        <div class="col-md-3 col-xl-3">
 
             <div class="card">
                 <div class="card-header">
@@ -38,9 +38,9 @@
             </div>
         </div>
 
-        <div class="col-md-5 col-xl-6">
+        <div class="col-md-8 col-xl-9">
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="account" role="tabpanel">
+                <div class="tab-pane show" id="account" role="tabpanel">
 
                     <div class="card">
                         <div class="card-header">
@@ -162,12 +162,12 @@
                     </div>
 
                 </div>
-                <div class="tab-pane fade" id="password" role="tabpanel">
+                <div class="tab-pane show" id="password" role="tabpanel">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Password</h5>
 
-                            <form>
+                            <form class="form-horizontal form-groups-bordered">
                                 <div class="form-group">
                                     <label for="inputPasswordCurrent">Current password</label>
                                     <input type="password" class="form-control" id="inputPasswordCurrent">

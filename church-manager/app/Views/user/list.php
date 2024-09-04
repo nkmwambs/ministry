@@ -1,4 +1,3 @@
-<div class="main">
   <div class="row">
     <div class="col-xs-12">
       <div class="page-title"><i class='fa fa-users'></i>
@@ -35,24 +34,21 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach($result as $user){?>
             <tr>
               <td>
-                <span class='action-icons'><a href="<?= site_url("users/view/".hash_id($user['id'])); ?>"><i
+                <span class='action-icons'><a href="<?= site_url("users/view/"); ?>"><i
                       class='fa fa-search'></i></a></i></span>
-                <span class='action-icons'><a href="<?= site_url("users/edit/".hash_id($user['id'])); ?>"><i
+                <span class='action-icons'><a href="<?= site_url("users/edit/"); ?>"><i
                       class='fa fa-pencil'></i></a></span>
                 <span class='action-icons'><i class='fa fa-trash'></i></span>
               </td>
 
-              <td><?=$user['first_name'];?></td>
-              <td><?=$user['last_name'];?></td>
-              <td><?=$user['phone'];?></td>
-              <td><?=$user['email'];?></td>
-              <td><?=$user['is_active'];?></td>
-          <?php } ?>
+              <td>First Name</td>
+              <td>Last Name</td>
+              <td>Phone</td>
+              <td>Email</td>
+              <td>Active</td>
         </tbody>
       </table>
     </div>
   </div>
-</div>

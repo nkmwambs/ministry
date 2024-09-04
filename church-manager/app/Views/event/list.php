@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <div class="page-title"><i class='fa fa-book'></i>
+        <div class="page-title"><i class='fa fa-calendar'></i>
             <?= lang('event.list_events'); ?>
         </div>
     </div>
