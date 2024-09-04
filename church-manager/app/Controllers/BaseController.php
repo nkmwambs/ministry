@@ -162,6 +162,10 @@ abstract class BaseController extends Controller
             unset($data['id']);
         }
 
+        if($this->request->isAJAX()){
+            return view("$this->feature/view", $this->page_data($data));
+        }
+
         return view('index', $this->page_data($data));
     }
 
