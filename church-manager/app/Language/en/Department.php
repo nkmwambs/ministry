@@ -7,7 +7,7 @@ return [
     'edit_department' => 'Edit Department',
     'delete_department' => 'Delete Department',
 
-    'department_name' => 'Department Name',
+    'department_name' => 'Name',
     'department_description' => 'Description',
     'department_action' => 'Actions',
 

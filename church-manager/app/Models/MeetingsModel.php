@@ -10,9 +10,9 @@ class MeetingsModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['id','denomination_id','name','description'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -43,4 +43,28 @@ class MeetingsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getAll() {
+        $library = new \App\Libraries\MeetingLibrary();
+        $setQueryFields = $library->setListQueryFields();
+
+        if (!empty($setQueryFields)) {
+            return $this->select($library->setListQueryFields())->orderBy('meetings.created_at desc')
+            ->findAll();
+        } else {
+            return $this->orderBy('meetings.created_at desc')->findAll();
+        }
+    }
+
+    public function getOne($id) {
+        $library = new \App\Libraries\MeetingLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())->where('id', $id)
+            ->findAll();
+        } else {
+            return $this->where('id', $id)->findAll();
+        }
+    }
 }

@@ -26,20 +26,17 @@
                 <?php foreach ($result as $department) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $department['id']; ?> participant"><a href="<?= site_url("participants/view/" . hash_id($department['id'])); ?>"><i
+                            <span class='action-icons' title="View <?= $department['id']; ?> department"><a href="<?= site_url("departments/view/" . hash_id($department['id'])); ?>"><i
                                         class='fa fa-search'></i></a></i></span>
-                            <span class='action-icons' title="Edit <?= $department['id']; ?> participant">
+                            <span class='action-icons' title="Edit <?= $department['id']; ?> department">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($department['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' title="Delete <?= $department['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' title="Delete <?= $department['id']; ?> department"><i class='fa fa-trash'></i></span>
 
                         </td>
 
-                        <td><?= $department['member_id']; ?></td>
-                        <td><?= $department['payment_id']; ?></td>
-                        <td><?= $department['payment_code']; ?></td>
-                        <td><?= $department['registration_amount']; ?></td>
-                        <td><?= $department['status']; ?></td>
+                        <td><?= $department['name']; ?></td>
+                        <td><?= $department['description']; ?></td>
 
                     <?php } ?>
             </tbody>
