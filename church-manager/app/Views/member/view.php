@@ -1,13 +1,6 @@
 <?php 
 $visitor_sections = array_pop($result);
 ?>
-<div class="row">
-    <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("events/view/".$id.'#list_members'); ?>" class="btn btn-info">
-            <?= lang('member.back_button') ?>
-        </a>
-    </div>
-</div>
 
 <div class = "row">
     <?php if(session()->getFlashdata('message') ) { ?>
@@ -46,13 +39,6 @@ $visitor_sections = array_pop($result);
                                 </div>
                             <?php } ?>
 
-                            <div class="form-group">
-                                <div class="col-xs-offset-4 col-xs-6">
-                                    <a href="<?= site_url(plural($feature) . '/edit/' . $id) ?>" class="btn btn-primary">
-                                        <?= lang('member.edit_button') ?>
-                                    </a>
-                                </div>
-                            </div>
                         </form>
                     </div>
 

@@ -1,21 +1,9 @@
-  <!-- <div class="row">
-    <div class="col-xs-12">
-      <div class="page-title"><i class='fa fa-book'></i>
-      <?= lang('member.list_members'); ?>
-      </div>
-    </div>
-  </div> -->
 
   <div class="row">
       <div class="col-xs-12 btn-container">
-          <div class='btn btn-primary' onclick="showAjaxModal('members','add', '<?= $id; ?>')">
+          <div class='btn btn-primary' onclick="showAjaxModal('members','add', '<?= $parent_id; ?>')">
               <?= lang('member.add_member'); ?>
           </div>
-          <?php if (!empty($result)) { ?>
-              <!-- <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?= $id; ?>')">
-              <?= lang('entity.add_entity'); ?>
-        </div> -->
-          <?php } ?>
       </div>
   </div>
 
@@ -38,8 +26,12 @@
                   <?php foreach ($result as $member) { ?>
                       <tr>
                           <td>
-                              <span class='action-icons' title="View <?= $member['first_name']; ?> member"><a href="<?= site_url("members/view/" . hash_id($member['id'])); ?>"><i
-                                          class='fa fa-search'></i></a></i></span>
+                              <span class='action-icons' title="View <?= $member['first_name']; ?> member">
+                                <!-- <a href="<?= site_url("members/view/" . hash_id($member['id'])); ?>">
+                                <i class='fa fa-search'></i> -->
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($member['id']);?>')"></i>
+                                </a>
+                                    </span>
                               <span class='action-icons' title="Edit <?= $member['first_name']; ?> member">
                                   <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($member['id']); ?>')" class='fa fa-pencil'></i>
                               </span>

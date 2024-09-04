@@ -77,6 +77,7 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
             return $this->select($library->setViewQueryFields())->where('assemblies.id', $numeric_id)
             ->join('entities','entities.id = assemblies.entity_id')
             ->join('hierarchies','hierarchies.id = entities.hierarchy_id')
+            ->join('ministers','ministers.id = assemblies.assembly_leader','left')
             ->first();
         }else{
             return $this->where('id', $this->id)->first();
