@@ -172,7 +172,7 @@ abstract class BaseController extends Controller
     public function edit(): string {
         $numeric_id = hash_id($this->id,'decode');
 
-        if(method_exists($this->model, 'getViewData')){
+        if(method_exists($this->model, 'getEditData')){
             $data = $this->model->getEditData($numeric_id);
         }else{
             $data = $this->model->getOne($numeric_id);
