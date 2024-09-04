@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('departments','add', '<?= $id; ?>')">
+        <div class='btn btn-primary' onclick="showAjaxModal('settings','add' . <?= $id ?>)">
             <?= lang('department.add_department'); ?>
         </div>
     </div>
@@ -17,7 +17,7 @@
         <table class="table table-striped datatable">
             <thead>
                 <tr>
-                    <th><?= lang('department.department_ction') ?></th>
+                    <th><?= lang('department.department_action') ?></th>
                     <th><?= lang('department.department_name') ?></th>
                     <th><?= lang('department.department_description') ?></th>
                 </tr>

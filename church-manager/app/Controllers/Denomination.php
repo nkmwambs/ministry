@@ -77,7 +77,7 @@ class Denomination extends BaseController
             'phone' => $this->request->getPost('phone'),
         ];
         
-        $this->model->update(hash_id($hashed_id,'decode'), $update_data);
+        $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
 
         if($this->request->isAJAX()){
             $this->feature = 'denomination';
@@ -120,7 +120,7 @@ class Denomination extends BaseController
             'phone' => $this->request->getPost('phone'),
         ];
 
-        $this->model->insert($data);
+        $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
 
         if($this->request->isAJAX()){

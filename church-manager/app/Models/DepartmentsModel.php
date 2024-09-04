@@ -6,13 +6,13 @@ use CodeIgniter\Model;
 
 class DepartmentsModel extends Model implements \App\Interfaces\ModelInterface
 {
-    protected $table            = 'assemblies';
+    protected $table            = 'departments';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','denomination_id','name','description',];
+    protected $allowedFields    = ['id','denomination_id','name','description'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -49,8 +49,8 @@ class DepartmentsModel extends Model implements \App\Interfaces\ModelInterface
         $listQueryFields = $library->setListQueryFields();
 
         if(!empty($listQueryFields)){
-            return $this->select($library->setListQueryFields())->orderBy('deparments.created_at desc')
-            ->join('denominations','denominations.id=departments.denomination_id')
+            return $this->select($library->setListQueryFields())
+            ->orderBy('departments.created_at desc')
             ->findAll();
         }else{
             return $this->orderBy('departments.created_at desc')->findAll();

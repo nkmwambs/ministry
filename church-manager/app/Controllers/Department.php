@@ -17,40 +17,33 @@ class Department extends BaseController
         $this->model = new \App\Models\DepartmentsModel();
     }
 
-    public function index($id = 0): string {
-        $departments = [];
+    // public function index() {
+    //     $data = [];
 
-        if ($id > 0) {
-            $departments = $this->model->select('departments.id,name,denomination_id')
-            ->where('denomination_id', $id)
-            ->join('denominations as parent', 'parent.id = departments.denomination_id', 'LEFT')
-            ->orderBy('deparments.created_at','desc')
-            ->findAll();
-        } else {
-            $departments = $this->model->select('departments.id,name,denomination_id')
-            ->join('denominations as parent', 'parent.id = departments.denomination_id')
-            ->orderBy('deparments.created_at','desc')
-            ->findAll();
-        }
+    //     // if(!session()->get('user_denomination_id')){
+    //     if(method_exists($this->model, 'getAll')){
+    //         $data = $this->model->getAll();
+    //     }else{
+    //         $data = $this->model->findAll();
+    //     }
+    //     // }else{
+    //     //     $data = $this->model->where('id', session()->get('user_denomination_id'))->findAll();
+    //     // }
 
-        if (!$departments) {
-            $page_data['result'] = [];
-        } else {
-            $page_data['result'] = $departments;
-        }
+    //     if ($this->request->isAJAX()) {
+    //         // $page_data['id'] = $id;
+    //         $page_data = $this->page_data($data);
+    //         return view("$this->feature/list", $page_data);
+    //     }
 
-        $page_data['result'] = $departments;
-        $page_data['feature'] = 'department';
-        $page_data['action'] = 'list';
+    //     return view('index', $this->page_data($data));
+    // }
 
-        if ($this->request->isAJAX()) {
-            return view('department/list');
-        } else {
-            $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
-        }
-
-        return view('index', $page_data);
-    }
+    // public function add($id = 0): string {
+    //     $page_data['feature'] = 'visitor';
+    //     $page_data['action'] = 'add';
+    //     return view('index', $page_data);
+    // }
 
     public function post() {
         $insertId = 0;

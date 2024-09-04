@@ -122,7 +122,7 @@ class Entity extends BaseController
             'parent_id' => $parent_id,
         ];
 
-        $this->model->insert($data);
+        $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
        
         $this->parent_id = $hashed_hierarchy_id;
@@ -198,7 +198,7 @@ class Entity extends BaseController
             'parent_id' => $this->request->getPost('parent_id'),
         ];
         
-        $this->model->update(hash_id($hashed_id,'decode'), $update_data);
+        $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
 
         $this->parent_id = $hashed_hierarchy_id;
 
