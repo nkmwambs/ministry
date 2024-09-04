@@ -17,7 +17,7 @@ class AssemblyLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setViewQueryFields(){
-        $fields = ['assemblies.id','assemblies.name','planted_at','location','entity_id','assembly_leader','assemblies.is_active','hierarchies.denomination_id as denomination_id'];
+        $fields = ['assemblies.id','assemblies.name','planted_at','location','entities.name as entity_name','ministers.name as assembly_leader','assemblies.is_active','hierarchies.denomination_id as denomination_id'];
         return $fields;
     }
 

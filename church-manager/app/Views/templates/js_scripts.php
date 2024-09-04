@@ -230,4 +230,19 @@
 				toastr.success("You have been awarded with 1 year free subscription. Enjoy it!", "Account Subcription Updated", opts);
 			}, 3000);
         })
+
+    $("#myTabs").on('click', function(ev){
+        const tabs = $(this)
+        const target_tab = $(ev.target).attr('href')
+        const tab_content = $('.tab-content')
+        const tab_panes = tab_content.find('.tab-pane')
+
+    // const tab_panes = tab_content.find('.tab-pane')
+
+    $.each(tab_panes, function (index, pane){
+        $(pane).removeClass('ajax_main')
+    })
+
+    $(target_tab).addClass('ajax_main')
+    })
 </script>

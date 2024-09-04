@@ -16,13 +16,13 @@ class Member extends BaseController
         $this->model = new \App\Models\MembersModel();
     }
     
-    public function index($id = 0): string
+    public function index($parent_id = 0): string
     {
         $members = [];
 
-        if($id > 0){
+        if($parent_id > 0){
             $members = $this->model->select('members.id,first_name,last_name,assembly_id,member_number,designation_id,date_of_birth,email,phone')
-            ->where('assembly_id',hash_id($id,'decode'))
+            ->where('assembly_id',hash_id($parent_id,'decode'))
             ->join('assemblies','assemblies.id=members.assembly_id')
             ->orderBy('members.created_at desc')
             ->findAll();
@@ -44,43 +44,55 @@ class Member extends BaseController
         $page_data['action'] = 'list';
         
         if ($this->request->isAJAX()) {
-            $page_data['id'] = $id;
+            $page_data['parent_id'] = $parent_id;
+            // $page_data['parent_id'] = ;
             return view('member/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
         }
 
         return view('index', $page_data);
-    }
-
-    public function add($id = 0): string {
-        $page_data['feature'] = 'member';
-        $page_data['action'] = 'add';
-        return view('index', $page_data);
-    }    
+    }   
 
     function post(){
         $insertId = 0;
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'first_name' => 'required|max_length[255]',
-            'last_name' => 'required|max_length[255]',
-            'member_number' => 'required|min_length[4]',
-            'designation_id' => 'required',
+            'first_name' => [
+                'rules' =>'required|min_length[3]|max_length[255]',
+                'label' => 'First Name',
+                'errors' => [
+                    'required' => 'First Name is required.',
+                    'min_length' => 'First Name must be at least {value} characters long.',
+                ]
+            ],
+            'last_name' => [
+                'rules' =>'required|min_length[3]|max_length[255]',
+                'label' => 'Last Name',
+                'errors' => [
+                    'required' => 'Last Name is required.',
+                    'min_length' => 'Last Name must be at least {value} characters long.',
+                ]
+            ],
+            'member_number' => [
+                'rules' =>'required|min_length[4]|max_length[255]',
+                'label' => 'Member Number',
+                'errors' => [
+                    'required' => 'Member Number is required.',
+                    'min_length' => 'Member Number must be at least {value} characters long.',
+                ]
+            ],
             'date_of_birth' => 'required',
             'email' => 'required|valid_email',
             'phone' => 'required|min_length[10]|max_length[50]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
         $assembly_id = hash_id($this->request->getPost('assembly_id'),'decode');
-        // $member_id = hash_id($this->request->getPost('member_id'), 'decode');
-        // $payment_id = hash_id($this->request->getPost('payment_id'), 'decode');
 
         $data = [
             'first_name' => $this->request->getPost('first_name'),
@@ -101,8 +113,7 @@ class Member extends BaseController
             $this->action = 'list';
             $records = $this->model->orderBy("created_at desc")->where('assembly_id', $assembly_id)->findAll();
             $page_data = parent::page_data($records);
-            $page_data['id'] = hash_id($assembly_id,'encode');
-            // log_message('error', json_encode($page_data));
+            $page_data['parent_id'] = hash_id($assembly_id,'encode');
             return view("member/list", $page_data);
         }
 
