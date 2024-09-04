@@ -15,6 +15,9 @@ return [
     'participant_registration_amount' => 'Registration Amount',
     'participant_status' => 'Status',
 
+    'select_member_name' => 'Select Member Name',
+    'select_payment_name' => 'Select Payment Name',
+
     'save_participant' => 'Save',
     'save_and_new_event' => 'Save and New',
     'reset_event_form' => 'Reset',

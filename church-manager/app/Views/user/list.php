@@ -6,13 +6,13 @@
     </div>
   </div>
 
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-xs-12 btn-container">
-      <a href="<?= site_url("users/add"); ?>" class='btn btn-primary'>
+      <div class='btn btn-primary' onclick="showAjaxModal('users','add', '<?= $id; ?>')">
         <?= lang('user.add_user'); ?>
-      </a>
+      </div>
     </div>
-  </div>
+  </div> -->
 
   <div class='row list-alert-container hidden'>
     <div class='col-xs-12 info'>

@@ -47,7 +47,17 @@
                 <?= lang('event.event_gatheringtype_id') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="gatheringtype_id" id="gatheringtype_id" placeholder="Enter Gathering Type">
+              <select class="form-control" name="gatheringtype_id" id="gatheringtype_id">
+                <option value=""><?= lang('event.select_gatheringtype') ?></option>
+                <!-- <?php 
+                  if(isset($parent_entities)){
+                    foreach($parent_entities as $entity){?>
+                      <option value = "<?=$entity['id'];?>"><?=$entity['member_id'];?></option>
+                <?php 
+                    }
+                  }
+                ?> -->
+              </select>
             </div>
           </div>
 
@@ -95,7 +105,17 @@
                 <?= lang('event.event_denomination_id') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="denomination_id" id="denomination_id" placeholder="Enter Denomination Name">
+              <select class="form-control" name="denomination_id" id="denomination_id">
+                <option value=""><?= lang('event.select_denomination_name') ?></option>
+                <!-- <?php 
+                  if(isset($parent_entities)){
+                    foreach($parent_entities as $entity){?>
+                      <option value = "<?=$entity['id'];?>"><?=$entity['member_id'];?></option>
+                <?php 
+                    }
+                  }
+                ?> -->
+              </select>
             </div>
           </div>
 

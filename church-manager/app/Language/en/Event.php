@@ -17,6 +17,9 @@ return [
     'event_denomination_id' => 'Denomination Name',
     'event_registration_fees' => 'Registration Fees',
 
+    'select_gatheringtype' => 'Select Gathering Type',
+    'select_denomination_name' => 'Select Denomination Name',
+
     'save_event' => 'Save',
     'save_and_new_event' => 'Save and New',
     'reset_event_form' => 'Reset',

@@ -69,7 +69,7 @@ class Assembly extends BaseController
             'is_active' => $this->request->getPost('is_active'),
         ];
         
-        $this->model->update(hash_id($hashed_id,'decode'), $update_data);
+        $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
 
         if($this->request->isAJAX()){
             $this->feature = 'assembly';
@@ -116,30 +116,6 @@ class Assembly extends BaseController
                    'required' => 'The {field} field is required.',
                 ]
             ]
-            'name' => [
-                'rules' =>'required|min_length[10]|max_length[255]',
-                'label' => lang('assembly.assembly_name'),
-                'errors' => [
-                   'required' => 'The {field} field is required.',
-                   'min_length' => 'The {field} field must be at least {param} characters long.',
-                   'max_length' => 'The {field} field must not exceed {param} characters long.'
-                ]
-            ],    
-            'entity_id'    => [
-                'rules' =>'required|max_length[255]',
-                'label' => lang('assembly.assembly_entity_id'),
-                'errors' => [
-                   'required' => 'The {field} field is required.',
-                   'max_length' => 'The {field} field must not exceed {param} characters long.'
-                ]
-                ],
-            'location' => [
-                'rules' =>'required',
-                'label' => lang('assembly.assembly_location'),
-                'errors' => [
-                   'required' => 'The {field} field is required.',
-                ]
-            ]
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -155,10 +131,8 @@ class Assembly extends BaseController
             'entity_id' => $this->request->getPost('entity_id'),
             'assembly_leader' => $this->request->getPost('assembly_leader'),
             'is_active' => 'yes'
-            'is_active' => 'yes'
         ];
 
-        $this->model->insert((object)$data);
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
 
