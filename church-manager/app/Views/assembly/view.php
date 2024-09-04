@@ -1,4 +1,5 @@
 <?php 
+// echo json_encode($result);
 $member_sections = array_pop($result);
 ?>
 <div class="row">
@@ -45,7 +46,7 @@ $member_sections = array_pop($result);
                                 <div class = "form-group">
                                     <label for="" class = "control-label col-xs-4"><?=humanize($field_name);?></label>
                                     <div class = "col-xs-6">
-                                        <div class = "form_view_field"><?=$field_value;?></div>
+                                        <div class = "form_view_field"><?=ucwords($field_value);?></div>
                                     </div>
                                 </div>
                             <?php } ?>

@@ -30,6 +30,7 @@
             </div>
           </div>
 
+
           <div class="form-group">
             <label class="control-label col-xs-4" for="last_name">
               <?= lang('member.member_last_name') ?>
@@ -41,14 +42,14 @@
           </div>
               
           <?php 
-            if(isset($id)){
+            if(isset($parent_id)){
           ?>
-            <input type="hidden" name="assembly_id" value="<?=$id;?>" />
+            <input type="hidden" name="assembly_id" value="<?=$parent_id;?>" />
           <?php 
             }else{
           ?>
             <div class="form-group">
-              <label class="control-label col-xs-4" for="assembly_id"><?= lang('member.mamber_assembly_id') ?></label>
+              <label class="control-label col-xs-4" for="assembly_id"><?= lang('member.member_assembly_id') ?></label>
               <div class="col-xs-6">
                 <select class="form-control" name="assembly_id" id="assembly_id">
                   <option value=""><?= lang('assembly.select_assembly') ?></option>
