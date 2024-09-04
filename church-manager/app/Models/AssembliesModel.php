@@ -52,6 +52,7 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
             return $this->select($library->setListQueryFields())->orderBy('assemblies.created_at desc')
             ->join('entities','entities.id=assemblies.entity_id')
             ->join('ministers','ministers.id=assemblies.assembly_leader', 'left')
+            ->join('hierarchies','hierarchies.id=entities.hierarchy_id')
             ->findAll();
         }else{
             return $this->orderBy('assemblies.created_at desc')->findAll();
