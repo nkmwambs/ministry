@@ -25,8 +25,17 @@
               <?= lang('participant.participant_member_id') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="member_id" id="member_id"
-                placeholder="Enter Member Name">
+              <select class="form-control" name="member_id" id="member_id">
+                <option value=""><?= lang('participant.select_member_name') ?></option>
+                <!-- <?php 
+                  if(isset($parent_entities)){
+                    foreach($parent_entities as $entity){?>
+                      <option value = "<?=$entity['id'];?>"><?=$entity['member_id'];?></option>
+                <?php 
+                    }
+                  }
+                ?> -->
+              </select>
             </div>
           </div>
               
@@ -55,7 +64,17 @@
               <?= lang('participant.participant_payment_id') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="payment_id" id="payment_id" placeholder="Enter Payment Name"></i>
+              <select class="form-control" name="payment_id" id="payment_id">
+                <option value=""><?= lang('participant.select_payment_name') ?></option>
+                <!-- <?php 
+                  if(isset($parent_entities)){
+                    foreach($parent_entities as $entity){?>
+                      <option value = "<?=$entity['id'];?>"><?=$entity['member_id'];?></option>
+                <?php 
+                    }
+                  }
+                ?> -->
+              </select>
             </div>
           </div>
 
