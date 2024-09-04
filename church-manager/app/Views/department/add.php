@@ -7,7 +7,7 @@
                 <div class="panel-title">
                     <div class="page-title">
                         <i class='fa fa-plus-circle'></i>
-                        <?= lang('denomination.add_denomination') ?>
+                        <?= lang('department.add_department') ?>
                     </div>
                 </div>
 
@@ -15,7 +15,7 @@
 
             <div class="panel-body">
 
-                <form role="form" id="frm_add_denomination" method="post" action="<?= site_url("denominations/save") ?>" class="form-horizontal form-groups-bordered">
+                <form role="form" id="frm_add_denomination" method="post" action="<?= site_url("departments/save") ?>" class="form-horizontal form-groups-bordered">
 
                     <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">
