@@ -85,6 +85,20 @@ class HierarchiesModel extends Model  implements \App\Interfaces\ModelInterface
         }
     }
 
+    function getEditData($hierarchy_id){
+        // log_message('error', $hierarchy_id);
+        $library = new \App\Libraries\HierarchyLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())
+            ->join('denominations','denominations.id=hierarchies.denomination_id')
+            ->where('hierarchies.id', $hierarchy_id)->first();
+        }else{
+            return $this->where('id', $hierarchy_id)->first();
+        }
+    }
+
     // function createHeadOfficeEntity(array $data){
     //     if($data['data']['level'] == 1){
     //         $headOfficeEntityData = [
