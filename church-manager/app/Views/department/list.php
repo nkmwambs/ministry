@@ -26,8 +26,12 @@
                 <?php foreach ($result as $department) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $department['id']; ?> department"><a href="<?= site_url("departments/view/" . hash_id($department['id'])); ?>"><i
-                                        class='fa fa-search'></i></a></i></span>
+                            <span class='action-icons' title="View <?= $department['id']; ?> department">
+                                <!-- <a href="<?= site_url("departments/view/" . hash_id($department['id'])); ?>">
+                                    <i class='fa fa-search'></i>
+                                </a> -->
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($department['id']);?>')"></i>
+                            </span>
                             <span class='action-icons' title="Edit <?= $department['id']; ?> department">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($department['id']); ?>')" class='fa fa-pencil'></i>
                             </span>

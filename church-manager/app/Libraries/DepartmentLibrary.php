@@ -17,7 +17,7 @@ class DepartmentLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setViewQueryFields(){
-        $fields = ['departments.id','denomination_id','departments.name','departments.description'];
+        $fields = ['departments.id','denomination_id','departments.name','departments.description', 'denominations.name as denomination_name'];
         return $fields;
     }
 
