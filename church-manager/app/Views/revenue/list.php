@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('revenues','add' . <?= $id ?>)">
+        <div class='btn btn-primary' onclick="showAjaxModal('revenues','add','<?= $parent_id ?>')">
             <?= lang('revenue.add_revenue'); ?>
         </div>
     </div>
@@ -26,8 +26,9 @@
                 <?php foreach ($result as $revenue) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $revenue['id']; ?> revenue"><a href="<?= site_url("revenues/view/" . hash_id($revenue['id'])); ?>"><i
-                                        class='fa fa-search'></i></a></i></span>
+                            <span class='action-icons' title="View <?= $revenue['id']; ?> revenue">
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($revenue['id']);?>')"></i>
+                            </span>
                             <span class='action-icons' title="Edit <?= $revenue['id']; ?> revenue">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($revenue['id']); ?>')" class='fa fa-pencil'></i>
                             </span>

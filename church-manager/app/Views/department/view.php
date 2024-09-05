@@ -14,7 +14,7 @@
                 <form  class="form-horizontal form-groups-bordered">
                 <div class = "form-group">
                         <div class="col-xs-4">
-                            <label>Department Name</label>
+                            <label><?= lang('department.department_name') ?></label>
                         </div>
                         <div class = "col-xs-8">
                             <?=$result['name'];?>
@@ -23,7 +23,7 @@
 
                     <div class = "form-group">
                         <div class="col-xs-4">
-                            <label>Denomination Name</label>
+                            <label><?= lang('denomination.denomination_name') ?></label>
                         </div>
                         <div class = "col-xs-8">
                             <?=$result['denomination_name'];?>
@@ -32,7 +32,7 @@
 
                     <div class = "form-group">
                         <div class="col-xs-4">
-                            <label>Description</label>
+                            <label><?= lang('department.department_name') ?></label>
                         </div>
                         <div class = "col-xs-8">
                             <?=$result['description'];?>

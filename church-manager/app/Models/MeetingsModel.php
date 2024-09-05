@@ -67,4 +67,32 @@ class MeetingsModel extends Model
             return $this->where('id', $id)->findAll();
         }
     }
+
+    public function getEditData($department_id){
+        $library = new \App\Libraries\MeetingLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())
+                ->join('denominations', 'denominations.id = meetings.denomination_id')
+                ->where('meetings.id', $department_id)
+                ->first();
+        } else {
+            return $this->where('meetings.id')->first();
+        }
+    }
+
+    public function getViewData($meeting_id){
+        $library = new \App\Libraries\MeetingLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields()) 
+                ->join('denominations', 'denominations.id = meetings.denomination_id')
+                ->where('meetings.id', $meeting_id)
+                ->first();
+        } else {
+            return $this->where('id', $meeting_id)->first();
+        }
+    }
 }
