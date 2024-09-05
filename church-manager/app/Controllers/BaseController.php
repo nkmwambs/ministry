@@ -138,13 +138,25 @@ abstract class BaseController extends Controller
         }
         
 
+        $page_data = $this->page_data($data);
+
         if ($this->request->isAJAX()) {
             // $page_data['id'] = $id;
-            $page_data = $this->page_data($data);
-            return view("$this->feature/list", $page_data);
-        }
+            if(method_exists($this->library,'listExtraData')){
+                // Note the editExtraData updates the $page_data by reference
+                $this->library->listExtraData($page_data);
+            }
 
-        return view('index', $this->page_data($data));
+            return view("$this->feature/list", $page_data);
+        }else{
+            if(method_exists($this->library,'listExtraData')){
+                // log_message('error', json_encode($page_data));
+                // Note the editExtraData updates the $page_data by reference
+                $this->library->listExtraData($page_data);
+            }
+        }
+        // log_message('error', json_encode($page_data));
+        return view('index', $page_data);
     }
     
 

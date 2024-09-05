@@ -1,5 +1,6 @@
 -- Adminer 4.8.1 MySQL 8.0.28 dump
 
+SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
@@ -9,7 +10,7 @@ CREATE TABLE `assemblies` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `planted_at` date NOT NULL,
-  `location` varchar(200)  NOT NULL,
+  `location` varchar(200) NOT NULL,
   `entity_id` int NOT NULL COMMENT 'Assemblies belong to lowest entity which belong to level 1 hierarchy',
   `assembly_leader` int DEFAULT NULL,
   `is_active` enum('yes','no') DEFAULT 'yes',
@@ -22,7 +23,7 @@ CREATE TABLE `assemblies` (
   PRIMARY KEY (`id`),
   KEY `entity_id` (`entity_id`),
   CONSTRAINT `assemblies_ibfk_1` FOREIGN KEY (`entity_id`) REFERENCES `entities` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `attendances`;
@@ -41,7 +42,7 @@ CREATE TABLE `attendances` (
   KEY `meeting_id` (`meeting_id`),
   CONSTRAINT `attendances_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`),
   CONSTRAINT `attendances_ibfk_2` FOREIGN KEY (`meeting_id`) REFERENCES `meetings` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `collections`;
@@ -65,11 +66,13 @@ CREATE TABLE `collections` (
   PRIMARY KEY (`id`),
   KEY `revenue_id` (`revenue_id`),
   CONSTRAINT `collections_ibfk_1` FOREIGN KEY (`revenue_id`) REFERENCES `revenues` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `revenues`;
-CREATE TABLE `revenues` (
+SET NAMES utf8mb4;
+
+DROP TABLE IF EXISTS `collectiontypes`;
+CREATE TABLE `collectiontypes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int NOT NULL,
   `name` varchar(200) NOT NULL,
@@ -82,8 +85,8 @@ CREATE TABLE `revenues` (
   `deleted_by` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
-  CONSTRAINT `revenues_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-);
+  CONSTRAINT `collectiontypes_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 DROP TABLE IF EXISTS `customfields`;
@@ -91,7 +94,7 @@ CREATE TABLE `customfields` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int DEFAULT NULL,
   `name` varchar(200) NOT NULL,
-  `type` enum('string','text','date','datetime','timestamp','password','numeric','email','dropdown')  NOT NULL DEFAULT 'string',
+  `type` enum('string','text','date','datetime','timestamp','password','numeric','email','dropdown') NOT NULL DEFAULT 'string',
   `options` longtext NOT NULL,
   `feature_id` int NOT NULL,
   `field_order` int DEFAULT '0',
@@ -108,7 +111,7 @@ CREATE TABLE `customfields` (
   KEY `denomination_id` (`denomination_id`),
   CONSTRAINT `customfields_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`),
   CONSTRAINT `customfields_ibfk_2` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `customvalues`;
@@ -123,7 +126,7 @@ CREATE TABLE `customvalues` (
   `deleted_at` datetime DEFAULT NULL,
   `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `dashboards`;
@@ -139,14 +142,14 @@ CREATE TABLE `dashboards` (
   `deleted_at` datetime DEFAULT NULL,
   `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `denominations`;
 CREATE TABLE `denominations` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
-  `code` varchar(20)  DEFAULT NULL,
+  `code` varchar(20) DEFAULT NULL,
   `registration_date` date NOT NULL,
   `head_office` varchar(200) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -158,7 +161,7 @@ CREATE TABLE `denominations` (
   `deleted_at` datetime DEFAULT NULL,
   `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `departments`;
@@ -176,7 +179,7 @@ CREATE TABLE `departments` (
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
   CONSTRAINT `departments_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `designations`;
@@ -186,7 +189,7 @@ CREATE TABLE `designations` (
   `denomination_id` int NOT NULL,
   `hierarchy_id` int DEFAULT NULL,
   `department_id` int DEFAULT NULL,
-  `minister_title_designation` enum('no','yes')  DEFAULT 'no',
+  `minister_title_designation` enum('no','yes') DEFAULT 'no',
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -198,7 +201,7 @@ CREATE TABLE `designations` (
   KEY `department_id` (`department_id`),
   CONSTRAINT `designations_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`),
   CONSTRAINT `designations_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `entities`;
@@ -207,7 +210,7 @@ CREATE TABLE `entities` (
   `hierarchy_id` int NOT NULL,
   `entity_number` varchar(50) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
-  `parent_id` int NOT NULL,
+  `parent_id` int DEFAULT NULL,
   `entity_leader` int DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
@@ -219,7 +222,7 @@ CREATE TABLE `entities` (
   UNIQUE KEY `entity_number` (`entity_number`),
   KEY `hierarchy_id` (`hierarchy_id`),
   CONSTRAINT `entities_ibfk_1` FOREIGN KEY (`hierarchy_id`) REFERENCES `hierarchies` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `events`;
@@ -230,7 +233,7 @@ CREATE TABLE `events` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `location` varchar(100) NOT NULL,
-  `description` longtext ,
+  `description` longtext,
   `denomination_id` int NOT NULL,
   `registration_fees` decimal(10,2) NOT NULL DEFAULT '0.00',
   `assemblies` longtext,
@@ -245,14 +248,14 @@ CREATE TABLE `events` (
   KEY `meeting_id` (`meeting_id`),
   CONSTRAINT `events_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`),
   CONSTRAINT `events_ibfk_2` FOREIGN KEY (`meeting_id`) REFERENCES `meetings` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `features`;
 CREATE TABLE `features` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
-  `description` longtext  NOT NULL,
+  `description` longtext NOT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -260,7 +263,7 @@ CREATE TABLE `features` (
   `deleted_at` datetime DEFAULT NULL,
   `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `features` (`id`, `name`, `description`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
 (1,	'dashboard',	'Dashboard',	'2024-06-26 20:26:16',	1,	'2024-06-26 20:26:16',	1,	NULL,	NULL),
@@ -310,7 +313,44 @@ CREATE TABLE `gatherings` (
   KEY `meeting_id` (`meeting_id`),
   CONSTRAINT `gatherings_ibfk_1` FOREIGN KEY (`assembly_id`) REFERENCES `assemblies` (`id`),
   CONSTRAINT `gatherings_ibfk_2` FOREIGN KEY (`meeting_id`) REFERENCES `meetings` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `gatheringtypes`;
+CREATE TABLE `gatheringtypes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `denomination_id` int NOT NULL,
+  `description` longtext,
+  `name` varchar(200) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `updated_by` int NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `denomination_id` (`denomination_id`),
+  CONSTRAINT `gatheringtypes_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS `hierarchies`;
+CREATE TABLE `hierarchies` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `denomination_id` int NOT NULL,
+  `level` int NOT NULL DEFAULT '1' COMMENT 'starts from 1,2,3,....n: 1 being the lowest',
+  `description` longtext,
+  `created_at` timestamp NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `updated_by` int NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `denomination_id` (`denomination_id`),
+  CONSTRAINT `hierarchies_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `meetings`;
@@ -328,25 +368,7 @@ CREATE TABLE `meetings` (
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
   CONSTRAINT `meetings_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-);
-
-
-DROP TABLE IF EXISTS `hierarchies`;
-CREATE TABLE `hierarchies` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `denomination_id` int NOT NULL,
-  `level` int NOT NULL DEFAULT '1' COMMENT 'starts from 1,2,3,....n: 1 being the lowest',
-  `created_at` timestamp NOT NULL,
-  `created_by` int NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `updated_by` int NOT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `denomination_id` (`denomination_id`),
-  CONSTRAINT `hierarchies_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `members`;
@@ -354,12 +376,12 @@ CREATE TABLE `members` (
   `id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
-  `member_number` varchar(100)  DEFAULT NULL,
+  `member_number` varchar(100) DEFAULT NULL,
   `designation_id` int NOT NULL,
   `date_of_birth` date NOT NULL,
-  `email` varchar(100)  DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `phone` varchar(100) NOT NULL,
-  `is_active` enum('yes','no')  NOT NULL DEFAULT 'yes',
+  `is_active` enum('yes','no') NOT NULL DEFAULT 'yes',
   `assembly_id` int NOT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
@@ -373,17 +395,17 @@ CREATE TABLE `members` (
   KEY `designation_id` (`designation_id`),
   CONSTRAINT `members_ibfk_1` FOREIGN KEY (`assembly_id`) REFERENCES `assemblies` (`id`),
   CONSTRAINT `members_ibfk_2` FOREIGN KEY (`designation_id`) REFERENCES `designations` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `menus`;
 CREATE TABLE `menus` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `icon` varchar(100)  NOT NULL DEFAULT 'entypo-home',
+  `icon` varchar(100) NOT NULL DEFAULT 'entypo-home',
   `feature_id` int NOT NULL,
   `parent_id` int NOT NULL DEFAULT '0',
-  `visible` enum('yes','no')  NOT NULL DEFAULT 'yes',
+  `visible` enum('yes','no') NOT NULL DEFAULT 'yes',
   `order` int DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
@@ -394,7 +416,7 @@ CREATE TABLE `menus` (
   PRIMARY KEY (`id`),
   KEY `feature_id` (`feature_id`),
   CONSTRAINT `menus_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `menus` (`id`, `name`, `icon`, `feature_id`, `parent_id`, `visible`, `order`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
 (1,	'dashboard',	'entypo-gauge',	1,	0,	'yes',	1,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
@@ -429,13 +451,13 @@ DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `version` varchar(255) NOT NULL,
-  `class` varchar(255)  NOT NULL,
-  `group` varchar(255)  NOT NULL,
-  `namespace` varchar(255)  NOT NULL,
+  `class` varchar(255) NOT NULL,
+  `group` varchar(255) NOT NULL,
+  `namespace` varchar(255) NOT NULL,
   `time` int NOT NULL,
   `batch` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `ministers`;
@@ -459,7 +481,7 @@ CREATE TABLE `ministers` (
   KEY `designation_id` (`designation_id`),
   CONSTRAINT `ministers_ibfk_1` FOREIGN KEY (`assembly_id`) REFERENCES `assemblies` (`id`),
   CONSTRAINT `ministers_ibfk_2` FOREIGN KEY (`designation_id`) REFERENCES `designations` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `participants`;
@@ -484,7 +506,7 @@ CREATE TABLE `participants` (
   CONSTRAINT `participants_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`),
   CONSTRAINT `participants_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
   CONSTRAINT `participants_ibfk_3` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `payments`;
@@ -505,7 +527,7 @@ CREATE TABLE `payments` (
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
   CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `permissions`;
@@ -513,8 +535,8 @@ CREATE TABLE `permissions` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `feature_id` int NOT NULL,
-  `label` enum('create','read','update','delete')  NOT NULL DEFAULT 'read' COMMENT 'create,read,update,delete',
-  `global_permission` enum('yes','no')  NOT NULL DEFAULT 'no',
+  `label` enum('create','read','update','delete') NOT NULL DEFAULT 'read' COMMENT 'create,read,update,delete',
+  `global_permission` enum('yes','no') NOT NULL DEFAULT 'no',
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -524,7 +546,7 @@ CREATE TABLE `permissions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `feature_id_label` (`feature_id`,`label`),
   CONSTRAINT `permissions_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `permissions` (`id`, `name`, `feature_id`, `label`, `global_permission`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
 (1,	'Create Denomination',	5,	'create',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
@@ -643,30 +665,30 @@ INSERT INTO `permissions` (`id`, `name`, `feature_id`, `label`, `global_permissi
 DROP TABLE IF EXISTS `queue_jobs`;
 CREATE TABLE `queue_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `queue` varchar(64)  NOT NULL,
-  `payload` text  NOT NULL,
-  `priority` varchar(64)  NOT NULL DEFAULT 'default',
+  `queue` varchar(64) NOT NULL,
+  `payload` text NOT NULL,
+  `priority` varchar(64) NOT NULL DEFAULT 'default',
   `status` tinyint unsigned NOT NULL DEFAULT '0',
   `attempts` tinyint unsigned NOT NULL DEFAULT '0',
   `available_at` int unsigned NOT NULL,
   `created_at` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `queue_priority_status_available_at` (`queue`,`priority`,`status`,`available_at`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `queue_jobs_failed`;
 CREATE TABLE `queue_jobs_failed` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `connection` varchar(64)  NOT NULL,
-  `queue` varchar(64)  NOT NULL,
-  `payload` text  NOT NULL,
-  `priority` varchar(64)  NOT NULL DEFAULT 'default',
-  `exception` text  NOT NULL,
+  `connection` varchar(64) NOT NULL,
+  `queue` varchar(64) NOT NULL,
+  `payload` text NOT NULL,
+  `priority` varchar(64) NOT NULL DEFAULT 'default',
+  `exception` text NOT NULL,
   `failed_at` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `queue` (`queue`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `reportfields`;
@@ -674,10 +696,10 @@ CREATE TABLE `reportfields` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `report_id` int NOT NULL,
-  `description` varchar(100)  DEFAULT NULL,
-  `placeholder` varchar(100)  DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `placeholder` varchar(100) DEFAULT NULL,
   `type` enum('text','select','checkbox','radio','textarea') NOT NULL DEFAULT 'text',
-  `options` longtext ,
+  `options` longtext,
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -687,7 +709,7 @@ CREATE TABLE `reportfields` (
   PRIMARY KEY (`id`),
   KEY `report_id` (`report_id`),
   CONSTRAINT `reportfields_ibfk_1` FOREIGN KEY (`report_id`) REFERENCES `reports` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `reports`;
@@ -710,7 +732,7 @@ CREATE TABLE `reports` (
   CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`reports_type_id`) REFERENCES `reporttypes` (`id`),
   CONSTRAINT `reports_ibfk_2` FOREIGN KEY (`report_period`) REFERENCES `reporttypes` (`id`),
   CONSTRAINT `reports_ibfk_3` FOREIGN KEY (`report_date`) REFERENCES `reporttypes` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `reporttypes`;
@@ -728,7 +750,7 @@ CREATE TABLE `reporttypes` (
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
   CONSTRAINT `reporttypes_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `reportvalues`;
@@ -745,8 +767,52 @@ CREATE TABLE `reportvalues` (
   PRIMARY KEY (`id`),
   KEY `report_field_id` (`report_field_id`),
   CONSTRAINT `reportvalues_ibfk_1` FOREIGN KEY (`report_field_id`) REFERENCES `reportfields` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+DROP TABLE IF EXISTS `revenues`;
+CREATE TABLE `revenues` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `denomination_id` int NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `description` longtext NOT NULL,
+  `created_at` datetime NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `updated_by` int NOT NULL,
+  `deleted_at` datetime NOT NULL,
+  `deleted_by` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `denomination_id` (`denomination_id`),
+  CONSTRAINT `revenues_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `role_permissions`;
+CREATE TABLE `role_permissions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `feature_id` int NOT NULL,
+  `role_id` int NOT NULL,
+  `create` enum('yes','no') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'no',
+  `read` enum('yes','no') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'no',
+  `update` enum('yes','no') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'no',
+  `delete` enum('yes','no') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'no',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int DEFAULT NULL,
+  `updated_at` int DEFAULT NULL,
+  `updated_by` datetime DEFAULT NULL,
+  `deleted_at` int DEFAULT NULL,
+  `deleted_by` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `feature_id` (`feature_id`),
+  KEY `role_id` (`role_id`),
+  CONSTRAINT `role_permissions_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`),
+  CONSTRAINT `role_permissions_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `role_permissions` (`id`, `feature_id`, `role_id`, `create`, `read`, `update`, `delete`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
+(1,	4,	1,	'yes',	'no',	'yes',	'no',	'2024-09-02 14:17:04',	NULL,	NULL,	NULL,	NULL,	NULL),
+(2,	16,	1,	'yes',	'no',	'yes',	'no',	'2024-09-02 14:17:04',	NULL,	NULL,	NULL,	NULL,	NULL);
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -764,7 +830,7 @@ CREATE TABLE `roles` (
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
   CONSTRAINT `roles_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `sections`;
@@ -785,21 +851,21 @@ CREATE TABLE `sections` (
   KEY `reporttype_id` (`reporttype_id`),
   CONSTRAINT `sections_ibfk_1` FOREIGN KEY (`customfield_id`) REFERENCES `customfields` (`id`),
   CONSTRAINT `sections_ibfk_2` FOREIGN KEY (`reporttype_id`) REFERENCES `reporttypes` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `class` varchar(255)  NOT NULL,
-  `key` varchar(255)  NOT NULL,
-  `value` text ,
-  `type` varchar(31)  NOT NULL DEFAULT 'string',
-  `context` varchar(255)  DEFAULT NULL,
+  `class` varchar(255) NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `value` text,
+  `type` varchar(31) NOT NULL DEFAULT 'string',
+  `context` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `subscriptions`;
@@ -810,7 +876,7 @@ CREATE TABLE `subscriptions` (
   `end_date` datetime NOT NULL,
   `subscription_type_id` int NOT NULL,
   `status` enum('active','terminated') NOT NULL DEFAULT 'active',
-  `is_auto_renewal` enum('yes','no')  NOT NULL DEFAULT 'no',
+  `is_auto_renewal` enum('yes','no') NOT NULL DEFAULT 'no',
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -822,7 +888,7 @@ CREATE TABLE `subscriptions` (
   KEY `subscription_type_id` (`subscription_type_id`),
   CONSTRAINT `subscriptions_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`),
   CONSTRAINT `subscriptions_ibfk_2` FOREIGN KEY (`subscription_type_id`) REFERENCES `subscriptiontypes` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `subscriptiontypes`;
@@ -838,7 +904,7 @@ CREATE TABLE `subscriptiontypes` (
   `deleted_at` datetime NOT NULL,
   `deleted_by` int NOT NULL,
   PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `users`;
@@ -848,16 +914,16 @@ CREATE TABLE `users` (
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `gender` enum('male','female')  NOT NULL,
-  `phone` varchar(20)  DEFAULT NULL,
+  `gender` enum('male','female') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(100)  DEFAULT NULL,
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `roles` longtext,
   `is_system_admin` enum('yes','no') DEFAULT 'no',
   `access_count` int DEFAULT NULL,
   `accessed_at` datetime DEFAULT NULL,
   `last_password_reset_at` datetime DEFAULT NULL,
-  `is_active` enum('yes','no')  NOT NULL DEFAULT 'yes',
+  `is_active` enum('yes','no') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'yes',
   `associated_member_id` int DEFAULT NULL,
   `permitted_entities` longtext,
   `permitted_assemblies` longtext,
@@ -872,8 +938,10 @@ CREATE TABLE `users` (
   KEY `associated_member_id` (`associated_member_id`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`),
   CONSTRAINT `users_ibfk_2` FOREIGN KEY (`associated_member_id`) REFERENCES `members` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+INSERT INTO `users` (`id`, `denomination_id`, `first_name`, `last_name`, `date_of_birth`, `gender`, `phone`, `email`, `password`, `roles`, `is_system_admin`, `access_count`, `accessed_at`, `last_password_reset_at`, `is_active`, `associated_member_id`, `permitted_entities`, `permitted_assemblies`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
+(1,	NULL,	'Nicodemus',	'Karisa',	'2024-08-14',	'male',	'+254711808071',	'nkmwambs@gmail.com',	'$2y$10$h7nibDJpffpr8ZkXHnxJheCySIrIiRDE5ctGr6ajiAxzi.s7cYBaS',	NULL,	'yes',	NULL,	NULL,	NULL,	'yes',	NULL,	NULL,	NULL,	'2024-08-20 14:43:08',	NULL,	NULL,	NULL,	NULL,	NULL);
 
 DROP TABLE IF EXISTS `visitors`;
 CREATE TABLE `visitors` (
@@ -900,7 +968,7 @@ CREATE TABLE `visitors` (
   KEY `payment_id` (`payment_id`),
   CONSTRAINT `visitors_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
   CONSTRAINT `visitors_ibfk_2` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2024-08-12 14:49:53
+-- 2024-09-05 10:42:58

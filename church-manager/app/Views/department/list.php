@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('settings','add' . <?= $id ?>)">
+        <div class='btn btn-primary' onclick="showAjaxModal('departments','add', '<?= $parent_id ?>')">
             <?= lang('department.add_department'); ?>
         </div>
     </div>
