@@ -39,7 +39,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             </div>
                         </div>
                     <?php }else{?>
-                        <input type="hidden" name="denomination_id" id = "denomination_id" value="<?=$paent_id;?>" />
+                        <input type="hidden" name="denomination_id" id = "denomination_id" value="<?=$parent_id;?>" />
                     <?php }?>
 
 

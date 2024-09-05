@@ -67,4 +67,17 @@ class DepartmentsModel extends Model implements \App\Interfaces\ModelInterface
             return $this->where('id', $id)->first();
         }
     }
+
+    public function getEditData($department_id){
+        $library = new \App\Libraries\DepartmentLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())
+            ->join('denominations','denominations.id=departments.denomination_id')
+            ->where('departments.id', $department_id)->first();
+        }else{
+            return $this->where('id', $department_id)->first();
+        }
+    }
 }
