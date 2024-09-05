@@ -249,4 +249,26 @@ $(document).on('click', "#myTabs", function(ev){
     $(target_tab).addClass('active')
 })
 
+
+function deleteItem(plural_feature, action, item_id){
+    
+    const url = `<?=site_url()?>${plural_feature}/${action}/${item_id}`
+
+    $("#delete_confirmation").modal("show");
+
+    $("#confirmDeleteBtn").click(function(){
+        $.ajax({
+            url,
+            method: "GET",
+            success: function(response) {
+                // console.log(response)
+                // childrenAjaxLists($('.ajax_main'))
+                $("#delete_confirmation").modal("hide");
+            }
+        })
+    })
+
+    
+}
+
 </script>

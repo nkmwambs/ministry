@@ -25,6 +25,7 @@ foreach ($features as $featureObj) {
             $routes->get('view/(:segment)', "$ucfirst::view/$1");
             $routes->get('view/(:segment)/(:segment)', "$ucfirst::view/$1");
             $routes->get('edit/(:segment)', "$ucfirst::edit/$1");
+            $routes->get('delete/(:segment)', "$ucfirst::delete/$1");
             $routes->post('update', "$ucfirst::update");
             $routes->post('save', "$ucfirst::post");
             $routes->get('modal/(:segment)/(:segment)', "$ucfirst::modal/$1/$2");

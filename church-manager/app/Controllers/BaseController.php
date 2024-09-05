@@ -192,6 +192,20 @@ abstract class BaseController extends Controller
         return view("$this->feature/edit", $page_data);
     }
 
+    public function delete($id){
+        // log_message('error', $id);
+        $numeric_id = hash_id($id,'decode');
+
+        if(method_exists($this->model, 'deleteData')){
+            $this->model->deleteData($numeric_id);
+        } else{
+            $this->model->delete($numeric_id);
+        }
+
+        // return redirect()->to($this->feature);
+        // return view("$this->feature/edit", $page_data);
+    }
+
     public function add(): string {
         $page_data = $this->page_data();
         $page_data['parent_id'] = $this->parent_id;

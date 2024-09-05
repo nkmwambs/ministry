@@ -42,7 +42,7 @@ class MeetingsModel extends Model
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $afterDelete    = ["updateRecycleBin"];
 
     public function getAll() {
         $library = new \App\Libraries\MeetingLibrary();
@@ -94,5 +94,16 @@ class MeetingsModel extends Model
         } else {
             return $this->where('id', $meeting_id)->first();
         }
+    }
+
+    function updateRecycleBin($data){
+
+        $trashModel = new \App\Models\TrashesModel();
+        $trashData = [
+            'item_id' => $data['id'][0],
+            'item_deleted_at' => date('Y-m-d H:i:s')
+        ];
+        $trashModel->insert((object)$trashData);
+        return true;
     }
 }
