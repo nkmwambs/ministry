@@ -75,4 +75,5 @@ $parent_id = hash_id($parent_id, 'encode');
         const elem = $('#view_departments_tab')
         childrenAjaxLists(elem)
     })
+    
 </script>

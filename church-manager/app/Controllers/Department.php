@@ -48,8 +48,18 @@ class Department extends BaseController
     public function post() {
         $insertId = 0;
 
+
+        // log_message('error', json_encode($this->request->getPost()));
+        
         $validation = \Config\Services::validation();
         $validation->setRules([
+            'denomination_id' => [
+                'rules' => 'required',
+                'label' => 'Denomination Name',
+                'errors' => [
+                    'required' => 'Department Name is required'
+                ]
+            ],
             'name' => [
                 'rules' => 'required|min_length[5]|max_length[255]',
                 'label' => 'Name',
@@ -69,8 +79,9 @@ class Department extends BaseController
             ]
         ]);
 
-        if ($this->validate($validation->getRules())) {
-            return response()->setJSON(['errors' => $validation->getErrors()]);
+        if (!$this->validate($validation->getRules())) {
+            $validationErrors = $validation->getErrors();
+            return response()->setJSON(['errors' => $validationErrors]);
         }
 
         $data = [
@@ -83,6 +94,7 @@ class Department extends BaseController
         $insertId = $this->model->getInsertID();
 
         if ($this->request->isAJAX()) {
+           
             $this->feature = 'department';
             $this->action = 'list';
             $records = [];
@@ -93,7 +105,7 @@ class Department extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('department/list', parent::page_data($records));
+            return view('setting/list', parent::page_data($records));
         }
 
         return redirect()->to(site_url('settings/view/' . hash_id($insertId)));
