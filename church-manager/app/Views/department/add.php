@@ -31,9 +31,9 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             <label for="denomination_id" class = "control-label col-xs-4">Denomination Name</label>
                             <div class = "col-xs-6">
                                 <select class = "form-control" name = "denomination_id" id = "denomination_id">
-                                    <option value ="">Select a denomination</option>
+                                    <option value =""><?= lang('denomination.select_denomination') ?></option>
                                     <?php foreach ($denominations as $denomination) :?>
-                                    <option value="<?php echo $denomination['id'];?>"><?php echo $denomination['name'];?></option>
+                                        <option value="<?php echo $denomination['id'];?>"><?php echo $denomination['name'];?></option>
                                     <?php endforeach;?>
                                 </select>
                             </div>

@@ -12,7 +12,7 @@ class RevenuesModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['id','denomination_id','name','description'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -65,6 +65,32 @@ class RevenuesModel extends Model
             ->findAll();
         } else {
             return $this->where('id', $id)->findAll();
+        }
+    }
+
+    public function getEditData($revenue_id){
+        $library = new \App\Libraries\RevenueLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())
+            ->join('denominations','denominations.id=revenues.denomination_id')
+            ->where('revenues.id', $revenue_id)->first();
+        }else{
+            return $this->where('id', $revenue_id)->first();
+        }
+    }
+
+    public function getViewData($revenue_id){
+        $library = new \App\Libraries\RevenueLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())
+            ->join('denominations','denominations.id=revenues.denomination_id')
+            ->where('revenues.id', $revenue_id)->first();
+        }else{
+            return $this->where('id', $revenue_id)->first();
         }
     }
 }

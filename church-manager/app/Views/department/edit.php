@@ -16,7 +16,7 @@
 
             <div class="panel-body">
                 <form id="frm_edit_assembly" method="post" action="<?=site_url('departments/update/');?>" role="form" class="form-horizontal form-groups-bordered">
-                <div class="form-group hidden error_container">
+                    <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">
 
                         </div>
@@ -29,9 +29,9 @@
                             <label for="denomination_id" class = "control-label col-xs-4">Denomination Name</label>
                             <div class = "col-xs-6">
                                 <select class = "form-control" name = "denomination_id" id = "denomination_id">
-                                    <option value ="">Select a denomination</option>
+                                    <option value =""><?= lang('denomination.select_denomination') ?></option>
                                     <?php foreach ($denominations as $denomination) :?>
-                                    <option value="<?php echo $denomination['id'];?>" <?=$result['denomination_id'] == $denomination['id'] ? 'selected' : ''; ?>><?php echo $denomination['name'];?></option>
+                                        <option value="<?php echo $denomination['id'];?>" <?=$result['denomination_id'] == $denomination['id'] ? 'selected' : ''; ?>><?php echo $denomination['name'];?></option>
                                     <?php endforeach;?>
                                 </select>
                             </div>
