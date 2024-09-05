@@ -22,6 +22,8 @@
                         </div>
                     </div>
 
+                    <input type="hidden" name="id" id = "department_id" value="<?=$id;?>" />
+
                     <?php if(!$numeric_denomination_id){?>
                         <div class = 'form-group'>
                             <label for="denomination_id" class = "control-label col-xs-4">Denomination Name</label>

@@ -116,6 +116,13 @@ class Department extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
+            'denomination_id' => [
+                'rules' => 'required',
+                'label' => 'Denomination Name',
+                'errors' => [
+                    'required' => 'Department Name is required'
+                ]
+            ],
             'name' => [
                 'rules' =>'required|min_length[5]|max_length[255]',
                 'label' => 'Name',
@@ -135,7 +142,7 @@ class Department extends BaseController
             ]
         ]);
 
-        if ($this->validate($validation->getRules())) {
+        if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
@@ -159,7 +166,7 @@ class Department extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('deparment/list', parent::page_data($records));
+            return view('setting/list', parent::page_data($records));
         }
 
         return redirect()->to(site_url("department/view".$hashed_id));
