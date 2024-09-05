@@ -19,7 +19,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
 
             <div class="panel-body">
 
-                <form role="form" id="frm_add_meeting" method="post" action="<?= site_url("meetings/save") ?>" class="form-horizontal form-groups-bordered">
+                <form role="form" id="frm-view_meetings" method="post" action="<?= site_url("meetings/save") ?>" class="form-horizontal form-groups-bordered">
 
                     <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">

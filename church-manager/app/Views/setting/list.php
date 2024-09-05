@@ -41,7 +41,7 @@ $parent_id = hash_id($parent_id, 'encode');
             </div>
             <div class="panel-body">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="view_departments">
+                    <div class="tab-pane" id="view_departments">
                         <!-- <div class='info'>There are no departments available</div> -->
                     </div>
 
@@ -71,9 +71,15 @@ $parent_id = hash_id($parent_id, 'encode');
 
 <script>
 
+    // $(document).on('click', '#view_departments_tab', function() {
+    //     $('#view_departments').addClass('active')
+    // });
+
     $(document).ready(function () {
+        // document.getElementById("view_departments_tab").click();
         const elem = $('#view_departments_tab')
         childrenAjaxLists(elem)
+        $('#view_departments').addClass('active')
     })
     
 </script>

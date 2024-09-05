@@ -105,7 +105,7 @@ class Department extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('setting/list', parent::page_data($records));
+            return view('department/list', parent::page_data($records));
         }
 
         return redirect()->to(site_url('settings/view/' . hash_id($insertId)));

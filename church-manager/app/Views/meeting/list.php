@@ -41,8 +41,8 @@
 
                         <td><?= $meeting['name']; ?></td>
                         <td><?= $meeting['description']; ?></td>
-
-                    <?php } ?>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
     </div>

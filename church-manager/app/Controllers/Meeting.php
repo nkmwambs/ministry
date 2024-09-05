@@ -72,7 +72,7 @@ class Meeting extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('setting/list', parent::page_data($records));
+            return view('meeting/list', parent::page_data($records));
         }
 
         return redirect()->to(site_url('settings/view/' . hash_id($insertId)));
@@ -133,7 +133,7 @@ class Meeting extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('setting/list', parent::page_data($records));
+            return view('meeting/list', parent::page_data($records));
         }
 
         return redirect()->to(site_url("meeting/view".$hashed_id));

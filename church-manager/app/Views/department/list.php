@@ -41,8 +41,8 @@
 
                         <td><?= $department['name']; ?></td>
                         <td><?= $department['description']; ?></td>
-
-                    <?php } ?>
+                        </tr>
+                <?php } ?>
             </tbody>
         </table>
     </div>

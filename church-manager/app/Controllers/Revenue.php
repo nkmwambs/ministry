@@ -74,7 +74,7 @@ class Revenue extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('setting/list', parent::page_data($records));
+            return view('revenue/list', parent::page_data($records));
         }
 
         return redirect()->to(site_url('settings/view/' . hash_id($insertId)));
@@ -111,7 +111,7 @@ class Revenue extends BaseController
             ],
         ]);
 
-        if ($this->validate($validation->getRules())) {
+        if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
@@ -136,7 +136,7 @@ class Revenue extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('setting/list', parent::page_data($records));
+            return view('revenue/list', parent::page_data($records));
         }
 
         return redirect()->to(site_url("revenue/view".$hashed_id));
