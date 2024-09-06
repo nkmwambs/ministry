@@ -103,7 +103,7 @@
           <div class="form-group">
             <label class="control-label col-xs-4" for="permitted_entities">Permitted Entities</label>
             <div class="col-xs-6">
-              <select class="form-control" name="permitted_entities" id="permitted_entities">
+              <select class="form-control js-example-basic-multiple" name="permitted_entities[]" id="permitted_entities" multiple="multiple">
                 <!-- Populate the options from the entities array passed from the controller -->
                 <?php foreach ($entities as $entity): ?>
                     <option value="<?= $entity['id']; ?>">
