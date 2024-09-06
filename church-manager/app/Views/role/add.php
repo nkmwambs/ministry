@@ -33,6 +33,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             <div class = "col-xs-6">
                                 <select class = "form-control" name = "denomination_id" id = "denomination_id">
                                     <option value =""><?= lang('role.select_denomination') ?></option>
+                                    <option value ="0"><?= lang('role.system_denomination') ?></option>
                                     <?php foreach ($denominations as $denomination) : ?>
                                         <option value="<?php echo $denomination['id']; ?>"><?php echo $denomination['name']; ?></option>
                                     <?php endforeach; ?>
@@ -58,7 +59,10 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             <?= lang('role.role_default') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="default_role" id="default_role" placeholder="Enter Default Role">
+                            <select readonly class="form-control" name="default_role" id="default_role">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
                         </div>
                     </div>
                     
@@ -70,3 +74,32 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        if($('#default_role').val() == 'no'){
+            
+        }
+
+        $('#denomination_id').change(function () {
+                const denomination_id = $(this).val();
+                const base_url = '<?= site_url("roles/get_default_role/");?>';
+                $.ajax({
+                    url: base_url + denomination_id,
+                    type: 'GET',
+                    success: function (response) {
+                        // console.log(response.denominationHasDefaultRole);
+                        if (response.denominationHasDefaultRole) {
+                            $('#default_role').attr('readonly', 'readonly');
+                            $('#default_role').val('no')
+                            
+                        } else {
+                            $('#default_role').removeAttr('readonly');
+                        }
+                    }
+        
+            });
+        })
+    });
+</script>

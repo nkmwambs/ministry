@@ -33,6 +33,33 @@ class RoleLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['parent_id'] = hash_id($parent_id,'encode');
     }
 
+    function viewExtraData(&$page_data){
+        $features = [];
+
+        // Get list of features
+        $featuresModel = new \App\Models\FeaturesModel();
+        $features = $featuresModel->findAll();
+
+        $permissionsModel = new \App\Models\PermissionsModel();
+        $roleAssignedFeatures = $permissionsModel
+        ->select('permissions.id,role_id,features.id as feature_id,features.name as feature_name,permission_label,allowable_permission_labels')
+        ->join('features', 'features.id=permissions.feature_id')
+        ->where('role_id', $page_data['result']['id'])->findAll();
+
+        $roleAssignedFeatureIds = array_column($roleAssignedFeatures, 'feature_id');
+
+        foreach ($features as $key => $feature) {
+            if(in_array($feature['id'], $roleAssignedFeatureIds)){
+                unset($features[$key]);
+            }
+        }
+
+        $page_data['features'] = $features;
+
+        // List assigned permissions
+        $page_data['role_assigned_features'] = $roleAssignedFeatures;
+    }
+
     function addExtraData(&$page_data) {
         $parent_id = 0;
 

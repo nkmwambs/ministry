@@ -3,7 +3,7 @@
 return [
     'list_roles' => 'List Roles',
     'add_role' => 'Add Role',
-    'view_role' => 'View Role',
+    'view_role' => 'View Role Permissions',
     'edit_role' => 'Edit Role',
     'delete_role' => 'Delete Role',
 
@@ -14,6 +14,7 @@ return [
     'role_denomination_name' => 'Denomination Name',
 
     'select_denomination' => 'Select a denomination',
+    'system_denomination' => 'System',
 
     'add_role_success' => 'Role added successfully!',
     'edit_role_success' => 'Role updated successfully!',

@@ -10,7 +10,7 @@ class RolesModel extends Model  implements \App\Interfaces\ModelInterface
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['id','name','default_role','denomination_id'];
 
@@ -68,17 +68,18 @@ class RolesModel extends Model  implements \App\Interfaces\ModelInterface
         }
     }
     
-    public function getEditData($department_id){
+    public function getEditData($role_id){
+        // log_message('error', json_encode($role_id));
         $library = new \App\Libraries\RoleLibrary();
         $viewQueryFields = $library->setViewQueryFields();
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
-                ->join('denominations', 'denominations.id = roles.denomination_id')
-                ->where('roles.id', $department_id)
+                ->join('denominations', 'denominations.id = roles.denomination_id', 'left')
+                ->where('roles.id', $role_id)
                 ->first();
         } else {
-            return $this->where('roles.id')->first();
+            return $this->where('roles.id', $role_id)->first();
         }
     }
 

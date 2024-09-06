@@ -38,3 +38,6 @@ $routes->get('entities/lowestEntities/(:segment)', "Entity::getDenominationLowes
 $routes->get('hierarchies/denomination/(:segment)', "Hierarchy::getHierarchiesByDenominationId/$1");
 $routes->get('participants/event/(:segment)', 'Participant::getParticipantsByEventId/$1');
 $routes->get('settings', 'Setting::list');
+$routes->get('roles/get_default_role/(:segment)', 'Role::getDefaultRole/$1');
+$routes->get('features/get_allowable_permission_labels/(:segment)', 'Feature::getAllowablePermissionLabels/$1');
+$routes->post('permissions/update_permission', 'Permission::updatePermission/');
