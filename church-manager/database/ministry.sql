@@ -256,6 +256,7 @@ CREATE TABLE `features` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
   `description` longtext NOT NULL,
+  `allowable_permission_labels` json NOT NULL,
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -265,35 +266,35 @@ CREATE TABLE `features` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `features` (`id`, `name`, `description`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1,	'dashboard',	'Dashboard',	'2024-06-26 20:26:16',	1,	'2024-06-26 20:26:16',	1,	NULL,	NULL),
-(2,	'hierarchy',	'Hierarchy',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(3,	'entity',	'Entity',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(4,	'assembly',	'Assembly',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(5,	'denomination',	'Denomination',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(6,	'collection',	'Collection',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(7,	'revenue',	'Revenue',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(8,	'designation',	'Designation',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(9,	'event',	'Events',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(10,	'meeting',	'Meetings',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(11,	'member',	'Members',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(12,	'participant',	'Participants',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(13,	'role',	'Roles',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(14,	'subscription',	'Subscriptions',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(15,	'subscription_type',	'Subscription Types',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(16,	'user',	'Users',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(17,	'setting',	'Settings',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(18,	'report',	'Reports',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(19,	'report_type',	'Reports Types',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(22,	'attendance',	'Meeting Attendance',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(23,	'meeting',	'Meeting types',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(24,	'custom_field',	'Custom Fields',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(25,	'custom_value',	'Custom values',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(26,	'department',	'Departments',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(27,	'section',	'Report Sections',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(28,	'visitor',	'Event Visitors',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(29,	'payment',	'Event payments',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(30,	'minister',	'ministers',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL);
+INSERT INTO `features` (`id`, `name`, `description`, `allowable_permission_labels`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
+(1,	'dashboard',	'Dashboard',	'[\"read\"]',	'2024-06-26 20:26:16',	1,	'2024-06-26 20:26:16',	1,	NULL,	NULL),
+(2,	'hierarchy',	'Hierarchy',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(3,	'entity',	'Entity',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(4,	'assembly',	'Assembly',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(5,	'denomination',	'Denomination',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(6,	'collection',	'Collection',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(7,	'revenue',	'Revenue',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(8,	'designation',	'Designation',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(9,	'event',	'Events',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(10,	'meeting',	'Meetings',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(11,	'member',	'Members',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(12,	'participant',	'Participants',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(13,	'role',	'Roles',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(14,	'subscription',	'Subscriptions',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(15,	'subscription_type',	'Subscription Types',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(16,	'user',	'Users',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(17,	'setting',	'Settings',	'[\"read\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(18,	'report',	'Reports',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(19,	'report_type',	'Reports Types',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(22,	'attendance',	'Meeting Attendance',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(24,	'custom_field',	'Custom Fields',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(25,	'custom_value',	'Custom values',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(26,	'department',	'Departments',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(27,	'section',	'Report Sections',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(28,	'visitor',	'Event Visitors',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(29,	'payment',	'Event payments',	'[\"read\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(30,	'minister',	'ministers',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
+(31,	'trash',	'trash',	'[\"read\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL);
 
 DROP TABLE IF EXISTS `gatherings`;
 CREATE TABLE `gatherings` (
@@ -357,8 +358,8 @@ DROP TABLE IF EXISTS `meetings`;
 CREATE TABLE `meetings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int NOT NULL,
-  `description` longtext,
-  `name` varchar(200) NOT NULL,
+  `name` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `description` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci,
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -439,7 +440,6 @@ INSERT INTO `menus` (`id`, `name`, `icon`, `feature_id`, `parent_id`, `visible`,
 (20,	'designation',	'entypo-star',	8,	4,	'yes',	54,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (21,	'participant',	'entypo-user-add',	12,	7,	'no',	7,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (22,	'meeting',	'entypo-bell',	10,	7,	'no',	7,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(23,	'meeting',	'entypo-tag',	23,	4,	'yes',	52,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (24,	'custom_field',	'entypo-lamp',	24,	0,	'yes',	52,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (25,	'department',	'entypo-archive',	26,	4,	'yes',	10,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (26,	'section',	'entypo-map',	27,	13,	'yes',	10,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
@@ -533,134 +533,22 @@ CREATE TABLE `payments` (
 DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
   `feature_id` int NOT NULL,
-  `label` enum('create','read','update','delete') NOT NULL DEFAULT 'read' COMMENT 'create,read,update,delete',
-  `global_permission` enum('yes','no') NOT NULL DEFAULT 'no',
-  `created_at` datetime NOT NULL,
-  `created_by` int NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `updated_by` int NOT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` int DEFAULT NULL,
+  `role_id` int NOT NULL,
+  `permission_label` varchar(10) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int DEFAULT NULL,
+  `updated_at` int DEFAULT NULL,
+  `updated_by` datetime DEFAULT NULL,
+  `deleted_at` int DEFAULT NULL,
+  `deleted_by` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `feature_id_label` (`feature_id`,`label`),
-  CONSTRAINT `permissions_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`)
+  UNIQUE KEY `feature_id_role_id` (`feature_id`,`role_id`),
+  KEY `role_id` (`role_id`),
+  CONSTRAINT `permissions_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`),
+  CONSTRAINT `permissions_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `permissions` (`id`, `name`, `feature_id`, `label`, `global_permission`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1,	'Create Denomination',	5,	'create',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(2,	'Read Denomination',	5,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(3,	'Update Denomination',	5,	'update',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(4,	'Delete Denomination',	5,	'delete',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(5,	'Create Hierarchy',	2,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(6,	'Read Hierarchy',	2,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(7,	'Update Hierarchy',	2,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(8,	'Delete Hierarchy',	2,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(10,	'Create Event',	9,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(11,	'Read Event',	9,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(12,	'Update Event',	9,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(13,	'Delete Event',	9,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(14,	'Create User',	16,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(15,	'Read User',	16,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(16,	'Update User',	16,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(17,	'Delete User',	16,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(21,	'Create Dashboard',	1,	'create',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(22,	'Read Dashboard',	1,	'read',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(23,	'Update Dashboard',	1,	'update',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(24,	'Delete Dashboard',	1,	'delete',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(28,	'Create Entity',	3,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(29,	'Read Entity',	3,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(30,	'Update Entity',	3,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(31,	'Delete Entity',	3,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(35,	'Create Assembly',	4,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(36,	'Read Assembly',	4,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(37,	'Update Assembly',	4,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(38,	'Delete Assembly',	4,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(42,	'Create Collection',	6,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(43,	'Read Collection',	6,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(44,	'Update Collection',	6,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(45,	'Delete Collection',	6,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(49,	'Create Collection Type',	7,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(50,	'Read Collection Type',	7,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(51,	'Update Collection Type',	7,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(52,	'Delete Collection Type',	7,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(56,	'Create Designation',	8,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(57,	'Read Designation',	8,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(58,	'Update Designation',	8,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(59,	'Delete Designation',	8,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(63,	'Create Meeting',	10,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(64,	'Read Meeting',	10,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(65,	'Update Meeting',	10,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(66,	'Delete Meeting',	10,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(70,	'Create Member',	11,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(71,	'Read Member',	11,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(72,	'Update Member',	11,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(73,	'Delete Member',	11,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(77,	'Create Participant',	12,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(78,	'Read Participant',	12,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(79,	'Update Participant',	12,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(80,	'Delete Participant',	12,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(84,	'Create Role',	13,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(85,	'Read Role',	13,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(86,	'Update Role',	13,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(87,	'Delete Role',	13,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(91,	'Create Subscription',	14,	'create',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(92,	'Read Subscription',	14,	'read',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(93,	'Update Subscription',	14,	'update',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(94,	'Delete Subscription',	14,	'delete',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(98,	'Create Subscription Type',	15,	'create',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(99,	'Read Subscription Type',	15,	'read',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(100,	'Update Subscription Type',	15,	'update',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(101,	'Delete Subscription Type',	15,	'delete',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(105,	'Create Setting',	17,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(106,	'Read Setting',	17,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(107,	'Update Setting',	17,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(108,	'Delete Setting',	17,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(112,	'Create Report',	18,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(113,	'Read Report',	18,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(114,	'Update Report',	18,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(115,	'Delete Report',	18,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(119,	'Create Report Type',	19,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(120,	'Read Report Type',	19,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(121,	'Update Report Type',	19,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(122,	'Delete Report Type',	19,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(126,	'Create Attendance',	22,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(127,	'Read Attendance',	22,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(128,	'Update Attendance',	22,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(129,	'Delete Attendance',	22,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(133,	'Create Meeting Name',	23,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(134,	'Read Meeting Name',	23,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(135,	'Update Meeting Name',	23,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(136,	'Delete Meeting Name',	23,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(140,	'Create Custom Field',	24,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(141,	'Read Custom Field',	24,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(142,	'Update Custom Field',	24,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(143,	'Delete Custom Field',	24,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(147,	'Create Custom Value',	25,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(148,	'Read Custom Value',	25,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(149,	'Update Custom Value',	25,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(150,	'Delete Custom Value',	25,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(151,	'Create Department',	26,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(152,	'Read Department',	26,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(153,	'Update Department',	26,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(154,	'Delete Department',	26,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(155,	'Create Section',	27,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(156,	'Read Section',	27,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(157,	'Update Section',	27,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(158,	'Delete Section',	27,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(159,	'Create Visitor',	28,	'create',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(160,	'Read Visitor',	28,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(161,	'Update Visitor',	28,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(162,	'Delete Visitor',	28,	'delete',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(166,	'Create Payment',	29,	'create',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(167,	'Read Payment',	29,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(168,	'Update Payment',	29,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(169,	'Delete Payment',	29,	'delete',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(170,	'Create Minister',	30,	'create',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(171,	'Read Minister',	30,	'read',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(172,	'Update Minister',	30,	'update',	'no',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL),
-(173,	'Delete Minister',	30,	'delete',	'yes',	'2024-06-27 22:06:28',	1,	'2024-06-27 22:06:28',	1,	NULL,	NULL);
 
 DROP TABLE IF EXISTS `queue_jobs`;
 CREATE TABLE `queue_jobs` (
@@ -788,32 +676,6 @@ CREATE TABLE `revenues` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `role_permissions`;
-CREATE TABLE `role_permissions` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `feature_id` int NOT NULL,
-  `role_id` int NOT NULL,
-  `create` enum('yes','no') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'no',
-  `read` enum('yes','no') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'no',
-  `update` enum('yes','no') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'no',
-  `delete` enum('yes','no') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'no',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_by` int DEFAULT NULL,
-  `updated_at` int DEFAULT NULL,
-  `updated_by` datetime DEFAULT NULL,
-  `deleted_at` int DEFAULT NULL,
-  `deleted_by` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `feature_id` (`feature_id`),
-  KEY `role_id` (`role_id`),
-  CONSTRAINT `role_permissions_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`),
-  CONSTRAINT `role_permissions_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-INSERT INTO `role_permissions` (`id`, `feature_id`, `role_id`, `create`, `read`, `update`, `delete`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1,	4,	1,	'yes',	'no',	'yes',	'no',	'2024-09-02 14:17:04',	NULL,	NULL,	NULL,	NULL,	NULL),
-(2,	16,	1,	'yes',	'no',	'yes',	'no',	'2024-09-02 14:17:04',	NULL,	NULL,	NULL,	NULL,	NULL);
-
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -821,10 +683,10 @@ CREATE TABLE `roles` (
   `permissions` longtext,
   `default_role` enum('yes','no') DEFAULT 'no',
   `denomination_id` int DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `created_by` int NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `updated_by` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -907,6 +769,19 @@ CREATE TABLE `subscriptiontypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `trashes`;
+CREATE TABLE `trashes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `feature_name` int DEFAULT NULL,
+  `item_id` int NOT NULL,
+  `item_name` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+  `item_deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `feature_name` (`feature_name`),
+  CONSTRAINT `trashes_ibfk_1` FOREIGN KEY (`feature_name`) REFERENCES `features` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -940,8 +815,6 @@ CREATE TABLE `users` (
   CONSTRAINT `users_ibfk_2` FOREIGN KEY (`associated_member_id`) REFERENCES `members` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `users` (`id`, `denomination_id`, `first_name`, `last_name`, `date_of_birth`, `gender`, `phone`, `email`, `password`, `roles`, `is_system_admin`, `access_count`, `accessed_at`, `last_password_reset_at`, `is_active`, `associated_member_id`, `permitted_entities`, `permitted_assemblies`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1,	NULL,	'Nicodemus',	'Karisa',	'2024-08-14',	'male',	'+254711808071',	'nkmwambs@gmail.com',	'$2y$10$h7nibDJpffpr8ZkXHnxJheCySIrIiRDE5ctGr6ajiAxzi.s7cYBaS',	NULL,	'yes',	NULL,	NULL,	NULL,	'yes',	NULL,	NULL,	NULL,	'2024-08-20 14:43:08',	NULL,	NULL,	NULL,	NULL,	NULL);
 
 DROP TABLE IF EXISTS `visitors`;
 CREATE TABLE `visitors` (
@@ -971,4 +844,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2024-09-05 10:42:58
+-- 2024-09-06 17:09:30
