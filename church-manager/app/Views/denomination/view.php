@@ -50,7 +50,7 @@ $hierarchy_sections = array_pop($result);
                                         <div class = "form_view_field"><?=$field_value;?></div>
                                     </div>
                                 </div>
-                            <?php } ?>
+                            <?php } ?> 
             
                             <div class = "form-group">
                                 <div class = "col-xs-offset-4 col-xs-6">

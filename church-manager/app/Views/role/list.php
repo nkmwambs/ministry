@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('roles','add', '<?= $parent_id ?>')">
+        <div class='btn btn-primary' onclick="showAjaxModal('roles','add','<?= $parent_id ?>')">
             <?= lang('role.add_role'); ?>
         </div>
     </div>
@@ -19,7 +19,6 @@
                 <tr>
                     <th><?= lang('role.role_action') ?></th>
                     <th><?= lang('role.role_name') ?></th>
-                    <th><?= lang('role.role_permissions') ?></th>
                     <th><?= lang('role.role_default') ?></th>
                     <th><?= lang('role.role_denomination_name') ?></th>
                 </tr>
@@ -39,7 +38,6 @@
                         </td>
 
                         <td><?= $role['name']; ?></td>
-                        <td><?= $role['permissions']; ?></td>
                         <td><?= $role['default_role']; ?></td>
                         <td><?= $role['denomination_id']; ?></td>
                     </tr>

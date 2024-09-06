@@ -12,7 +12,7 @@ class RolesModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','name','permissions','default_role','denomination_id'];
+    protected $allowedFields    = ['id','name','default_role','denomination_id'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

@@ -18,7 +18,7 @@ return [
     'event_registration_fees' => 'Registration Fees',
 
     'select_meeting' => 'Select Meeting Name',
-    'select_denomination_name' => 'Select Denomination Name',
+    'select_denomination' => 'Select Denomination Name',
 
     'save_event' => 'Save',
     'save_and_new_event' => 'Save and New',

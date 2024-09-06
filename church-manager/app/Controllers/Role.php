@@ -30,20 +30,13 @@ class Role extends BaseController
                 ]
             ],
             'name' => [
-                'rules'=> 'required|min_length[5]|max_length[255]|alpha_space',
+                'rules'=> 'required|min_length[5]|max_length[255]',
                 'label' => 'Name',
                 'errors' => [
                     'required' => 'Role Name is required',
                     'min_length' => 'Role Name must be at least {value} characters long',
                     'max_length' => 'Role Name cannot exceed {value} characters long',
-                    'alpha_space' => 'Role field can only contain alphabetic characters and spaces.',
-                ]
-            ],
-            'permissions' => [
-                'rules' => 'array',
-                'label' => 'Permissions',
-                'errors' => [
-                    'array' => 'Permissions must be an array'
+                    // 'alpha_space' => 'Role field can only contain alphabetic characters and spaces.',
                 ]
             ],
             'default_role' => [
@@ -63,7 +56,6 @@ class Role extends BaseController
 
         $data = [
             'name' => $this->request->getPost('name'),
-            'permissions' => $this->request->getPost('permissions'),
             'default_role' => $this->request->getPost('default_role'),
             'denomination_id' => $this->request->getPost('denomination_id')
         ];
@@ -89,41 +81,34 @@ class Role extends BaseController
         return redirect()->to(site_url('settings/view' . hash_id($insertID)));
     }
 
-    public function update($id) {
+    public function update() {
         $hashed_id = $this->request->getVar('id');
 
         $validation = \Config\Services::validation();
         $validation->setRules([
             'denomination_id' => [
-                'rules' =>'required',
+                'rules' => 'required',
                 'label' => 'Denomination Name',
                 'errors' => [
-                   'required' => 'Department Name is required'
+                    'required' => 'Department Name is required'
                 ]
             ],
             'name' => [
                 'rules'=> 'required|min_length[5]|max_length[255]|alpha_space',
                 'label' => 'Name',
                 'errors' => [
-                   'required' => 'Role Name is required',
-                   'min_length' => 'Role Name must be at least {value} characters long',
-                   'max_length' => 'Role Name cannot exceed {value} characters long',
+                    'required' => 'Role Name is required',
+                    'min_length' => 'Role Name must be at least {value} characters long',
+                    'max_length' => 'Role Name cannot exceed {value} characters long',
                     'alpha_space' => 'Role field can only contain alphabetic characters and spaces.',
                 ]
             ],
-            'permissions' => [
-                'rules' => 'array',
-                'label' =>'Permissions',
-                'errors' => [
-                    'array' => 'Permissions must be an array'
-                ]
-            ],
             'default_role' => [
-                'rules' =>'required|max_length[255]|alpha_space',
+                'rules' => 'required|max_length[255]|alpha_space',
                 'label' => 'Default Role',
                 'errors' => [
                     'required' => 'Default Role is required',
-                   'max_length' => 'Default Role cannot exceed {value} characters long',
+                    'max_length' => 'Default Role cannot exceed {value} characters long',
                     'alpha_space' => 'Default Role field can only contain alphabetic characters and spaces.'
                 ]
             ],
@@ -135,7 +120,6 @@ class Role extends BaseController
 
         $update_data = [
             'name' => $this->request->getPost('name'),
-            'permissions' => $this->request->getPost('permissions'),
             'default_role' => $this->request->getPost('default_role'),
             'denomination_id' => $this->request->getPost('denomination_id')
         ];

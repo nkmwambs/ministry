@@ -54,15 +54,6 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="permissions">
-                            <?= lang('role.role_permissions') ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" name="permissions" id="permissions" placeholder="Enter Permissions">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label class="control-label col-xs-4" for="default_role">
                             <?= lang('role.role_default') ?>
                         </label>
