@@ -70,4 +70,15 @@ class MembersModel extends Model
     {
         return $this->where('assembly_id', $assembly_id)->findAll();
     }
+
+    function updateRecycleBin($data){
+
+        $trashModel = new \App\Models\TrashesModel();
+        $trashData = [
+            'item_id' => $data['id'][0],
+            'item_deleted_at' => date('Y-m-d H:i:s')
+        ];
+        $trashModel->insert((object)$trashData);
+        return true;
+    }
 }
