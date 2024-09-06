@@ -19,7 +19,7 @@ class Role extends BaseController
 
     public function post() {
         $insertID = 0;
-
+        
         $validation = \Config\Services::validation();
         $validation->setRules([
             'denomination_id' => [
@@ -39,25 +39,17 @@ class Role extends BaseController
                     // 'alpha_space' => 'Role field can only contain alphabetic characters and spaces.',
                 ]
             ],
-            'default_role' => [
-                'rules' => 'required|max_length[255]|alpha_space',
-                'label' => 'Default Role',
-                'errors' => [
-                    'required' => 'Default Role is required',
-                    'max_length' => 'Default Role cannot exceed {value} characters long',
-                    'alpha_space' => 'Default Role field can only contain alphabetic characters and spaces.'
-                ]
-            ],
+            
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            return response()->setJSON(['error' => $validation->getErrors()]);
+            return response()->setJSON(['errors' => $validation->getErrors()]);
         }
-
+        
         $data = [
             'name' => $this->request->getPost('name'),
             'default_role' => $this->request->getPost('default_role'),
-            'denomination_id' => $this->request->getPost('denomination_id')
+            'denomination_id' => $this->request->getPost('denomination_id') == 0 ? NULL : $this->request->getPost('denomination_id')
         ];
 
         $this->model->insert((object)$data);
@@ -117,11 +109,11 @@ class Role extends BaseController
         if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['error' => $validation->getErrors()]);
         }
-
+        
         $update_data = [
             'name' => $this->request->getPost('name'),
             'default_role' => $this->request->getPost('default_role'),
-            'denomination_id' => $this->request->getPost('denomination_id')
+            'denomination_id' => $this->request->getPost('denomination_id') == 0 ? NULL : $this->request->getPost('denomination_id')
         ];
 
         $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
@@ -142,5 +134,16 @@ class Role extends BaseController
         }
 
         return redirect()->to(site_url('settings/view' . hash_id($hashed_id, 'decode')));
+    }
+
+    function getDefaultRole($denomination_id){
+        $denominationHasDefaultRole = true;
+
+        if($denomination_id > 0){
+            $countDefaultRoles = $this->model->where(['denomination_id' => $denomination_id, 'default_role' => 'yes'])->countAllResults();
+            $denominationHasDefaultRole = $countDefaultRoles > 0 ? true : false;
+        }
+        
+        return response()->setJSON(compact('denominationHasDefaultRole'));
     }
 }

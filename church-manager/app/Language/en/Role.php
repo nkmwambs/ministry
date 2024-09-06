@@ -14,6 +14,7 @@ return [
     'role_denomination_name' => 'Denomination Name',
 
     'select_denomination' => 'Select a denomination',
+    'system_denomination' => 'System',
 
     'add_role_success' => 'Role added successfully!',
     'edit_role_success' => 'Role updated successfully!',
