@@ -3,7 +3,7 @@
 return [
     'list_roles' => 'List Roles',
     'add_role' => 'Add Role',
-    'view_role' => 'View Role',
+    'view_role' => 'View Role Permissions',
     'edit_role' => 'Edit Role',
     'delete_role' => 'Delete Role',
 

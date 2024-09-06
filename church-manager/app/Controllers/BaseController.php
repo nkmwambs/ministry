@@ -162,12 +162,18 @@ abstract class BaseController extends Controller
             $data = $this->model->getOne($numeric_id);
         }
 
+        $page_data = $this->page_data($data);
+        if(method_exists($this->library,'viewExtraData')){  
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->viewExtraData($page_data);
+        }
+
         if(array_key_exists('id',$data)){
             unset($data['id']);
         }
 
         if($this->request->isAJAX()){
-            return view("$this->feature/view", $this->page_data($data));
+            return view("$this->feature/view", $page_data);
         }
 
         return view('index', $this->page_data($data));
