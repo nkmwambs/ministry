@@ -30,6 +30,7 @@
                             <div class = "col-xs-6">
                                 <select class = "form-control" name = "denomination_id" id = "denomination_id">
                                     <option value =""><?= lang('denomination.select_denomination') ?></option>
+                                    <option value ="0" <?=$result['denomination_id'] == null ? 'selected': '';?> ><?= lang('role.system_denomination') ?></option>
                                     <?php foreach ($denominations as $denomination) :?>
                                         <option value="<?php echo $denomination['id'];?>" <?=$result['denomination_id'] == $denomination['id'] ? 'selected' : ''; ?>><?php echo $denomination['name'];?></option>
                                     <?php endforeach;?>
@@ -56,7 +57,11 @@
                             <?= lang('role.role_default') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="default_role" id="default_role" value = "<?=$result['default_role'];?>" placeholder="Is Default Role?">
+                            
+                            <select <?=$result['default_role'] == 'no' ? 'readonly' : '';?> class="form-control" name="default_role" id="default_role">
+                                <option value="no" <?=$result['default_role'] == 'no' ? 'selected': '';?>>No</option>
+                                <option value="yes" <?=$result['default_role'] == 'yes' ? 'selected' : '';?> >Yes</option>
+                            </select>
                         </div>
                     </div>
                 </form> 

@@ -77,6 +77,11 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
 
 <script>
     $(document).ready(function () {
+
+        if($('#default_role').val() == 'no'){
+            
+        }
+
         $('#denomination_id').change(function () {
                 const denomination_id = $(this).val();
                 const base_url = '<?= site_url("roles/get_default_role/");?>';
@@ -88,6 +93,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                         if (response.denominationHasDefaultRole) {
                             $('#default_role').attr('readonly', 'readonly');
                             $('#default_role').val('no')
+                            
                         } else {
                             $('#default_role').removeAttr('readonly');
                         }
