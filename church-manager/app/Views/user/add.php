@@ -83,7 +83,7 @@
           <div class="form-group">
             <label class="control-label col-xs-4" for="roles">Roles</label>
             <div class="col-xs-6">
-              <select class="form-control" name="roles" id="roles">
+              <select class="form-control js-example-basic-multiple" name="roles[]" id="roles" multiple="multiple">
                 <option value="">Select roles</option>
               </select>
             </div>
@@ -104,7 +104,12 @@
             <label class="control-label col-xs-4" for="permitted_entities">Permitted Entities</label>
             <div class="col-xs-6">
               <select class="form-control" name="permitted_entities" id="permitted_entities">
-                <option value="">Select entities</option>
+                <!-- Populate the options from the entities array passed from the controller -->
+                <?php foreach ($entities as $entity): ?>
+                    <option value="<?= $entity['id']; ?>">
+                        <?= $entity['name'] . ' - ' . $entity['value']; ?>
+                    </option>
+                <?php endforeach; ?>
               </select>
             </div>
           </div>
@@ -112,7 +117,7 @@
           <div class="form-group">
             <label class="control-label col-xs-4" for="permitted_assemblies">Permitted Assemblies</label>
             <div class="col-xs-6">
-              <select class="form-control" name="permitted_assemblies" id="permitted_assemblies">
+              <select class="form-control js-example-basic-multiple" name="permitted_assemblies[]" id="permitted_assemblies" multiple="'multiple">
                 <option value="">Select Assemblies</option>
               </select>
             </div>
@@ -133,3 +138,14 @@
 
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+
+    $('#permitted_entities').select2({
+      placeholder: 'Select permitted entities',
+      allowClear: true
+    });
+  });
+</script>
