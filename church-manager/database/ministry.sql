@@ -316,8 +316,8 @@ CREATE TABLE `gatherings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `gatheringtypes`;
-CREATE TABLE `gatheringtypes` (
+DROP TABLE IF EXISTS `meetings`;
+CREATE TABLE `meetings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int NOT NULL,
   `description` longtext,
