@@ -66,6 +66,8 @@ class UsersModel extends Model  implements \App\Interfaces\ModelInterface
         }
     }
 
+    
+
     function updateRecycleBin($data){
 
         $trashModel = new \App\Models\TrashesModel();

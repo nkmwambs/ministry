@@ -38,7 +38,7 @@ class UserLibrary implements LibraryInterface {
     function addExtraData(&$page_data){
         $parent_id = 0;
         $entity_id = 0;
-        // $hierarchy_id = 0;
+        $hierarchy_id = 0;
 
         if(session()->get('user_denomination_id')){
             $parent_id = session()->get('user_denomination_id');
@@ -50,29 +50,42 @@ class UserLibrary implements LibraryInterface {
         $entitiesModel = new \App\Models\EntitiesModel();
         $entities = $entitiesModel->findAll();
 
-        // $hierarchiesModel = new \App\Models\HierarchiesModel();
-        // $hierarchies = $hierarchiesModel->findAll();
+        $hierarchiesModel = new \App\Models\HierarchiesModel();
+        $hierarchies = $hierarchiesModel->findAll();
 
         $page_data['denominations'] = $denominations;
         $page_data['entities'] = $entities;
-        // $page_data['hierarchies'] = $hierarchies;
+        $page_data['hierarchies'] = $hierarchies;
 
         $page_data['parent_id'] = hash_id($parent_id,'encode');
         $page_data['entity_id'] = hash_id($entity_id, 'encode');
-        // $page_data['hierarchy_id'] = hash_id($hierarchy_id, 'encode');
+        $page_data['hierarchy_id'] = hash_id($hierarchy_id, 'encode');
     }
 
     function editExtraData(&$page_data){
         $numeric_denomination_id = 0;
+        $numeric_hierarchy_id = 0;
+        $numeric_entity_id = 0;
 
         if(session()->get('user_denomination_id')){
             $numeric_denomination_id = session()->get('user_denomination_id');
         }
 
         $page_data['numeric_denomination_id'] = $numeric_denomination_id;
+        $page_data['numeric_hierarchy_id'] = $numeric_hierarchy_id;
+        $page_data['numeric_entity_id'] = $numeric_entity_id;
         
         $denominationsModel = new \App\Models\DenominationsModel();
         $denominations = $denominationsModel->findAll();
+
+        $entitiesModel = new \App\Models\EntitiesModel();
+        $entities = $entitiesModel->findAll();
+
+        $hierarchiesModel = new \App\Models\HierarchiesModel();
+        $hierarchies = $hierarchiesModel->findAll();
+
         $page_data['denominations'] = $denominations;
+        $page_data['entities'] = $entities;
+        $page_data['hierarchies'] = $hierarchies;
     }
 }

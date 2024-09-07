@@ -140,53 +140,37 @@ class User extends BaseController
         return redirect()->to(site_url('users/view' . $hashed_id))->with('message', 'User updated successfuly!');
     }
 
-    public function getEntitiesWithValues()
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('entities');
-        $builder->select('entities.id, entities.name, hierarchies.name, hierarchies.hierarchy_id');
-        $builder->join('entity_values', 'entity_values.entity_id = entities.id', 'left'); // Adjust based on your structure
-        $results = $builder->get()->getResult();
+    
+    // Method to fetch hierarchies and entities for select2
+    // public function getHierarchiesWithEntities()
+    // {
+    //     $searchTerm = $this->request->getVar('searchTerm');
+    //     // Get hierarchies from the database
+    //     $hierarchiesModel = new \App\Models\HierarchiesModel();
+    //     $hierarchies = $hierarchiesModel->like('name', $searchTerm)->findAll();
 
-        // $entitiesModel = new \App\Models\EntitiesModel();
-        // $results = $entitiesModel->select('entities.id, entities.name, entity_values.value')
-        //     ->join('entity_values', 'entity_values.entity_id = entities.id', 'left')->get()->getAllResult();
+    //     $data = [];
 
-        // Prepare data to pass to the view
-        $entities = [];
-        foreach ($results as $result) {
-            $entities[] = [
-                'id' => $result->id,
-                'name' => $result->name,
-                'value' => $result->value
-            ];
-        }
+    //     // Loop through hierarchies and attach entities
+    //     foreach ($hierarchies as $hierarchy) {
+    //         $entitiesModel = new \App\Models\EntitiesModel();
+    //         $entities = $entitiesModel->where('hierarchy_id', $hierarchy['id'])
+    //         ->like('name', $searchTerm)->findAll();
 
-        // Pass the entities data to the view
-        // return view('add_user', parent::page_data($entities));
-    }
+    //         // Format the data for Select2
+    //         $data[] = [
+    //             'id' => $hierarchy['id'],
+    //             'text' => $hierarchy['name'],
+    //             'children' => array_map(function ($entity) {
+    //                 return [
+    //                     'id' => $entity['id'],
+    //                     'text' => $entity['name']
+    //                 ];
+    //             }, $entities)
+    //         ];
+    //     }
 
-    public function getHierarchiesWithEntities()
-    {
-        $db = \Config\Database::connect();
-        $builder = $db->table('hierarchies');
-        $builder->select('hierarchies.id as hierarchy_id, hierarchies.name as hierarchy_name, entities.id as entity_id, entities.name as entity_name');
-        $builder->join('entities', 'entities.hierarchy_id = hierarchies.id');
-        $results = $builder->get()->getResult();
-
-        // Initialize an array to hold hierarchy data
-        $hierarchies = [];
-        foreach ($results as $row) {
-            if (!isset($hierarchies[$row->hierarchy_name])) {
-                $hierarchies[$row->hierarchy_name] = [];
-            }
-            $hierarchies[$row->hierarchy_name][] = [
-                'id' => $row->entity_id,
-                'name' => $row->entity_name
-            ];
-        }
-
-        // Pass the structured hierarchies to the view
-        return view('user/add', ['hierarchies' => $hierarchies]);
-    }
+    //     // Return as JSON for the AJAX response
+    //     return $this->response->setJSON($data);
+    // }
 }
