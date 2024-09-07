@@ -34,20 +34,24 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <span class='action-icons'><a href="<?= site_url("users/view/"); ?>"><i
-                    class='fa fa-search'></i></a></i></span>
-              <span class='action-icons'><a href="<?= site_url("users/edit/"); ?>"><i
-                    class='fa fa-pencil'></i></a></span>
-              <span class='action-icons'><i class='fa fa-trash'></i></span>
-            </td>
+          <?php foreach($result as $user) { ?>
+            <tr>
+              <td>
+                <span class='action-icons' title="View <?= $user['id']; ?> user">
+                  <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($user['id']);?>')"></i>
+                </span>
+                <span class='action-icons' title="Edit <?= $user['id']; ?> user">
+                  <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($user['id']); ?>')" class='fa fa-pencil'></i>
+                </span>
+                <span class='action-icons' title="Delete <?= $user['id']; ?> user"><i class='fa fa-trash'></i></span>
+              </td>
 
-            <td>First Name</td>
-            <td>Last Name</td>
-            <td>Phone</td>
-            <td>Email</td>
-            <td>Active</td>
+              <td><?= $user['first_name']; ?></td>
+              <td><?= $user['last_name']; ?></td>
+              <td><?= $user['phone']; ?></td>
+              <td><?= $user['email']; ?></td>
+              <td><?= $user['is_active']; ?></td>
+          <?php } ?>
         </tbody>
       </table>
     </div>

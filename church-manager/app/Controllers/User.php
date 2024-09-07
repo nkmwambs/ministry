@@ -144,7 +144,7 @@ class User extends BaseController
     {
         $db = \Config\Database::connect();
         $builder = $db->table('entities');
-        $builder->select('entities.id, entities.name, entity_values.value');
+        $builder->select('entities.id, entities.name, hierarchies.name, hierarchies.hierarchy_id');
         $builder->join('entity_values', 'entity_values.entity_id = entities.id', 'left'); // Adjust based on your structure
         $results = $builder->get()->getResult();
 
@@ -164,5 +164,29 @@ class User extends BaseController
 
         // Pass the entities data to the view
         // return view('add_user', parent::page_data($entities));
+    }
+
+    public function getHierarchiesWithEntities()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('hierarchies');
+        $builder->select('hierarchies.id as hierarchy_id, hierarchies.name as hierarchy_name, entities.id as entity_id, entities.name as entity_name');
+        $builder->join('entities', 'entities.hierarchy_id = hierarchies.id');
+        $results = $builder->get()->getResult();
+
+        // Initialize an array to hold hierarchy data
+        $hierarchies = [];
+        foreach ($results as $row) {
+            if (!isset($hierarchies[$row->hierarchy_name])) {
+                $hierarchies[$row->hierarchy_name] = [];
+            }
+            $hierarchies[$row->hierarchy_name][] = [
+                'id' => $row->entity_id,
+                'name' => $row->entity_name
+            ];
+        }
+
+        // Pass the structured hierarchies to the view
+        return view('user/add', ['hierarchies' => $hierarchies]);
     }
 }
