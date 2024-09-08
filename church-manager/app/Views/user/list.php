@@ -8,7 +8,7 @@
 
   <div class="row">
     <div class="col-xs-12 btn-container">
-      <div class='btn btn-primary' onclick="showAjaxModal('users','add', '<?= $id; ?>')">
+      <div class='btn btn-primary' onclick="showAjaxSelectModal('users','add', '<?= $id; ?>')">
         <?= lang('user.add_user'); ?>
       </div>
     </div>

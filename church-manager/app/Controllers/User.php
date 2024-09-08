@@ -140,6 +140,19 @@ class User extends BaseController
         return redirect()->to(site_url('users/view' . $hashed_id))->with('message', 'User updated successfuly!');
     }
 
+    public function store()
+    {
+        $permitted_entities = $this->request->getVar('permitted_entities');
+        $name = $this->request->getVar('name');
+
+        // Save user
+        $this->model->save([
+            'name' => $name,
+            'permitted_entities' => json_encode($permitted_entities)
+        ]);
+
+        return redirect()->to('/users');
+    }
     
     // Method to fetch hierarchies and entities for select2
     // public function getHierarchiesWithEntities()

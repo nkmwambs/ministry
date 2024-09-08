@@ -41,4 +41,6 @@ $routes->get('settings', 'Setting::list');
 $routes->get('roles/get_default_role/(:segment)', 'Role::getDefaultRole/$1');
 $routes->get('features/get_allowable_permission_labels/(:segment)', 'Feature::getAllowablePermissionLabels/$1');
 $routes->post('permissions/update_permission', 'Permission::updatePermission/');
-$routes->get('/user/getHierarchiesWithEntities', 'User::getHierarchiesWithEntities');
+// $routes->get('/user/getHierarchiesWithEntities', 'User::getHierarchiesWithEntities');
+$routes->post('users/store', 'User::store');
+

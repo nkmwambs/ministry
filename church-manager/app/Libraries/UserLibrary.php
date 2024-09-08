@@ -35,32 +35,74 @@ class UserLibrary implements LibraryInterface {
         $page_data['parent_id'] = hash_id($parent_id,'encode');
     }
 
-    function addExtraData(&$page_data){
+    // function addExtraData(&$page_data){
+    //     $parent_id = 0;
+    //     $entity_id = 0;
+    //     $hierarchy_id = 0;
+
+    //     if(session()->get('user_denomination_id')){
+    //         $parent_id = session()->get('user_denomination_id');
+    //     }
+
+    //     $denominationsModel = new \App\Models\DenominationsModel();
+    //     $denominations = $denominationsModel->findAll();
+
+    //     $entitiesModel = new \App\Models\EntitiesModel();
+    //     $entities = $entitiesModel->findAll();
+
+    //     $hierarchiesModel = new \App\Models\HierarchiesModel();
+    //     $hierarchies = $hierarchiesModel->findAll();
+
+    //     $page_data['denominations'] = $denominations;
+    //     $page_data['entities'] = $entities;
+    //     $page_data['hierarchies'] = $hierarchies;
+
+    //     $page_data['parent_id'] = hash_id($parent_id,'encode');
+    //     $page_data['entity_id'] = hash_id($entity_id, 'encode');
+    //     $page_data['hierarchy_id'] = hash_id($hierarchy_id, 'encode');
+    // }
+
+    public function addExtraData(&$page_data)
+    {
         $parent_id = 0;
         $entity_id = 0;
         $hierarchy_id = 0;
 
-        if(session()->get('user_denomination_id')){
+        // Get the parent_id from the session, if available
+        if (session()->get('user_denomination_id')) {
             $parent_id = session()->get('user_denomination_id');
         }
 
+        // Fetch data from the relevant models
         $denominationsModel = new \App\Models\DenominationsModel();
         $denominations = $denominationsModel->findAll();
 
         $entitiesModel = new \App\Models\EntitiesModel();
-        $entities = $entitiesModel->findAll();
+        $entities = $entitiesModel->select('entities.id, entities.name, entities.hierarchy_id, hierarchies.name as hierarchy_name')
+                                  ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id')
+                                  ->orderBy('hierarchies.name, entities.name')
+                                  ->findAll();
+
+        // Group entities by hierarchy
+        $grouped_entities = [];
+        foreach ($entities as $entity) {
+            $grouped_entities[$entity['hierarchy_name']][] = $entity;
+        }
 
         $hierarchiesModel = new \App\Models\HierarchiesModel();
         $hierarchies = $hierarchiesModel->findAll();
 
+        // Assign the data to the page_data array
         $page_data['denominations'] = $denominations;
-        $page_data['entities'] = $entities;
+        $page_data['entities'] = $grouped_entities;  // Updated to use grouped entities
         $page_data['hierarchies'] = $hierarchies;
 
-        $page_data['parent_id'] = hash_id($parent_id,'encode');
+        // Encode the IDs for security
+        $page_data['parent_id'] = hash_id($parent_id, 'encode');
         $page_data['entity_id'] = hash_id($entity_id, 'encode');
         $page_data['hierarchy_id'] = hash_id($hierarchy_id, 'encode');
     }
+
 
     function editExtraData(&$page_data){
         $numeric_denomination_id = 0;
@@ -79,13 +121,22 @@ class UserLibrary implements LibraryInterface {
         $denominations = $denominationsModel->findAll();
 
         $entitiesModel = new \App\Models\EntitiesModel();
-        $entities = $entitiesModel->findAll();
+        $entities = $entitiesModel->select('entities.id, entities.name, entities.hierarchy_id, hierarchies.name as hierarchy_name')
+        ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id')
+        ->orderBy('hierarchies.name, entities.name')
+        ->findAll();
+
+        // Group entities by hierarchy
+        $grouped_entities = [];
+        foreach ($entities as $entity) {
+            $grouped_entities[$entity['hierarchy_name']][] = $entity;
+        }
 
         $hierarchiesModel = new \App\Models\HierarchiesModel();
         $hierarchies = $hierarchiesModel->findAll();
 
         $page_data['denominations'] = $denominations;
-        $page_data['entities'] = $entities;
+        $page_data['entities'] = $grouped_entities;
         $page_data['hierarchies'] = $hierarchies;
     }
 }

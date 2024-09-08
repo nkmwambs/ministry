@@ -14,7 +14,7 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
       </div>
 
       <div class="panel-body">
-        <form role="form" method="post" action="<?= site_url("users/save") ?>" class="form-horizontal form-groups-bordered">
+        <form role="form" method="post" action="<?= site_url("users/store") ?>" class="form-horizontal form-groups-bordered">
 
           <!-- Error Display -->
           <?php if (session()->get('errors')): ?>
@@ -116,11 +116,26 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
           </div>
 
           <!-- Permitted Entities -->
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="permitted_entities" class="control-label col-xs-4">Permitted Entities</label>
             <div class="col-xs-6">
               <select class="form-control js-multiple" name="permitted_entities" id="permitted_entities">
                 <option value="">Select Permitted Entities</option>
+              </select>
+            </div>
+          </div> -->
+
+          <div class="form-group">
+            <label class="control-label col-xs-4" for="permitted_entities">Permitted Entities:</label>
+            <div class="col-xs-6">
+              <select id="permitted_entities" name="permitted_entities[]" class="form-control js_multiple" multiple="multiple">
+                <?php foreach ($entities as $hierarchy_name => $hierarchy_entities): ?>
+                  <optgroup label="<?= $hierarchy_name ?>">
+                    <?php foreach ($hierarchy_entities as $entity): ?>
+                      <option value="<?= $entity['id'] ?>"><?= $entity['name'] ?></option>
+                    <?php endforeach; ?>
+                  </optgroup>
+                <?php endforeach; ?>
               </select>
             </div>
           </div>
@@ -130,28 +145,14 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
           <div class="form-group">
             <label class="control-label col-xs-4" for="permitted_assemblies">Permitted Assemblies</label>
             <div class="col-xs-6">
-              <select class="form-control js-multiple" name="permitted_assemblies" id="permitted_assemblies">
+              <select class="form-control" name="permitted_assemblies" id="permitted_assemblies">
                 <option value="">Select Assemblies</option>
               </select>
             </div>
           </div>
 
-          <!-- Form Buttons -->
-          <div class="form-group">
-            <div class="col-xs-offset-4 col-xs-6">
-              <button type="submit" class="btn btn-primary">Save</button>
-              <button type="submit" class="btn btn-primary">Save and New</button>
-              <button type="reset" class="btn btn-primary">Reset</button>
-            </div>
-          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-
-
-<script>
-
-
-</script>
