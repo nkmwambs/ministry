@@ -126,18 +126,16 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
           </div> -->
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="permitted_entities">Permitted Entities:</label>
-            <div class="col-xs-6">
-              <select id="permitted_entities" name="permitted_entities[]" class="form-control js_multiple" multiple="multiple">
-                <?php foreach ($entities as $hierarchy_name => $hierarchy_entities): ?>
-                  <optgroup label="<?= $hierarchy_name ?>">
-                    <?php foreach ($hierarchy_entities as $entity): ?>
-                      <option value="<?= $entity['id'] ?>"><?= $entity['name'] ?></option>
-                    <?php endforeach; ?>
-                  </optgroup>
-                <?php endforeach; ?>
-              </select>
-            </div>
+            <label for="permitted_entities" class="control-label col-xs-4">Permitted Entities:</label>
+            <select id="permitted_entities" name="permitted_entities[]" class="form-control" multiple="multiple">
+              <?php foreach ($entities as $hierarchy_name => $hierarchy_entities): ?>
+                <optgroup label="<?= $hierarchy_name ?>">
+                  <?php foreach ($hierarchy_entities as $entity): ?>
+                    <option value="<?= $entity['id'] ?>"><?= $entity['name'] ?></option>
+                  <?php endforeach; ?>
+                </optgroup>
+              <?php endforeach; ?>
+            </select>
           </div>
 
 

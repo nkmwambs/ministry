@@ -112,7 +112,7 @@
 
     function showAjaxSelectModal(plural_feature, action, id_segment = 0) {
 
-        cons url = `<?= site_url() ?>${plural_feature}/modal/${plural_feature}/${action}/${id_segment}`
+        const url = `<?= site_url() ?>${plural_feature}/modal/${plural_feature}/${action}/${id_segment}`
 
         $.ajax({
             url: url,
@@ -140,9 +140,9 @@
                     $('#permitted_entities').val(null).trigger('change'); // Clear Select2 selection
                 });
             },
-            // error: function(xhr, status, error) {
-            //     console.error('Error loading modal content:', error);
-            // }
+            error: function(xhr, status, error) {
+                console.error('Error loading modal content:', error);
+            }
         });
     }
 
