@@ -119,23 +119,23 @@
             type: 'GET',
             success: function(response) {
                 // Inject the loaded content into the modal body
-                $('#userModal .modal-body').html(response);
+                $('#user_modal .modal-body').html(response);
 
                 // Show the modal
-                $('#userModal').modal('show');
+                $('#user_modal').modal('show');
 
                 // Trigger modal display event
-                $('#userModal').on('shown.bs.modal', function() {
+                $('#user_modal').on('shown.bs.modal', function() {
                     // Initialize Select2 inside the modal
                     $('#permitted_entities').select2({
                         placeholder: 'Select permitted entities',
                         allowClear: true,
-                        dropdownParent: $('#userModal') // Ensure Select2 is appended inside the modal
+                        dropdownParent: $('#user_modal') // Ensure Select2 is appended inside the modal
                     });
                 });
 
                 // Ensure modal closes and resets form properly (if needed)
-                $('#userModal').on('hidden.bs.modal', function() {
+                $('#user_modal').on('hidden.bs.modal', function() {
                     $(this).find('form')[0].reset();
                     $('#permitted_entities').val(null).trigger('change'); // Clear Select2 selection
                 });
