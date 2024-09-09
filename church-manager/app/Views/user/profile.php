@@ -23,7 +23,7 @@
                             </div>
                         </div>
                         <div class="page-title mb-0"><i class="fa fa-user"></i>
-                            <?= lang('profile.profile_settings') ?>
+                            <?= lang('user.profile_settings') ?>
                         </div>
                     </div>
 
@@ -201,7 +201,6 @@
                             </div>
                             <div class="card-body">
                                 <div class="panel-body">
-                                    <h5 class="card-title">Password</h5>
 
                                     <form class="form-horizontal form-groups-bordered">
                                         <div class="form-group">
