@@ -28,7 +28,7 @@
                     <div class="panel-options">
 							
 							<ul class="nav nav-tabs" id ="myTabs">
-								<li class = "active"><a href="#view_user" id="view_user_tab" data-toggle="tab"><?= lang('user.view_denomination'); ?></a></li>
+								<li class = "active"><a href="#view_user" id="view_user_tab" data-toggle="tab"><?= lang('user.view_user'); ?></a></li>
 								<li><a href="#view_profile"  data-link_id="view_profile" data-feature_plural="profiles" onclick="childrenAjaxLists(this)" id="view_profile_tab" data-toggle="tab"><?= lang('user.view_profile'); ?></a></li>
                                 
                             </ul>
@@ -59,6 +59,10 @@
 
                     <div class="tab-pane" id="view_profile">
                         <?= include('profile.php') ?>
+                    </div>
+
+                    <div class="tab-pane" id="view_password">
+
                     </div>
 
                 </div>
