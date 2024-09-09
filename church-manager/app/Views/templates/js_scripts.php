@@ -118,6 +118,8 @@
             url: url,
             type: 'GET',
             success: function(response) {
+                console.log(response);
+
                 // Inject the loaded content into the modal body
                 $('#user_modal .modal-body').html(response);
 

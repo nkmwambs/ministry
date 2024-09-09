@@ -38,7 +38,7 @@
             <tr>
               <td>
                 <span class='action-icons' title="View <?= $user['id']; ?> user">
-                  <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($user['id']);?>')"></i>
+                  <i class='fa fa-search' onclick="showAjaxModal('<?=plural($feature);?>','view', '<?=hash_id($user['id']);?>')"></i>
                 </span>
                 <span class='action-icons' title="Edit <?= $user['id']; ?> user">
                   <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($user['id']); ?>')" class='fa fa-pencil'></i>
