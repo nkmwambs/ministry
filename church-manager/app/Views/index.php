@@ -12,15 +12,18 @@
 
 	<title><?=humanize($feature);?> | <?=humanize($action);?></title>
 
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">
-	<link href="<?php echo base_url(); ?>assets/js/select2/select2-bootstrap.css" rel="stylesheet" />
-	<link href="<?php echo base_url(); ?>assets/js/select2/select2.css" rel="stylesheet" />
-	<!-- <link rel="stylesheet" href="<?php echo base_url();?>assets/js/selectboxit/jquery.selectBoxIt.css"> -->
+	
+	
 
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/font-icons/entypo/css/entypo.css">
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
 	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">
+	<!-- Select2 CSS -->
+	<link href="<?php echo base_url(); ?>assets/js/select2/select2-bootstrap.css" rel="stylesheet" />
+	<link href="<?php echo base_url(); ?>assets/js/select2/select2.css" rel="stylesheet" />
+
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/neon-core.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/neon-theme.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/neon-forms.css">
@@ -30,10 +33,12 @@
 	<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"> -->
 	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.min.css"/>
 
-	<!-- Select2 CSS -->
+	
 
 	<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.3.min.js"></script>
 	
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/">
+
 	<script src="https://cdn.jsdelivr.net/npm/pluralize@8.0.0/pluralize.min.js"></script>
 	<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
 	<!-- <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> -->

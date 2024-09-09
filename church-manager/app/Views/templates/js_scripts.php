@@ -67,16 +67,16 @@
             url,
             success: function(response) {
                 $('#modal_ajax').on('shown.bs.modal', function() {
-                    $('.datepicker').css('z-index', '10200');
                     $('.datepicker').datepicker({
                         format: 'yyyy-mm-dd',
-                        container: '#modal_ajax modal-body'
+                        container: '#modal_ajax modal-body',
+                        autoclose: true
                     });
-                    
+                    $('select.select_fields').select2();
                 });
 
                 $('#modal_ajax .modal-body').html(response);
-                $('select.select_fields').select2();
+                
                 $("#modal_ajax").modal("show");
             }
         });
@@ -108,44 +108,6 @@
                     stateSave: true
                 })
 
-            }
-        });
-    }
-
-    function showAjaxSelectModal(plural_feature, action, id_segment = 0) {
-
-        const url = `<?= site_url() ?>${plural_feature}/modal/${plural_feature}/${action}/${id_segment}`
-
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function(response) {
-                // console.log(response);
-
-                // Inject the loaded content into the modal body
-                $('#user_modal .modal-body').html(response);
-
-                // Show the modal
-                $('#user_modal').modal('show');
-
-                // Trigger modal display event
-                $('#user_modal').on('shown.bs.modal', function() {
-                    // Initialize Select2 inside the modal
-                    $('#permitted_entities').select2({
-                        placeholder: 'Select permitted entities',
-                        allowClear: true,
-                        dropdownParent: $('#user_modal') // Ensure Select2 is appended inside the modal
-                    });
-                });
-
-                // Ensure modal closes and resets form properly (if needed)
-                $('#user_modal').on('hidden.bs.modal', function() {
-                    $(this).find('form')[0].reset();
-                    $('#permitted_entities').val(null).trigger('change'); // Clear Select2 selection
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error loading modal content:', error);
             }
         });
     }
@@ -307,10 +269,7 @@
 
     }
 
-    // $(document).ready(function() {
-    //     $('#permitted_entities').select2({
-    //         placeholder: 'Select permitted entities',
-    //         allowClear: true
-    //     });
-    // });
+    $(document).on('keydown','.datepicker', function (){
+        return false;
+    })
 </script>
