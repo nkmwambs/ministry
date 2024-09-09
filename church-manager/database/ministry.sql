@@ -354,6 +354,20 @@ CREATE TABLE `hierarchies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `logmails`;
+CREATE TABLE `logmails` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email_to` varchar(150) NOT NULL,
+  `subject` longtext NOT NULL,
+  `email_body` longtext NOT NULL,
+  `send_status` enum('new','sent','failed') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'new',
+  `count_failure` int DEFAULT '0',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 DROP TABLE IF EXISTS `meetings`;
 CREATE TABLE `meetings` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -769,6 +783,21 @@ CREATE TABLE `subscriptiontypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `templates`;
+CREATE TABLE `templates` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `denomination_id` int DEFAULT NULL,
+  `short_name` varchar(255) NOT NULL,
+  `template_vars` longtext NOT NULL,
+  `template_subject` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `template_body` longtext NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `denomination_id` (`denomination_id`),
+  CONSTRAINT `templates_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 DROP TABLE IF EXISTS `trashes`;
 CREATE TABLE `trashes` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -793,15 +822,15 @@ CREATE TABLE `users` (
   `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `roles` longtext,
+  `roles` json DEFAULT NULL,
   `is_system_admin` enum('yes','no') DEFAULT 'no',
-  `access_count` int DEFAULT NULL,
+  `access_count` int DEFAULT '0',
   `accessed_at` datetime DEFAULT NULL,
   `last_password_reset_at` datetime DEFAULT NULL,
   `is_active` enum('yes','no') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'yes',
   `associated_member_id` int DEFAULT NULL,
-  `permitted_entities` longtext,
-  `permitted_assemblies` longtext,
+  `permitted_entities` json DEFAULT NULL,
+  `permitted_assemblies` json DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_by` int DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -844,4 +873,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2024-09-06 17:09:30
+-- 2024-09-09 15:18:44
