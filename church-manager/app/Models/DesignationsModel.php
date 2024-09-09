@@ -12,7 +12,7 @@ class DesignationsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['id','name','denomination_id','hierarchy_id','department_id','minister_title_designation'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,19 +44,16 @@ class DesignationsModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-
-
-
-        public function get_designations() {
-            $this->model->select('designation.id, designation.name as designation_name, denomination.name as denomination_name, hierarchy.name as hierarchy_name, department.name as department_name');
-            $this->model->from('designation');
-            $this->model->join('denomination', 'designation.denomination_id = denomination.id', 'left');
-            $this->model->join('hierarchy', 'designation.hierarchy_id = hierarchy.id', 'left');
-            $this->model->join('department', 'designation.department_id = department.id', 'left');
-            $query = $this->model->getAll();
+        // public function get_designations() {
+        //     $this->model->select('designation.id, designation.name as designation_name, denomination.name as denomination_name, hierarchy.name as hierarchy_name, department.name as department_name');
+        //     $this->model->from('designation');
+        //     $this->model->join('denomination', 'designation.denomination_id = denomination.id', 'left');
+        //     $this->model->join('hierarchy', 'designation.hierarchy_id = hierarchy.id', 'left');
+        //     $this->model->join('department', 'designation.department_id = department.id', 'left');
+        //     $query = $this->model->getAll();
     
-            return $query->result_array();
-        }
+        //     return $query->result_array();
+        // }
     
     
     public function getAll() {
@@ -83,6 +80,45 @@ class DesignationsModel extends Model
         }else {
             return $this->where('id', $id) ->first();
         }
+    }
+
+    public function getEditData($designation_id){
+        $library = new \App\Libraries\DesignationLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())
+                ->join('denominations', 'denominations.id = designations.denomination_id')
+                ->where('designations.id', $designation_id)
+                ->first();
+        } else {
+            return $this->where('id', $designation_id)->first();
+        }
+    }
+
+    public function getViewData($designation_id){
+        $library = new \App\Libraries\MeetingLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields()) 
+                ->join('denominations', 'denominations.id = designations.denomination_id')
+                ->where('designations.id', $designation_id)
+                ->first();
+        } else {
+            return $this->where('id', $designation_id)->first();
+        }
+    }
+
+    function updateRecycleBin($data){
+
+        $trashModel = new \App\Models\TrashesModel();
+        $trashData = [
+            'item_id' => $data['id'][0],
+            'item_deleted_at' => date('Y-m-d H:i:s')
+        ];
+        $trashModel->insert((object)$trashData);
+        return true;
     }
 
 }
