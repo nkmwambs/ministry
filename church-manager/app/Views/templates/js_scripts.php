@@ -71,10 +71,12 @@
                     $('.datepicker').datepicker({
                         format: 'yyyy-mm-dd',
                         container: '#modal_ajax modal-body'
-                    })
+                    });
+                    
                 });
 
                 $('#modal_ajax .modal-body').html(response);
+                $('select.select_fields').select2();
                 $("#modal_ajax").modal("show");
             }
         });
@@ -118,7 +120,7 @@
             url: url,
             type: 'GET',
             success: function(response) {
-                console.log(response);
+                // console.log(response);
 
                 // Inject the loaded content into the modal body
                 $('#user_modal .modal-body').html(response);
