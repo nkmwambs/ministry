@@ -151,4 +151,10 @@ class Assembly extends BaseController
 
         return redirect()->to(site_url("assemblies/view/".hash_id($insertId)));
     }
+
+    function getAssembliesByDenominationId($denomination_id){
+        // $denomination_id = $this->request->getGet('denomination_id');
+        $records = $this->model->getAssembliesByDenominationId($denomination_id);
+        return response()->setJSON($records);
+    }
 }

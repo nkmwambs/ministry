@@ -131,4 +131,12 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
         $trashModel->insert((object)$trashData);
         return true;
     }
+
+    function getAssembliesByDenominationId($hashed_denomination_id){
+        return $this->where(['hierarchies.denomination_id' => hash_id($hashed_denomination_id, 'decode')])
+        ->select('assemblies.id, assemblies.name')
+        ->join('entities','entities.id = assemblies.entity_id')
+        ->join('hierarchies','hierarchies.id = entities.hierarchy_id')
+        ->findAll();
+    }
 }

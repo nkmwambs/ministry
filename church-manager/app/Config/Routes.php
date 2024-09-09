@@ -35,7 +35,10 @@ foreach ($features as $featureObj) {
 
 $routes->get('entities/items/(:segment)/(:segment)', "Entity::getParentEntitiesByDenomination/$1/$2");
 $routes->get('entities/lowestEntities/(:segment)', "Entity::getDenominationLowestEntities/$1");
+$routes->get('entities/hierarchy/(:segment)', "Entity::getEntitiesByHierarchyId/$1");
+$routes->get('assemblies/denomination/(:segment)', "Assembly::getAssembliesByDenominationId/$1");
 $routes->get('hierarchies/denomination/(:segment)', "Hierarchy::getHierarchiesByDenominationId/$1");
+$routes->get('hierarchies/all_denomination/(:segment)', "Hierarchy::getAllHierarchiesByDenominationId/$1");
 $routes->get('participants/event/(:segment)', 'Participant::getParticipantsByEventId/$1');
 $routes->get('settings', 'Setting::list');
 $routes->get('roles/get_default_role/(:segment)', 'Role::getDefaultRole/$1');

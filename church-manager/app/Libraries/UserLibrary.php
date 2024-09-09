@@ -80,7 +80,7 @@ class UserLibrary implements LibraryInterface {
         $entitiesModel = new \App\Models\EntitiesModel();
         $entities = $entitiesModel->select('entities.id, entities.name, entities.hierarchy_id, hierarchies.name as hierarchy_name')
                                   ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id')
-                                  ->orderBy('hierarchies.name, entities.name')
+                                  ->orderBy('hierarchies.level, hierarchies.name, entities.name')
                                   ->findAll();
 
         // Group entities by hierarchy
@@ -90,7 +90,13 @@ class UserLibrary implements LibraryInterface {
         }
 
         $hierarchiesModel = new \App\Models\HierarchiesModel();
-        $hierarchies = $hierarchiesModel->findAll();
+        $hierarchies = [];
+
+        if(session()->get('user_denomination_id')){
+            $hierarchies = $hierarchiesModel->where('denomination_id', session()->get('user_denomination_id'))->findAll();
+        }else{
+            $hierarchies = $hierarchiesModel->findAll();
+        }
 
         // Assign the data to the page_data array
         $page_data['denominations'] = $denominations;
@@ -101,6 +107,17 @@ class UserLibrary implements LibraryInterface {
         $page_data['parent_id'] = hash_id($parent_id, 'encode');
         $page_data['entity_id'] = hash_id($entity_id, 'encode');
         $page_data['hierarchy_id'] = hash_id($hierarchy_id, 'encode');
+
+        // Fetch and assign roles for the current user
+        $rolesModel = new \App\Models\RolesModel();
+        $roles = [];
+
+        if(session()->get('user_denomination_id')){
+            $roles = $rolesModel->where('denomination_id', session()->get('user_denomination_id'))->findAll();
+        }else{
+            $roles = $rolesModel->findAll();
+        }
+        $page_data['roles'] = $roles;
     }
 
 
