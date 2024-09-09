@@ -14,7 +14,13 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
       </div>
 
       <div class="panel-body">
-        <form role="form" method="post" action="<?= site_url("users/store") ?>" class="form-horizontal form-groups-bordered">
+        <form role="form" id = "frm_add_user"  method="post" action="<?= site_url("users/save") ?>" class="form-horizontal form-groups-bordered">
+
+        <div class="form-group hidden error_container">
+                  <div class="col-xs-12 error">
+                    
+                  </div>
+              </div>
 
           <!-- Error Display -->
           <?php if (session()->get('errors')): ?>
@@ -107,16 +113,18 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
           </div>
 
           <!-- System Administrator -->
+          <?php if (!$numeric_denomination_id) { ?>
           <div class="form-group">
             <label class="control-label col-xs-4" for="is_system_admin">Is system Administrator</label>
             <div class="col-xs-6">
               <select class="form-control" name="is_system_admin" id="is_system_admin">
                 <option value="">Select option</option>
                 <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="no" selected >No</option>
               </select>
             </div>
           </div>
+          <?php }?>
 
           <!-- Permitted Entities -->
             <div class="form-group">
@@ -155,7 +163,7 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
           <div class="form-group hidden">
             <label class="control-label col-xs-4" for="permitted_assemblies">Permitted Assemblies</label>
             <div class="col-xs-6">
-              <select class="form-control" name="permitted_assemblies" id="permitted_assemblies">
+              <select class="form-control select_fields" name="permitted_assemblies[]" id="permitted_assemblies" multiple>
                 <option value="">Select Assemblies</option>
               </select>
             </div>

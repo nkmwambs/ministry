@@ -17,10 +17,22 @@ class User extends BaseController
         $this->model = new \App\Models\UsersModel();
     }
 
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+    
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+    
+        return $randomString;
+    }
+
     public function post()
     {
         $insertId = 0;
-
+        // log_message('error', json_encode($this->request->getPost()));
         $validation = \Config\Services::validation();
         $validation->setRules([
             'denomination_id' => 'required',
@@ -31,34 +43,51 @@ class User extends BaseController
             'gender' => 'required|min_length[4]|max_length[6]',
             'date_of_birth' => 'required',
             'roles' => 'required',
-            'access_count' => 'required',
-            'associated_member_id' => 'required',
-            'permitted_entities' => 'required',
-            'permitted_assemblies' => 'required',
+            // 'access_count' => 'required',
+            // 'associated_member_id' => 'required',
+            // 'permitted_entities' => 'required',
+            // 'permitted_assemblies' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $this->validator->getErrors()]);
         }
 
+        $numeric_denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
+
+        // Generate random password with password hash in php 
+        $password = $this->generateRandomString(8);
+        $hashed_password = password_hash($this->generateRandomString(8), PASSWORD_DEFAULT);
+
+        $templateLibrary =  new \App\Libraries\TemplateLibrary();
+        $first_name = $this->request->getPost('first_name');
+        $email = $this->request->getPost('email');
+        $mailTemplate = $templateLibrary->getEmailTemplate(short_name:'new_user_account', template_vars:compact('password','first_name','email'), denomination_id: $numeric_denomination_id);
+
+        $logMailsModel = new \App\Models\LogmailsModel();
+        $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
+
         $data = [
-            'denomination_id' => $this->request->getPost('denomination_id'),
+            'denomination_id' => $numeric_denomination_id,
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
             'phone' => $this->request->getPost('phone'),
             'email' => $this->request->getPost('email'),
             'gender' => $this->request->getPost('gender'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
-            'roles' => $this->request->getPost('roles'),
-            'access_count' => $this->request->getPost('access_count'),
-            'associated_member_id' => $this->request->getPost('associated_member_id'),
-            'permitted_entities' => $this->request->getPost('permitted_entities'),
-            'permitted_assemblies' => $this->request->getPost('permitted_assemblies'),
-            'is_system_admin' => $this->request->getPost('is_system_admin'),
+            'roles' => json_encode($this->request->getPost('roles')),
+            'permitted_entities' => json_encode($this->request->getPost('permitted_entities'))?:NULL,
+            'permitted_assemblies' => $this->request->getPost('permitted_assemblies')?:NULL,
+            'is_system_admin' => $this->request->getPost('is_system_admin') ?: NULL,
+            'password' => $hashed_password,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
 
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
+
+
 
         if ($this->request->isAJAX()) {
             $this->feature = 'user';

@@ -47,7 +47,10 @@ class Login extends BaseController {
         $this->session->set('user_is_system_admin', $user['is_system_admin']);
         $this->session->set('user_permitted_entities', explode(',',$user['permitted_entities']));
         $this->session->set('user_permitted_assemblies', explode(',',$user['permitted_assemblies']));
-        
+        // Update log count
+        $userModel = new \App\Models\UsersModel();
+        $userModel->update($user['id'], (object)['access_count' => $user['access_count'] + 1]);
+
         return redirect()->to(site_url('dashboards'));
     }
 
