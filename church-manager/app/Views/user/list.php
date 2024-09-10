@@ -1,3 +1,4 @@
+ 
   <div class="row">
     <div class="col-xs-12">
       <div class="page-title"><i class='fa fa-users'></i>
@@ -6,13 +7,13 @@
     </div>
   </div>
 
-  <!-- <div class="row">
+  <div class="row">
     <div class="col-xs-12 btn-container">
       <div class='btn btn-primary' onclick="showAjaxModal('users','add', '<?= $id; ?>')">
         <?= lang('user.add_user'); ?>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <div class='row list-alert-container hidden'>
     <div class='col-xs-12 info'>
@@ -34,20 +35,24 @@
           </tr>
         </thead>
         <tbody>
+          <?php foreach($result as $user) { ?>
             <tr>
               <td>
-                <span class='action-icons'><a href="<?= site_url("users/view/"); ?>"><i
-                      class='fa fa-search'></i></a></i></span>
-                <span class='action-icons'><a href="<?= site_url("users/edit/"); ?>"><i
-                      class='fa fa-pencil'></i></a></span>
-                <span class='action-icons'><i class='fa fa-trash'></i></span>
+                <span class='action-icons'>
+                  <a href="<?= site_url("users/view/".hash_id($user['id'])); ?>"><i class='fa fa-search'></i></a></i>
+                </span>
+                <!-- <span class='action-icons'>
+                  <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($user['id']); ?>')" class='fa fa-pencil'></i>
+                </span> -->
+                <!-- <span class='action-icons' title="Delete <?= $user['id']; ?> user"><i class='fa fa-trash'></i></span> -->
               </td>
 
-              <td>First Name</td>
-              <td>Last Name</td>
-              <td>Phone</td>
-              <td>Email</td>
-              <td>Active</td>
+              <td><?= $user['first_name']; ?></td>
+              <td><?= $user['last_name']; ?></td>
+              <td><?= $user['phone']; ?></td>
+              <td><?= $user['email']; ?></td>
+              <td><?= $user['is_active']; ?></td>
+          <?php } ?>
         </tbody>
       </table>
     </div>

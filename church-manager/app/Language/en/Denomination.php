@@ -26,4 +26,6 @@ return [
     'back_button' => 'Back',
     'edit_again_button' => 'Edit Again',
     'edit_button' => 'Edit',
+
+    'select_denomination' => 'Select a Denomination',
 ];

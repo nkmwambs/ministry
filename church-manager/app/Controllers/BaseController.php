@@ -118,6 +118,7 @@ abstract class BaseController extends Controller
             $page_data['fields'] = $table_field;
         }
        
+        // $page_data['content'] = '';
         if(!$this->request->isAJAX()){
             $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
         }
@@ -137,14 +138,18 @@ abstract class BaseController extends Controller
             $data = $this->model->findAll();
         }
         
+        $page_data = $this->page_data($data);
 
-        if ($this->request->isAJAX()) {
-            // $page_data['id'] = $id;
-            $page_data = $this->page_data($data);
-            return view("$this->feature/list", $page_data);
+        if(method_exists($this->library,'listExtraData')){  
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->listExtraData($page_data);
         }
 
-        return view('index', $this->page_data($data));
+        if ($this->request->isAJAX()) {
+            return view("$this->feature/list", $page_data);
+        }
+ 
+        return view('index', $page_data);
     }
     
 
@@ -158,12 +163,18 @@ abstract class BaseController extends Controller
             $data = $this->model->getOne($numeric_id);
         }
 
+        $page_data = $this->page_data($data);
+        if(method_exists($this->library,'viewExtraData')){  
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->viewExtraData($page_data);
+        }
+
         if(array_key_exists('id',$data)){
             unset($data['id']);
         }
 
         if($this->request->isAJAX()){
-            return view("$this->feature/view", $this->page_data($data));
+            return view("$this->feature/view", $page_data);
         }
 
         return view('index', $this->page_data($data));
@@ -186,6 +197,20 @@ abstract class BaseController extends Controller
         }
 
         return view("$this->feature/edit", $page_data);
+    }
+
+    public function delete($id){
+        // log_message('error', $id);
+        $numeric_id = hash_id($id,'decode');
+
+        if(method_exists($this->model, 'deleteData')){
+            $this->model->deleteData($numeric_id);
+        } else{
+            $this->model->delete($numeric_id);
+        }
+
+        // return redirect()->to($this->feature);
+        // return view("$this->feature/edit", $page_data);
     }
 
     public function add(): string {

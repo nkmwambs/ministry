@@ -1,3 +1,5 @@
+
+
 <div class="row">
     <div class="col-xs-12 btn-container">
         <a href="<?= site_url("users"); ?>" class="btn btn-info">
@@ -25,42 +27,13 @@
                     <div class="page-title">
                         <i class='fa fa-eye'></i><?= lang('user.view_user'); ?>
                     </div>
-                    <div class="panel-options">
-							
-							<ul class="nav nav-tabs" id ="myTabs">
-								<li class = "active"><a href="#view_user" id="view_user_tab" data-toggle="tab"><?= lang('user.view_denomination'); ?></a></li>
-								<li><a href="#view_profile"  data-link_id="view_profile" data-feature_plural="profiles" onclick="childrenAjaxLists(this)" id="view_profile_tab" data-toggle="tab"><?= lang('user.view_profile'); ?></a></li>
-                                
-                            </ul>
-					</div>
                 </div>
             </div>
             <div class="panel-body">
-                
-                <div class="tab-content">
-                    <div class="tab-pane active" id="view_user">
-                        <form class="form-horizontal form-groups-bordered" role="form">
-                            <?php foreach($result as $field_name => $field_value){ ?>
-                                <div class = "form-group">
-                                    <label for="" class = "control-label col-xs-4"><?=humanize($field_name);?></label>
-                                    <div class = "col-xs-6">
-                                        <div class = "form_view_field"><?=$field_value;?></div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-            
-                            <div class = "form-group">
-                                <div class = "col-xs-offset-4 col-xs-6">
-                                    <a href="<?= site_url(plural($feature).'/edit/' . $id) ?>" class="btn btn-primary">Edit</a>
-                                </div>
-                            </div> 
-                        </form>
+                <div class = 'row'>  
+                    <div class = "col-xs-12" id="view_profile">
+                        <?= view('user/profile') ?>
                     </div>
-
-                    <div class="tab-pane" id="view_profile">
-                        <?= include('profile.php') ?>
-                    </div>
-
                 </div>
             </div>
 
@@ -68,3 +41,31 @@
     </div>
 </div>
 
+<script>
+
+    $(document).ready(function() {
+        $('.list-group-item:first').trigger('click');
+    })
+
+    $('.list-group-item-action').on('click', function (ev){
+       const url = "<?=site_url("users/profile")?>"
+
+       $.ajax({
+        url: url + '/' + $(this).data('profile'),
+        type: 'GET',
+        beforeSend: function(){
+            $("#overlay").css("display", "block");
+        },
+        success: function (data) {
+            $('#profile_data').html(data);
+            $("#overlay").css("display", "none");
+        },
+        error: function(xhr, status, error) {
+            $('#profile_data').html('<div class="error">Error Occurred</div>');
+            $("#overlay").css("display", "none");
+        }
+       })
+
+       ev.preventDefault()
+    })
+</script>

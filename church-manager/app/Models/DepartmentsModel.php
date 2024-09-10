@@ -10,7 +10,7 @@ class DepartmentsModel extends Model implements \App\Interfaces\ModelInterface
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['id','denomination_id','name','description'];
 
@@ -66,5 +66,42 @@ class DepartmentsModel extends Model implements \App\Interfaces\ModelInterface
         }else{
             return $this->where('id', $id)->first();
         }
+    }
+
+    public function getEditData($department_id){
+        $library = new \App\Libraries\DepartmentLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())
+            ->join('denominations','denominations.id=departments.denomination_id')
+            ->where('departments.id', $department_id)->first();
+        }else{
+            return $this->where('id', $department_id)->first();
+        }
+    }
+
+    public function getViewData($department_id){
+        $library = new \App\Libraries\DepartmentLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())
+            ->join('denominations','denominations.id=departments.denomination_id')
+            ->where('departments.id', $department_id)->first();
+        }else{
+            return $this->where('id', $department_id)->first();
+        }
+    }
+
+    function updateRecycleBin($data){
+
+        $trashModel = new \App\Models\TrashesModel();
+        $trashData = [
+            'item_id' => $data['id'][0],
+            'item_deleted_at' => date('Y-m-d H:i:s')
+        ];
+        $trashModel->insert((object)$trashData);
+        return true;
     }
 }

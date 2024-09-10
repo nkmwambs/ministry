@@ -42,7 +42,7 @@ class MeetingsModel extends Model
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $afterDelete    = ["updateRecycleBin"];
 
     public function getAll() {
         $library = new \App\Libraries\MeetingLibrary();
@@ -66,5 +66,44 @@ class MeetingsModel extends Model
         } else {
             return $this->where('id', $id)->findAll();
         }
+    }
+
+    public function getEditData($department_id){
+        $library = new \App\Libraries\MeetingLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())
+                ->join('denominations', 'denominations.id = meetings.denomination_id')
+                ->where('meetings.id', $department_id)
+                ->first();
+        } else {
+            return $this->where('meetings.id')->first();
+        }
+    }
+
+    public function getViewData($meeting_id){
+        $library = new \App\Libraries\MeetingLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields()) 
+                ->join('denominations', 'denominations.id = meetings.denomination_id')
+                ->where('meetings.id', $meeting_id)
+                ->first();
+        } else {
+            return $this->where('id', $meeting_id)->first();
+        }
+    }
+
+    function updateRecycleBin($data){
+
+        $trashModel = new \App\Models\TrashesModel();
+        $trashData = [
+            'item_id' => $data['id'][0],
+            'item_deleted_at' => date('Y-m-d H:i:s')
+        ];
+        $trashModel->insert((object)$trashData);
+        return true;
     }
 }

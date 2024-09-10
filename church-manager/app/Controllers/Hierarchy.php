@@ -162,4 +162,18 @@ class Hierarchy extends BaseController
 
         return response()->setJSON($hierarchies);
     }
+
+    public function getAllHierarchiesByDenominationId($hashed_denomination_id){
+        // $hashed_denomination_id = $this->request->getVar('denomination_id');
+        $denomination_id = hash_id($hashed_denomination_id,'decode');
+
+        $hierarchies = $this->model->select('id,name')->where(['denomination_id' => $denomination_id])->findAll();
+        // $hierarchies = array_map(function($elem){
+        //     $elem['id'] = hash_id($elem['id'],"encode");
+        //     $elem['name'] = plural($elem['name']);
+        //      return $elem;
+        // }, $hierarchies );
+
+        return response()->setJSON($hierarchies);
+    }
 }

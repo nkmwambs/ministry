@@ -303,4 +303,14 @@ class Entity extends BaseController
     public function getDenominationLowestEntities($numeric_denomination_id){
        return  $this->response->setJSON($this->model->getLowestEntities($numeric_denomination_id));
     }
+
+    function getEntitiesByHierarchyId($hierarchy_id){
+        $entities = $this->model
+        ->where('hierarchy_id', $hierarchy_id)
+        ->select('entities.id, entities.name')
+        ->orderBy("entity_number asc")
+        ->findAll();
+
+        return response()->setJSON($entities);
+    }
 }

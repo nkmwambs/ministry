@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('settings','add' . <?= $id ?>)">
+        <div class='btn btn-primary' onclick="showAjaxModal('departments','add', '<?= $parent_id ?>')">
             <?= lang('department.add_department'); ?>
         </div>
     </div>
@@ -26,8 +26,12 @@
                 <?php foreach ($result as $department) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $department['id']; ?> department"><a href="<?= site_url("departments/view/" . hash_id($department['id'])); ?>"><i
-                                        class='fa fa-search'></i></a></i></span>
+                            <span class='action-icons' title="View <?= $department['id']; ?> department">
+                                <!-- <a href="<?= site_url("departments/view/" . hash_id($department['id'])); ?>">
+                                    <i class='fa fa-search'></i>
+                                </a> -->
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($department['id']);?>')"></i>
+                            </span>
                             <span class='action-icons' title="Edit <?= $department['id']; ?> department">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($department['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
@@ -37,8 +41,8 @@
 
                         <td><?= $department['name']; ?></td>
                         <td><?= $department['description']; ?></td>
-
-                    <?php } ?>
+                        </tr>
+                <?php } ?>
             </tbody>
         </table>
     </div>

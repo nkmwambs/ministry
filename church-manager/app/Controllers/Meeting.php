@@ -22,6 +22,13 @@ class Meeting extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
+            'denomination_id' => [
+                'rules' => 'required',
+                'label' => 'Denomination Name',
+                'errors' => [
+                    'required' => 'Department Name is required'
+                ]
+            ],
             'name' => [
                 'rules' => 'required|min_length[5]|max_length[255]',
                 'label' => 'Name',
@@ -41,7 +48,7 @@ class Meeting extends BaseController
             ]
         ]);
 
-        if ($this->validate($validation->getRules())) {
+        if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
@@ -76,6 +83,13 @@ class Meeting extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
+            'denomination_id' => [
+                'rules' => 'required',
+                'label' => 'Denomination Name',
+                'errors' => [
+                    'required' => 'Department Name is required'
+                ],
+            ],
             'name' => [
                 'rules' =>'required|min_length[5]|max_length[255]',
                 'label' => 'Name',
@@ -83,7 +97,7 @@ class Meeting extends BaseController
                     'required' => 'Meeting Name is required',
                    'min_length' => 'Meeting Name must be at least {value} characters long',
                    'max_length' => 'Meeting Name cannot exceed {value} characters long'
-                ]
+                ],
             ],
             'description' => [
                 'rules' =>'max_length[255]',
@@ -91,11 +105,11 @@ class Meeting extends BaseController
                 'errors' => [
                    'required' => 'Description is required.',
                    'max_length' => 'Description cannot exceed {value} characters long'
-                ]
-            ]
+                ],
+            ],
         ]);
 
-        if ($this->validate($validation->getRules())) {
+        if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
@@ -119,7 +133,7 @@ class Meeting extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('deparment/list', parent::page_data($records));
+            return view('meeting/list', parent::page_data($records));
         }
 
         return redirect()->to(site_url("meeting/view".$hashed_id));

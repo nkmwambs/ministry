@@ -120,4 +120,23 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
 
         return $assemblies;
     }
+
+    function updateRecycleBin($data){
+
+        $trashModel = new \App\Models\TrashesModel();
+        $trashData = [
+            'item_id' => $data['id'][0],
+            'item_deleted_at' => date('Y-m-d H:i:s')
+        ];
+        $trashModel->insert((object)$trashData);
+        return true;
+    }
+
+    function getAssembliesByDenominationId($hashed_denomination_id){
+        return $this->where(['hierarchies.denomination_id' => hash_id($hashed_denomination_id, 'decode')])
+        ->select('assemblies.id, assemblies.name')
+        ->join('entities','entities.id = assemblies.entity_id')
+        ->join('hierarchies','hierarchies.id = entities.hierarchy_id')
+        ->findAll();
+    }
 }

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('settings','add' . <?= $id ?>)">
+        <div class='btn btn-primary' onclick="showAjaxModal('meetings','add', '<?= $parent_id ?>')">
             <?= lang('meeting.add_meeting'); ?>
         </div>
     </div>
@@ -26,19 +26,23 @@
                 <?php foreach ($result as $meeting) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $meeting['id']; ?> meeting"><a href="<?= site_url("meetings/view/" . hash_id($meeting['id'])); ?>"><i
-                                        class='fa fa-search'></i></a></i></span>
+                            <span class='action-icons' title="View <?= $meeting['id']; ?> meeting">
+                                <!-- <a href="<?= site_url("meetings/view/" . hash_id($meeting['id'])); ?>">
+                                    <i class='fa fa-search'></i>
+                                </a> -->
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($meeting['id']);?>')"></i>
+                            </span>
                             <span class='action-icons' title="Edit <?= $meeting['id']; ?> meeting">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($meeting['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' title="Delete <?= $meeting['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($meeting['id']); ?>')" title="Delete <?= $meeting['id']; ?> participant"><i class='fa fa-trash'></i></span>
 
                         </td>
 
                         <td><?= $meeting['name']; ?></td>
                         <td><?= $meeting['description']; ?></td>
-
-                    <?php } ?>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
     </div>

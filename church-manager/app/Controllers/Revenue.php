@@ -22,6 +22,13 @@ class Revenue extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
+            'denomination_id' => [
+                'rules' => 'required',
+                'label' => 'Denomination Name',
+                'errors' => [
+                    'required' => 'Department Name is required'
+                ]
+            ],
             'name' => [
                 'rules' => 'required|min_length[5]|max_length[255]',
                 'label' => 'Name',
@@ -41,7 +48,7 @@ class Revenue extends BaseController
             ]
         ]);
 
-        if ($this->validate($validation->getRules())) {
+        if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
@@ -55,8 +62,10 @@ class Revenue extends BaseController
         $insertId = $this->model->getInsertID();
 
         if ($this->request->isAJAX()) {
+
             $this->feature = 'revenue';
             $this->action = 'list';
+
             $records = [];
 
             if (method_exists($this->model, 'getAll')) {
@@ -76,6 +85,13 @@ class Revenue extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
+            'denomination_id' => [
+                'rules' => 'required',
+                'label' => 'Denomination Name',
+                'errors' => [
+                    'required' => 'Department Name is required'
+                ],
+            ],
             'name' => [
                 'rules' =>'required|min_length[5]|max_length[255]',
                 'label' => 'Name',
@@ -83,7 +99,7 @@ class Revenue extends BaseController
                     'required' => 'Revenue Name is required',
                    'min_length' => 'Revenue Name must be at least {value} characters long',
                    'max_length' => 'Revenue Name cannot exceed {value} characters long'
-                ]
+                ],
             ],
             'description' => [
                 'rules' =>'max_length[255]',
@@ -91,11 +107,11 @@ class Revenue extends BaseController
                 'errors' => [
                    'required' => 'Description is required.',
                    'max_length' => 'Description cannot exceed {value} characters long'
-                ]
-            ]
+                ],
+            ],
         ]);
 
-        if ($this->validate($validation->getRules())) {
+        if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
@@ -108,6 +124,7 @@ class Revenue extends BaseController
         $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
 
         if ($this->request->isAJAX()) {
+            
             $this->feature = 'revenue';
             $this->action = 'list';
 
@@ -119,7 +136,7 @@ class Revenue extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('deparment/list', parent::page_data($records));
+            return view('revenue/list', parent::page_data($records));
         }
 
         return redirect()->to(site_url("revenue/view".$hashed_id));

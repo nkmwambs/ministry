@@ -99,6 +99,17 @@ class HierarchiesModel extends Model  implements \App\Interfaces\ModelInterface
         }
     }
 
+    function updateRecycleBin($data){
+
+        $trashModel = new \App\Models\TrashesModel();
+        $trashData = [
+            'item_id' => $data['id'][0],
+            'item_deleted_at' => date('Y-m-d H:i:s')
+        ];
+        $trashModel->insert((object)$trashData);
+        return true;
+    }
+
     // function createHeadOfficeEntity(array $data){
     //     if($data['data']['level'] == 1){
     //         $headOfficeEntityData = [

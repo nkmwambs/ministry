@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <div class="page-title"><i class='fas'>&#xf51d;</i>
+        <div class="page-title"><i class='entypo-bell'></i>
             <?= lang('assembly.list_assemblies'); ?>
         </div>
     </div>
