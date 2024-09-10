@@ -58,9 +58,7 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
             <div class="col-xs-3">
               <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name" required>
             </div>
-          <!-- </div>
-
-          <div class="form-group"> -->
+          
             <label class="control-label col-xs-2" for="last_name">Last Name</label>
             <div class="col-xs-3">
               <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name" required>
@@ -72,9 +70,7 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
             <div class="col-xs-3">
               <input type="text" class="form-control datepicker" name="date_of_birth" id="date_of_birth" placeholder="Date of birth">
             </div>
-          <!-- </div>
 
-          <div class="form-group"> -->
             <label class="control-label col-xs-2" for="gender">Gender</label>
             <div class="col-xs-3">
               <select class="form-control" name="gender" id="gender">
@@ -90,9 +86,7 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
             <div class="col-xs-3">
               <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email" required>
             </div>
-          <!-- </div>
-
-          <div class="form-group"> -->
+          
             <label class="control-label col-xs-2" for="phone">Phone</label>
             <div class="col-xs-3">
               <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Phone" required>

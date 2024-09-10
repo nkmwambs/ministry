@@ -48,4 +48,10 @@ $routes->post('permissions/update_permission', 'Permission::updatePermission/');
 $routes->post('users/store', 'User::store');
 
 $routes->get('users/profile/account', "User::account");
+$routes->post('users/profile/account', "User::updatePublicInfo");
+$routes->post('users/profile/account', "User::updatePrivateInfo");
 $routes->get('users/profile/password_reset', "User::passwordReset");
+$routes->get('users/profile/email_notifications', "User::emailNotifications");
+$routes->get('users/profile/privacy', "User::privacy");
+$routes->get('users/profile/your_data', "User::yourData");
+$routes->get('users/profile/delete_account', "User::deleteAccount");

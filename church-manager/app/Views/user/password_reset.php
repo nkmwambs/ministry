@@ -5,7 +5,7 @@
                 <div class="panel-title">
                     <div class="page-title">
                         <i class='fa fa-key'></i>
-                        <?= lang('user.password') ?>
+                        <?= lang('user.password_reset') ?>
                     </div>
                 </div>
             </div>
@@ -16,22 +16,22 @@
                 <form class="form-horizontal form-groups-bordered">
                     <div class="form-group">
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="inputPasswordCurrent">Current password</label>
+                            <label class="control-label col-xs-4" for="password">Current password</label>
                             <div class="col-xs-6">
-                                <input type="password" class="form-control" id="inputPasswordCurrent">
+                                <input type="password" class="form-control" id="password" name="password">
                                 <small><a href="#">Forgot your password?</a></small>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="inputPasswordNew">New password</label>
+                            <label class="control-label col-xs-4" for="password">New password</label>
                             <div class="col-xs-6">
-                                <input type="password" class="form-control" id="inputPasswordNew">
+                                <input type="password" class="form-control" name="password" id="password">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="inputPasswordNew2">Verify password</label>
+                            <label class="control-label col-xs-4" for="password">Verify password</label>
                             <div class="col-xs-6">
-                                <input type="password" class="form-control" id="inputPasswordNew2">
+                                <input type="password" class="form-control" name="password" id="password">
                             </div>
                         </div>
                     </div>
