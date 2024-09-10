@@ -272,4 +272,17 @@
     $(document).on('keydown','.datepicker', function (){
         return false;
     })
+    
+    $(document).ready(function () {
+        $('.list-group-item').on('click', function (e) {
+            e.preventDefault();
+            
+            let url = $(this).attr('href'); 
+            $.get(url, function (data) {
+                $('.tab-content').html(data); 
+            });
+        });
+
+        $('.list-group-item:first').trigger('click');
+    });
 </script>

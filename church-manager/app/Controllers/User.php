@@ -182,7 +182,21 @@ class User extends BaseController
 
         return redirect()->to('/users');
     }
+
+    public function account()
+    {
+        return view('user/account');
+    }
+
+    public function passwordReset()
+    {
+        return view('user/password_reset');
+    }
     
+    public function privacy()
+    {
+        return view('user/privacy'); // Load privacy and safety view
+    }
     // Method to fetch hierarchies and entities for select2
     // public function getHierarchiesWithEntities()
     // {
