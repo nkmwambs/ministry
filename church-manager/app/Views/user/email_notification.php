@@ -42,7 +42,17 @@
                                 <span class="switcher-yes"></span>
                                 <span class="switcher-no"></span>
                             </span>
-                            <span class="switcher-label">Email me when someone follows me</span>
+                            <span class="switcher-label">Email me when someone views my information</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="switcher">
+                            <input type="checkbox" class="switcher-input">
+                            <span class="switcher-indicator">
+                                <span class="switcher-yes"></span>
+                                <span class="switcher-no"></span>
+                            </span>
+                            <span class="switcher-label">Email me when someone edits my information</span>
                         </label>
                     </div>
                     </div>
