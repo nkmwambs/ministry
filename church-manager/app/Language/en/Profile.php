@@ -7,6 +7,7 @@ return [
     'privacy_and_safety' => 'Privacy and Safety',
     'email_notifications' => 'Email Notifications',
     'web_notifications' => 'Web Notifications',
+    'pending_tasks' => 'Pending Tasks',
     'widgets' => 'Widgets',
     'your_data' => 'Your Data',
     'delete_account' => 'Delete Account',
