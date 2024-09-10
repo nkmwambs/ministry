@@ -10,11 +10,11 @@
                     </svg>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right">
+                <!-- <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="#">Action</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <a class="dropdown-item" href="#">Something else here</a>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="page-title mb-0"><i class="entypo-user"></i>
