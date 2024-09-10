@@ -41,10 +41,10 @@
                 <span class='action-icons'>
                   <a href="<?= site_url("users/view/".hash_id($user['id'])); ?>"><i class='fa fa-search'></i></a></i>
                 </span>
-                <span class='action-icons'>
+                <!-- <span class='action-icons'>
                   <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($user['id']); ?>')" class='fa fa-pencil'></i>
-                </span>
-                <span class='action-icons' title="Delete <?= $user['id']; ?> user"><i class='fa fa-trash'></i></span>
+                </span> -->
+                <!-- <span class='action-icons' title="Delete <?= $user['id']; ?> user"><i class='fa fa-trash'></i></span> -->
               </td>
 
               <td><?= $user['first_name']; ?></td>

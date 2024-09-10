@@ -5,6 +5,7 @@ namespace App\Filters;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
+use CodeIgniter\Services;
 
 class SessionCheck implements FilterInterface
 {
@@ -26,6 +27,24 @@ public function before(RequestInterface $request, $arguments = null)
     if (!$session->has('logged_in')) {
         // Redirect to the login page if the user is not authenticated
         return redirect()->to('/');
+    }else{
+        $user_id = session()->get('user_id');
+        $uri = service('uri');
+        
+        
+        $router = service('router');
+
+        // Get the current controller and method being called
+        $controller = $router->controllerName();
+        $method = $router->methodName();
+
+        // Get any route parameters (if any)
+        $params = $router->params();
+
+        // You can use the route information as needed
+        // For example, logging the route information
+        // log_message('error', 'Controller: ' . $controller . ', Method: ' . $method . ', Params: ' . implode(', ', $params));
+        // log_message('error', json_encode($router));
     }
 }
 

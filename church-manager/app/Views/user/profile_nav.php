@@ -31,23 +31,23 @@
             <i class="fa fa-key" ></i>
             <?= lang('profile.password') ?>
         </a>
-        <a class="list-group-item list-group-item-action" data-toggle="list" href="<?= site_url("users/privacy"); ?>" role="tab">
+        <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "privacy" href="#" role="tab">
             <i class="fa fa-shield" ></i>
             <?= lang('profile.privacy_and_safety') ?>
         </a>
-        <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab">
+        <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "email_notifications" href="#" role="tab">
             <?= lang('profile.email_notifications') ?>
         </a>
-        <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab">
+        <a class="list-group-item list-group-item-action" data-toggle="list"  data-profile = "web_notifications" href="#" role="tab">
             <?= lang('profile.web_notifications') ?>
         </a>
-        <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab">
+        <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "widgets" href="#" role="tab">
             <?= lang('profile.widgets') ?>
         </a>
-        <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab">
+        <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "your_data" href="#" role="tab">
             <?= lang('profile.your_data') ?>
         </a>
-        <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab">
+        <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "delete_account" href="#" role="tab">
             <?= lang('profile.delete_account') ?>
         </a>
     </div>
