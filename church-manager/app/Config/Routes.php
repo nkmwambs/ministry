@@ -47,5 +47,5 @@ $routes->post('permissions/update_permission', 'Permission::updatePermission/');
 // $routes->get('/user/getHierarchiesWithEntities', 'User::getHierarchiesWithEntities');
 $routes->post('users/store', 'User::store');
 
-$routes->get('users/account', "User::account");
-$routes->get('users/password_reset', "User::password");
+$routes->get('users/profile/account', "User::account");
+$routes->get('users/profile/password_reset', "User::passwordReset");

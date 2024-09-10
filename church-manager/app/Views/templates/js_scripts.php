@@ -208,28 +208,7 @@
     }
 
 
-    $(document).ready(function($) {
-        // Sample Toastr Notification
-        setTimeout(function() {
-            var opts = {
-                "closeButton": true,
-                "debug": false,
-                "positionClass": rtl() || public_vars.$pageContainer.hasClass('right-sidebar') ? "toast-top-left" : "toast-top-right",
-                "toastClass": "black",
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-
-            toastr.success("You have been awarded with 1 year free subscription. Enjoy it!", "Account Subcription Updated", opts);
-        }, 3000);
-    })
+   
 
     $(document).on('click', "#myTabs", function(ev) {
         const tabs = $(this)
@@ -273,16 +252,39 @@
         return false;
     })
     
-    $(document).ready(function () {
-        $('.list-group-item').on('click', function (e) {
-            e.preventDefault();
-            
-            let url = $(this).attr('href'); 
-            $.get(url, function (data) {
-                $('.tab-content').html(data); 
-            });
-        });
 
-        $('.list-group-item:first').trigger('click');
-    });
+
+    $(document).ready(function($) {
+        // Sample Toastr Notification
+        // setTimeout(function() {
+        //     var opts = {
+        //         "closeButton": true,
+        //         "debug": false,
+        //         "positionClass": rtl() || public_vars.$pageContainer.hasClass('right-sidebar') ? "toast-top-left" : "toast-top-right",
+        //         "toastClass": "black",
+        //         "onclick": null,
+        //         "showDuration": "300",
+        //         "hideDuration": "1000",
+        //         "timeOut": "5000",
+        //         "extendedTimeOut": "1000",
+        //         "showEasing": "swing",
+        //         "hideEasing": "linear",
+        //         "showMethod": "fadeIn",
+        //         "hideMethod": "fadeOut"
+        //     };
+
+        //     toastr.success("You have been awarded with 1 year free subscription. Enjoy it!", "Account Subcription Updated", opts);
+        // }, 3000);
+
+        // $('.list-group-item').on('click', function (e) {
+        //     e.preventDefault();
+            
+        //     let url = $(this).attr('href'); 
+        //     $.get(url, function (data) {
+        //         $('.tab-content').html(data); 
+        //     });
+        // });
+
+        // $('.list-group-item:first').trigger('click');
+    })
 </script>

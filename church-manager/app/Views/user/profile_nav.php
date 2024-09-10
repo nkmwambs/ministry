@@ -23,11 +23,11 @@
     </div>
 
     <div class="list-group list-group-flush" role="tablist">
-        <a class="list-group-item list-group-item-action" data-toggle="list" href="<?= site_url('users/account'); ?>" role="tab">
+        <a class="list-group-item list-group-item-action" data-toggle="list" href="#" data-profile = "account" role="tab">
             <i class="fa fa-user" ?></i>
             <?= lang('profile.account') ?>
         </a>
-        <a class="list-group-item list-group-item-action" data-toggle="list" href="<?= site_url("users/password_reset"); ?>" role="tab">
+        <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "password_reset" href="#" role="tab">
             <i class="fa fa-key" ></i>
             <?= lang('profile.password') ?>
         </a>

@@ -29,7 +29,7 @@
 							
 							<ul class="nav nav-tabs" id ="myTabs">
 								<li class = "active"><a href="#view_user" id="view_user_tab" data-toggle="tab"><?= lang('user.view_user'); ?></a></li>
-								<li><a href="#view_profile"  data-link_id="view_profile" data-feature_plural="profiles" onclick="childrenAjaxLists(this)" id="view_profile_tab" data-toggle="tab"><?= lang('user.view_profile'); ?></a></li>
+								<li><a href="#view_profile" class ="list-group-item-action" data-profile = "account" data-toggle="tab"><?= lang('user.view_profile'); ?></a></li>
                                 
                             </ul>
 					</div>
@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="tab-pane" id="view_profile">
-                        <?= include('profile.php') ?>
+                        <?= view('user/profile') ?>
                     </div>
 
                     <div class="tab-pane" id="view_password">
@@ -72,3 +72,24 @@
     </div>
 </div>
 
+<script>
+    $('.list-group-item-action').on('click', function (){
+       const url = "<?=site_url("users/profile")?>"
+
+       $.ajax({
+        url: url + '/' + $(this).data('profile'),
+        type: 'GET',
+        beforeSend: function(){
+            $("#overlay").css("display", "block");
+        },
+        success: function (data) {
+            $('#profile_data').html(data);
+            $("#overlay").css("display", "none");
+        },
+        error: function(xhr, status, error) {
+            $('#profile_data').html('<div class="error">Error Occurred</div>');
+            $("#overlay").css("display", "none");
+        }
+       })
+    })
+</script>

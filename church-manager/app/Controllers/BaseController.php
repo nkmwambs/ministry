@@ -118,6 +118,7 @@ abstract class BaseController extends Controller
             $page_data['fields'] = $table_field;
         }
        
+        // $page_data['content'] = '';
         if(!$this->request->isAJAX()){
             $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
         }
