@@ -14,4 +14,6 @@ return [
     'public_info' => 'Public Info',
     'private_info' => 'Private Info',
     'password' => 'Password',
+    'activity' => 'Activity',
+    'application' => 'Application',
 ];

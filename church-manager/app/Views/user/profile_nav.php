@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="page-title mb-0"><i class="fa fa-user"></i>
+        <div class="page-title mb-0"><i class="entypo-user"></i>
             <?= lang('user.profile_settings') ?>
         </div>
     </div>
@@ -36,18 +36,23 @@
             <?= lang('profile.privacy_and_safety') ?>
         </a>
         <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "email_notifications" href="#" role="tab">
+            <i class="fa fa-envelope"></i>
             <?= lang('profile.email_notifications') ?>
         </a>
         <a class="list-group-item list-group-item-action" data-toggle="list"  data-profile = "web_notifications" href="#" role="tab">
+            <i class="fa fa-globe"></i>
             <?= lang('profile.web_notifications') ?>
         </a>
         <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "widgets" href="#" role="tab">
+            <i class="fa fa-tachometer"></i>
             <?= lang('profile.widgets') ?>
         </a>
         <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "your_data" href="#" role="tab">
+            <i class="fa fa-database"></i>
             <?= lang('profile.your_data') ?>
         </a>
         <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "delete_account" href="#" role="tab">
+            <i class="fa fa-trash"></i>
             <?= lang('profile.delete_account') ?>
         </a>
     </div>
