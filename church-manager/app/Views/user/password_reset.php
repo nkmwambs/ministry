@@ -5,7 +5,7 @@
                 <div class="panel-title">
                     <div class="page-title">
                         <i class='fa fa-key'></i>
-                        <?= lang('user.password') ?>
+                        <?= lang('user.password_reset') ?>
                     </div>
                 </div>
             </div>

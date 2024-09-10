@@ -13,7 +13,10 @@ return [
     'profile_settings' => 'Profile Settings',
     'public_info' => 'Public Info',
     'private_info' => 'Private Info',
-    'password' => 'Password',
+    'password_reset' => 'Password Reset',
     'activity' => 'Activity',
     'application' => 'Application',
+    'privacy' => 'Privacy and Safety',
+    'your_data' => 'Your Data',
+    'delete_account' => 'Delete Account'
 ];

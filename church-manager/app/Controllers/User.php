@@ -218,6 +218,16 @@ class User extends BaseController
     {
         return view('user/email_notification');
     }
+
+    public function yourData()
+    {
+        return view('user/your_data');
+    }
+
+    public function deleteAccount()
+    {
+        return view('user/delete_account');
+    }
     // Method to fetch hierarchies and entities for select2
     // public function getHierarchiesWithEntities()
     // {

@@ -29,7 +29,7 @@
         </a>
         <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "password_reset" href="#" role="tab">
             <i class="fa fa-key" ></i>
-            <?= lang('profile.password') ?>
+            <?= lang('profile.password_reset') ?>
         </a>
         <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "privacy" href="#" role="tab">
             <i class="fa fa-shield" ></i>
@@ -43,10 +43,10 @@
             <i class="fa fa-globe"></i>
             <?= lang('profile.web_notifications') ?>
         </a>
-        <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "widgets" href="#" role="tab">
+        <!-- <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "widgets" href="#" role="tab">
             <i class="fa fa-tachometer"></i>
             <?= lang('profile.widgets') ?>
-        </a>
+        </a> -->
         <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "your_data" href="#" role="tab">
             <i class="fa fa-database"></i>
             <?= lang('profile.your_data') ?>
