@@ -170,7 +170,7 @@ abstract class BaseController extends Controller
         }
 
         // if(array_key_exists('id',$data)){
-        if (isset($page_data['result']) && is_array($page_data['result']) && array_key_exists('id', $page_data['result'])) {
+        if (isset($data) && is_array($data) && array_key_exists('id', $data)) {
             unset($data['id']);
         }
 
