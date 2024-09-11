@@ -19,13 +19,13 @@
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="username">Username</label>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" name="username" id="username"  placeholder="Edit Username">
+                                    <input type="text" class="form-control" name="username" id="username" value="<?=$result['username'];?>" placeholder="Edit Username">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="biography">Biography</label>
                                 <div class="col-xs-6">
-                                    <textarea rows="2" class="form-control" name="biography" id="biography"  placeholder="Tell something about yourself"></textarea>
+                                    <textarea rows="2" class="form-control" name="biography" id="biography" value="<?=$result['biography'];?>" placeholder="Tell something about yourself"><?=$result['biography'];?></textarea>
                                 </div>
                             </div>
                         </div>

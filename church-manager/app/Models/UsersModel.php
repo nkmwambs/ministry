@@ -15,6 +15,7 @@ class UsersModel extends Model  implements \App\Interfaces\ModelInterface
     protected $allowedFields    = [
         "id","denomination_id",
         "first_name","last_name",
+        "username","biography",
         "date_of_birth","email",
         "gender","phone","roles",
         "access_count",
