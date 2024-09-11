@@ -15,12 +15,12 @@ class UserLibrary implements LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ["users.id","users.denomination_id","first_name","last_name","date_of_birth","email","gender","phone","roles","access_count","is_active","permitted_entities","permitted_assemblies"];
+        $fields = ["users.id","users.denomination_id","first_name","last_name","date_of_birth","users.email","gender","users.phone","roles","access_count","is_active","permitted_entities","permitted_assemblies"];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ["users.id","users.denomination_id","first_name","last_name","date_of_birth","email","gender","phone","roles","access_count","is_active","permitted_entities","permitted_assemblies"];
+        $fields = ["users.id","users.denomination_id","first_name","last_name","date_of_birth","users.email","gender","users.phone","roles","access_count","is_active","permitted_entities","permitted_assemblies"];
         return $fields;
     }
 
@@ -34,33 +34,6 @@ class UserLibrary implements LibraryInterface {
 
         $page_data['parent_id'] = hash_id($parent_id,'encode');
     }
-
-    // function addExtraData(&$page_data){
-    //     $parent_id = 0;
-    //     $entity_id = 0;
-    //     $hierarchy_id = 0;
-
-    //     if(session()->get('user_denomination_id')){
-    //         $parent_id = session()->get('user_denomination_id');
-    //     }
-
-    //     $denominationsModel = new \App\Models\DenominationsModel();
-    //     $denominations = $denominationsModel->findAll();
-
-    //     $entitiesModel = new \App\Models\EntitiesModel();
-    //     $entities = $entitiesModel->findAll();
-
-    //     $hierarchiesModel = new \App\Models\HierarchiesModel();
-    //     $hierarchies = $hierarchiesModel->findAll();
-
-    //     $page_data['denominations'] = $denominations;
-    //     $page_data['entities'] = $entities;
-    //     $page_data['hierarchies'] = $hierarchies;
-
-    //     $page_data['parent_id'] = hash_id($parent_id,'encode');
-    //     $page_data['entity_id'] = hash_id($entity_id, 'encode');
-    //     $page_data['hierarchy_id'] = hash_id($hierarchy_id, 'encode');
-    // }
 
     public function addExtraData(&$page_data)
     {
@@ -151,6 +124,33 @@ class UserLibrary implements LibraryInterface {
 
         $hierarchiesModel = new \App\Models\HierarchiesModel();
         $hierarchies = $hierarchiesModel->findAll();
+
+        $page_data['denominations'] = $denominations;
+        $page_data['entities'] = $grouped_entities;
+        $page_data['hierarchies'] = $hierarchies;
+    }
+
+    function viewExtraData(&$page_data){
+        $denominations = [];
+        $hierarchies = [];
+        $entities = [];
+
+        $denominationsModel = new \App\Models\DenominationsModel();
+        $denominations = $denominationsModel->findAll();
+
+        $hierarchiesModel = new \App\Models\HierarchiesModel();
+        $hierarchies = $hierarchiesModel->findAll();
+
+        $entitiesModel = new \App\Models\EntitiesModel();
+        $entities = $entitiesModel->select('entities.id, entities.name, entities.hierarchy_id, hierarchies.name as hierarchy_name')
+        ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id')
+        ->orderBy('hierarchies.name, entities.name')
+        ->findAll();
+
+        $grouped_entities = [];
+        foreach ($entities as $entity) {
+            $grouped_entities[$entity['hierarchy_name']][] = $entity;
+        }
 
         $page_data['denominations'] = $denominations;
         $page_data['entities'] = $grouped_entities;

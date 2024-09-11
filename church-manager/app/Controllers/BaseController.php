@@ -169,7 +169,8 @@ abstract class BaseController extends Controller
             $this->library->viewExtraData($page_data);
         }
 
-        if(array_key_exists('id',$data)){
+        // if(array_key_exists('id',$data)){
+        if (isset($page_data['result']) && is_array($page_data['result']) && array_key_exists('id', $page_data['result'])) {
             unset($data['id']);
         }
 

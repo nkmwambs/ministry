@@ -78,7 +78,31 @@ class UsersModel extends Model  implements \App\Interfaces\ModelInterface
         }
     }
 
-    
+    public function getEditData($user_id){
+        $library = new \App\Libraries\UserLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())
+            ->join('denominations','denominations.id=users.denomination_id')
+            ->where('users.id', $user_id)->first();
+        }else{
+            return $this->where('id', $user_id)->first();
+        }
+    }
+
+    public function getViewData($user_id){
+        $library = new \App\Libraries\UserLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if(!empty($viewQueryFields)){
+            return $this->select($library->setViewQueryFields())
+            ->join('denominations','denominations.id=users.denomination_id')
+            ->where('users.id', $user_id)->first();
+        }else{
+            return $this->where('id', $user_id)->first();
+        }
+    }
 
     function updateRecycleBin($data){
 
