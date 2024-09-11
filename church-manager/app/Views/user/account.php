@@ -13,19 +13,19 @@
 
         <div class="card-body">
             <div class="panel-body">
-                <form role="form" id="frm_add_public" method="post" class="form-horizontal form-groups-bordered">
+                <form role="form" id="frm_add_public" method="post" action="<?=site_url('users/profile/account/update/');?>" class="form-horizontal form-groups-bordered">
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="username">Username</label>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" name="username" id="username" value="<?=$result['username'];?>" placeholder="Edit Username">
+                                    <input type="text" class="form-control" name="username" id="username"  placeholder="Edit Username">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="biography">Biography</label>
                                 <div class="col-xs-6">
-                                    <textarea rows="2" class="form-control" name="biography" id="biography" value="<?=$result['biography'];?>" placeholder="Tell something about yourself"><?=$result['biography'];?></textarea>
+                                    <textarea rows="2" class="form-control" name="biography" id="biography"  placeholder="Tell something about yourself"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
         </div>
         <div class="card-body">
             <div class="panel-body">
-                <form role="form" id="frm_add_private" method="post" class="form-horizontal form-groups-bordered">
+                <form role="form" id="frm_add_private" method="post" action="<?=site_url('users/profile/account/update/');?>" class="form-horizontal form-groups-bordered">
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="first_name">First name</label>

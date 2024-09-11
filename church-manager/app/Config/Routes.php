@@ -47,11 +47,20 @@ $routes->post('permissions/update_permission', 'Permission::updatePermission/');
 // $routes->get('/user/getHierarchiesWithEntities', 'User::getHierarchiesWithEntities');
 $routes->post('users/store', 'User::store');
 
-$routes->get('users/profile/account', "User::account");
-$routes->post('users/profile/account', "User::updatePublicInfo");
-$routes->post('users/profile/account', "User::updatePrivateInfo");
-$routes->get('users/profile/password_reset', "User::passwordReset");
-$routes->get('users/profile/email_notifications', "User::emailNotifications");
-$routes->get('users/profile/privacy', "User::privacy");
-$routes->get('users/profile/your_data', "User::yourData");
-$routes->get('users/profile/delete_account', "User::deleteAccount");
+// $routes->get('users/profile/account', "User::account");
+$routes->get('users/profile/account/(:segment)', "User::editProfile/$1");
+$routes->post('users/profile/account/save', "User::updatePublicInfo");
+$routes->post('users/profile/account/update', "User::updatePublicInfo");
+$routes->post('users/profile/account/update', "User::updatePrivateInfo");
+
+$routes->group('users/profile', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->get('account', 'User::account');
+    $routes->get('account', 'User::editAccount');      // Display the account edit form
+    $routes->post('account/update', 'User::updatePrivateInfo');  // Handle the account update form submission
+    $routes->post('account/save', 'User::postPrivateInfo');
+    $routes->get('password_reset', "User::passwordReset");
+    $routes->get('email_notifications', "User::emailNotifications");
+    $routes->get('privacy', "User::privacy");
+    $routes->get('your_data', "User::yourData");
+    $routes->get('delete_account', "User::deleteAccount");
+});

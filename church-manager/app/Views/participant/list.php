@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('participants','add', '<?= $id; ?>')">
+        <div class='btn btn-primary' onclick="showAjaxModal('participants','add', '<?= $parent_id; ?>')">
             <?= lang('participant.add_participant'); ?>
         </div>
     </div>
@@ -26,23 +26,23 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($result as $department) { ?>
+                <?php foreach ($result as $participant) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $department['member_id']; ?> participant"><a href="<?= site_url("participants/view/" . hash_id($department['id'])); ?>"><i
+                            <span class='action-icons' title="View <?= $participant['member_id']; ?> participant"><a href="<?= site_url("participants/view/" . hash_id($participant['id'])); ?>"><i
                                         class='fa fa-search'></i></a></i></span>
-                            <span class='action-icons' title="Edit <?= $department['member_id']; ?> participant">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($department['id']); ?>')" class='fa fa-pencil'></i>
+                            <span class='action-icons' title="Edit <?= $participant['member_id']; ?> participant">
+                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($participant['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' title="Delete <?= $department['member_id']; ?> participant"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' title="Delete <?= $participant['member_id']; ?> participant"><i class='fa fa-trash'></i></span>
 
                         </td>
 
-                        <td><?= $department['member_id']; ?></td>
-                        <td><?= $department['payment_id']; ?></td>
-                        <td><?= $department['payment_code']; ?></td>
-                        <td><?= $department['registration_amount']; ?></td>
-                        <td><?= $department['status']; ?></td>
+                        <td><?= $participant['member_id']; ?></td>
+                        <td><?= $participant['payment_id']; ?></td>
+                        <td><?= $participant['payment_code']; ?></td>
+                        <td><?= $participant['registration_amount']; ?></td>
+                        <td><?= $participant['status']; ?></td>
 
                     <?php } ?>
             </tbody>

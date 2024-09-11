@@ -16,13 +16,13 @@ class Visitor extends BaseController
         $this->model = new \App\Models\VisitorsModel();
     }
     
-    public function index($id = 0): string
+    public function index($parent_id = 0): string
     {
         $visitors = [];
 
-        if($id > 0){
+        if($parent_id > 0){
             $visitors = $this->model->select('visitors.id,first_name,last_name,phone,email,gender,date_of_birth,event_id,payment_id,payment_code,registration_amount,status')
-            ->where('event_id',hash_id($id,'decode'))
+            ->where('event_id',hash_id($parent_id,'decode'))
             ->join('events','events.id=visitors.event_id')
             ->orderBy('visitors.created_at desc')
             ->findAll();
@@ -44,7 +44,7 @@ class Visitor extends BaseController
         $page_data['action'] = 'list';
         
         if ($this->request->isAJAX()) {
-            $page_data['id'] = $id;
+            $page_data['parent_id'] = $parent_id;
             return view('visitor/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);

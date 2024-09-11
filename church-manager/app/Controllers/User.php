@@ -29,6 +29,29 @@ class User extends BaseController
         return $randomString;
     }
 
+    /// Edit Controllers
+
+    public function editProfile($id): string {
+        $numeric_id = hash_id($id,'decode');
+
+        if(method_exists($this->model, 'getEditData')){
+            $data = $this->model->getEditData($numeric_id);
+        }else{
+            $data = $this->model->getOne($numeric_id);
+        }
+
+        $page_data = $this->page_data($data);
+        
+        if(method_exists($this->library,'editExtraData')){
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->editExtraData($page_data);
+        }
+
+        return view("$this->feature/profile/account", $page_data);
+    }
+
+    /// Posting Controllers
+
     public function post()
     {
         $insertId = 0;
@@ -42,11 +65,6 @@ class User extends BaseController
             'email' => 'required|valid_email',
             'gender' => 'required|min_length[4]|max_length[6]',
             'date_of_birth' => 'required',
-            'roles' => 'required',
-            // 'access_count' => 'required',
-            // 'associated_member_id' => 'required',
-            // 'permitted_entities' => 'required',
-            // 'permitted_assemblies' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -87,8 +105,6 @@ class User extends BaseController
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
 
-
-
         if ($this->request->isAJAX()) {
             $this->feature = 'user';
             $this->action = 'list';
@@ -108,6 +124,73 @@ class User extends BaseController
 
         return redirect()->to(site_url('users/view' . hash_id($insertId)));
     }
+
+    public function postPrivateInfo()
+    {
+        $insertId = 0;
+        // log_message('error', json_encode($this->request->getPost()));
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'first_name' => 'required|min_length[3]|max_length[255]',
+            'last_name' => 'required|min_length[3]|max_length[255]',
+            'phone' => 'required',
+            'email' => 'required|valid_email',
+            'gender' => 'required|min_length[4]|max_length[6]',
+            'date_of_birth' => 'required',
+        ]);
+
+        if (!$this->validate($validation->getRules())) {
+            return response()->setJSON(['errors' => $this->validator->getErrors()]);
+        }
+
+        $numeric_denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
+
+        // Generate random password with password hash in php 
+        $password = $this->generateRandomString(8);
+        $hashed_password = password_hash($this->generateRandomString(8), PASSWORD_DEFAULT);
+
+        $templateLibrary =  new \App\Libraries\TemplateLibrary();
+        $first_name = $this->request->getPost('first_name');
+        $email = $this->request->getPost('email');
+        $mailTemplate = $templateLibrary->getEmailTemplate(short_name:'new_user_account', template_vars:compact('password','first_name','email'), denomination_id: $numeric_denomination_id);
+
+        $logMailsModel = new \App\Models\LogmailsModel();
+        $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
+
+        $data = [
+            'denomination_id' => $numeric_denomination_id,
+            'first_name' => $this->request->getPost('first_name'),
+            'last_name' => $this->request->getPost('last_name'),
+            'phone' => $this->request->getPost('phone'),
+            'email' => $this->request->getPost('email'),
+            'gender' => $this->request->getPost('gender'),
+            'date_of_birth' => $this->request->getPost('date_of_birth'),
+        ];
+
+        $this->model->insert((object)$data);
+        $insertId = $this->model->getInsertID();
+
+        if ($this->request->isAJAX()) {
+            $this->feature = 'user';
+            $this->action = 'list';
+
+            $records = [];
+
+            if (method_exists($this->model, 'getAll')) {
+                $records = $this->model->getAll();
+            } else {
+                $records = $this->model->findAll();
+            }
+
+            $page_data = parent::page_data($records);
+
+            return view('user/profile/account', $page_data);
+        }
+
+        return redirect()->to(site_url('users/profile/account' . hash_id($insertId)));
+    }
+
+    /// Update Controllers
 
     public function updatePublicInfo()
     {
@@ -201,6 +284,7 @@ class User extends BaseController
 
     public function account()
     {
+        // return redirect()->to(site_url('users/profile/account' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
         return view('user/account');
     }
 
@@ -228,36 +312,4 @@ class User extends BaseController
     {
         return view('user/delete_account');
     }
-    // Method to fetch hierarchies and entities for select2
-    // public function getHierarchiesWithEntities()
-    // {
-    //     $searchTerm = $this->request->getVar('searchTerm');
-    //     // Get hierarchies from the database
-    //     $hierarchiesModel = new \App\Models\HierarchiesModel();
-    //     $hierarchies = $hierarchiesModel->like('name', $searchTerm)->findAll();
-
-    //     $data = [];
-
-    //     // Loop through hierarchies and attach entities
-    //     foreach ($hierarchies as $hierarchy) {
-    //         $entitiesModel = new \App\Models\EntitiesModel();
-    //         $entities = $entitiesModel->where('hierarchy_id', $hierarchy['id'])
-    //         ->like('name', $searchTerm)->findAll();
-
-    //         // Format the data for Select2
-    //         $data[] = [
-    //             'id' => $hierarchy['id'],
-    //             'text' => $hierarchy['name'],
-    //             'children' => array_map(function ($entity) {
-    //                 return [
-    //                     'id' => $entity['id'],
-    //                     'text' => $entity['name']
-    //                 ];
-    //             }, $entities)
-    //         ];
-    //     }
-
-    //     // Return as JSON for the AJAX response
-    //     return $this->response->setJSON($data);
-    // }
 }

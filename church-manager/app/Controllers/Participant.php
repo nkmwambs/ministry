@@ -44,7 +44,7 @@ class Participant extends BaseController
         $page_data['action'] = 'list';
         
         if ($this->request->isAJAX()) {
-            $page_data['id'] = $parent_id;
+            $page_data['parent_id'] = $parent_id;
             return view('participant/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
