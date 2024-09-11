@@ -84,8 +84,10 @@ class UsersModel extends Model  implements \App\Interfaces\ModelInterface
 
         if(!empty($viewQueryFields)){
             return $this->select($library->setViewQueryFields())
-            ->join('denominations','denominations.id=users.denomination_id')
+            ->join('denominations','denominations.id=users.denomination_id','left')
             ->where('users.id', $user_id)->first();
+            // log_message('error', json_encode($var_return));
+            // return $var_return;
         }else{
             return $this->where('id', $user_id)->first();
         }

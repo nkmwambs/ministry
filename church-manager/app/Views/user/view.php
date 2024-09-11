@@ -51,7 +51,7 @@
        const url = "<?=site_url("users/profile")?>"
 
        $.ajax({
-        url: url + '/' + $(this).data('profile'),
+        url: url + '/' + $(this).data('profile') + '/<?=$id;?>',
         type: 'GET',
         beforeSend: function(){
             $("#overlay").css("display", "block");

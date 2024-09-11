@@ -13,12 +13,12 @@
         <div class="card-body">
             <div class="panel-body">
 
-                <form class="form-horizontal form-groups-bordered">
+                <form class="form-horizontal form-groups-bordered" action="<?=site_url('users/profile/account/update/');?>">
                     <div class="form-group">
                         <div class="form-group">
                             <label class="control-label col-xs-4" for="password">Current password</label>
                             <div class="col-xs-6">
-                                <input type="password" class="form-control" id="password" name="password">
+                                <input type="password" class="form-control" id="password" name="password" value="<?= hash_id($result['password']); ?>">
                                 <small><a href="#">Forgot your password?</a></small>
                             </div>
                         </div>

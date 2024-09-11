@@ -280,17 +280,56 @@ class User extends BaseController
         return redirect()->to(site_url('users/view' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
     }
 
-    
 
     public function account()
     {
-        // return redirect()->to(site_url('users/profile/account' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
         return view('user/account');
     }
 
-    public function passwordReset()
+    public function getAccount($id)
     {
-        return view('user/password_reset');
+        // log_message('error', 'here');
+        $numeric_id = hash_id($id,'decode');
+
+        if(method_exists($this->model, 'getEditData')){
+            $data = $this->model->getEditData($numeric_id);
+        }else{
+            $data = $this->model->getOne($numeric_id);
+        }
+
+        $page_data = $this->page_data($data);
+
+        // log_message('error', json_encode($page_data));
+        
+        if(method_exists($this->library,'editExtraData')){
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->editExtraData($page_data);
+        }
+        // return redirect()->to(site_url('users/profile/account' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
+        return view('user/account', $page_data);
+    }
+
+    public function passwordReset($id)
+    {
+        // log_message('error', 'here');
+        $numeric_id = hash_id($id,'decode');
+
+        if(method_exists($this->model, 'getEditData')){
+            $data = $this->model->getEditData($numeric_id);
+        }else{
+            $data = $this->model->getOne($numeric_id);
+        }
+
+        $page_data = $this->page_data($data);
+
+        // log_message('error', json_encode($page_data));
+        
+        if(method_exists($this->library,'editExtraData')){
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->editExtraData($page_data);
+        }
+        // return redirect()->to(site_url('users/profile/account' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
+        return view('user/password_reset', $page_data);
     }
     
     public function privacy()
