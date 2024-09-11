@@ -24,12 +24,14 @@ class EventLibrary implements \App\Interfaces\LibraryInterface {
     function listExtraData(&$page_data) {
         
         $parent_id = 0;
+        $meeting_id = 0;
 
         if (session()->get('user_denomination_id')) {
             $parent_id = session()->get('user_denomination_id');
         }
 
         $page_data['parent_id'] = hash_id($parent_id,'encode');
+        $page_data['meeting_id'] = hash_id($meeting_id,'encode');
     }
 
     function addExtraData(&$page_data) {

@@ -1,3 +1,7 @@
+<?php 
+$numeric_designation_id = hash_id($designation_id, 'decode');
+?>
+
 <div class="row">
   <div class="col-md-12">
 
@@ -70,14 +74,21 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-xs-4" for="designation_id">
-              <?= lang('member.member_designation_id') ?>
-            </label>
-            <div class="col-xs-6">
-              <input type="text" class="form-control" name="designation_id" id="designation_id" placeholder="Enter Designation Name"></i>
+          <?php if (!$numeric_designation_id) { ?>
+            <div class='form-group'>
+              <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_designation_id') ?></label>
+              <div class="col-xs-6">
+                <select class="form-control" name="designation_id" id="designation_id">
+                  <option value=""><?= lang('member.select_designation') ?></option>
+                  <?php foreach ($designations as $designation) : ?>
+                    <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
             </div>
-          </div>
+          <?php } else { ?>
+            <input type="hidden" name="denomination_id" id="denomination_id" value="<?= $parent_id; ?>" />
+          <?php } ?>
 
           <div class="form-group">
             <label class="control-label col-xs-4" for="date_of_birth">

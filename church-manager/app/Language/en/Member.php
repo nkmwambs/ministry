@@ -16,6 +16,8 @@ return [
     'member_email' => 'Email',
     'member_phone' => 'Phone',
 
+    'select_designation' => 'Select Designation',
+
     'save_member' => 'Save',
     'save_and_new_member' => 'Save and New',
     'reset_member_form' => 'Reset',
