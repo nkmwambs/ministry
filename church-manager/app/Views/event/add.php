@@ -95,7 +95,7 @@ $numeric_meeting_id = hash_id($meeting_id, 'decode');
               <?= lang('event.event_end_date') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="end_date" id="end_date"
+              <input type="text" class="form-control datepicker" name="end_date" id="end_date"
                 placeholder="Enter End Date">
             </div>
           </div>

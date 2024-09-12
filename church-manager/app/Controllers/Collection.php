@@ -16,13 +16,52 @@ class Collection extends BaseController
         $this->model = new \App\Models\CollectionsModel();
     }
     
-    public function index($id = 0): string
+    // public function index($parent_id = 0): string
+    // {
+    //     $collections = [];
+
+    //     if($parent_id > 0){
+    //         $collections = $this->model->select('collections.id,return_date,period_start_date,assembly_id,period_end_date,revenue_id,amount,status,collection_reference,description,collection_method')
+    //         ->where('assembly_id',hash_id($parent_id,'decode'))
+    //         ->join('assemblies','assemblies.id=collections.assembly_id')
+    //         ->orderBy('collections.created_at desc')
+    //         ->findAll();
+    //     }else{
+    //         $collections = $this->model->select('collections.id,return_date,period_start_date,assembly_id,period_end_date,revenue_id,amount,status,collection_reference,description,collection_method')
+    //         ->join('assemblies','assemblies.id=collections.assembly_id')
+    //         ->orderBy('collections.created_at desc')
+    //         ->findAll();
+    //     }
+
+    //     log_message('error', json_encode($collections));
+       
+    //     if(!$collections){
+    //         $page_data['result'] = [];
+    //     }else{
+    //         $page_data['result'] = $collections;
+    //     }
+
+    //     $page_data['result'] = $collections;
+    //     $page_data['feature'] = 'collection';
+    //     $page_data['action'] = 'list';
+        
+    //     if ($this->request->isAJAX()) {
+    //         $page_data['parent_id'] = $parent_id;
+    //         return view('collection/list', $page_data);
+    //     }else{
+    //         $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
+    //     }
+
+    //     return view('index', $page_data);
+    // }
+
+    public function index($parent_id = 0): string
     {
         $collections = [];
 
-        if($id > 0){
+        if($parent_id > 0){
             $collections = $this->model->select('collections.id,return_date,period_start_date,assembly_id,period_end_date,revenue_id,amount,status,collection_reference,description,collection_method')
-            ->where('assembly_id',hash_id($id,'decode'))
+            ->where('assembly_id',hash_id($parent_id,'decode'))
             ->join('assemblies','assemblies.id=collections.assembly_id')
             ->orderBy('collections.created_at desc')
             ->findAll();
@@ -32,6 +71,8 @@ class Collection extends BaseController
             ->orderBy('collections.created_at desc')
             ->findAll();
         }
+
+        log_message('error', json_encode($collections));
        
         if(!$collections){
             $page_data['result'] = [];
@@ -44,7 +85,7 @@ class Collection extends BaseController
         $page_data['action'] = 'list';
         
         if ($this->request->isAJAX()) {
-            $page_data['id'] = $id;
+            $page_data['parent_id'] = $parent_id;
             return view('collection/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
@@ -52,12 +93,6 @@ class Collection extends BaseController
 
         return view('index', $page_data);
     }
-
-    public function add($id = 0): string {
-        $page_data['feature'] = 'collection';
-        $page_data['action'] = 'add';
-        return view('index', $page_data);
-    }    
 
     function post(){
         $insertId = 0;

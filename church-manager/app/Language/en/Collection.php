@@ -20,6 +20,7 @@ return [
     'collection_collection_method' => 'Collection Method',
     
     'select_collection' => 'Select Collection',
+    'select_assembly' => 'Select Assembly',
 
     'collection_information' => 'Collection Information',
 

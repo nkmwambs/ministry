@@ -22,6 +22,7 @@
                     <th><?= lang('visitor.visitor_last_name') ?></th>
                     <th><?= lang('visitor.visitor_phone') ?></th>
                     <th><?= lang('visitor.visitor_email') ?></th>
+                    <th><?= lang('visitor.visitor_gender') ?></th>
                     <th><?= lang('visitor.visitor_date_of_birth') ?></th>
                     <th><?= lang('visitor.visitor_payment_id') ?></th>
                     <th><?= lang('visitor.visitor_payment_code') ?></th>
@@ -30,28 +31,29 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($result as $collection) { ?>
+                <?php foreach ($result as $visitor) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $collection['first_name']; ?> visitor"><a href="<?= site_url("visitors/view/" . hash_id($collection['id'])); ?>"><i
-                                        class='fa fa-search'></i></a></i></span>
-                            <span class='action-icons' title="Edit <?= $collection['first_name']; ?> visitor">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($collection['id']); ?>')" class='fa fa-pencil'></i>
+                            <span class='action-icons' title="View <?= $visitor['first_name']; ?> visitor">
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($visitor['id']);?>')"></i>
                             </span>
-                            <span class='action-icons' title="Delete <?= $collection['first_name']; ?> visitor"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' title="Edit <?= $visitor['first_name']; ?> visitor">
+                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($visitor['id']); ?>')" class='fa fa-pencil'></i>
+                            </span>
+                            <span class='action-icons' title="Delete <?= $visitor['first_name']; ?> visitor"><i class='fa fa-trash'></i></span>
 
                         </td>
 
-                        <td><?= $collection['first_name']; ?></td>
-                        <td><?= $collection['last_name']; ?></td>
-                        <td><?= $collection['phone']; ?></td>
-                        <td><?= $collection['email']; ?></td>
-                        <td><?= $collection['gender']; ?></td>
-                        <td><?= $collection['date_of_birth']; ?></td>
-                        <td><?= $collection['payment_id']; ?></td>
-                        <td><?= $collection['payment_code']; ?></td>
-                        <td><?= $collection['registration_amount']; ?></td>
-                        <td><?= $collection['status']; ?></td>
+                        <td><?= $visitor['first_name']; ?></td>
+                        <td><?= $visitor['last_name']; ?></td>
+                        <td><?= $visitor['phone']; ?></td>
+                        <td><?= $visitor['email']; ?></td>
+                        <td><?= $visitor['gender']; ?></td>
+                        <td><?= $visitor['date_of_birth']; ?></td>
+                        <td><?= $visitor['payment_id']; ?></td>
+                        <td><?= $visitor['payment_code']; ?></td>
+                        <td><?= $visitor['registration_amount']; ?></td>
+                        <td><?= $visitor['status']; ?></td>
 
                     <?php } ?>
             </tbody>

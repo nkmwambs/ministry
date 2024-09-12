@@ -10,7 +10,7 @@ class CollectionsModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['id','return_date','period_start_date','period_end_date','assembly_id','revenue_id','amount','status','collection_reference','description','collection_method'];
 

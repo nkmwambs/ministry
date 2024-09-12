@@ -1,8 +1,14 @@
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('collections','add', '<?= $id; ?>')">
+        <div class='btn btn-primary' onclick="showAjaxModal('collections','add', '<?= $parent_id; ?>')">
             <?= lang('collection.add_collection'); ?>
         </div>
+    </div>
+</div>
+
+<div class='row list-alert-container hidden'>
+    <div class='col-xs-12 info'>
+
     </div>
 </div>
 
@@ -27,8 +33,9 @@
                 <?php foreach ($result as $collection) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= hash_id($collection['id']); ?> collection"><a href="<?= site_url("collections/view/" . hash_id($collection['id'])); ?>"><i
-                                        class='fa fa-search'></i></a></i></span>
+                            <span class='action-icons' title="View <?= hash_id($collection['id']); ?> collection">
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($collection['id']);?>')"></i>
+                            </span>
                             <span class='action-icons' title="Edit <?= hash_id($collection['id']); ?> collection">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($collection['id']); ?>')" class='fa fa-pencil'></i>
                             </span>

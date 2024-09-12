@@ -32,6 +32,8 @@ class Visitor extends BaseController
             ->orderBy('visitors.created_at desc')
             ->findAll();
         }
+
+        log_message('error', json_encode($visitors));
        
         if(!$visitors){
             $page_data['result'] = [];
@@ -50,12 +52,6 @@ class Visitor extends BaseController
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
         }
 
-        return view('index', $page_data);
-    }
-
-    public function add($id = 0): string {
-        $page_data['feature'] = 'visitor';
-        $page_data['action'] = 'add';
         return view('index', $page_data);
     }
 

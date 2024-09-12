@@ -29,8 +29,9 @@
                 <?php foreach ($result as $participant) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $participant['member_id']; ?> participant"><a href="<?= site_url("participants/view/" . hash_id($participant['id'])); ?>"><i
-                                        class='fa fa-search'></i></a></i></span>
+                            <span class='action-icons' title="View <?= $participant['member_id']; ?> participant">
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($participant['id']);?>')"></i>
+                            </span>
                             <span class='action-icons' title="Edit <?= $participant['member_id']; ?> participant">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($participant['id']); ?>')" class='fa fa-pencil'></i>
                             </span>

@@ -1,3 +1,7 @@
+<?php 
+// log_message('error',json_encode($result));
+?>
+
 <div class="row">
     <div class="col-xs-12">
         <div class="page-title"><i class='entypo-bell'></i>

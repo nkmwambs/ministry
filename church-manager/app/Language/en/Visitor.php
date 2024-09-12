@@ -12,7 +12,7 @@ return [
     'visitor_phone' => 'Phone',
     'visitor_email' => 'Email',
     'visitor_gender' => 'Gender',
-    'visitor_date_of_birth' => 'Date of Birth',
+    'visitor_date_of_birth' => 'D.O.B',
     'visitor_event_id' => 'Event Name',
     'visitor_payment_id' => 'Payment Id',
     'visitor_payment_code' => 'Payment Code',

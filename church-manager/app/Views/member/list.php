@@ -6,6 +6,12 @@
     </div>
 </div>
 
+<div class='row list-alert-container hidden'>
+    <div class='col-xs-12 info'>
+
+    </div>
+</div>
+
 <div class="row">
     <div class="col-xs-12">
         <table class="table table-striped datatable">
@@ -29,7 +35,6 @@
                                 <!-- <a href="<?= site_url("members/view/" . hash_id($member['id'])); ?>">
                                 <i class='fa fa-search'></i> -->
                                 <i class='fa fa-search' onclick="showAjaxListModal('<?= plural($feature); ?>','view', '<?= hash_id($member['id']); ?>')"></i>
-                                </a>
                             </span>
                             <span class='action-icons' title="Edit <?= $member['first_name']; ?> member">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($member['id']); ?>')" class='fa fa-pencil'></i>
