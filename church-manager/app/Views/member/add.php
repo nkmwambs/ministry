@@ -87,7 +87,7 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
               </div>
             </div>
           <?php } else { ?>
-            <input type="hidden" name="denomination_id" id="denomination_id" value="<?= $parent_id; ?>" />
+            <input type="hidden" name="designation_id" id="designation_id" value="<?= $parent_id; ?>" />
           <?php } ?>
 
           <div class="form-group">

@@ -53,13 +53,14 @@ class Participant extends BaseController
         return view('index', $page_data);
     }
 
-    public function add($parent_id = 0): string {
-        $page_data['feature'] = 'participant';
-        $page_data['action'] = 'add';
-        return view('index', $page_data);
-    }    
+    // public function add($parent_id = 0): string {
+    //     $page_data['feature'] = 'participant';
+    //     $page_data['action'] = 'add';
+    //     return view('index', $page_data);
+    // }    
 
-    function post(){
+    public function post()
+    {
         $insertId = 0;
 
         $validation = \Config\Services::validation();
@@ -73,14 +74,9 @@ class Participant extends BaseController
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
-        $hashed_event_id = $this->request->getPost('event_id');
-        $event_id = hash_id($hashed_event_id,'decode');
-        // $member_id = hash_id($this->request->getPost('member_id'), 'decode');
-        // $payment_id = hash_id($this->request->getPost('payment_id'), 'decode');
-
         $data = [
             'member_id' => $this->request->getPost('member_id'),
-            'event_id' => $event_id,
+            'event_id' => $this->request->getPost('event_id'),
             'payment_id' => $this->request->getPost('payment_id'),
             'payment_code' => $this->request->getPost('payment_code'),
             'registration_amount' => $this->request->getPost('registration_amount'),
@@ -90,15 +86,20 @@ class Participant extends BaseController
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
 
-        $this->parent_id = $hashed_event_id;
-
         if($this->request->isAJAX()){
             $this->feature = 'participant';
             $this->action = 'list';
-            $records = $this->model->orderBy("created_at desc")->where('event_id', $event_id)->findAll();
-            $page_data = parent::page_data($records, $hashed_event_id);
+            $records = [];
+
+            if (method_exists($this->model, 'getAll')) {
+                $records = $this->model->getAll();
+            } else {
+                $records = $this->model->findAll();
+            }
+            // $records = $this->model->orderBy("created_at desc")->where('event_id', $event_id)->findAll();
+            // $page_data = parent::page_data($records, $hashed_event_id);
             // $page_data['id'] = hash_id($event_id,'encode');
-            return view("participant/list", $page_data);
+            return view("participant/list", parent::page_data($records));
         }
 
         return redirect()->to(site_url("participants/view/".hash_id($insertId)));

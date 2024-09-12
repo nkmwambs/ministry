@@ -22,13 +22,13 @@ class Member extends BaseController
 
         if($parent_id > 0){
             $members = $this->model->select('members.id,first_name,last_name,assembly_id,member_number,designation_id,date_of_birth,email,phone')
-            ->where('assembly_id',hash_id($parent_id,'decode'))
-            ->join('assemblies','assemblies.id=members.assembly_id')
+            ->where('assembly_id',hash_id($parent_id,'decode') )
+            ->join('assemblies','assemblies.id=members.assembly_id','left')
             ->orderBy('members.created_at desc')
             ->findAll();
         }else{
             $members = $this->model->select('members.id,first_name,last_name,assembly_id,member_number,designation_id,date_of_birth,email,phone')
-            ->join('assemblies','assemblies.id=members.assembly_id')
+            ->join('assemblies','assemblies.id=members.assembly_id','left')
             ->orderBy('members.created_at desc')
             ->findAll();
         }

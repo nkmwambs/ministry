@@ -101,7 +101,12 @@
               <?= lang('participant.participant_status') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="status" id="status" placeholder="Enter Status"></i>
+              <select class="form-control select_fields" name="status" id="status">
+                <option value="">Select Status</option>
+                <option value="registered">Registered</option>
+                <option value="attended">Attended</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
             </div>
           </div>
 
