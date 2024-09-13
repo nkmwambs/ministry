@@ -18,43 +18,6 @@ class Designation extends BaseController
 
     }
 
-    
-    
-
-    // public function index($id = 0): string {
-    //     $designations = [];
-
-    //     if ($id > 0) {
-    //         $designations = $this->model->select('designation.id,name,denomination_id',)
-    //         ->where('denomination_id', $id)
-    //         ->join('denominations as parent', 'parent.id = designation.denomination_id', 'LEFT')
-    //         ->orderBy('designation.created_at','desc')
-    //         ->findAll();
-    //     } else {
-    //         $departments = $this->model->select('designation.id,name,denomination_id')
-    //         ->join('denominations as parent', 'parent.id = designation.denomination_id')
-    //         ->orderBy('designations.created_at','desc')
-    //         ->findAll();
-    //     }
-
-    //     if (!$designations) {
-    //         $page_data['result'] = [];
-    //     } else {
-    //         $page_data['result'] = $designations;
-    //     }
-
-    //     $page_data['result'] = $designations;
-    //     $page_data['feature'] = 'designations';
-    //     $page_data['action'] = 'list';
-
-    //     if ($this->request->isAJAX()) {
-    //         return view('department/list');
-    //     } else {
-    //         $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
-    //     }
-
-    //     return view('index', $page_data);
-    // }
     public function post() {
         $insertId = 0;
 

@@ -43,18 +43,6 @@ class DesignationsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-        // public function get_designations() {
-        //     $this->model->select('designation.id, designation.name as designation_name, denomination.name as denomination_name, hierarchy.name as hierarchy_name, department.name as department_name');
-        //     $this->model->from('designation');
-        //     $this->model->join('denomination', 'designation.denomination_id = denomination.id', 'left');
-        //     $this->model->join('hierarchy', 'designation.hierarchy_id = hierarchy.id', 'left');
-        //     $this->model->join('department', 'designation.department_id = department.id', 'left');
-        //     $query = $this->model->getAll();
-    
-        //     return $query->result_array();
-        // }
-    
     
     public function getAll() {
 
