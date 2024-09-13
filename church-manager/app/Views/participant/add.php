@@ -19,8 +19,24 @@
               
             </div>
           </div>
+
+          <?php if (!$numeric_member_id) { ?>
+            <div class='form-group'>
+              <label for="member_id" class="control-label col-xs-4"><?= lang('participant.participant_payment_id') ?></label>
+              <div class="col-xs-6">
+                <select class="form-control" name="member_id" id="member_id">
+                  <option value=""><?= lang('participant.select_member') ?></option>
+                  <?php foreach ($members as $member) : ?>
+                    <option value="<?php echo $member['id']; ?>"><?php echo $member['name']; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+          <?php } else { ?>
+            <input type="hidden" name="member_id" id="member_id" value="<?= $member_id; ?>" />
+          <?php } ?>
         
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label class="control-label col-xs-4" for="member_id">
               <?= lang('participant.participant_member_id') ?>
             </label>
@@ -37,7 +53,7 @@
                 ?> -->
               </select>
             </div>
-          </div>
+          </div> -->
               
           <?php 
             if(isset($id)){
@@ -58,25 +74,22 @@
           <?php 
             }
           ?>
-          
-          <div class="form-group">
-            <label class="control-label col-xs-4" for="payment_id">
-              <?= lang('participant.participant_payment_id') ?>
-            </label>
-            <div class="col-xs-6">
-              <select class="form-control" name="payment_id" id="payment_id">
-                <option value=""><?= lang('participant.select_payment_name') ?></option>
-                <!-- <?php 
-                  if(isset($parent_entities)){
-                    foreach($parent_entities as $entity){?>
-                      <option value = "<?=$entity['id'];?>"><?=$entity['member_id'];?></option>
-                <?php 
-                    }
-                  }
-                ?> -->
-              </select>
+
+          <?php if (!$numeric_payment_id) { ?>
+            <div class="form-group">
+              <label for="payment_id" class="control-label col-xs-4"><?= lang('participant.participant_payment_id') ?></label>
+              <div class="col-xs-6">
+                <select class="form-control" name="payment_id" id="payment_id">
+                  <option value=""><?= lang('participant.select_payment') ?></option>
+                  <?php foreach ($payments as $payment) : ?>
+                    <option value="<?php echo $payment['id']; ?>"><?php echo $payment['name']; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
             </div>
-          </div>
+          <?php } else { ?>
+            <input type="hidden" name="payment_id" id="payment_id" value="<?= $payment_id; ?>" />
+          <?php } ?>
 
           <div class="form-group">
             <label class="control-label col-xs-4" for="payment_code">

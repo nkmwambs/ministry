@@ -42,7 +42,7 @@ class VisitorLibrary implements \App\Interfaces\LibraryInterface {
     function addExtraData(&$page_data) {
         $parent_id = 0;
         $event_id = 0;
-        // $payment_id = 0;
+        $payment_id = 0;
 
         if (session()->get('user_denomination_id')) {
             $parent_id = session()->get('user_denomination_id');
@@ -54,19 +54,22 @@ class VisitorLibrary implements \App\Interfaces\LibraryInterface {
         $eventsModel = new \App\Models\EventsModel();
         $events = $eventsModel->findAll();
 
-        // $paymentsModel = new \App\Models\PaymentsModel();
-        // $payments = $paymentsModel->findAll();
+        $paymentsModel = new \App\Models\PaymentsModel();
+        $payments = $paymentsModel->findAll();
 
         $page_data['denominations'] = $denominations;
         $page_data['events'] = $events;
+        $page_data['payments'] = $payments;
 
         $page_data['parent_id'] = hash_id($parent_id,'encode');
         $page_data['event_id'] = hash_id($event_id, 'encode');
+        $page_data['payment_id'] = hash_id($payment_id, 'encode');
     }
 
     function editExtraData (&$page_data) {
         $numeric_denomination_id = 0;
         $numeric_event_id = 0;
+        $numeric_payment_id = 0;
 
         if (session()->get('user_denomination_id')) {
             $numeric_denomination_id = session()->get('user_denomination_id');
@@ -74,6 +77,7 @@ class VisitorLibrary implements \App\Interfaces\LibraryInterface {
 
         $page_data['numeric_denomination_id'] = $numeric_denomination_id;
         $page_data['numeric_event_id'] = $numeric_event_id;
+        $page_data['numeric_payment_id'] = $numeric_payment_id;
         
         $denominationsModel = new \App\Models\DenominationsModel();
         $denominations = $denominationsModel->findAll();
@@ -81,10 +85,11 @@ class VisitorLibrary implements \App\Interfaces\LibraryInterface {
         $eventsModel = new \App\Models\EventsModel();
         $events = $eventsModel->findAll();
 
-        // $paymentsModel = new \App\Models\PaymentsModel();
-        // $payments = $paymentsModel->findAll();
+        $paymentsModel = new \App\Models\PaymentsModel();
+        $payments = $paymentsModel->findAll();
 
         $page_data['denominations'] = $denominations;
         $page_data['events'] = $events;
+        $page_data['payments'] = $payments;
     }
 }

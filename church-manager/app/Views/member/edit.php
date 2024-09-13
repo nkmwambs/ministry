@@ -51,14 +51,22 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-xs-4" for="designation_id">
-                            <?= lang('member.member_designation_id') ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" name="designation_id" id="designation_id" value="<?= $result['designation_id']; ?>" placeholder="Enter Designation Name">
+                    <?php if (!$numeric_designation_id) { ?>
+                        <div class='form-group'>
+                            <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_designation_id') ?></label>
+                            <div class="col-xs-6">
+                                <select class="form-control" name="designation_id" id="designation_id">
+                                    <option value="<?= $result['name'] ?>"><?= $result['name'] ?></option>
+                                    <?php foreach ($designations as $designation) : ?>
+                                        <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    <?php } else { ?>
+                        <input type="hidden" name="designation_id" id="designation_id" value="<?= $designation_id; ?>" />
+                    <?php } ?>
+
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="date_of_birth">
