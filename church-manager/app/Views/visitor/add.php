@@ -75,12 +75,12 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
             </div>
 
             <?php if (!$numeric_payment_id) { ?>
-              <label for="payment_id" class="control-label col-xs-4"><?= lang('visitor.visitor_payment_id') ?></label>
-              <div class="col-xs-6">
+              <label for="payment_id" class="control-label col-xs-2"><?= lang('visitor.visitor_payment_id') ?></label>
+              <div class="col-xs-3">
                 <select class="form-control" name="payment_id" id="payment_id">
                   <option value=""><?= lang('visitor.select_payment') ?></option>
                   <?php foreach ($payments as $payment) : ?>
-                    <option value="<?php echo $payment['id']; ?>"><?php echo $payment['name']; ?></option>
+                    <option value="<?php echo $payment['id']; ?>"><?php echo $payment['payment_code']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>

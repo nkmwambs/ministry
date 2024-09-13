@@ -68,17 +68,17 @@ class MeetingsModel extends Model
         }
     }
 
-    public function getEditData($department_id){
+    public function getEditData($meeting_id){
         $library = new \App\Libraries\MeetingLibrary();
         $viewQueryFields = $library->setViewQueryFields();
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
                 ->join('denominations', 'denominations.id = meetings.denomination_id')
-                ->where('meetings.id', $department_id)
+                ->where('meetings.id', $meeting_id)
                 ->first();
         } else {
-            return $this->where('meetings.id')->first();
+            return $this->where('id', $meeting_id)->first();
         }
     }
 

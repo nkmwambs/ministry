@@ -66,6 +66,34 @@ class CollectionsModel extends Model
         }
     }
 
+    public function getEditData($collection_id){
+        $library = new \App\Libraries\CollectionLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())
+                ->join('denominations', 'denominations.id = collections.denomination_id')
+                ->where('collections.id', $collection_id)
+                ->first();
+        } else {
+            return $this->where('id', $collection_id)->first();
+        }
+    }
+
+    public function getViewData($collection_id){
+        $library = new \App\Libraries\CollectionLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields()) 
+                ->join('denominations', 'denominations.id = collections.denomination_id')
+                ->where('collections.id', $collection_id)
+                ->first();
+        } else {
+            return $this->where('id', $collection_id)->first();
+        }
+    }
+
     function updateRecycleBin($data){
 
         $trashModel = new \App\Models\TrashesModel();

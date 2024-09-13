@@ -43,17 +43,12 @@
                 <tr>
                     <td>
                         <span class='action-icons'>
-                            <a href="<?= site_url("assemblies/view/".hash_id($assembly['id'])); ?>"><i
-                                    class='fa fa-search'></i></a></i>
+                            <a href="<?= site_url("assemblies/view/".hash_id($assembly['id'])); ?>"><i class='fa fa-search'></i></a></i>
                         </span>
                         <span class='action-icons'>
-                            <i style="cursor:pointer"
-                                onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($assembly['id']);?>')"
-                                class='fa fa-pencil'></i>
+                            <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($assembly['id']);?>')" class='fa fa-pencil'></i>
                         </span>
-                        <span class='action-icons'>
-                            <i class='fa fa-trash'></i>
-                        </span>
+                        <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($assembly['id']); ?>')" title="Delete <?= $assembly['id']; ?> participant"><i class='fa fa-trash'></i></span>
                     </td>
 
                     <td><?=$assembly['name'];?></td>

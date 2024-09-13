@@ -66,6 +66,34 @@ class MinistersModel extends Model  implements \App\Interfaces\ModelInterface
         }
     }
 
+    public function getEditData($minister_id){
+        $library = new \App\Libraries\MinisterLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())
+                ->join('denominations', 'denominations.id = ministers.denomination_id')
+                ->where('ministers.id', $minister_id)
+                ->first();
+        } else {
+            return $this->where('id', $minister_id)->first();
+        }
+    }
+
+    public function getViewData($minister_id){
+        $library = new \App\Libraries\MinisterLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields()) 
+                ->join('denominations', 'denominations.id = ministers.denomination_id')
+                ->where('ministers.id', $minister_id)
+                ->first();
+        } else {
+            return $this->where('id', $minister_id)->first();
+        }
+    }
+
     function updateRecycleBin($data){
 
         $trashModel = new \App\Models\TrashesModel();

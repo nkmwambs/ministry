@@ -66,6 +66,34 @@ class ParticipantsModel extends Model
         }
     }
 
+    public function getEditData($participant_id){
+        $library = new \App\Libraries\ParticipantLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())
+                ->join('events', 'events.id = participants.event_id')
+                ->where('participants.id', $participant_id)
+                ->first();
+        } else {
+            return $this->where('id', $participant_id)->first();
+        }
+    }
+
+    public function getViewData($participant_id){
+        $library = new \App\Libraries\ParticipantLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields()) 
+                ->join('events', 'events.id = participants.event_id')
+                ->where('participants.id', $participant_id)
+                ->first();
+        } else {
+            return $this->where('id', $participant_id)->first();
+        }
+    }
+
     public function getParticipantsByEventId($event_id)
     {
         return $this->where('event_id', $event_id)->findAll();

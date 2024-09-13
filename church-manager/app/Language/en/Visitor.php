@@ -18,7 +18,9 @@ return [
     'visitor_payment_code' => 'Payment Code',
     'visitor_registration_amount' => 'Reg Amount',
     'visitor_status' => 'Status',
+
     'select_visitor' => 'Select Visitor',
+    'select_payment' => 'Select Payment',
 
     'save_visitor' => 'Save',
     'save_and_new_visitor' => 'Save and New',

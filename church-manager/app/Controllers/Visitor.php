@@ -33,7 +33,7 @@ class Visitor extends BaseController
             ->findAll();
         }
 
-        log_message('error', json_encode($visitors));
+        // log_message('error', json_encode($visitors));
        
         if(!$visitors){
             $page_data['result'] = [];

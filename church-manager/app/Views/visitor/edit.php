@@ -1,5 +1,5 @@
 <?php
-$numeric_payment_id = hash_id($payment_id, 'decode');
+// $numeric_payment_id = hash_id($payment_id, 'decode');
 ?>
 
 <div class="row">
@@ -97,40 +97,31 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
                                 placeholder="Edit Payment Code">
                         </div>
 
-                        <?php if (!$numeric_payment_id) { ?>
-                            <label for="payment_id" class="control-label col-xs-4"><?= lang('visitor.visitor_payment_id') ?></label>
-                            <div class="col-xs-6">
-                                <select class="form-control" name="payment_id" id="payment_id">
-                                    <option value="<?= $result['payment_id'] ?>"><?= $result['payment_id'] ?></option>
-                                    <?php foreach ($payments as $payment) : ?>
-                                        <option value="<?php echo $payment['id']; ?>"><?php echo $payment['name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                    </div>
-                <?php } else { ?>
-                    <input type="hidden" name="payment_id" id="payment_id" value="<?= $payment_id; ?>" />
-                <?php } ?>
-
-                <div class="form-group">
-                    <label class="control-label col-xs-2" for="registration_amount">
-                        <?= lang('visitor.visitor_registration_amount') ?>
-                    </label>
-                    <div class="col-xs-3">
-                        <input type="text" class="form-control" name="registration_amount" value="<?= $result['registration_amount']; ?>" id="registration_amount"
-                            placeholder="Edit Registration Amount">
+                        <label for="payment_id" class="control-label col-xs-2"><?= lang('visitor.visitor_payment_id') ?></label>
+                        <div class="col-xs-3">
+                            <input class="form-control" name="payment_id" id="payment_id" value="<?= $result['payment_id']; ?>" placeholder="Enter Payment">
+                        </div>
                     </div>
 
-                    <label class="control-label col-xs-2" for="status"><?= lang('visitor.visitor_status') ?></label>
-                    <div class="col-xs-3">
-                        <select type="text" class="form-control" name="status" id="status">
-                            <option value="<?= $result['status'] ?>"><?= $result['status'] ?></option>
-                            <option value="registered">Registered</option>
-                            <option value="attended">Attended</option>
-                            <option value="cancelled">Cancelled</option>
-                        </select>
+                    <div class="form-group">
+                        <label class="control-label col-xs-2" for="registration_amount">
+                            <?= lang('visitor.visitor_registration_amount') ?>
+                        </label>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" name="registration_amount" value="<?= $result['registration_amount']; ?>" id="registration_amount"
+                                placeholder="Edit Registration Amount">
+                        </div>
+
+                        <label class="control-label col-xs-2" for="status"><?= lang('visitor.visitor_status') ?></label>
+                        <div class="col-xs-3">
+                            <select type="text" class="form-control" name="status" id="status">
+                                <option value="<?= $result['status'] ?>"><?= $result['status'] ?></option>
+                                <option value="registered">Registered</option>
+                                <option value="attended">Attended</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
                 </form>
             </div>

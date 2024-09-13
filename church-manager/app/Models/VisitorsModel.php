@@ -66,6 +66,34 @@ class VisitorsModel extends Model
         }
     }
 
+    public function getEditData($visitor_id){
+        $library = new \App\Libraries\VisitorLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())
+                // ->join('denominations', 'denominations.id = visitors.denomination_id')
+                ->where('visitors.id', $visitor_id)
+                ->first();
+        } else {
+            return $this->where('id', $visitor_id)->first();
+        }
+    }
+
+    public function getViewData($visitor_id){
+        $library = new \App\Libraries\VisitorLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields()) 
+                // ->join('denominations', 'denominations.id = visitors.denomination_id')
+                ->where('visitors.id', $visitor_id)
+                ->first();
+        } else {
+            return $this->where('id', $visitor_id)->first();
+        }
+    }
+
     public function getVisitorsByEventId($event_id)
     {
         return $this->where('event_id', $event_id)->findAll();

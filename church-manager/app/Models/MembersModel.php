@@ -66,6 +66,34 @@ class MembersModel extends Model
         }
     }
 
+    public function getEditData($member_id){
+        $library = new \App\Libraries\MemberLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())
+                ->join('denominations', 'denominations.id = members.denomination_id')
+                ->where('members.id', $member_id)
+                ->first();
+        } else {
+            return $this->where('id', $member_id)->first();
+        }
+    }
+
+    public function getViewData($member_id){
+        $library = new \App\Libraries\MemberLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields()) 
+                ->join('denominations', 'denominations.id = members.denomination_id')
+                ->where('members.id', $member_id)
+                ->first();
+        } else {
+            return $this->where('id', $member_id)->first();
+        }
+    }
+
     public function getMembersByAssemblyId($assembly_id)
     {
         return $this->where('assembly_id', $assembly_id)->findAll();
