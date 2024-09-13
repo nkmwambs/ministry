@@ -90,9 +90,9 @@
                             <label class="control-label col-xs-4" for="gender">Gender</label>
                             <div class="col-xs-6">
                                 <select id="gender" name="gender" class="form-control">
-                                    <option value="<?=$result['gender'];?>"><?=$result['gender'];?></option>
-                                    <option value="yes" selected>Yes</option>
-                                    <option value="no" selected>No</option>
+                                    <option value="<?=$result['gender'];?>"><?= ucfirst($result['gender']);?></option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
                                 </select>
                             </div>
                         </div>
