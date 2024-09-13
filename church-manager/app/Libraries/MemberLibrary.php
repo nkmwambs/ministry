@@ -14,12 +14,20 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['id','first_name','last_name','assembly_id','member_number','designation_id','date_of_birth','email','phone','is_active'];
+        $fields = [
+            'members.id','first_name','last_name',
+            'assembly_id','member_number','designation_id',
+            'date_of_birth','members.email','members.phone','members.is_active'
+        ];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['id','first_name','last_name','assembly_id','member_number','designation_id','date_of_birth','email','phone','is_active'];
+        $fields = [
+            'members.id','first_name','last_name',
+            'assembly_id','member_number','designation_id',
+            'date_of_birth','members.email','members.phone','members.is_active'
+        ];
         return $fields;
     }
 

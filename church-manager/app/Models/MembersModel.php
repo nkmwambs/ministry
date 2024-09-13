@@ -72,7 +72,7 @@ class MembersModel extends Model
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
-                ->join('denominations', 'denominations.id = members.denomination_id')
+                ->join('assemblies', 'assemblies.id = members.assembly_id')
                 ->where('members.id', $member_id)
                 ->first();
         } else {
@@ -86,7 +86,7 @@ class MembersModel extends Model
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields()) 
-                ->join('denominations', 'denominations.id = members.denomination_id')
+                ->join('assemblies', 'assemblies.id = members.assembly_id')
                 ->where('members.id', $member_id)
                 ->first();
         } else {

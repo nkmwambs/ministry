@@ -72,7 +72,7 @@ class MinistersModel extends Model  implements \App\Interfaces\ModelInterface
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
-                ->join('denominations', 'denominations.id = ministers.denomination_id')
+                ->join('assemblies', 'assemblies.id = ministers.assembly_id')
                 ->where('ministers.id', $minister_id)
                 ->first();
         } else {
@@ -86,7 +86,7 @@ class MinistersModel extends Model  implements \App\Interfaces\ModelInterface
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields()) 
-                ->join('denominations', 'denominations.id = ministers.denomination_id')
+                ->join('assemblies', 'assemblies.id = ministers.assembly_id')
                 ->where('ministers.id', $minister_id)
                 ->first();
         } else {

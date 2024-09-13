@@ -51,7 +51,7 @@
                 <span class='action-icons'>
                   <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($denomination['id']);?>')" class='fa fa-pencil'></i>
                 </span>
-                <span class='action-icons' title="Delete <?= $denomination['id']; ?> user"><i class='fa fa-trash'></i></span>
+                <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($denomination['id']); ?>')" title="Delete <?= $denomination['id']; ?> participant"><i class='fa fa-trash'></i></span>
               </td>
 
               <td><?=$denomination['name'];?></td>

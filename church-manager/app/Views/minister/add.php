@@ -112,7 +112,11 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
               <?= lang('minister.minister_is_active') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="is_active" id="is_active" placeholder="Enter Active Status">
+              <select type="text" class="form-control" name="is_active" id="is_active">
+                <option value="" selected><?= lang('minister.select_status') ?></option>
+                <option value="yes">Yes</option>
+                <option value="yes">No</option>
+              </select>
             </div>
           </div>
         </form>

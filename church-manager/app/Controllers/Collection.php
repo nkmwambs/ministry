@@ -21,7 +21,7 @@ class Collection extends BaseController
         $collections = [];
 
         if($parent_id > 0){
-            $collections = $this->model->select('collections.id,return_date,period_start_date,assembly_id,period_end_date,revenue_id,amount,status,collection_reference,description,collection_method')
+            $collections = $this->model->select('collections.id,return_date,period_start_date,period_end_date,assembly_id,revenue_id,amount,status,collection_reference,description,collection_method')
             ->where('assembly_id',hash_id($parent_id,'decode'))
             ->join('assemblies','assemblies.id=collections.assembly_id')
             ->orderBy('collections.created_at desc')

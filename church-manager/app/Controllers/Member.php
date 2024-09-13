@@ -92,7 +92,8 @@ class Member extends BaseController
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
-        $assembly_id = hash_id($this->request->getPost('assembly_id'),'decode');
+        $hashed_assembly_id = $this->request->getPost('assembly_id');
+        $assembly_id = hash_id($hashed_assembly_id, 'decode');
 
         $data = [
             'first_name' => $this->request->getPost('first_name'),
@@ -112,7 +113,8 @@ class Member extends BaseController
             $this->feature = 'member';
             $this->action = 'list';
             $records = $this->model->orderBy("created_at desc")->where('assembly_id', $assembly_id)->findAll();
-            $page_data = parent::page_data($records);
+
+            $page_data = parent::page_data($records, $hashed_assembly_id);
             $page_data['parent_id'] = hash_id($assembly_id,'encode');
             return view("member/list", $page_data);
         }

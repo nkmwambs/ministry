@@ -1,6 +1,6 @@
 <?php
-$numeric_assembly_id = hash_id($designation_id, 'decode');
-$numeric_designation_id = hash_id($designation_id, 'decode');
+// $numeric_assembly_id = hash_id($designation_id, 'decode');
+// $numeric_designation_id = hash_id($designation_id, 'decode');
 ?>
 
 <div class="row">
@@ -50,46 +50,34 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="number">
+                        <label class="control-label col-xs-4" for="minister_number">
                             <?= lang('minister.minister_number') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="number" id="number" value="<?= $result['number']; ?>"
+                            <input type="text" class="form-control" name="minister_number" id="minister_number" value="<?= $result['minister_number']; ?>"
                                 placeholder="Edit Number">
                         </div>
                     </div>
 
-                    <?php if (!$numeric_assembly_id) { ?>
-                        <div class='form-group'>
-                            <label for="assembly_id" class="control-label col-xs-4"><?= lang('minister.minister_assembly_id') ?></label>
-                            <div class="col-xs-6">
-                                <select class="form-control" name="assembly_id" id="assembly_id">
-                                    <option value="<?= $result['assembly_id'] ?>"><?= $result['assembly_id'] ?></option>
-                                    <?php foreach ($assemblies as $assembly) : ?>
-                                        <option value="<?php echo $assembly['id']; ?>"><?php echo $assembly['name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                    <?php } else { ?>
-                        <input type="hidden" name="assembly_id" id="assembly_id" value="<?= $assembly_id; ?>" />
-                    <?php } ?>
+                    <div class='form-group'>
+                        <label for="assembly_id" class="control-label col-xs-4"><?= lang('minister.minister_assembly_id') ?></label>
+                        <div class="col-xs-6">
+                            <select class="form-control" name="assembly_id" id="assembly_id">
+                                <option value="<?= $result['assembly_id'] ?>"><?= $result['assembly_id'] ?></option>
 
-                    <?php if (!$numeric_designation_id) { ?>
-                        <div class='form-group'>
-                            <label for="designation_id" class="control-label col-xs-4"><?= lang('minister.minister_designation_id') ?></label>
-                            <div class="col-xs-6">
-                                <select class="form-control" name="designation_id" id="designation_id">
-                                    <option value="<?= $result['designation_id'] ?>"><?= $result['designation_id'] ?></option>
-                                    <?php foreach ($designations as $designation) : ?>
-                                        <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
+                            </select>
                         </div>
-                    <?php } else { ?>
-                        <input type="hidden" name="designation_id" id="designation_id" value="<?= $designation_id; ?>" />
-                    <?php } ?>
+                    </div>
+
+                    <div class='form-group'>
+                        <label for="designation_id" class="control-label col-xs-4"><?= lang('minister.minister_designation_id') ?></label>
+                        <div class="col-xs-6">
+                            <select class="form-control" name="designation_id" id="designation_id">
+                                <option value="<?= $result['designation_id'] ?>"><?= $result['designation_id'] ?></option>
+
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="phone">

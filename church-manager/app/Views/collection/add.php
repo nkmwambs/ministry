@@ -64,7 +64,23 @@
           
             <label class="control-label col-xs-2" for="collection_method"><?= lang('collection.collection_collection_method') ?></label>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="collection_method" id="collection_method" placeholder="Enter Collection Method">
+              <select type="text" class="form-control" name="collection_method" id="collection_method">
+                <option value="" selected>Select Collection Method</option>
+                <option value="bank">Bank</option>
+                <option value="mobile">Mobile</option>
+                <option value="in-person">In Person</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-xs-4" for="status"><?= lang('collection.collection_status') ?></label>
+            <div class="col-xs-6">
+              <select type="text" class="form-control" name="status" id="status">
+                <option value="" selected>Select Status</option>
+                <option value="approved">Approved</option>
+                <option value="submitted">Submitted</option>
+              </select>
             </div>
           </div>
 

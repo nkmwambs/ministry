@@ -1,5 +1,5 @@
-<?php 
-$numeric_designation_id = hash_id($designation_id, 'decode');
+<?php
+// $numeric_designation_id = hash_id($designation_id, 'decode');
 ?>
 
 <div class="row">
@@ -55,22 +55,15 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
                         </div>
                     </div>
 
-                    <?php if (!$numeric_designation_id) { ?>
-                        <div class='form-group'>
-                            <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_designation_id') ?></label>
-                            <div class="col-xs-6">
-                                <select class="form-control" name="designation_id" id="designation_id">
-                                    <option value="<?= $result['designation_id'] ?>"><?= $result['designation_id'] ?></option>
-                                    <?php foreach ($designations as $designation) : ?>
-                                        <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                    <?php } else { ?>
-                        <input type="hidden" name="designation_id" id="designation_id" value="<?= $designation_id; ?>" />
-                    <?php } ?>
+                    <div class='form-group'>
+                        <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_designation_id') ?></label>
+                        <div class="col-xs-6">
+                            <select class="form-control" name="designation_id" id="designation_id">
+                                <option value="<?= $result['designation_id'] ?>"><?= $result['designation_id'] ?></option>
 
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="date_of_birth">
