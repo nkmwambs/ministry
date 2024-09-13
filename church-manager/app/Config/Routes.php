@@ -61,6 +61,8 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
     $routes->post('account/save', 'User::postPrivateInfo');
     $routes->get('password_reset/(:segment)', "User::passwordReset/$1");
     $routes->get('email_notifications/(:segment)', "User::emailNotifications/$1");
+    $routes->get('pending_tasks/(:segment)', 'User::pendingTasks');
+    $routes->get('widgets/(:segment)', 'User::widgets');
     $routes->get('privacy/(:segment)', "User::privacy/$1");
     $routes->get('your_data/(:segment)', "User::yourData/$1");
     $routes->get('delete_account/(:segment)', "User::deleteAccount/$1");

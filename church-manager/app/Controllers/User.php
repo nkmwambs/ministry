@@ -342,6 +342,16 @@ class User extends BaseController
         return view('user/email_notification');
     }
 
+    public function pendingTasks()
+    {
+        return view('user/pending_tasks');
+    }
+
+    public function widgets() 
+    {
+        return view('user/widget');
+    }
+
     public function yourData()
     {
         return view('user/your_data');

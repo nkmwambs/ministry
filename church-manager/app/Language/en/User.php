@@ -17,6 +17,7 @@ return [
     'activity' => 'Activity',
     'application' => 'Application',
     'privacy' => 'Privacy and Safety',
+    'widgets' => 'Widgets',
     'your_data' => 'Your Data',
     'delete_account' => 'Delete Account'
 ];

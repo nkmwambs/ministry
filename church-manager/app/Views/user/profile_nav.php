@@ -39,10 +39,6 @@
             <i class="fa fa-envelope"></i>
             <?= lang('profile.email_notifications') ?>
         </a>
-        <a class="list-group-item list-group-item-action" data-toggle="list"  data-profile = "web_notifications" href="#" role="tab">
-            <i class="fa fa-globe"></i>
-            <?= lang('profile.web_notifications') ?>
-        </a>
         <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "pending_tasks" href="#" role="tab">
             <i class="fa fa-tasks"></i>  
             <?= lang('profile.pending_tasks') ?>
