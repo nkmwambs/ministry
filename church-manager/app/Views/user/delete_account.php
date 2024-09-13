@@ -13,7 +13,7 @@
 
         <div class="card-body">
             <div class="panel-body">
-                <button class="btn btn-danger" id="data_button" style="width:100%"><i class="fa fa-trash"></i> Delete Account</button>
+                <button class="btn btn-danger" onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($user['id']); ?>')" title="Delete <?= $user['id']; ?> participant" id="data_button" style="width:100%"><i class="fa fa-trash"></i> Delete Account</button>
             </div>
         </div>
 
