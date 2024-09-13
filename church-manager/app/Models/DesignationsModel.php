@@ -45,7 +45,6 @@ class DesignationsModel extends Model
     protected $afterDelete    = [];
     
     public function getAll() {
-
         $library = new \App\Libraries\DesignationLibrary();
         $listQueryFields = $library->setListqueryFields();
 
@@ -56,7 +55,6 @@ class DesignationsModel extends Model
         }else{
             return $this->orderBy('designations.created_at desc')->findall();
         }
-
     }
 
     public function getOne($id){
