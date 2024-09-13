@@ -101,9 +101,6 @@ class Event extends BaseController
             return response()->setJSON(['errors' => $validationErrors]);
         }
 
-        // $denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
-        // $meeting_id = hash_id($this->request->getPost('meeting_id'), 'decode');
-
         $data = [
             'name' => $this->request->getPost('name'),
             'meeting_id' => $this->request->getPost('meeting_id'),
@@ -134,7 +131,7 @@ class Event extends BaseController
             return view('event/list', $page_data);
         }
 
-        return redirect()->to(site_url('events/view'.hash_id($insertId)));
+        return redirect()->to(site_url('events/view'.hash_id($insertId)))->with('message', 'Event added seccessfuly!');;
     }
 
 }

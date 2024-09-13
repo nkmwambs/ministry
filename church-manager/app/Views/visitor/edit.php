@@ -1,3 +1,7 @@
+<?php
+$numeric_payment_id = hash_id($payment_id, 'decode');
+?>
+
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary" data-collapsed="0">
@@ -97,7 +101,7 @@
                             <label for="payment_id" class="control-label col-xs-4"><?= lang('visitor.visitor_payment_id') ?></label>
                             <div class="col-xs-6">
                                 <select class="form-control" name="payment_id" id="payment_id">
-                                    <option value="<?= $result['name'] ?>"><?= $result['name'] ?></option>
+                                    <option value="<?= $result['payment_id'] ?>"><?= $result['payment_id'] ?></option>
                                     <?php foreach ($payments as $payment) : ?>
                                         <option value="<?php echo $payment['id']; ?>"><?php echo $payment['name']; ?></option>
                                     <?php endforeach; ?>

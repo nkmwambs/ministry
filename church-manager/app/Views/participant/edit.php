@@ -1,3 +1,8 @@
+<?php
+$numeric_member_id = hash_id($member_id, 'decode');
+$numeric_payment_id = hash_id($payment_id, 'decode');
+?>
+
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary" data-collapsed="0">
@@ -29,7 +34,7 @@
                             <label for="member_id" class="control-label col-xs-4"><?= lang('participant.participant_payment_id') ?></label>
                             <div class="col-xs-6">
                                 <select class="form-control" name="member_id" id="member_id">
-                                    <option value="<?= $result['name'] ?>"><?= $result['name'] ?></option>
+                                    <option value="<?= $result['member_id'] ?>"><?= $result['member_id'] ?></option>
                                     <?php foreach ($members as $member) : ?>
                                         <option value="<?php echo $member['id']; ?>"><?php echo $member['name']; ?></option>
                                     <?php endforeach; ?>
@@ -55,7 +60,7 @@
                             <label for="payment_id" class="control-label col-xs-4"><?= lang('participant.participant_payment_id') ?></label>
                             <div class="col-xs-6">
                                 <select class="form-control" name="payment_id" id="payment_id">
-                                    <option value="<?= $result['name'] ?>"><?= $result['name'] ?></option>
+                                    <option value="<?= $result['payment_id'] ?>"><?= $result['payment_id'] ?></option>
                                     <?php foreach ($payments as $payment) : ?>
                                         <option value="<?php echo $payment['id']; ?>"><?php echo $payment['name']; ?></option>
                                     <?php endforeach; ?>

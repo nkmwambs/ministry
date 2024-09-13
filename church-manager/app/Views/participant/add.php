@@ -1,3 +1,8 @@
+<?php
+$numeric_member_id = hash_id($member_id, 'decode');
+$numeric_payment_id = hash_id($payment_id, 'decode');
+?>
+
 <div class="row">
   <div class="col-md-12">
 

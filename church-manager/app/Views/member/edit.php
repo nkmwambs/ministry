@@ -1,3 +1,7 @@
+<?php 
+$numeric_designation_id = hash_id($designation_id, 'decode');
+?>
+
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary" data-collapsed="0">
@@ -56,7 +60,7 @@
                             <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_designation_id') ?></label>
                             <div class="col-xs-6">
                                 <select class="form-control" name="designation_id" id="designation_id">
-                                    <option value="<?= $result['name'] ?>"><?= $result['name'] ?></option>
+                                    <option value="<?= $result['designation_id'] ?>"><?= $result['designation_id'] ?></option>
                                     <?php foreach ($designations as $designation) : ?>
                                         <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
                                     <?php endforeach; ?>

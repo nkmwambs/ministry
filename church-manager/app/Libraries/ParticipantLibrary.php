@@ -85,9 +85,6 @@ class ParticipantLibrary implements LibraryInterface {
         $membersModel = new \App\Models\MembersModel();
         $members = $membersModel->findAll();
 
-        $eventsModel = new \App\Models\EventsModel();
-        $events = $eventsModel->findAll();
-
         $paymentsModel = new \App\Models\PaymentsModel();
         $payments = $paymentsModel->findAll();
 

@@ -26,24 +26,7 @@ class Minister extends BaseController
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             $validationErrors = $validation->getErrors();
-
-            // Renaming specific keys
-            $renamedErrors = [];
-            foreach ($validationErrors as $key => $message) {
-                switch ($key) {
-                    case 'minister_number':
-                        $renamedErrors['number'] = $message;
-                        break;
-                    case 'is_active':
-                        $renamedErrors['active'] = $message;
-                        break;
-                    default:
-                        $renamedErrors[$key] = $message; // Keep other keys unchanged
-                        break;
-                }
-            }
-
-            return response()->setJSON(['errors' => $renamedErrors]);
+            return response()->setJSON(['errors' => $validationErrors]);
         }
 
         $update_data = [
@@ -86,24 +69,7 @@ class Minister extends BaseController
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             $validationErrors = $validation->getErrors();
-
-            // Renaming specific keys
-            $renamedErrors = [];
-            foreach ($validationErrors as $key => $message) {
-                switch ($key) {
-                    case 'minister_number':
-                        $renamedErrors['number'] = $message;
-                        break;
-                    case 'is_active':
-                        $renamedErrors['active'] = $message;
-                        break;
-                    default:
-                        $renamedErrors[$key] = $message; // Keep other keys unchanged
-                        break;
-                }
-            }
-
-            return response()->setJSON(['errors' => $renamedErrors]);
+            return response()->setJSON(['errors' => $validationErrors]);
         }
 
         $data = [
@@ -131,6 +97,6 @@ class Minister extends BaseController
             return view("minister/list", parent::page_data($records));
         }
 
-        return redirect()->to(site_url("ministers/view/".hash_id($insertId)));
+        return redirect()->to(site_url("ministers/view/".hash_id($insertId)))->with('message', 'Minister added seccessfuly!');;
     }
 }
