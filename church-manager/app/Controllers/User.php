@@ -344,7 +344,7 @@ class User extends BaseController
 
     public function pendingTasks()
     {
-        return view('user/pending_tasks');
+        return view('task/list');
     }
 
     public function widgets() 
