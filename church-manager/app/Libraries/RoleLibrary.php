@@ -38,7 +38,7 @@ class RoleLibrary implements \App\Interfaces\LibraryInterface {
 
         // Get list of features
         $featuresModel = new \App\Models\FeaturesModel();
-        $features = $featuresModel->findAll();
+        $features = $featuresModel->findAll(); 
 
         $permissionsModel = new \App\Models\PermissionsModel();
         $roleAssignedFeatures = $permissionsModel
