@@ -29,6 +29,5 @@ class Permission extends BaseController
             $permission_id = $permissionModel->where(['role_id' => $role_id, 'feature_id' => $feature_id])->first()['id'];
             $permissionModel->update($permission_id, (object)['permission_label' => $permission_label]);
         }
-        
     }
 }

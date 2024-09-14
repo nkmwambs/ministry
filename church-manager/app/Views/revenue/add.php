@@ -59,7 +59,7 @@
                             <?= lang('revenue.revenue_description') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="description" id="description" placeholder="Enter Description">
+                            <textarea type="text" class="form-control" name="description" id="description" placeholder="Enter Description"></textarea>
                         </div>
                     </div>
                     

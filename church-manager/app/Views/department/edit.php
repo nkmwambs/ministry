@@ -56,7 +56,7 @@
                             <?= lang('department.department_description') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="description" id="description" value = "<?=$result['description'];?>" placeholder="Enter Description">
+                            <textarea type="text" class="form-control" name="description" id="description" value = "<?=$result['description'];?>" placeholder="Enter Description"><?=$result['description'];?></textarea>
                         </div>
                     </div>
                 </form> 

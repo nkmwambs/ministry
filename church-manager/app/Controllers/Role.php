@@ -70,7 +70,7 @@ class Role extends BaseController
             return view('role/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url('settings/view' . hash_id($insertID)));
+        return redirect()->to(site_url('settings/view' . hash_id($insertID)))->with('message', 'Role added successfully!');;
     }
 
     public function update() {

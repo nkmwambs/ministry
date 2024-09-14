@@ -83,7 +83,7 @@ class User extends BaseController
         $mailTemplate = $templateLibrary->getEmailTemplate(short_name:'new_user_account', template_vars:compact('password','first_name','email'), denomination_id: $numeric_denomination_id);
 
         $logMailsModel = new \App\Models\LogmailsModel();
-        $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
+        // $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
 
         $data = [
             'denomination_id' => $numeric_denomination_id,

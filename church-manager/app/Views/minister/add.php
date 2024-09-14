@@ -90,15 +90,6 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
           <?php } ?>
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="designation_id">
-              <?= lang('minister.minister_designation_id') ?>
-            </label>
-            <div class="col-xs-6">
-              <input type="text" class="form-control" name="designation_id" id="designation_id" placeholder="Enter Designation Id">
-            </div>
-          </div>
-
-          <div class="form-group">
             <label class="control-label col-xs-4" for="phone">
               <?= lang('minister.minister_phone') ?>
             </label>

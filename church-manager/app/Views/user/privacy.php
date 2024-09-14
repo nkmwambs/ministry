@@ -112,7 +112,66 @@
                 <p><strong>Questions</strong></p>
                 <p><br></p>
                 <p>If you have any questions about this Privacy Policy, please contact us.</p>
+
+                <div class="row">
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<button id="myBtn" class="btn btn-sm btn-primary rounded-circle position-fixed bottom-0 end-0 translate-middle d-none">
+    <!-- <div class="btn btn-success"><i class="bi bi-arrow-up-short"></i></div> -->
+    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</button>
+
+
+
+<script>
+    $(document).ready(function() {
+        // Get the button
+        let mybutton = $("#myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 20) {
+                mybutton.show();
+            } else {
+                mybutton.hide();
+            }
+        });
+
+        // When the user clicks on the button, scroll to the top of the document
+        mybutton.click(function() {
+            $('html, body').animate({
+                scrollTop: 0
+            }, 'fast');
+        });
+    });
+
+
+    // Get the button:
+    // let mybutton = document.getElementById("myBtn");
+
+    // // When the user scrolls down 20px from the top of the document, show the button
+    // window.onscroll = function() {
+    //     scrollFunction()
+    // };
+
+    // function scrollFunction() {
+    //     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    //         mybutton.style.display = "block";
+    //     } else {
+    //         mybutton.style.display = "none";
+    //     }
+    // }
+
+    // // When the user clicks on the button, scroll to the top of the document
+    // function topFunction() {
+    //     document.body.scrollTop = 0; // For Safari
+    //     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    // }
+</script>
