@@ -43,10 +43,10 @@
             <i class="fa fa-tasks"></i>  
             <?= lang('profile.pending_tasks') ?>
         </a>
-        <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "widgets" href="#" role="tab">
+        <!-- <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "widgets" href="#" role="tab">
             <i class="fa fa-tachometer"></i>
             <?= lang('profile.widgets') ?>
-        </a>
+        </a> -->
         <a class="list-group-item list-group-item-action" data-toggle="list" data-profile = "your_data" href="#" role="tab">
             <i class="fa fa-database"></i>
             <?= lang('profile.your_data') ?>
