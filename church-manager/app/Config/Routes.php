@@ -44,12 +44,7 @@ $routes->get('settings', 'Setting::list');
 $routes->get('roles/get_default_role/(:segment)', 'Role::getDefaultRole/$1');
 $routes->get('features/get_allowable_permission_labels/(:segment)', 'Feature::getAllowablePermissionLabels/$1');
 $routes->post('permissions/update_permission', 'Permission::updatePermission/');
-// $routes->get('/user/getHierarchiesWithEntities', 'User::getHierarchiesWithEntities');
-$routes->post('users/store', 'User::store');
 
-// $routes->get('users/profile/account', "User::account");
-// $routes->get('users/profile/account/(:segment)', "User::getAccount/$1");
-// $routes->get('users/profile/account/(:segment)', "User::getAccount/$1");
 $routes->post('users/profile/account/save', "User::updatePublicInfo");
 $routes->post('users/profile/account/update', "User::updatePublicInfo");
 $routes->post('users/profile/account/update', "User::updatePrivateInfo");
@@ -67,3 +62,6 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
     $routes->get('your_data/(:segment)', "User::yourData/$1");
     $routes->get('delete_account/(:segment)', "User::deleteAccount/$1");
 });
+
+$routes->post('users/view/pending_tasks/save-task', 'Task::saveTask');
+$routes->post('users/view/pending_tasks/update_task_status', 'Task::updateTaskStatus');
