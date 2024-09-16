@@ -65,4 +65,4 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
 });
 
 $routes->post('users/view/(:segment)/pending_tasks/save-task', 'Task::saveTask/$1');
-$routes->post('users/view/pending_tasks/update_task_status', 'Task::updateTaskStatus');
+$routes->post('users/profile/pending_tasks/update_task_status/', 'Task::updateTaskStatus');

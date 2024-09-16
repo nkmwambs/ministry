@@ -1,3 +1,15 @@
+<style>
+    .center, .heading{
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .heading {
+        padding-top: 20px;
+        font-weight: bold;
+    }
+</style>
+
 <div class="tab-pane show" id="pending_tasks" role="tabpanel">
     <div class="card">
         <div class="card-header">
@@ -49,9 +61,9 @@
                                         </span>
                                         <span class='action-icons' title='Delete Task'><i class='fa fa-trash'></i></span>
                                     </td>
-                                    <td><?= $task['name']; ?></td>
+                                    <td><?= humanize($task['name']); ?></td>
                                     <td>
-                                        <select class="form-control task_status_labels" id="task_<?= $task['id']; ?>">
+                                        <select class="form-control task_status_labels mySelect" id="task_<?= $task['id']; ?>">
                                             <option value="<?= $task['status']; ?>"><?= $task['status']; ?></option> 
                                             <option value="not_started" <?= $task['status'] == 'not_started' ? 'selected' : ''; ?>>Not Started</option>
                                             <option value="in_progress" <?= $task['status'] == 'in_progress' ? 'selected' : ''; ?>>In Progress</option>
@@ -124,6 +136,28 @@
         });
     });
 
+    $(document).on('change', '.task_status_labels', function() {
+        const status_label = $(this).val();
+        const row_index = $(this).closest('tr').index();
+        const user_id = $(this).attr('id');
+        const url = "<?= site_url("users/profile/pending_tasks/update_task_status"); ?>";
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {status_label, user_id},
+            beforeSend: function() {
+                $('#overlay').css("display", "block");
+            },
+            success: function(response) {
+                $('#overlay').css('display', 'block');
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        })
+    })
+
     // Add new task via AJAX
     $(document).on('click', '#btn_add_feature', function() {
         var taskName = $('#my_input').val();
@@ -166,29 +200,29 @@
     });
 
     // Handle task status change via AJAX
-    $('#permission_table').on('change', '.mySelect', function() {
-        var row = $(this).closest('tr');
-        var taskId = row.data('task-id');
-        var newStatus = $(this).val();
+    // $(document).on('change', '.mySelect', function() {
+    //     var row = $(this).closest('tr');
+    //     var taskId = row.data('task-id');
+    //     var newStatus = $(this).val();
 
-        // Send AJAX request to update task status
-        $.ajax({
-            url: 'pending_tasks/update_task_status', // Adjust the URL based on your routes
-            type: 'POST',
-            data: {
-                task_id: taskId,
-                status: newStatus
-            },
-            success: function(response) {
-                if (response.success) {
-                    alert('Task status updated successfully');
-                } else {
-                    alert('Failed to update task status: ' + response.message);
-                }
-            },
-            error: function() {
-                alert('An error occurred while updating the task status');
-            }
-        });
-    });
+    //     // Send AJAX request to update task status
+    //     $.ajax({
+    //         url: 'pending_tasks/update_task_status', // Adjust the URL based on your routes
+    //         type: 'POST',
+    //         data: {
+    //             task_id: taskId,
+    //             status: newStatus
+    //         },
+    //         success: function(response) {
+    //             if (response.success) {
+    //                 alert('Task status updated successfully');
+    //             } else {
+    //                 alert('Failed to update task status: ' + response.message);
+    //             }
+    //         },
+    //         error: function() {
+    //             alert('An error occurred while updating the task status');
+    //         }
+    //     });
+    // });
 </script>

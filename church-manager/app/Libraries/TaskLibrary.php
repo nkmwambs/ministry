@@ -35,12 +35,26 @@ class TaskLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function viewExtraData(&$page_data){
-        // $tasks = [];
+        $tasks = [];
 
         $tasksModel = new \App\Models\TasksModel();
         $tasks = $tasksModel->findAll();
 
+        $statusesModel = new \App\Models\StatusesModel();
+        $statusAssignedTasks = $statusesModel->where('user_id', $page_data['result']['id'])->findAll();
+        log_message('error', json_encode($statusAssignedTasks));
+
+        $statusAssignedTasksIds = array_column($statusAssignedTasks, 'task_id');
+
+        foreach ($tasks as $key => $task) {
+            if (in_array($task['id'], $statusAssignedTasksIds)) {
+                unset($task[$key]);
+            }
+        }
+
         $page_data['tasks'] = $tasks;
+
+        $page_data['status_assigned_tasks'] = $statusAssignedTasks;
     }
 
     function addExtraData(&$page_data) {

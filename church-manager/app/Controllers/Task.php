@@ -71,35 +71,28 @@ class Task extends BaseController
     }
 
     public function updateTaskStatus() {
-        $tasksModel = $this->model; // Load the model
-        $user_id = $this->request->getPost('user_id'); // Get the user ID from the request
-        $task_status = $this->request->getPost('status'); // Get the new status from the request
 
-        $hashed_id = $this->request->getVar('id');
-    
-        // Retrieve the first task associated with the user (if any)
-        // $task = $tasksModel->where('user_id', $user_id)->first();
-        $task_user_id = $tasksModel->where(['user_id' => $user_id])->first()['id'];
-        
-        $tasksModel->update(hash_id($task_user_id, (object)['status' => $task_status]));
+        $statusesModel = new \App\Models\StatusesModel();
+        $user_id = $this->request->getPost('user_id');
+        $task_status = $this->request->getPost('status');
 
-        if ($this->request->isAJAX()) {
-            $this->feature = 'task';
-            $this->action = 'list';
-
-            $records = [];
-
-            if (method_exists($this->model, 'getAll')) {
-                $records = $this->model->getAll();
-            } else {
-                $records = $this->model->findAll();
-            }
-
-            return view('task/list', parent::page_data($records));
+        $countTaskStatuses = $statusesModel->where('user_id', $user_id)->countAllResults();
+        // log_message('error', json_encode($countTaskStatuses));
+        if ($countTaskStatuses == 0) {
+            $this->model->insert((object)['status' => $this->request->getPost('status')]);
+        } else {
+            $task_id = $statusesModel->where('user_id', $user_id)->first()['id'];
+            // log_message('error', json_encode($task_id));
+            $statusesModel->update($task_id, (object)['status' => $task_status]);
         }
 
-        return redirect()->to(site_url('users/profile' . hash_id($hashed_id, 'decode')));
+        // return redirect()->to
     }  
+
+    function getTaskStatuses($task_id){
+        $task_statuses = $this->model->where('id', $task_id)->first()['status'];
+        return $this->response->setJSON(compact('status'));
+    }
     
 
     // function updateTaskStatus(){
