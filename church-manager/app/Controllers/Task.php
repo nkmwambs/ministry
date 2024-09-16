@@ -17,35 +17,34 @@ class Task extends BaseController
 
     public function saveTask() {
         $insertID = 0;
-        
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'user_id' => [
-                'rules' => 'required',
-                'label' => 'User Name',
-                'errors' => [
-                    'required' => 'Department Name is required'
-                ]
-            ],
-            'name' => [
-                'rules'=> 'required|min_length[5]|max_length[255]',
-                'label' => 'Name',
-                'errors' => [
-                    'required' => 'Role Name is required',
-                    'min_length' => 'Role Name must be at least {value} characters long',
-                    'max_length' => 'Role Name cannot exceed {value} characters long',
-                    // 'alpha_space' => 'Role field can only contain alphabetic characters and spaces.',
-                ]
-            ],
-        ]);
+        // $validation = \Config\Services::validation();
+        // $validation->setRules([
+        //     'user_id' => [
+        //         'rules' => 'required',
+        //         'label' => 'User Name',
+        //         'errors' => [
+        //             'required' => 'Department Name is required'
+        //         ]
+        //     ],
+        //     'name' => [
+        //         'rules'=> 'required|min_length[5]|max_length[255]',
+        //         'label' => 'Name',
+        //         'errors' => [
+        //             'required' => 'Role Name is required',
+        //             'min_length' => 'Role Name must be at least {value} characters long',
+        //             'max_length' => 'Role Name cannot exceed {value} characters long',
+        //             // 'alpha_space' => 'Role field can only contain alphabetic characters and spaces.',
+        //         ]
+        //     ],
+        // ]);
 
         $data = [
-            'name' => $this->request->getPost('task_name'),
+            'name' => $this->request->getPost('name'),
             'user_id' => $this->request->getPost('user_id'),
         ];
     
         // Validate and sanitize input if necessary
-        if (empty($task_name)) {
+        if (empty($data['name'])) {
             return $this->response->setJSON(['success' => false, 'message' => 'Task name is required']);
         }
     

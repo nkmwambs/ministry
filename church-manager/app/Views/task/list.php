@@ -12,7 +12,7 @@
         </div>
         <div class="card-body">
             <div class="panel-body">
-                <form class="form-horizontal form-groups-bordered">
+                <form class="form-horizontal form-groups-bordered" method="post">
                     <div class="form-group">
                         <label for="name" class="control-label col-xs-4">Add a Task</label>
                         <div class="col-xs-4">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <form class="form-horizontal form-groups-bordered">
+                <form class="form-horizontal form-groups-bordered" method="post">
                     <table id="permission_table" class="table table-striped">
                         <thead>
                             <tr>
@@ -41,11 +41,18 @@
                         </thead>
                         <tbody>
 
-                            <?php foreach ($tasks as $task): ?>
+                            <?php foreach ($result as $task): ?>
                                 <tr data-task-id="<?= $task['id']; ?>">
+                                    <td>
+                                        <span class='action-icons' title="Edit Task">
+                                            <i style="cursor:pointer" class='fa fa-pencil'></i>
+                                        </span>
+                                        <span class='action-icons' title='Delete Task'><i class='fa fa-trash'></i></span>
+                                    </td>
                                     <td><?= $task['name']; ?></td>
                                     <td>
                                         <select class="form-control task_status_labels" id="task_<?= $task['id']; ?>">
+                                            <option value="<?= $task['status']; ?>"><?= $task['status']; ?></option> 
                                             <option value="not_started" <?= $task['status'] == 'not_started' ? 'selected' : ''; ?>>Not Started</option>
                                             <option value="in_progress" <?= $task['status'] == 'in_progress' ? 'selected' : ''; ?>>In Progress</option>
                                             <option value="completed" <?= $task['status'] == 'completed' ? 'selected' : ''; ?>>Completed</option>
@@ -89,7 +96,6 @@
         function updateSelectBackground(selectElement) {
             var selectedValue = selectElement.val();
 
-            // Define a value-color mapping object
             var statusColors = {
                 "not_started": "#BDD8F1",
                 "in_progress": "#FAD839",
@@ -97,7 +103,6 @@
                 "rejected": "#EE4749"
             };
 
-            // Reset the background color to default (optional)
             selectElement.css('background-color', '');
 
             // Loop through each entry in the object to apply the corresponding color
@@ -119,12 +124,13 @@
         });
     });
 
-    $('#btn_add_feature').click(function() {
+    // Add new task via AJAX
+    $(document).on('click', '#btn_add_feature', function() {
         var taskName = $('#my_input').val();
+        
         if (taskName) {
-            // AJAX request to save task in the database
             $.ajax({
-                url: 'pending_tasks/save_task',
+                url: 'pending_tasks/save_task', // Adjust the URL based on your routes
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -134,25 +140,23 @@
                     if (data.success) {
                         // Dynamically add task to the table
                         var newRow = `
-                    <tr data-task-id="${data.task_id}">
-                        <td>
-                            <span class='action-icons' title="Edit task">
-                                <i style="cursor:pointer" class='fa fa-pencil'></i>
-                            </span>
-                            <span class='action-icons' title="Delete task">
-                                <i class='fa fa-trash'></i>
-                            </span>
-                        </td>
-                        <td>${taskName}</td>
-                        <td>
-                            <select class="form-control permission_labels mySelect">
-                                <option value="not_started" selected>Not Started</option>
-                                <option value="in_progress">In Progress</option>
-                                <option value="completed">Completed</option>
-                                <option value="rejected">Rejected</option>
-                            </select>
-                        </td>
-                    </tr>`;
+                        <tr data-task-id="${data.task_id}">
+                            <td>
+                                <span class='action-icons' title="Edit Task">
+                                    <i style="cursor:pointer" class='fa fa-pencil'></i>
+                                </span>
+                                <span class='action-icons' title='Delete Task'><i class='fa fa-trash'></i></span>
+                            </td>
+                            <td>${taskName}</td>
+                            <td>
+                                <select class="form-control task_status_labels mySelect">
+                                    <option value="not_started" selected>Not Started</option>
+                                    <option value="in_progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
+                            </td>
+                        </tr>`;
                         $('#permission_table tbody').append(newRow);
                         $('#my_input').val(''); // Clear the input field
                     }
@@ -161,19 +165,19 @@
         }
     });
 
-    // Handle the task status change
+    // Handle task status change via AJAX
     $('#permission_table').on('change', '.mySelect', function() {
-        var row = $(this).closest('tr'); // Get the closest table row
-        var taskId = row.data('task-id'); // Assuming each row has a data-task-id attribute
-        var newStatus = $(this).val(); // Get the selected status value
+        var row = $(this).closest('tr');
+        var taskId = row.data('task-id');
+        var newStatus = $(this).val();
 
-        // Send an AJAX request to update the task status
+        // Send AJAX request to update task status
         $.ajax({
-            url: 'pending_tasks/update_task_status', // URL to handle task status update
+            url: 'pending_tasks/update_task_status', // Adjust the URL based on your routes
             type: 'POST',
             data: {
-                task_id: taskId, // Task ID
-                status: newStatus // New status
+                task_id: taskId,
+                status: newStatus
             },
             success: function(response) {
                 if (response.success) {
@@ -188,94 +192,3 @@
         });
     });
 </script>
-
-<!-- <script>
-    $(document).ready(function() {
-        // Function to update background color based on task status
-        function updateSelectBackground(selectElement) {
-            var selectedValue = selectElement.val();
-            var statusColors = {
-                "not_started": "#BDD8F1",
-                "in_progress": "#FAD839",
-                "completed": "#00A651",
-                "rejected": "#EE4749"
-            };
-
-            selectElement.css('background-color', statusColors[selectedValue]);
-        }
-
-        // Event listener for adding a new task
-        $('#btn_add_task').click(function() {
-            var taskName = $('#task_name').val();
-            if (taskName) {
-                // Send AJAX request to save task to database
-                $.ajax({
-                    url: 'tasks/save_task', // Update this URL as per your route
-                    type: 'POST',
-                    data: {
-                        name: taskName
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            var newTaskId = response.task_id; // Get task ID from response
-                            var taskRow = `
-                            <tr data-task-id="${newTaskId}">
-                                <td>${taskName}</td>
-                                <td>
-                                    <select class="form-control task_status" id="${newTaskId}">
-                                        <option value="not_started" selected>Not Started</option>
-                                        <option value="in_progress">In Progress</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="rejected">Rejected</option>
-                                    </select>
-                                </td>
-                            </tr>`;
-                            $('#task_table tbody').append(taskRow);
-                            $('#task_name').val(''); // Clear input
-                        } else {
-                            alert('Failed to add task');
-                        }
-                    },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
-        });
-
-        // Event listener for changing task status
-        $('#task_table').on('change', '.task_status', function() {
-            var selectElement = $(this);
-            var newStatus = selectElement.val();
-            var taskId = selectElement.attr('id');
-
-            // Update the background color based on the selected status
-            updateSelectBackground(selectElement);
-
-            // Send AJAX request to update task status in the database
-            $.ajax({
-                url: 'tasks/update_task_status', // Update this URL as per your route
-                type: 'POST',
-                data: {
-                    task_id: taskId,
-                    status: newStatus
-                },
-                success: function(response) {
-                    if (response.success) {
-                        alert('Task status updated');
-                    } else {
-                        alert('Failed to update status');
-                    }
-                },
-                error: function(xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-        });
-
-        // Apply the background color for status when the page is loaded
-        $('#task_table').on('DOMNodeInserted', '.task_status', function() {
-            updateSelectBackground($(this));
-        });
-    });
-</script> -->

@@ -305,7 +305,7 @@ class User extends BaseController
             // Note the editExtraData updates the $page_data by reference
             $this->library->editExtraData($page_data);
         }
-        // return redirect()->to(site_url('users/profile/account' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
+
         return view('user/account', $page_data);
     }
 
@@ -342,9 +342,36 @@ class User extends BaseController
         return view('user/email_notification');
     }
 
-    public function pendingTasks()
+    public function pendingTasks($user_id)
     {
-        return view('task/list');
+        $tasks = [];
+
+        $tasksModel = new \App\Models\TasksModel();
+
+        // Fetch tasks from the database
+        if ($user_id > 0) {
+            $tasks = $tasksModel
+            ->where('user_id', hash_id($user_id, 'decode'))
+            ->join('users', 'users.id = tasks.user_id')
+            ->orderBy('tasks.created_at asc')->findAll();
+        } else {
+            $tasks = $tasksModel->join('users', 'users.id = tasks.user_id')->
+            orderBy('tasks.created_at asc')->findAll();
+        }
+
+        if (!$tasks) {
+            $page_data['result'] = [];
+        } else {
+            $page_data['result'] = $tasks;
+        }
+
+        $page_data['result'] = $tasks;
+        $page_data['feature'] = 'task';
+        $page_data['action'] = 'list';
+        $page_data['id'] = $user_id;
+
+        // Load the view and pass the data
+        return view('task/list', $page_data);
     }
 
     public function widgets() 
