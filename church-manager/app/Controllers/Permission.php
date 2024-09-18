@@ -22,13 +22,12 @@ class Permission extends BaseController
         $permission_label = $this->request->getPost('permission_label');
 
         $countAssignedFeatureRoles = $permissionModel->where(['role_id' => $role_id, 'feature_id' => $feature_id])->countAllResults();
-        log_message('error', json_encode($countAssignedFeatureRoles));
+        // log_message('error', json_encode($countAssignedFeatureRoles));
         if($countAssignedFeatureRoles == 0){
             $this->model->insert($this->request->getPost());
         }else{
             $permission_id = $permissionModel->where(['role_id' => $role_id, 'feature_id' => $feature_id])->first()['id'];
             $permissionModel->update($permission_id, (object)['permission_label' => $permission_label]);
         }
-        
     }
 }

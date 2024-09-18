@@ -44,12 +44,7 @@ $routes->get('settings', 'Setting::list');
 $routes->get('roles/get_default_role/(:segment)', 'Role::getDefaultRole/$1');
 $routes->get('features/get_allowable_permission_labels/(:segment)', 'Feature::getAllowablePermissionLabels/$1');
 $routes->post('permissions/update_permission', 'Permission::updatePermission/');
-// $routes->get('/user/getHierarchiesWithEntities', 'User::getHierarchiesWithEntities');
-$routes->post('users/store', 'User::store');
 
-// $routes->get('users/profile/account', "User::account");
-// $routes->get('users/profile/account/(:segment)', "User::getAccount/$1");
-// $routes->get('users/profile/account/(:segment)', "User::getAccount/$1");
 $routes->post('users/profile/account/save', "User::updatePublicInfo");
 $routes->post('users/profile/account/update', "User::updatePublicInfo");
 $routes->post('users/profile/account/update', "User::updatePrivateInfo");
@@ -60,10 +55,15 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
     $routes->post('account/update', 'User::updatePrivateInfo');  // Handle the account update form submission
     $routes->post('account/save', 'User::postPrivateInfo');
     $routes->get('password_reset/(:segment)', "User::passwordReset/$1");
+    $routes->post('verify_password', "User::passwordVerify");
     $routes->get('email_notifications/(:segment)', "User::emailNotifications/$1");
-    $routes->get('pending_tasks/(:segment)', 'User::pendingTasks');
+    $routes->get('pending_tasks/(:segment)', 'User::pendingTasks/$1');
+    $routes->post('save_task', 'Task::saveTask');
     $routes->get('widgets/(:segment)', 'User::widgets');
     $routes->get('privacy/(:segment)', "User::privacy/$1");
     $routes->get('your_data/(:segment)', "User::yourData/$1");
     $routes->get('delete_account/(:segment)', "User::deleteAccount/$1");
 });
+
+$routes->post('users/view/(:segment)/pending_tasks/save-task', 'Task::saveTask/$1');
+$routes->post('users/profile/pending_tasks/update_task_status/', 'Task::updateTaskStatus');

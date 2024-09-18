@@ -1,11 +1,14 @@
 <script>
     const base_url = '<?= site_url(); ?>'
 
+    // Drag the modals
     $(".modal").draggable({
         handle: ".modal-header",
     });
 
+    // Resize the modal according number of properties
     $(".modal").resizable();
+
 
     function getRequest(url, on_success) {
         $.ajax({
@@ -120,13 +123,16 @@
         return capitalized;
     }
 
+
     $('.datatable').DataTable({
         stateSave: true
     });
 
+
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd'
     });
+
 
     $(document).on('click', "#modal_save", function() {
         const modal_content = $(this).closest('.modal-content');
@@ -143,9 +149,7 @@
                 $("#overlay").css("display", "block");
             },
             success: function(response) {
-
                 // console.log(response);
-
                 if (typeof response == 'object') {
 
                     if (response.hasOwnProperty('errors')) {
@@ -165,6 +169,7 @@
                     }
 
                     $("#overlay").css("display", "none");
+                    
                     return false;
                 }
 
@@ -173,7 +178,6 @@
                 if ($('.ajax_main').length > 0) {
                     $('.ajax_main').html(response);
                 } else {
-
                     $('.main').html(response);
 
                     const list_alert_container = $('.list-alert-container');
@@ -185,17 +189,16 @@
 
                 $('.datatable').DataTable().destroy();
 
-                // if (!DataTable.isDataTable('.datatable')) {
                 $(".datatable").DataTable({
                     stateSave: true
                 });
-                // }
 
                 $("#overlay").css("display", "none");
             }
         })
 
     })
+
 
     function isEmpty(obj) {
         for (const prop in obj) {
@@ -207,8 +210,6 @@
         return true;
     }
 
-
-   
 
     $(document).on('click', "#myTabs", function(ev) {
         const tabs = $(this)
@@ -248,11 +249,11 @@
 
     }
 
+
     $(document).on('keydown','.datepicker', function (){
         return false;
     })
     
-
 
     $(document).ready(function($) {
         // Sample Toastr Notification

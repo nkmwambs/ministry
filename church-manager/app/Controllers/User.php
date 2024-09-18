@@ -83,7 +83,7 @@ class User extends BaseController
         $mailTemplate = $templateLibrary->getEmailTemplate(short_name:'new_user_account', template_vars:compact('password','first_name','email'), denomination_id: $numeric_denomination_id);
 
         $logMailsModel = new \App\Models\LogmailsModel();
-        $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
+        // $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
 
         $data = [
             'denomination_id' => $numeric_denomination_id,
@@ -305,8 +305,25 @@ class User extends BaseController
             // Note the editExtraData updates the $page_data by reference
             $this->library->editExtraData($page_data);
         }
-        // return redirect()->to(site_url('users/profile/account' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
+
         return view('user/account', $page_data);
+    }
+
+    function passwordVerify(){
+        $user_password = $this->request->getPost('user_password');
+        $user_id = $this->request->getPost('user_id');
+        $numeric_user_id = hash_id($user_id, 'decode');
+
+        $user = $this->model->find($numeric_user_id);
+
+        $validPassword = false;
+        if($user){
+            $current_password = addslashes($user['password']);
+            // log_message('error', json_encode(compact('user_password','current_password')));
+            $validPassword = password_verify(trim($user_password), $current_password);  
+        }
+
+        return response()->setJSON(['success' => $validPassword]);
     }
 
     public function passwordReset($id)
@@ -319,6 +336,8 @@ class User extends BaseController
         }else{
             $data = $this->model->getOne($numeric_id);
         }
+
+        $this->parent_id = $id;
 
         $page_data = $this->page_data($data);
 
@@ -342,9 +361,36 @@ class User extends BaseController
         return view('user/email_notification');
     }
 
-    public function pendingTasks()
+    public function pendingTasks($user_id)
     {
-        return view('user/pending_tasks');
+        $tasks = [];
+
+        $tasksModel = new \App\Models\TasksModel();
+
+        // Fetch tasks from the database
+        if ($user_id > 0) {
+            $tasks = $tasksModel
+            ->where('user_id', hash_id($user_id, 'decode'))
+            ->join('users', 'users.id = tasks.user_id')
+            ->orderBy('tasks.created_at asc')->findAll();
+        } else {
+            $tasks = $tasksModel->join('users', 'users.id = tasks.user_id')->
+            orderBy('tasks.created_at asc')->findAll();
+        }
+
+        if (!$tasks) {
+            $page_data['result'] = [];
+        } else {
+            $page_data['result'] = $tasks;
+        }
+
+        $page_data['result'] = $tasks;
+        $page_data['feature'] = 'task';
+        $page_data['action'] = 'list';
+        $page_data['parent_id'] = $user_id;
+
+        // Load the view and pass the data
+        return view('task/list', $page_data);
     }
 
     public function widgets() 

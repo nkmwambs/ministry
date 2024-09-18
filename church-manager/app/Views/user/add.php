@@ -214,12 +214,10 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
           $('#permitted_assemblies').html(options)
         }
       })
-
     } else {
       $('#permitted_entities').closest('.form-group').removeClass('hidden')
       $('#permitted_assemblies').closest('.form-group').addClass('hidden')
       $('#permitted_assemblies').val(null).trigger('change');
-
 
       const base_url = '<?= site_url('entities/hierarchy') ?>'
 

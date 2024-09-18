@@ -16,10 +16,10 @@
                 <form class="form-horizontal form-groups-bordered" action="<?=site_url('users/profile/account/update/');?>">
                     <div class="form-group">
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="password">Current password</label>
+                            <label class="control-label col-xs-4" for="current_password">Current password</label>
                             <div class="col-xs-6">
-                                <input type="password" class="form-control" id="password" name="password" value="<?= hash_id($result['password']); ?>">
-                                <small><a href="#">Forgot your password?</a></small>
+                                <input type="password" class="form-control" id="current_password" name="current_password">
+                                <small id="wrong_password_message" style = "color:red;"></small>
                             </div>
                         </div>
                         <div class="form-group">
@@ -29,9 +29,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="password">Verify password</label>
+                            <label class="control-label col-xs-4" for="confirm_password">Verify password</label>
                             <div class="col-xs-6">
-                                <input type="password" class="form-control" name="password" id="password">
+                                <input type="password" class="form-control" name="confirm_password" id="confirm_password">
                             </div>
                         </div>
                     </div>
@@ -45,3 +45,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#current_password').on('change', function(){
+        const pass_elem = $(this)
+        const user_password = $(this).val()
+        const user_id = "<?=$parent_id;?>"
+        const url = "<?=site_url("users/profile/verify_password");?>"
+        const data = {
+            user_id,
+            user_password
+        }
+
+        $.ajax({
+            url,
+            data,
+            method: "POST",
+            success: function (response){
+                if(!response.success){
+                    $("#wrong_password_message").html("<?=lang('user.wrong_password_message');?>")
+                    pass_elem.val('')
+                }else{
+                    $("#wrong_password_message").html("")
+                }
+            }
+        })
+    })
+</script>
