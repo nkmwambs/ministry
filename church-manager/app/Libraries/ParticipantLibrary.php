@@ -15,12 +15,12 @@ class ParticipantLibrary implements LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['participants.id','member_id','event_id','payment_id','payment_code','registration_amount','status'];
+        $fields = ['participants.id','member_id','event_id','payment_id','payment_code','registration_amount','status','members.name as member_name'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['participants.id','member_id','event_id','payment_id','payment_code','registration_amount','status'];
+        $fields = ['participants.id','member_id','event_id','payment_id','payment_code','registration_amount','status','members.name as member_name'];
         return $fields;
     }
 

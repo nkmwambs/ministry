@@ -41,7 +41,10 @@ class TaskLibrary implements \App\Interfaces\LibraryInterface {
         $tasks = $tasksModel->findAll();
 
         $statusesModel = new \App\Models\StatusesModel();
-        $statusAssignedTasks = $statusesModel->where('user_id', $page_data['result']['id'])->findAll();
+        $statusAssignedTasks = $statusesModel
+        ->select('statuses.id,tasks.id as task_id,user_id,tasks.name as task_name,status_label')
+        ->join('tasks', 'tasks.id=statuses.task_id')
+        ->where('user_id', $page_data['result']['id'])->findAll();
         log_message('error', json_encode($statusAssignedTasks));
 
         $statusAssignedTasksIds = array_column($statusAssignedTasks, 'task_id');

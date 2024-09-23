@@ -74,6 +74,7 @@ class Participant extends BaseController
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
+        // $numeric_event_id = hash_id($this->request->getPost('event_id'), 'decode');
         $data = [
             'member_id' => $this->request->getPost('member_id'),
             'event_id' => $this->request->getPost('event_id'),
@@ -96,6 +97,9 @@ class Participant extends BaseController
             } else {
                 $records = $this->model->findAll();
             }
+
+            $this->parent_id = $this->request->getPost('event_id');
+            $this->id = hash_id($insertId, 'encode');
             // $records = $this->model->orderBy("created_at desc")->where('event_id', $event_id)->findAll();
             // $page_data = parent::page_data($records, $hashed_event_id);
             // $page_data['id'] = hash_id($event_id,'encode');

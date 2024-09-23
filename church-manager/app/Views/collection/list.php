@@ -14,7 +14,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <table class="table table-striped datatable">
+        <table class="table table-striped scrollable-x-datatable">
             <thead>
                 <tr>
                     <th><?= lang('collection.collection_action') ?></th>
@@ -58,3 +58,23 @@
         </table>
     </div>
 </div>
+
+<script>
+    $('.scrollable-x-datatable').DataTable({
+        stateSave: true,
+        scrollX: true,
+        scrollY: 200,
+        scrollCollapse: true,
+        fixedColumns: true,
+        fixedHeader: true,
+        responsive: true,
+        // dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        columnDefs: [{
+            targets: [0],
+            orderable: false
+        }]
+    })
+</script>

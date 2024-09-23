@@ -1,5 +1,6 @@
 <style>
-    .center, .heading{
+    .center,
+    .heading {
         text-align: center;
         padding-bottom: 20px;
     }
@@ -9,7 +10,6 @@
         font-weight: bold;
     }
 </style>
-
 
 <div class="tab-pane show" id="pending_tasks" role="tabpanel">
     <div class="card">
@@ -27,77 +27,60 @@
             <div class="panel-body">
                 <form class="form-horizontal form-groups-bordered" method="post">
                     <div class="form-group">
-                        <label for="name" class="control-label col-xs-4">Add a Task</label>
+                        <label for="name" class="control-label col-xs-4"><?= lang('task.add_task') ?></label>
                         <div class="col-xs-4">
                             <input class="form-control" id="my_input" name="name" type="text" placeholder="New Task Name...">
                         </div>
                         <div class="col-xs-2">
-                            <div id="btn_add_feature" class="btn btn-success">Add</div>
+                            <div id="btn_add_feature" class="btn btn-success"><?= lang('task.add_button') ?></div>
                         </div>
                     </div>
                 </form>
 
                 <div class="row">
                     <div class="col-xs-12 center heading">
-                        Pending Tasks
+                        <?= lang('task.pending_tasks_heading') ?>
                     </div>
                 </div>
 
-                <form class="form-horizontal form-groups-bordered" method="post">
-                    <table id="permission_table" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Action</th>
-                                <th>Task Name</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <?php foreach ($result as $task): ?>
-                                <tr data-task-id="<?= $task['id']; ?>">
-                                    <td>
-                                        <span class='action-icons' title="Edit Task">
-                                            <i style="cursor:pointer" class='fa fa-pencil'></i>
-                                        </span>
-                                        <span class='action-icons' title='Delete Task'><i class='fa fa-trash'></i></span>
-                                    </td>
-                                    <td><?= humanize($task['name']); ?></td>
-                                    <td>
-                                        <select class="form-control task_status_labels mySelect" id="task_<?= $task['id']; ?>">
-                                            <option value="<?= $task['status']; ?>"><?= $task['status']; ?></option> 
-                                            <option value="Not Started" <?= $task['status'] == 'Not Started' ? 'selected' : ''; ?>>Not Started</option>
-                                            <option value="In Progress" <?= $task['status'] == 'In Progress' ? 'selected' : ''; ?>>In Progress</option>
-                                            <option value="Completed" <?= $task['status'] == 'Completed' ? 'selected' : ''; ?>>Completed</option>
-                                            <option value="Rejected" <?= $task['status'] == 'Rejected' ? 'selected' : ''; ?>>Rejected</option>
-                                        </select>
-                                    </td>
+                <!-- <form class="form-horizontal form-groups-bordered" method="post"> -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <table class="table table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th><?= lang('task.task_action') ?></th>
+                                    <th><?= lang('task.task_name') ?></th>
+                                    <th><?= lang('task.task_status') ?></th>
                                 </tr>
-                            <?php endforeach; ?>
+                            </thead>
+                            <tbody>
 
-                            <!-- <tr>
-                                <td>
-                                    <span class='action-icons' title="Edit task">
-                                        <i style="cursor:pointer" class='fa fa-pencil'></i>
-                                    </span>
-                                    <span class='action-icons' title="Delete task"><i class='fa fa-trash'></i></span>
-                                </td>
-                                <td>
-                                    Charity
-                                </td>
-                                <td>
-                                    <select class="form-control permission_labels mySelect" id="">
-                                        <option value="not_started">Not Started</option>
-                                        <option value="in_progress" selected>In Progress</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="rejected">Rejected</option>
-                                    </select>
-                                </td>
-                            </tr> -->
+                                <?php foreach ($result as $task): ?>
+                                    <tr data-task-id="<?= $task['id']; ?>">
+                                        <td>
+                                            <span class='action-icons' title="Edit <?= $task['id']; ?> task">
+                                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($task['id']); ?>')" class='fa fa-pencil'></i>
+                                            </span>
+                                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($task['id']); ?>')" title="Delete <?= $task['id']; ?> task"><i class='fa fa-trash'></i></span>
+                                        </td>
+                                        <td><?= humanize($task['name']); ?></td>
+                                        <td>
+                                            <select class="form-control task_status_labels mySelect" id="task_<?= $task['id']; ?>">
+                                                <option class="myOption" value="Not Started" <?= $task['status'] == 'Not Started' ? 'selected' : ''; ?>><?= lang('task.not_started') ?></option>
+                                                <option class="myOption" value="In Progress" <?= $task['status'] == 'In Progress' ? 'selected' : ''; ?>><?= lang('task.in_progress') ?></option>
+                                                <option class="myOption" value="Completed" <?= $task['status'] == 'Completed' ? 'selected' : ''; ?>><?= lang('task.completed') ?></option>
+                                                <option class="myOption" value="Rejected" <?= $task['status'] == 'Rejected' ? 'selected' : ''; ?>><?= lang('task.rejected') ?></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
 
-                        </tbody>
-                    </table>
-                </form>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- </form> -->
             </div>
         </div>
     </div>
@@ -106,8 +89,8 @@
 
 <script>
     $(document).ready(function() {
-        function updateSelectBackground(selectElement) {
-            var selectedValue = selectElement.val();
+        function updateSelectBackground(optionElement) {
+            var optionValue = optionElement.val();
 
             var statusColors = {
                 "Not Started": "#BDD8F1",
@@ -116,25 +99,44 @@
                 "Rejected": "#EE4749"
             };
 
-            selectElement.css('background-color', '');
+            optionElement.css('background-color', '');
 
             // Loop through each entry in the object to apply the corresponding color
             Object.entries(statusColors).forEach(([status, color]) => {
-                if (selectedValue === status) {
-                    selectElement.css('background-color', color);
+                if (optionValue === status) {
+                    optionElement.css('background-color', color);
                 }
             });
         }
 
         // On document ready, update the color for all .mySelect elements based on their current selected value
-        $('.mySelect').each(function() {
+        $('.myOption').each(function() {
             updateSelectBackground($(this));
         });
 
         // Update background color when the user changes the selected option
-        $('.mySelect').change(function() {
+        $('.myOption').change(function() {
             updateSelectBackground($(this));
         });
+
+        // $.ajax({
+        //     url,
+        //     method: 'GET',
+        //     data,
+        //     success: function(response) {
+        //         $('.datatable').DataTable({
+        //             stateSave: true,
+        //             columns: [
+        //                 {
+        //                     data: 'status',
+        //                     render: function(data, type) {
+        //                         return '<span style="color:' + data + '">' + data + '</span>';
+        //                     }
+        //                 }
+        //             ]
+        //         });
+        //     }
+        // })
     });
 
     $(document).on('change', '.task_status_labels', function() {
@@ -146,7 +148,10 @@
         $.ajax({
             url: url,
             type: "POST",
-            data: {status_label, user_id},
+            data: {
+                status_label,
+                user_id
+            },
             beforeSend: function() {
                 $('#overlay').css("display", "block");
             },
@@ -160,73 +165,26 @@
     })
 
     // Add new task via AJAX
-    $('#btn_add_feature').on('click',function() {
+    $('#btn_add_feature').on('click', function() {
         var taskName = $('#my_input').val();
-        
+
         if (taskName) {
             $.ajax({
-                url: "<?=site_url('users/profile/save_task');?>", // Adjust the URL based on your routes
+                url: "<?= site_url('users/profile/save_task'); ?>", // Adjust the URL based on your routes
                 type: 'POST',
-                // contentType: 'application/json',
                 data: {
                     taskName: taskName,
-                    user_id: '<?=$parent_id;?>'
+                    user_id: '<?= $parent_id; ?>'
                 },
                 success: function(data) {
-                    // if (data.success) {
-                     
-                        $("#profile_data").html(data)
-                        // Dynamically add task to the table
-                        // var newRow = `
-                        // <tr data-task-id="${data.task_id}">
-                        //     <td>
-                        //         <span class='action-icons' title="Edit Task">
-                        //             <i style="cursor:pointer" class='fa fa-pencil'></i>
-                        //         </span>
-                        //         <span class='action-icons' title='Delete Task'><i class='fa fa-trash'></i></span>
-                        //     </td>
-                        //     <td>${taskName}</td>
-                        //     <td>
-                        //         <select class="form-control task_status_labels mySelect">
-                        //             <option value="not_started" selected>Not Started</option>
-                        //             <option value="in_progress">In Progress</option>
-                        //             <option value="completed">Completed</option>
-                        //             <option value="rejected">Rejected</option>
-                        //         </select>
-                        //     </td>
-                        // </tr>`;
-                        // $('#permission_table tbody').append(newRow);
-                        // $('#my_input').val(''); // Clear the input field
-                    // }
+
+                    $("#profile_data").html(data)
                 }
             });
         }
     });
 
-    // Handle task status change via AJAX
-    // $(document).on('change', '.mySelect', function() {
-    //     var row = $(this).closest('tr');
-    //     var taskId = row.data('task-id');
-    //     var newStatus = $(this).val();
-
-    //     // Send AJAX request to update task status
-    //     $.ajax({
-    //         url: 'pending_tasks/update_task_status', // Adjust the URL based on your routes
-    //         type: 'POST',
-    //         data: {
-    //             task_id: taskId,
-    //             status: newStatus
-    //         },
-    //         success: function(response) {
-    //             if (response.success) {
-    //                 alert('Task status updated successfully');
-    //             } else {
-    //                 alert('Failed to update task status: ' + response.message);
-    //             }
-    //         },
-    //         error: function() {
-    //             alert('An error occurred while updating the task status');
-    //         }
-    //     });
-    // });
+    $('.datatable').DataTable({
+        stateSave: true,
+    });
 </script>

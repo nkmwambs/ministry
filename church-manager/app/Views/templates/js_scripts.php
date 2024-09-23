@@ -125,8 +125,29 @@
 
 
     $('.datatable').DataTable({
-        stateSave: true
+        stateSave: true,
+        // scrollX: true,
+        scrollY: '200px',
+        scrollCollapse: true,
+        // paging: true,
+        fixedColumns: true,
+        fixedHeader: true,
+        responsive: true,
+        // dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        columnDefs: [{
+            targets: [0],
+            orderable: false
+        }]
     });
+
+
+    // $('.scrollable-x-datatable').DataTable({
+    //     stateSave: true,
+    //     scrollX: true
+    // });
 
 
     $('.datepicker').datepicker({

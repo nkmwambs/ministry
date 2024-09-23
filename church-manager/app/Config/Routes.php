@@ -59,6 +59,8 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
     $routes->get('email_notifications/(:segment)', "User::emailNotifications/$1");
     $routes->get('pending_tasks/(:segment)', 'User::pendingTasks/$1');
     $routes->post('save_task', 'Task::saveTask');
+    $routes->post('update_task', 'Task::updateTask');
+    $routes->post('update_task_status/', 'Task::updateTaskStatus');
     $routes->get('widgets/(:segment)', 'User::widgets');
     $routes->get('privacy/(:segment)', "User::privacy/$1");
     $routes->get('your_data/(:segment)', "User::yourData/$1");
@@ -66,4 +68,4 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
 });
 
 $routes->post('users/view/(:segment)/pending_tasks/save-task', 'Task::saveTask/$1');
-$routes->post('users/profile/pending_tasks/update_task_status/', 'Task::updateTaskStatus');
+// $routes->post('update_task_status/', 'Task::updateTaskStatus');

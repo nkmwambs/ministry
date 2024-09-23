@@ -43,15 +43,6 @@ class Task extends BaseController
             'name' => $this->request->getPost('taskName'),
             'user_id' => $numeric_user_id,
         ];
-    
-        // Validate and sanitize input if necessary
-        // if ($data['name']) {
-        //     return $this->response->setJSON(['success' => false, 'message' => 'Task name is required']);
-        // }
-    
-        // Insert the task into the database
-        // $this->model->insert((object)$data);
-         // $insertID = $this->model->getInsertID();
 
         $db = db_connect();
         $builder = $db->table('tasks');
@@ -73,15 +64,45 @@ class Task extends BaseController
             $this->parent_id =  $this->request->getPost('user_id');
             $this->id =  hash_id($insertID, 'encode');
 
-            // $page_data = [...parent::page_data($records)];
-            // $page_data['success'] = true;
-
-            // log_message('error', json_encode(value: $data));
-
             return view('task/list', parent::page_data($records));
         }
     
-        return redirect()->to(site_url('users/profile' . hash_id($insertID)))->with('message', 'Role added successfully!');;
+        return redirect()->to(site_url('users/profile' . hash_id($insertID)))->with('message', 'Role added successfully!');
+    }
+
+    public function updateTask() {
+        $hashed_id = $this->request->getVar('id');
+
+        // Validations
+
+        $update_data = [
+            'name' => $this->request->getPost('name'),
+            'status' => $this->request->getPost('status'),
+            'user_id' => $this->request->getPost('user_id')
+        ];
+
+        // $db = db_connect();
+        // $builder = $db->table('tasks');
+
+        $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
+
+        if ($this->request->isAJAX()) {
+            $this->feature = 'task';
+            $this->action = 'list';
+
+            $records = [];
+
+            if (method_exists($this->model, 'getAll')) {
+                $records = $this->model->getAll();
+            } else {
+                $records = $this->model->findAll();
+            }
+
+            $this->parent_id =  $this->request->getPost('user_id');
+
+            return view('task/list', parent::page_data($records));
+        }
+        return redirect()->to(site_url('users/profile' . $hashed_id))->with('message', 'Role updated successfully!');
     }
 
     public function updateTaskStatus() {
@@ -105,21 +126,4 @@ class Task extends BaseController
         $task_statuses = $this->model->where('id', $task_id)->first()['status'];
         return $this->response->setJSON(compact('status'));
     }
-    
-
-    // function updateTaskStatus(){
-    //     $tasksModel = $this->model;
-    //     $user_id = $this->request->getPost('user_id');
-    //     // $feature_id = $this->request->getPost('feature_id');
-    //     $task_status = $this->request->getPost('status');
-
-    //     $countAssignedUserTasks = $tasksModel->where(['user_id' => $user_id])->countAllResults();
-    //     log_message('error', json_encode($countAssignedUserTasks));
-    //     if($countAssignedUserTasks == 0){
-    //         $this->model->insert($this->request->getPost());
-    //     }else{
-    //         $task_user_id = $tasksModel->where(['user_id' => $user_id])->first()['id'];
-    //         $tasksModel->update($task_user_id, (object)['status' => $task_status]);
-    //     }
-    // }
 }
