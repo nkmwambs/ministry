@@ -75,6 +75,8 @@
         columnDefs: [{
             targets: [0],
             orderable: false
-        }]
+        }],
+        // processing: true,
+        // serverSide: true,
     })
 </script>
