@@ -126,10 +126,8 @@
 
     $('.datatable').DataTable({
         stateSave: true,
-        // scrollX: true,
         scrollY: '200px',
         scrollCollapse: true,
-        // paging: true,
         fixedColumns: true,
         fixedHeader: true,
         responsive: true,
@@ -141,6 +139,7 @@
             targets: [0],
             orderable: false
         }],
+        // deferLoading: 57,
         // processing: true,
         // serverSide: true,
     });

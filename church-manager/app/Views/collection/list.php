@@ -76,6 +76,7 @@
             targets: [0],
             orderable: false
         }],
+        // deferLoading: true,
         // processing: true,
         // serverSide: true,
     })
