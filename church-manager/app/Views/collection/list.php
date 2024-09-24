@@ -79,5 +79,14 @@
         // deferLoading: true,
         // processing: true,
         // serverSide: true,
+        // "ajax": {
+        //     'url': "<?=site_url();?>/api/users/getAll",
+        //     "method": "POST"
+        // },
+        // "columns": [
+        //     { "data": "id" },
+        //     { "data": "name" },
+        //     { "data": "email" }
+        // ]
     })
 </script>

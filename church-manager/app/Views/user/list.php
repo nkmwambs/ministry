@@ -57,3 +57,36 @@
       </table>
     </div>
   </div>
+
+  <script>
+    $('.datatable').DataTable({
+        stateSave: true,
+        scrollY: '200px',
+        scrollCollapse: true,
+        fixedColumns: true,
+        fixedHeader: true,
+        responsive: true,
+        // dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        columnDefs: [{
+            targets: [0],
+            orderable: false
+        }],
+        // deferLoading: 57,
+        processing: true,
+        serverSide: true,
+        "ajax": {
+            'url': "<?=site_url();?>/users",
+            "method": "POST"
+        },
+        "columns": [
+            { "data": "first_name" },
+            { "data": "last_name" },
+            { "data": "phone" },
+            {"data": "email"},
+            {"data": "is_Active"}
+        ]
+    });
+  </script>
