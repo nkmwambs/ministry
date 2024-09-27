@@ -86,7 +86,7 @@ CREATE TABLE `collectiontypes` (
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
   CONSTRAINT `collectiontypes_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 
 DROP TABLE IF EXISTS `customfields`;
@@ -267,34 +267,34 @@ CREATE TABLE `features` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `features` (`id`, `name`, `description`, `allowable_permission_labels`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1,	'dashboard',	'Dashboard',	'[\"read\"]',	'2024-06-26 20:26:16',	1,	'2024-06-26 20:26:16',	1,	NULL,	NULL),
-(2,	'hierarchy',	'Hierarchy',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(3,	'entity',	'Entity',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(4,	'assembly',	'Assembly',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(5,	'denomination',	'Denomination',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(6,	'collection',	'Collection',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(7,	'revenue',	'Revenue',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(8,	'designation',	'Designation',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(9,	'event',	'Events',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(10,	'meeting',	'Meetings',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(11,	'member',	'Members',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(12,	'participant',	'Participants',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(13,	'role',	'Roles',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(14,	'subscription',	'Subscriptions',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(15,	'subscription_type',	'Subscription Types',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(16,	'user',	'Users',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(17,	'setting',	'Settings',	'[\"read\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(18,	'report',	'Reports',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(19,	'report_type',	'Reports Types',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(22,	'attendance',	'Meeting Attendance',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(24,	'custom_field',	'Custom Fields',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(25,	'custom_value',	'Custom values',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(26,	'department',	'Departments',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(27,	'section',	'Report Sections',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(28,	'visitor',	'Event Visitors',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(29,	'payment',	'Event payments',	'[\"read\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(30,	'minister',	'ministers',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
-(31,	'trash',	'trash',	'[\"read\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL);
+(1, 'dashboard',  'Dashboard',  '[\"read\"]', '2024-06-26 20:26:16',  1,  '2024-06-26 20:26:16',  1,  NULL, NULL),
+(2, 'hierarchy',  'Hierarchy',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(3, 'entity', 'Entity', '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(4, 'assembly', 'Assembly', '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(5, 'denomination', 'Denomination', '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(6, 'collection', 'Collection', '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(7, 'revenue',  'Revenue',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(8, 'designation',  'Designation',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(9, 'event',  'Events', '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(10,  'meeting',  'Meetings', '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(11,  'member', 'Members',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(12,  'participant',  'Participants', '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(13,  'role', 'Roles',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(14,  'subscription', 'Subscriptions',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(15,  'subscription_type',  'Subscription Types', '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(16,  'user', 'Users',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(17,  'setting',  'Settings', '[\"read\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(18,  'report', 'Reports',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(19,  'report_type',  'Reports Types',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(22,  'attendance', 'Meeting Attendance', '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(24,  'custom_field', 'Custom Fields',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(25,  'custom_value', 'Custom values',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(26,  'department', 'Departments',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(27,  'section',  'Report Sections',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(28,  'visitor',  'Event Visitors', '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(29,  'payment',  'Event payments', '[\"read\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(30,  'minister', 'ministers',  '[\"create\", \"read\", \"update\", \"delete\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL),
+(31,  'trash',  'trash',  '[\"read\"]', '2024-06-26 20:34:21',  1,  '2024-06-26 20:34:21',  1,  NULL, NULL);
 
 DROP TABLE IF EXISTS `gatherings`;
 CREATE TABLE `gatherings` (
@@ -332,7 +332,7 @@ CREATE TABLE `meetings` (
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
   CONSTRAINT `gatheringtypes_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 
 DROP TABLE IF EXISTS `hierarchies`;
@@ -434,32 +434,32 @@ CREATE TABLE `menus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `menus` (`id`, `name`, `icon`, `feature_id`, `parent_id`, `visible`, `order`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1,	'dashboard',	'entypo-gauge',	1,	0,	'yes',	1,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(2,	'hierarchy',	'entypo-flow-tree',	2,	4,	'yes',	5,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(3,	'assembly',	'entypo-users',	4,	0,	'yes',	4,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(4,	'denomination',	'entypo-feather',	5,	0,	'yes',	2,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(5,	'collection',	'entypo-database',	6,	0,	'no',	6,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(6,	'setting',	'entypo-cog',	17,	0,	'no',	50,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(7,	'event',	'entypo-cog',	9,	0,	'yes',	7,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(8,	'attendance',	'entypo-folder',	22,	7,	'no',	8,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(9,	'member',	'entypo-basket',	11,	3,	'yes',	9,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(10,	'role',	'entypo-bookmark',	13,	12,	'yes',	10,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(11,	'subscription',	'entypo-link',	14,	0,	'no',	11,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(12,	'user',	'entypo-user',	16,	0,	'yes',	12,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(13,	'report',	'entypo-print',	18,	0,	'yes',	13,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(14,	'entity',	'entypo-docs',	3,	4,	'yes',	3,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(16,	'revenue',	'entypo-vcard',	7,	6,	'no',	52,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(17,	'report_type',	'entypo-bag',	19,	4,	'yes',	53,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(18,	'subscription_type',	'entypo-list',	15,	6,	'no',	54,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(20,	'designation',	'entypo-star',	8,	4,	'yes',	54,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(21,	'participant',	'entypo-user-add',	12,	7,	'no',	7,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(22,	'meeting',	'entypo-bell',	10,	7,	'no',	7,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(24,	'custom_field',	'entypo-lamp',	24,	0,	'yes',	52,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(25,	'department',	'entypo-archive',	26,	4,	'yes',	10,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(26,	'section',	'entypo-map',	27,	13,	'yes',	10,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(27,	'visitor',	'entypo-heart',	28,	7,	'no',	10,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(28,	'payment',	'entypo-flag',	29,	0,	'yes',	7,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
-(29,	'minister',	'entypo-flag',	30,	0,	'yes',	2,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL);
+(1, 'dashboard',  'entypo-gauge', 1,  0,  'yes',  1,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(2, 'hierarchy',  'entypo-flow-tree', 2,  4,  'yes',  5,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(3, 'assembly', 'entypo-users', 4,  0,  'yes',  4,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(4, 'denomination', 'entypo-feather', 5,  0,  'yes',  2,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(5, 'collection', 'entypo-database',  6,  0,  'no', 6,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(6, 'setting',  'entypo-cog', 17, 0,  'no', 50, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(7, 'event',  'entypo-cog', 9,  0,  'yes',  7,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(8, 'attendance', 'entypo-folder',  22, 7,  'no', 8,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(9, 'member', 'entypo-basket',  11, 3,  'yes',  9,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(10,  'role', 'entypo-bookmark',  13, 12, 'yes',  10, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(11,  'subscription', 'entypo-link',  14, 0,  'no', 11, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(12,  'user', 'entypo-user',  16, 0,  'yes',  12, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(13,  'report', 'entypo-print', 18, 0,  'yes',  13, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(14,  'entity', 'entypo-docs',  3,  4,  'yes',  3,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(16,  'revenue',  'entypo-vcard', 7,  6,  'no', 52, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(17,  'report_type',  'entypo-bag', 19, 4,  'yes',  53, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(18,  'subscription_type',  'entypo-list',  15, 6,  'no', 54, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(20,  'designation',  'entypo-star',  8,  4,  'yes',  54, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(21,  'participant',  'entypo-user-add',  12, 7,  'no', 7,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(22,  'meeting',  'entypo-bell',  10, 7,  'no', 7,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(24,  'custom_field', 'entypo-lamp',  24, 0,  'yes',  52, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(25,  'department', 'entypo-archive', 26, 4,  'yes',  10, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(26,  'section',  'entypo-map', 27, 13, 'yes',  10, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(27,  'visitor',  'entypo-heart', 28, 7,  'no', 10, '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(28,  'payment',  'entypo-flag',  29, 0,  'yes',  7,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL),
+(29,  'minister', 'entypo-flag',  30, 0,  'yes',  2,  '2024-06-26 20:27:20',  1,  '2024-06-26 20:27:20',  1,  NULL, NULL);
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -818,16 +818,16 @@ CREATE TABLE `users` (
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `gender` enum('male','female') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `gender` enum('male','female') NOT NULL,
+  `phone` varchar(20)  DEFAULT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
   `roles` json DEFAULT NULL,
   `is_system_admin` enum('yes','no') DEFAULT 'no',
   `access_count` int DEFAULT '0',
   `accessed_at` datetime DEFAULT NULL,
   `last_password_reset_at` datetime DEFAULT NULL,
-  `is_active` enum('yes','no') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'yes',
+  `is_active` enum('yes','no')  NOT NULL DEFAULT 'yes',
   `associated_member_id` int DEFAULT NULL,
   `permitted_entities` json DEFAULT NULL,
   `permitted_assemblies` json DEFAULT NULL,
@@ -842,7 +842,7 @@ CREATE TABLE `users` (
   KEY `associated_member_id` (`associated_member_id`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`),
   CONSTRAINT `users_ibfk_2` FOREIGN KEY (`associated_member_id`) REFERENCES `members` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 
 DROP TABLE IF EXISTS `visitors`;
@@ -874,3 +874,4 @@ CREATE TABLE `visitors` (
 
 
 -- 2024-09-09 15:18:44
+
