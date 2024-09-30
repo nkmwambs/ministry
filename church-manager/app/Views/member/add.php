@@ -1,5 +1,6 @@
 <?php 
 $numeric_designation_id = hash_id($designation_id, 'decode');
+print_r($parent_id);
 ?>
 
 <div class="row">

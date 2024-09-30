@@ -10,7 +10,7 @@ class VisitorsModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['id','first_name','last_name','phone','email','gender','date_of_birth','event_id','payment_id','payment_code','registration_amount','status'];
 

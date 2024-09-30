@@ -10,7 +10,7 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['id','name','planted_at','location','entity_id','assembly_leader','is_active'];
 

@@ -10,7 +10,7 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ["hierarchy_id","entity_number","name","parent_id","entity_leader"];
 

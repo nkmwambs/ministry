@@ -15,7 +15,7 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
 
     function setListQueryFields(){
         $fields = [
-            'members.id','first_name','last_name',
+            'members.id','first_name','last_name','parent_id',
             'assembly_id','member_number','designation_id',
             'date_of_birth','members.email','members.phone','members.is_active'
         ];
@@ -24,7 +24,7 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
 
     function setViewQueryFields(){
         $fields = [
-            'members.id','first_name','last_name',
+            'members.id','first_name','last_name','parent_id',
             'assembly_id','member_number','designation_id',
             'date_of_birth','members.email','members.phone','members.is_active'
         ];

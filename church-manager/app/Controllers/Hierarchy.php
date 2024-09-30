@@ -69,6 +69,7 @@ class Hierarchy extends BaseController
 
         $hashed_denomination_id = $this->request->getPost('denomination_id');
         $denomination_id = hash_id($hashed_denomination_id,'decode');
+        // log_message('error',$denomination_id);
 
         $data = [
             'name' => $this->request->getPost('name'),

@@ -83,15 +83,15 @@ class Entity extends BaseController
                    'max_length' => 'Entity Name cannot exceed {value} characters.'
                 ]
             ],
-            // 'entity_number' => [
-            //     'rules' => 'required|min_length[3]|max_length[255]',
-            //     'label' => 'Entity Number',
-            //     'errors' => [
-            //         'required' => 'Entity Number is required.',
-            //         'min_length' => 'Entity Number must be at least {value} characters long.',
-            //         'max_length' => 'Entity Number cannot exceed {value} characters.',
-            //     ]
-            // ],
+            'entity_number' => [
+                'rules' => 'required|min_length[3]|max_length[255]',
+                'label' => 'Entity Number',
+                'errors' => [
+                    'required' => 'Entity Number is required.',
+                    'min_length' => 'Entity Number must be at least {value} characters long.',
+                    'max_length' => 'Entity Number cannot exceed {value} characters.',
+                ]
+            ],
             'parent_id' => [
                 'rules' => 'required',
                 'label' => 'Parent Entity',
