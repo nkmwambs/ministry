@@ -17,6 +17,72 @@ class User extends BaseController
         $this->model = new \App\Models\UsersModel();
     }
 
+    private function getUsers(){
+
+        $start = intval(request()->getPost('start'));
+        $length = intval(request()->getPost('length'));
+        $searchValue = request()->getPost('search')['value'];
+
+        $users = [];
+
+        if ($searchValue == "") {
+            $users = $this->model
+            ->limit($length, $start)
+            ->findAll();
+        }else{
+            $users = $this->model
+            ->like('name', $searchValue)
+            ->orLike('email', $searchValue)
+            ->limit($length, $start)
+            ->findAll();
+        }
+
+        // log_message('error', json_encode($users[0]->name));
+
+        return $users; 
+    }
+
+    private function countAllUsers(){
+        
+        $searchValue = request()->getPost('search')['value'];
+        $usersCount = 10;
+
+        if ($searchValue == "") {
+            $usersCount = $this->model
+            ->countAllResults();
+        }else{
+            $usersCount = $this->model
+            ->like('first_name', $searchValue)
+            ->orLike('last_name', $searchValue)
+            ->orLike('phone', $searchValue)
+            ->orLike('email', $searchValue)
+            ->countAllResults();
+        }
+
+        return $usersCount;
+    }
+
+    // public function index(): ResponseInterface
+    // {
+    
+    //     $draw = intval(request()->getPost('draw'));
+    //     $allUsers = $this->countAllUsers();
+        
+    //     // Return array of users with id, name and email 
+    //     $users = $this->getUsers();
+
+    //     $response = [
+    //         "draw" => $draw,
+    //         "recordsTotal" => $allUsers,
+    //         "recordsFiltered" => $allUsers,
+    //         "data" => $users
+    //     ];
+
+    //     return response()->setJSON($response);
+    // }
+
+
+
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -27,27 +93,6 @@ class User extends BaseController
         }
     
         return $randomString;
-    }
-
-    /// Edit Controllers
-
-    public function editProfile($id): string {
-        $numeric_id = hash_id($id,'decode');
-
-        if(method_exists($this->model, 'getEditData')){
-            $data = $this->model->getEditData($numeric_id);
-        }else{
-            $data = $this->model->getOne($numeric_id);
-        }
-
-        $page_data = $this->page_data($data);
-        
-        if(method_exists($this->library,'editExtraData')){
-            // Note the editExtraData updates the $page_data by reference
-            $this->library->editExtraData($page_data);
-        }
-
-        return view("$this->feature/profile/account", $page_data);
     }
 
     /// Posting Controllers
@@ -192,6 +237,25 @@ class User extends BaseController
 
     /// Update Controllers
 
+    public function editProfile($id): string {
+        $numeric_id = hash_id($id,'decode');
+
+        if(method_exists($this->model, 'getEditData')){
+            $data = $this->model->getEditData($numeric_id);
+        }else{
+            $data = $this->model->getOne($numeric_id);
+        }
+
+        $page_data = $this->page_data($data);
+        
+        if(method_exists($this->library,'editExtraData')){
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->editExtraData($page_data);
+        }
+
+        return view("$this->feature/profile/account", $page_data);
+    }
+
     public function updatePublicInfo()
     {
         $hashed_id = $this->request->getPost('id');
@@ -280,11 +344,6 @@ class User extends BaseController
         return redirect()->to(site_url('users/view' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
     }
 
-
-    public function account()
-    {
-        return view('user/account');
-    }
 
     public function getAccount($id)
     {

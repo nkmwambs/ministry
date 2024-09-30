@@ -9,8 +9,8 @@ class UsersModel extends Model  implements \App\Interfaces\ModelInterface
     protected $table            = 'users';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $returnType       = 'array';// \App\Entities\UserEntity::class;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
         "id","denomination_id",
