@@ -23,7 +23,7 @@ class EntityLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setViewQueryFields(){
-        $fields = ['entities.id','entities.entity_number','entities.hierarchy_id','hierarchies.name as hierarchy_name','entities.name','et.parent_id','et.name as parent_name','entities.entity_leader'];
+        $fields = ['entities.id','entities.entity_number','entities.hierarchy_id','entities.name','entities.parent_id','entities.name as parent_name','entities.entity_leader'];
         return $fields;
     }
 
@@ -48,5 +48,61 @@ class EntityLibrary implements \App\Interfaces\LibraryInterface {
         }
 
         return $page_data;
+    }
+
+
+    function listExtraData(&$page_data) {
+        
+        $parent_id = 0;
+        $hierarchy_id =0;
+
+        if (session()->get('user_denomination_id')) {
+            $parent_id = session()->get('user_denomination_id');
+        }
+
+        $page_data['parent_id'] = hash_id($parent_id,'encode');
+        $page_data['hierarchy_id'] = hash_id($hierarchy_id,'encode');
+    }
+
+    function addExtraData(&$page_data) {
+        $parent_id = 0; 
+        $hierarchy_id = 0;
+
+        if (session()->get('user_denomination_id')) {
+            $parent_id = session()->get('user_denomination_id');
+        }
+
+        $denominationsModel = new \App\Models\DenominationsModel();
+        $denominations = $denominationsModel->findAll();
+
+        $hierarchiesModel = new \App\Models\HierarchiesModel();
+        $hierarchies = $hierarchiesModel->findAll();
+
+        $page_data['denominations'] = $denominations;
+        $page_data['hierarchies'] = $hierarchies;
+
+        $page_data['parent_id'] = hash_id($parent_id,'encode');
+        $page_data['hierarchy_id'] = hash_id($hierarchy_id,'encode');
+    }
+
+    function editExtraData (&$page_data) {
+        $numeric_denomination_id = 0;
+        $numeric_hierarchy_id = 0;
+
+        if (session()->get('user_denomination_id')) {
+            $numeric_denomination_id = session()->get('user_denomination_id');
+        }
+
+        $page_data['numeric_denomination_id'] = $numeric_denomination_id;
+        $page_data['numeric_hierarchy_id'] = $numeric_hierarchy_id;
+        
+        $denominationsModel = new \App\Models\DenominationsModel();
+        $denominations = $denominationsModel->findAll();
+        
+        $hierarchiesModel = new \App\Models\HierarchiesModel();
+        $hierarchies = $hierarchiesModel->findAll();
+
+        $page_data['denominations'] = $denominations;
+        $page_data['hierarchies'] = $hierarchies;
     }
 }
