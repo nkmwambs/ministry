@@ -32,7 +32,7 @@
                             <span class='action-icons' title="Edit <?= $revenue['id']; ?> revenue">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($revenue['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' title="Delete <?= $revenue['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($revenue['id']); ?>')" title="Delete <?= $revenue['id']; ?> revenue"><i class='fa fa-trash'></i></span>
 
                         </td>
 

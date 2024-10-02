@@ -21,7 +21,6 @@ class Department extends BaseController
     public function post() {
         $insertId = 0;
 
-
         // log_message('error', json_encode($this->request->getPost()));
         
         $validation = \Config\Services::validation();
@@ -78,7 +77,7 @@ class Department extends BaseController
                 $records = $this->model->findAll();
             }
 
-            return view('department/list', parent::page_data($records));
+            return view('department/after_save', parent::page_data($records));
         }
 
         return redirect()->to(site_url('settings/view/' . hash_id($insertId)));

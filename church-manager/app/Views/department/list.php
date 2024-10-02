@@ -35,7 +35,7 @@
                             <span class='action-icons' title="Edit <?= $department['id']; ?> department">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($department['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' title="Delete <?= $department['id']; ?> department"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($department['id']); ?>')" title="Delete <?= $department['id']; ?> department"><i class='fa fa-trash'></i></span>
 
                         </td>
 

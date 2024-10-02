@@ -95,14 +95,14 @@ class Member extends BaseController
 
         $hashed_assembly_id = $this->request->getVar('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
-        // $parent_id = $this->request->getPost('parent_id');
+        $parent_id = $this->request->getPost('parent_id');
         log_message('error', $hashed_assembly_id);
 
         $data = [
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
             'assembly_id' => $this->request->getPost('assembly_id'),
-            'member_number' => $this->request->getPost('member_number'),//computeMemberNumber($assembly_id, $parent_id),
+            'member_number' => $this->computeMemberNumber($assembly_id, $parent_id),
             'designation_id' => $this->request->getPost('designation_id'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
             'email' => $this->request->getPost('email'),
@@ -198,6 +198,7 @@ class Member extends BaseController
         
         return redirect()->to(site_url("member/view/".$hashed_id))->with('message', 'Member updated successfully!');
     }
+
     private function computeMemberNumber($assembly_id, $parent_id) {
         $memberNumber = '';
 

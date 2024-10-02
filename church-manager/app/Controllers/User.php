@@ -170,71 +170,6 @@ class User extends BaseController
         return redirect()->to(site_url('users/view' . hash_id($insertId)));
     }
 
-    public function postPrivateInfo()
-    {
-        $insertId = 0;
-        // log_message('error', json_encode($this->request->getPost()));
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'first_name' => 'required|min_length[3]|max_length[255]',
-            'last_name' => 'required|min_length[3]|max_length[255]',
-            'phone' => 'required',
-            'email' => 'required|valid_email',
-            'gender' => 'required|min_length[4]|max_length[6]',
-            'date_of_birth' => 'required',
-        ]);
-
-        if (!$this->validate($validation->getRules())) {
-            return response()->setJSON(['errors' => $this->validator->getErrors()]);
-        }
-
-        $numeric_denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
-
-        // Generate random password with password hash in php 
-        $password = $this->generateRandomString(8);
-        $hashed_password = password_hash($this->generateRandomString(8), PASSWORD_DEFAULT);
-
-        $templateLibrary =  new \App\Libraries\TemplateLibrary();
-        $first_name = $this->request->getPost('first_name');
-        $email = $this->request->getPost('email');
-        $mailTemplate = $templateLibrary->getEmailTemplate(short_name:'new_user_account', template_vars:compact('password','first_name','email'), denomination_id: $numeric_denomination_id);
-
-        $logMailsModel = new \App\Models\LogmailsModel();
-        $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
-
-        $data = [
-            'denomination_id' => $numeric_denomination_id,
-            'first_name' => $this->request->getPost('first_name'),
-            'last_name' => $this->request->getPost('last_name'),
-            'phone' => $this->request->getPost('phone'),
-            'email' => $this->request->getPost('email'),
-            'gender' => $this->request->getPost('gender'),
-            'date_of_birth' => $this->request->getPost('date_of_birth'),
-        ];
-
-        $this->model->insert((object)$data);
-        $insertId = $this->model->getInsertID();
-
-        if ($this->request->isAJAX()) {
-            $this->feature = 'user';
-            $this->action = 'list';
-
-            $records = [];
-
-            if (method_exists($this->model, 'getAll')) {
-                $records = $this->model->getAll();
-            } else {
-                $records = $this->model->findAll();
-            }
-
-            $page_data = parent::page_data($records);
-
-            return view('user/profile/account', $page_data);
-        }
-
-        return redirect()->to(site_url('users/profile/account' . hash_id($insertId)));
-    }
-
     /// Update Controllers
 
     public function editProfile($id): string {
@@ -315,7 +250,7 @@ class User extends BaseController
         }
 
         $update_data = [
-            'denomination_id' => $this->request->getPost('denomination_id'),
+            // 'denomination_id' => $this->request->getPost('denomination_id'),
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
             'phone' => $this->request->getPost('phone'),

@@ -46,13 +46,14 @@ $routes->get('features/get_allowable_permission_labels/(:segment)', 'Feature::ge
 $routes->post('permissions/update_permission', 'Permission::updatePermission/');
 
 $routes->post('users/profile/account/save', "User::updatePublicInfo");
-$routes->post('users/profile/account/update', "User::updatePublicInfo");
-$routes->post('users/profile/account/update', "User::updatePrivateInfo");
+$routes->post('users/profile/account/update_public_info', "User::updatePublicInfo");
+$routes->post('users/profile/account/update_private_info', "User::updatePrivateInfo");
 
 $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('account/(:segment)', 'User::getAccount/$1');
     $routes->get('account', 'User::editAccount');      // Display the account edit form
-    $routes->post('account/update', 'User::updatePrivateInfo');  // Handle the account update form submission
+    $routes->post('account/update_public_info', 'User::updatePrivateInfo');  // Handle the account update form submission
+    $routes->post('account/update_private_info', 'User::updatePrivateInfo');
     $routes->post('account/save', 'User::postPrivateInfo');
     $routes->get('password_reset/(:segment)', "User::passwordReset/$1");
     $routes->post('verify_password', "User::passwordVerify");

@@ -11,21 +11,34 @@
             </div>
         </div>
 
+        <div class='row list-alert-container hidden'>
+            <div class='col-xs-12 info'>
+
+            </div>
+        </div>
+
         <div class="card-body">
-            <div class="panel-body">
-                <form role="form" id="frm_add_public" method="post" action="<?=site_url('users/profile/account/update/');?>" class="form-horizontal form-groups-bordered">
+            <div class="panel-body account_content">
+                <form role="form" id="frm_add_public" method="post" action="<?= site_url('users/profile/account/update_public_info/'); ?>" class="form-horizontal form-groups-bordered">
+
+                    <div class="form-group hidden error_container">
+                        <div class="col-xs-12 error">
+
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="username">Username</label>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" name="username" id="username" value="<?=$result['username'];?>" placeholder="Edit Username">
+                                    <input type="text" class="form-control" name="username" id="username" value="<?= $result['username']; ?>" placeholder="Edit Username">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="biography">Biography</label>
                                 <div class="col-xs-6">
-                                    <textarea rows="2" class="form-control" name="biography" id="biography" value="<?=$result['biography'];?>" placeholder="Tell something about yourself"><?=$result['biography'];?></textarea>
+                                    <textarea rows="2" class="form-control" name="biography" id="biography" value="<?= $result['biography']; ?>" placeholder="Tell something about yourself"><?= $result['biography']; ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +54,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save changes</button>
+                        <button type="button" id="account_save" data-item_id="" data-feature_plural="" class="btn btn-success">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -58,39 +71,53 @@
                 </div>
             </div>
         </div>
+
+        <div class='row list-alert-container hidden'>
+            <div class='col-xs-12 info'>
+
+            </div>
+        </div>
+        
         <div class="card-body">
-            <div class="panel-body">
-                <form role="form" id="frm_add_private" method="post" action="<?=site_url('users/profile/account/update/');?>" class="form-horizontal form-groups-bordered">
+            <div class="panel-body account_content">
+                <form role="form" id="frm_add_private" method="post" action="<?= site_url('users/profile/account/update_private_info/'); ?>" class="form-horizontal form-groups-bordered">
+
+                    <div class="form-group hidden error_container">
+                        <div class="col-xs-12 error">
+
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="first_name">First name</label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" name="first_name" id="first_name" value="<?=$result['first_name'];?>" placeholder="Edit First name">
+                                <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $result['first_name']; ?>" placeholder="Edit First name">
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="last_name">Last name</label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" name="last_name" id="last_name" value="<?=$result['last_name'];?>" placeholder="Edit Last name">
+                                <input type="text" class="form-control" name="last_name" id="last_name" value="<?= $result['last_name']; ?>" placeholder="Edit Last name">
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="email">Email</label>
                             <div class="col-xs-6">
-                                <input type="email" class="form-control" name="email" id="email" value="<?=$result['email'];?>" placeholder="Edit Email">
+                                <input type="email" class="form-control" name="email" id="email" value="<?= $result['email']; ?>" placeholder="Edit Email">
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="date_of_birth">Date of Birth</label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control datepicker" name="date_of_birth" value="<?=$result['date_of_birth'];?>" id="date_of_birth" placeholder="Edit Date of Birth">
+                                <input type="text" class="form-control datepicker" name="date_of_birth" value="<?= $result['date_of_birth']; ?>" id="date_of_birth" placeholder="Edit Date of Birth">
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="gender">Gender</label>
                             <div class="col-xs-6">
                                 <select id="gender" name="gender" class="form-control">
-                                    <option value="<?=$result['gender'];?>"><?= ucfirst($result['gender']);?></option>
+                                    <option value="<?= $result['gender']; ?>"><?= ucfirst($result['gender']); ?></option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
@@ -99,12 +126,13 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="phone">Phone</label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" name="phone" id="phone" value="<?=$result['phone'];?>" placeholder="Edit Phone">
+                                <input type="text" class="form-control" name="phone" id="phone" value="<?= $result['phone']; ?>" placeholder="Edit Phone">
                             </div>
                         </div>
                     </div>
+
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save changes</button>
+                        <button type="button" id="account_save" data-item_id="" data-feature_plural="" class="btn btn-success">Save Changes</button>
                     </div>
                 </form>
             </div>

@@ -48,15 +48,6 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-xs-4" for="minister_number">
-              <?= lang('minister.minister_number') ?>
-            </label>
-            <div class="col-xs-6">
-              <input type="text" class="form-control" name="minister_number" id="minister_number" placeholder="Enter Minister Number">
-            </div>
-          </div>
-
           <?php if (!$numeric_assembly_id) { ?>
             <div class='form-group'>
               <label for="assembly_id" class="control-label col-xs-4"><?= lang('minister.minister_assembly_id') ?></label>

@@ -19,7 +19,7 @@ class Minister extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'name' => 'required|min_length[10]|max_length[255]',
-            'minister_number' => 'required|min_length[3]',
+            // 'minister_number' => 'required|min_length[3]',
             'is_active' => 'required|min_length[2]|max_length[3]',
         ]);
 
@@ -31,7 +31,7 @@ class Minister extends BaseController
 
         $update_data = [
             'name' => $this->request->getPost('name'),
-            'minister_number' => $this->request->getPost('minister_number'),
+            // 'minister_number' => $this->request->getPost('minister_number'),
             'assembly_id' => $this->request->getPost('assembly_id'),
             'designation_id' => $this->request->getPost('designation_id'),
             'phone' => $this->request->getPost('phone'),
@@ -62,7 +62,7 @@ class Minister extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'name' => 'required|min_length[10]|max_length[255]',
-            'minister_number' => 'required|min_length[3]',
+            // 'minister_number' => 'required|min_length[3]',
             'is_active' => 'required|min_length[2]|max_length[3]',
         ]);
 
@@ -72,9 +72,12 @@ class Minister extends BaseController
             return response()->setJSON(['errors' => $validationErrors]);
         }
 
+        // $hashed_denomination_id = $this->request->getPost('denomination_id');
+        $assembly_id = $this->request->getPost('assembly_id');//hash_id($hashed_denomination_id, 'decode');
+
         $data = [
             'name' => $this->request->getPost('name'),
-            'minister_number' => $this->request->getPost('minister_number'),
+            'minister_number' => $this->computeMinisterNumber(),
             'assembly_id' => $this->request->getPost('assembly_id'),
             'designation_id' => $this->request->getPost('designation_id'),
             'phone' => $this->request->getPost('phone'),
@@ -98,5 +101,21 @@ class Minister extends BaseController
         }
 
         return redirect()->to(site_url("ministers/view/".hash_id($insertId)))->with('message', 'Minister added seccessfuly!');;
+    }
+
+    private function computeMinisterNumber() {
+        $ministerNumber = '';
+
+        $ministerCount = $this->model->countAllResults();
+        ++$ministerCount;
+
+        $ministerCount = str_pad($ministerCount,4,'0',STR_PAD_LEFT);
+
+        while ($this->model->where('minister_number', $ministerNumber)->countAllResults() > 0) {
+            ++$ministerCount;
+            $ministerNumber = "MIN/$ministerCount";
+        }
+
+        return $ministerNumber;
     }
 }

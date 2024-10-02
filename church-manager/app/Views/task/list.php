@@ -59,10 +59,10 @@
                                 <?php foreach ($result as $task): ?>
                                     <tr data-task-id="<?= $task['id']; ?>">
                                         <td>
-                                            <span class='action-icons' title="Edit <?= $task['id']; ?> task">
+                                            <span class='action-icons' title="Edit <?= $task['name']; ?> task">
                                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($task['id']); ?>')" class='fa fa-pencil'></i>
                                             </span>
-                                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($task['id']); ?>')" title="Delete <?= $task['id']; ?> task"><i class='fa fa-trash'></i></span>
+                                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($task['id']); ?>')" title="Delete <?= $task['name']; ?> task"><i class='fa fa-trash'></i></span>
                                         </td>
                                         <td><?= humanize($task['name']); ?></td>
                                         <td>

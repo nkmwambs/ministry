@@ -42,9 +42,9 @@ $member_sections = array_pop($result);
                 <div class="tab-content">
                     <div class="tab-pane active" id="view_assembly">
                         <form class="form-horizontal form-groups-bordered" role="form">
-                            <?php foreach($result as $field_name => $field_value){ ?>
+                            <?php foreach($result as $department => $field_value){ ?>
                                 <div class = "form-group">
-                                    <label for="" class = "control-label col-xs-4"><?=humanize($field_name);?></label>
+                                    <label for="" class = "control-label col-xs-4"><?=humanize($department);?></label>
                                     <div class = "col-xs-6">
                                         <div class = "form_view_field"><?=ucwords($field_value);?></div>
                                     </div>

@@ -9,7 +9,7 @@ return [
 
     'minister_action_col' => 'Action',
     'minister_name' => 'Name',
-    'minister_number' => 'Number',
+    'minister_number' => 'Minister Number',
     'minister_assembly_id' => 'Assembly Name',
     'minister_designation_id' => 'Designation Name',
     'minister_phone' => 'Phone',
