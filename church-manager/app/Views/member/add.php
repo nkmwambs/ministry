@@ -81,8 +81,8 @@ print_r($parent_id);
               <div class="col-xs-6">
                 <select class="form-control" name="designation_id" id="designation_id">
                   <option value=""><?= lang('member.select_designation') ?></option>
-                  <?php foreach ($designations as $designation) : ?>
-                    <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
+                  <?php foreach ($designations as $feature) : ?>
+                    <option value="<?php echo $feature['id']; ?>"><?php echo $feature['name']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>

@@ -41,25 +41,25 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($result as $designation) { ?>
+                <?php foreach ($result as $feature) { ?>
                 <tr>
                 <td>
-                        <span class='action-icons' title="View <?= $designation['id']; ?> designation">
+                        <span class='action-icons' title="View <?= $feature['id']; ?> designation">
                             
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($designation['id']);?>')"></i>
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($feature['id']);?>')"></i>
                         </span>
-                        <span class='action-icons' title="Edit <?= $designation['id']; ?> designation">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($designation['id']); ?>')" class='fa fa-pencil'></i>
+                        <span class='action-icons' title="Edit <?= $feature['id']; ?> designation">
+                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($feature['id']); ?>')" class='fa fa-pencil'></i>
                         </span>
-                        <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($designation['id']); ?>')" title="Delete <?= $designation['id']; ?> designation"><i class='fa fa-trash'></i></span>
+                        <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($feature['id']); ?>')" title="Delete <?= $feature['id']; ?> designation"><i class='fa fa-trash'></i></span>
 
                 </td>
 
-                    <td><?= $designation['name']; ?></td>
-                    <td><?= $designation['denomination_id']; ?></td>
-                    <td><?= $designation['hierarchy_id']; ?></td>
-                    <td><?= $designation['department_id']; ?></td>
-                    <td><?= $designation['minister_title_designation']; ?></td>
+                    <td><?= $feature['name']; ?></td>
+                    <td><?= $feature['denomination_id']; ?></td>
+                    <td><?= $feature['hierarchy_id']; ?></td>
+                    <td><?= $feature['department_id']; ?></td>
+                    <td><?= $feature['minister_title_designation']; ?></td>
 
                     <?php } ?>
             </tbody>
