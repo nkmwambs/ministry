@@ -37,12 +37,12 @@
                             <span class='action-icons' title="View <?= $member['first_name']; ?> member">
                                 <!-- <a href="<?= site_url("members/view/" . hash_id($member['id'])); ?>">
                                 <i class='fa fa-search'></i> -->
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?= plural($feature); ?>','view', '<?= hash_id($member['id']); ?>')"></i>
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?= plural($designation); ?>','view', '<?= hash_id($member['id']); ?>')"></i>
                             </span>
                             <span class='action-icons' title="Edit <?= $member['first_name']; ?> member">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($member['id']); ?>')" class='fa fa-pencil'></i>
+                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($designation); ?>','edit', '<?= hash_id($member['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($member['id']); ?>')" title="Delete <?= $member['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' onclick="deleteItem('<?= plural($designation); ?>','delete','<?= hash_id($member['id']); ?>')" title="Delete <?= $member['id']; ?> participant"><i class='fa fa-trash'></i></span>
 
                         </td>
 

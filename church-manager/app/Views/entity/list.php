@@ -33,13 +33,13 @@
               <td>
                 <span class='action-icons' title="View <?=singular($entity['entity_name']);?> hierarchy">
                   <!-- <a href="<?= site_url("entities/view/".hash_id($entity['id'])); ?>"> -->
-                    <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($entity['id']);?>')"></i>
+                    <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($designation);?>','view', '<?=hash_id($entity['id']);?>')"></i>
                   <!-- </a> -->
                 </span>
                 <span class='action-icons' title = "Edit <?=singular($entity['entity_name']);?> hierarchy">
-                  <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($entity['id']);?>')" class='fa fa-pencil'></i>
+                  <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($designation);?>','edit', '<?=hash_id($entity['id']);?>')" class='fa fa-pencil'></i>
                 </span>
-                <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($entity['id']); ?>')" title="Delete <?= $entity['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                <span class='action-icons' onclick="deleteItem('<?= plural($designation); ?>','delete','<?= hash_id($entity['id']); ?>')" title="Delete <?= $entity['id']; ?> participant"><i class='fa fa-trash'></i></span>
               </td>
 
               <td><?=$entity['entity_number'];?></td>

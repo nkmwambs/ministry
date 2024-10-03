@@ -35,12 +35,12 @@
                     <tr>
                         <td>
                             <span class='action-icons' title="View <?= $visitor['first_name']; ?> visitor">
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($visitor['id']);?>')"></i>
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($designation);?>','view', '<?=hash_id($visitor['id']);?>')"></i>
                             </span>
                             <span class='action-icons' title="Edit <?= $visitor['first_name']; ?> visitor">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($visitor['id']); ?>')" class='fa fa-pencil'></i>
+                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($designation); ?>','edit', '<?= hash_id($visitor['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($visitor['id']); ?>')" title="Delete <?= $visitor['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' onclick="deleteItem('<?= plural($designation); ?>','delete','<?= hash_id($visitor['id']); ?>')" title="Delete <?= $visitor['id']; ?> participant"><i class='fa fa-trash'></i></span>
 
                         </td>
 

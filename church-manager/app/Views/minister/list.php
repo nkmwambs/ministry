@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('<?= plural($feature); ?>','add')">
+        <div class='btn btn-primary' onclick="showAjaxModal('<?= plural($designation); ?>','add')">
             <?= lang('minister.add_minister'); ?>
         </div>
     </div>
@@ -42,9 +42,9 @@
                                 <a href="<?= site_url("ministers/view/" . hash_id($minister['id'])); ?>"><i class='fa fa-search'></i></a></i>
                             </span>
                             <span class='action-icons'>
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($minister['id']); ?>')" class='fa fa-pencil'></i>
+                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($designation); ?>','edit', '<?= hash_id($minister['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($minister['id']); ?>')" title="Delete <?= $minister['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' onclick="deleteItem('<?= plural($designation); ?>','delete','<?= hash_id($minister['id']); ?>')" title="Delete <?= $minister['id']; ?> participant"><i class='fa fa-trash'></i></span>
                         </td>
 
                         <td><?= $minister['name']; ?></td>

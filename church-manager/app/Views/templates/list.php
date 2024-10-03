@@ -2,16 +2,16 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="page-title"><i class='fa fa-book'></i>
-        <?= lang("$feature.list_".plural($feature)); ?>
+        <?= lang("$designation.list_".plural($designation)); ?>
       </div>
     </div>
   </div>
 
   <div class="row">
     <div class="col-xs-12 btn-container">
-      <a href="<?= site_url(plural($feature)."/add"); ?>" class='btn btn-primary'>
-      <!-- <a href="<?= site_url("modal/load/$feature/add"); ?>" class='btn btn-primary'> -->
-        <?= lang("$feature.add_$feature"); ?>
+      <a href="<?= site_url(plural($designation)."/add"); ?>" class='btn btn-primary'>
+      <!-- <a href="<?= site_url("modal/load/$designation/add"); ?>" class='btn btn-primary'> -->
+        <?= lang("$designation.add_$designation"); ?>
       </a>
     </div>
   </div>

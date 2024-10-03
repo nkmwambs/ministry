@@ -15,9 +15,9 @@ $featureModel = new \App\Models\FeaturesModel();
 $features = $featureModel->findAll();
 
 foreach ($features as $featureObj) {
-    $feature = $featureObj['name'];
-    $ucfirst = ucfirst($feature);
-    $group = plural($feature);
+    $designation = $featureObj['name'];
+    $ucfirst = ucfirst($designation);
+    $group = plural($designation);
     $routes->group($group, function ($routes) use ($ucfirst) {
             $routes->get('/', "$ucfirst::index");
             $routes->get('(:segment)', "$ucfirst::index/$1");

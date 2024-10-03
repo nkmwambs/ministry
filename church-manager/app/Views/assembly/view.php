@@ -12,7 +12,7 @@ $member_sections = array_pop($result);
     <?php if(session()->getFlashdata('message') ){?>
         <div class = "col-xs-12 info">
             <p><?= session()->getFlashdata('message');?></p>
-            <a href="<?= site_url(plural($feature).'/edit/' . $id) ?>">Edit Again</a>
+            <a href="<?= site_url(plural($designation).'/edit/' . $id) ?>">Edit Again</a>
         </div>
     <?php }?>
 </div>
@@ -53,7 +53,7 @@ $member_sections = array_pop($result);
             
                             <div class = "form-group">
                                 <div class = "col-xs-offset-4 col-xs-6">
-                                    <a href="<?= site_url(plural($feature).'/edit/' . $id) ?>" class="btn btn-primary">Edit</a>
+                                    <a href="<?= site_url(plural($designation).'/edit/' . $id) ?>" class="btn btn-primary">Edit</a>
                                 </div>
                             </div> 
                         </form>

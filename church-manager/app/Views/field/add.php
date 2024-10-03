@@ -61,8 +61,8 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                             <div class="col-xs-6">
                                 <select class="form-control" name="feature_id" id="feature_id">
                                     <option value=""><?= lang('field.select_feature') ?></option>
-                                    <?php foreach ($features as $feature) : ?>
-                                        <option value="<?php echo $feature['id']; ?>"><?php echo $feature['name']; ?></option>
+                                    <?php foreach ($features as $designation) : ?>
+                                        <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

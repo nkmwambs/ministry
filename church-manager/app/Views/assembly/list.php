@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add', '<?=session()->get('user_denomination_id') ? hash_id(session()->get('user_denomination_id'), 'encode') : '';?>')">
+        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($designation);?>','add', '<?=session()->get('user_denomination_id') ? hash_id(session()->get('user_denomination_id'), 'encode') : '';?>')">
             <?= lang('assembly.add_assembly'); ?>
         </div>
     </div>
@@ -46,9 +46,9 @@
                             <a href="<?= site_url("assemblies/view/".hash_id($assembly['id'])); ?>"><i class='fa fa-search'></i></a></i>
                         </span>
                         <span class='action-icons'>
-                            <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($assembly['id']);?>')" class='fa fa-pencil'></i>
+                            <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($designation);?>','edit', '<?=hash_id($assembly['id']);?>')" class='fa fa-pencil'></i>
                         </span>
-                        <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($assembly['id']); ?>')" title="Delete <?= $assembly['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                        <span class='action-icons' onclick="deleteItem('<?= plural($designation); ?>','delete','<?= hash_id($assembly['id']); ?>')" title="Delete <?= $assembly['id']; ?> participant"><i class='fa fa-trash'></i></span>
                     </td>
 
                     <td><?=$assembly['name'];?></td>

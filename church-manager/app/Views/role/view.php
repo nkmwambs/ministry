@@ -39,8 +39,8 @@
                         <div class = "col-xs-4">
                             <select class="form-control" id="feature">
                                 <option value="">Select a feature</option>
-                                <?php foreach ($features as $feature) :?>
-                                <option value="<?php echo $feature['id'];?>"><?php echo humanize($feature['name']);?></option>
+                                <?php foreach ($features as $designation) :?>
+                                <option value="<?php echo $designation['id'];?>"><?php echo humanize($designation['name']);?></option>
                                 <?php endforeach;?>
                             </select>
                         </div>

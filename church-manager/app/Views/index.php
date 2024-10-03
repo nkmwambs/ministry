@@ -10,7 +10,7 @@
 
 	<link rel="icon" href="assets/images/favicon.ico">
 
-	<title><?=humanize($feature);?> | <?=humanize($action);?></title>
+	<title><?=humanize($designation);?> | <?=humanize($action);?></title>
 
 	
 	

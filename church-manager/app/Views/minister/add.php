@@ -70,8 +70,8 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
               <div class="col-xs-6">
                 <select class="form-control" name="designation_id" id="designation_id">
                   <option value=""><?= lang('minister.select_designation') ?></option>
-                  <?php foreach ($designations as $feature) : ?>
-                    <option value="<?php echo $feature['id']; ?>"><?php echo $feature['name']; ?></option>
+                  <?php foreach ($designations as $designation) : ?>
+                    <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
