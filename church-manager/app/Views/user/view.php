@@ -12,7 +12,7 @@
     <?php if(session()->getFlashdata('message') ){?>
         <div class = "col-xs-12 info">
             <p><?= session()->getFlashdata('message');?></p>
-            <a href="<?= site_url(plural($designation)) ?>"><?= lang('user.edit_again_buttton') ?></a>
+            <a href="<?= site_url(plural($feature)) ?>"><?= lang('user.edit_again_buttton') ?></a>
         </div>
     <?php }?>
 </div>
