@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use Psr\Log\LoggerInterface;
+use CodeIgniter\I18n\Time;
 
 class User extends BaseController
 {
@@ -206,9 +207,14 @@ class User extends BaseController
             return response()->setJSON(['errors' => $this->validator->getErrors()]);
         }
 
+        $originalDate = Time::now('America/Chicago', 'en_US');
+        $newDateString = $originalDate->format('Y-m-d H:i:s');
+
         $update_data = [
             'username' => $this->request->getPost('username'),
             'biography' => $this->request->getPost('biography'),
+            'updated_at' => $newDateString,
+            // 'profile_picture' => $this->request->getPost('profile_picture')?: NULL, // This line prevents NULL values from being inserted into the database. It should be handled elsewhere in your application. If you want to remove this line, make sure to handle NULL values appropriately in your application.
         ];
 
         $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
@@ -249,6 +255,9 @@ class User extends BaseController
             return response()->setJSON(['errors' => $this->validator->getErrors()]);
         }
 
+        $originalDate = Time::now('America/Chicago', 'en_US');
+        $newDateString = $originalDate->format('Y-m-d H:i:s');
+
         $update_data = [
             // 'denomination_id' => $this->request->getPost('denomination_id'),
             'first_name' => $this->request->getPost('first_name'),
@@ -257,6 +266,7 @@ class User extends BaseController
             'email' => $this->request->getPost('email'),
             'gender' => $this->request->getPost('gender'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
+            'updated_at' => $newDateString,
         ];
 
         $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
