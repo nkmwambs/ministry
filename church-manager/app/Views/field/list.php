@@ -1,12 +1,4 @@
 <div class="row">
-    <div class="col-xs-12">
-        <div class="page-title"><i class='fa fa-book'></i>
-            <?= lang('field.list_customfields'); ?>
-        </div>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-xs-12 btn-container">
         <div class='btn btn-primary' onclick="showAjaxModal('<?= plural($feature); ?>','add')">
             <?= lang('field.add_customfield'); ?>
