@@ -71,7 +71,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                         <input type="hidden" name="feature_id" id="feature_id" value="<?= $feature_id; ?>" />
                     <?php } ?>
 
-                    <div class="form-group">
+                    <div class="form-group content">
                         <label class="control-label col-xs-4" for="table_name">
                             <?= lang("field.customfield_table_name") ?>
                         </label>
@@ -97,6 +97,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                             <select name="type" id="type" class="form-control" required>
                                 <option value="text">Text</option>
                                 <option value="number">Number</option>
+                                <option value="float">Float</option>
                                 <option value="date">Date</option>
                                 <option value="datetime">DateTime</option>
                                 <option value="timestamp">TimeStamp</option>
@@ -125,7 +126,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                             <?= lang("field.customfield_options") ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="options" id="options" placeholder="Enter Options">
+                            <textarea type="text" class="form-control" name="options" id="options" placeholder="Enter Options"></textarea>
                         </div>
                     </div>
 
@@ -149,3 +150,14 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
 
     </div>
 </div>
+
+<script>
+$("#feature_id").on("change", function(){
+    const parent_id = $(this).val();
+    const form_groups = $('.content');
+   
+    if(parent_id > 0){
+      form_groups.filter('#table_name').attr('disabled','disabled');
+    }
+})
+</script>

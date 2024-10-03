@@ -50,6 +50,7 @@ class FieldsModel extends Model
 
         if(!empty($listQueryFields)){
             return $this->select($library->setListQueryFields())
+            ->join('features', 'features.id = customfields.feature_id')
             ->orderBy('customfields.created_at desc')
             ->findAll();
         }else{

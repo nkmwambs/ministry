@@ -41,9 +41,9 @@
                         </td>
 
                         <td><?= $designation['name']; ?></td>
-                        <td><?= $designation['denomination_id']; ?></td>
-                        <td><?= $designation['hierarchy_id']; ?></td>
-                        <td><?= $designation['department_id']; ?></td>
+                        <td><?= $designation['denomination_name']; ?></td>
+                        <td><?= $designation['hierarchy_name']; ?></td>
+                        <td><?= $designation['department_name']; ?></td>
                         <td><?= $designation['minister_title_designation']; ?></td>
 
                     <?php } ?>

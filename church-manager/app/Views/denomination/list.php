@@ -12,7 +12,7 @@
   ?>
   <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($designation);?>','add')">   
+        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add')">   
           <?= lang('denomination.add_denomination'); ?>
         </div>
     </div>
@@ -49,9 +49,9 @@
                   <a href="<?= site_url("denominations/view/".hash_id($denomination['id'])); ?>"><i class='fa fa-search'></i></a></i>
                 </span>
                 <span class='action-icons'>
-                  <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($designation);?>','edit', '<?=hash_id($denomination['id']);?>')" class='fa fa-pencil'></i>
+                  <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($denomination['id']);?>')" class='fa fa-pencil'></i>
                 </span>
-                <span class='action-icons' onclick="deleteItem('<?= plural($designation); ?>','delete','<?= hash_id($denomination['id']); ?>')" title="Delete <?= $denomination['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($denomination['id']); ?>')" title="Delete <?= $denomination['id']; ?> participant"><i class='fa fa-trash'></i></span>
               </td>
 
               <td><?=$denomination['name'];?></td>

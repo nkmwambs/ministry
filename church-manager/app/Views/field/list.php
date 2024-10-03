@@ -39,12 +39,12 @@
                             <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($customField['id']); ?>')" title="Delete <?= $customField['id']; ?> participant"><i class='fa fa-trash'></i></span>
                         </td>
 
-                        <td><?= $customField['name']; ?></td>
-                        <td><?= $customField['type']; ?></td>
-                        <td><?= $customField['options']; ?></td>
-                        <td><?= $customField['feature_id']; ?></td>
-                        <td><?= $customField['field_order']; ?></td>
-                        <td><?= $customField['visible']; ?></td>
+                        <td><?= ucfirst($customField['name']); ?></td>
+                        <td><?= ucfirst($customField['type']); ?></td>
+                        <td><?= ucfirst($customField['options']); ?></td>
+                        <td><?= ucfirst($customField['feature_name']); ?></td>
+                        <td><?= ucfirst($customField['field_order']); ?></td>
+                        <td><?= ucfirst($customField['visible']); ?></td>
 
                     <?php } ?>
             </tbody>

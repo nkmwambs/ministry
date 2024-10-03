@@ -12,7 +12,7 @@ return [
     'denomination_id' => 'Denomination Name',
     'hierarchy_id' => 'Hierarchy Name',
     'department_id' => ' Department Name',
-    'minister_title_designation' => 'Minister Name',
+    'minister_title_designation' => 'Minister Title Designation',
     
 
     'save_designation' => 'Save',
