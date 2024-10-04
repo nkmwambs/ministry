@@ -26,7 +26,7 @@
                             <label><?= lang('field.customfield_name') ?></label>
                         </div>
                         <div class = "col-xs-8">
-                            <?=$result['name'];?>
+                            <?=$result['field_name'];?>
                         </div>
                     </div>
 
