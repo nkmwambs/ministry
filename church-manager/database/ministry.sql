@@ -5,10 +5,10 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP TABLE IF EXISTS `assemblies`;
 CREATE TABLE `assemblies` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
+  `assembly_code` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `planted_at` date NOT NULL,
   `location` varchar(200) NOT NULL,
   `entity_id` int NOT NULL COMMENT 'Assemblies belong to lowest entity which belong to level 1 hierarchy',
@@ -26,7 +26,6 @@ CREATE TABLE `assemblies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `attendances`;
 CREATE TABLE `attendances` (
   `id` int NOT NULL AUTO_INCREMENT,
   `member_id` int NOT NULL,
@@ -45,7 +44,6 @@ CREATE TABLE `attendances` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `collections`;
 CREATE TABLE `collections` (
   `id` int NOT NULL AUTO_INCREMENT,
   `return_date` datetime NOT NULL,
@@ -71,7 +69,6 @@ CREATE TABLE `collections` (
 
 SET NAMES utf8mb4;
 
-DROP TABLE IF EXISTS `collectiontypes`;
 CREATE TABLE `collectiontypes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int NOT NULL,
@@ -89,7 +86,6 @@ CREATE TABLE `collectiontypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-DROP TABLE IF EXISTS `customfields`;
 CREATE TABLE `customfields` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int DEFAULT NULL,
@@ -114,7 +110,6 @@ CREATE TABLE `customfields` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `customvalues`;
 CREATE TABLE `customvalues` (
   `id` int NOT NULL AUTO_INCREMENT,
   `record_id` int NOT NULL,
@@ -129,7 +124,6 @@ CREATE TABLE `customvalues` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `dashboards`;
 CREATE TABLE `dashboards` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -145,7 +139,6 @@ CREATE TABLE `dashboards` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `denominations`;
 CREATE TABLE `denominations` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -164,7 +157,6 @@ CREATE TABLE `denominations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `departments`;
 CREATE TABLE `departments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int NOT NULL,
@@ -182,33 +174,30 @@ CREATE TABLE `departments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `designations`;
 CREATE TABLE `designations` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `denomination_id` int NOT NULL,
-  `hierarchy_id` int DEFAULT NULL,
-  `department_id` int DEFAULT NULL,
-  `minister_title_designation` enum('no','yes') DEFAULT 'no',
-  `created_at` datetime NOT NULL,
-  `created_by` int NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `updated_by` int NOT NULL,
-  `deleted_at` datetime NOT NULL,
-  `deleted_by` int NOT NULL,
+  `is_hierarchy_leader_designation` enum('no','yes') DEFAULT 'no',
+  `is_department_leader_designation` enum('no','yes') DEFAULT 'no',
+  `is_minister_title_designation` enum('no','yes') CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT 'no',
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `denomination_id` (`denomination_id`),
-  KEY `department_id` (`department_id`),
-  CONSTRAINT `designations_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`),
-  CONSTRAINT `designations_ibfk_2` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`)
+  KEY `department_id` (`is_department_leader_designation`),
+  CONSTRAINT `designations_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `entities`;
 CREATE TABLE `entities` (
   `id` int NOT NULL AUTO_INCREMENT,
   `hierarchy_id` int NOT NULL,
-  `entity_number` varchar(50) DEFAULT NULL,
+  `entity_number` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `name` varchar(100) NOT NULL,
   `parent_id` int DEFAULT NULL,
   `entity_leader` int DEFAULT NULL,
@@ -225,7 +214,6 @@ CREATE TABLE `entities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -251,7 +239,6 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `features`;
 CREATE TABLE `features` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -296,7 +283,6 @@ INSERT INTO `features` (`id`, `name`, `description`, `allowable_permission_label
 (30,	'minister',	'ministers',	'[\"create\", \"read\", \"update\", \"delete\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL),
 (31,	'trash',	'trash',	'[\"read\"]',	'2024-06-26 20:34:21',	1,	'2024-06-26 20:34:21',	1,	NULL,	NULL);
 
-DROP TABLE IF EXISTS `gatherings`;
 CREATE TABLE `gatherings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `assembly_id` int NOT NULL,
@@ -317,30 +303,12 @@ CREATE TABLE `gatherings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `meetings`;
-CREATE TABLE `meetings` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `denomination_id` int NOT NULL,
-  `description` longtext,
-  `name` varchar(200) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `created_by` int NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `updated_by` int NOT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  `deleted_by` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `denomination_id` (`denomination_id`),
-  CONSTRAINT `gatheringtypes_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
-DROP TABLE IF EXISTS `hierarchies`;
 CREATE TABLE `hierarchies` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `denomination_id` int NOT NULL,
   `level` int NOT NULL DEFAULT '1' COMMENT 'starts from 1,2,3,....n: 1 being the lowest',
+  `hierarchy_code` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `description` longtext,
   `created_at` timestamp NOT NULL,
   `created_by` int NOT NULL,
@@ -354,7 +322,6 @@ CREATE TABLE `hierarchies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `logmails`;
 CREATE TABLE `logmails` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email_to` varchar(150) NOT NULL,
@@ -368,7 +335,6 @@ CREATE TABLE `logmails` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `meetings`;
 CREATE TABLE `meetings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int NOT NULL,
@@ -386,34 +352,32 @@ CREATE TABLE `meetings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `members`;
 CREATE TABLE `members` (
   `id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `member_number` varchar(100) DEFAULT NULL,
+  `gender` enum('male','female') CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `designation_id` int NOT NULL,
   `date_of_birth` date NOT NULL,
   `email` varchar(100) DEFAULT NULL,
   `phone` varchar(100) NOT NULL,
   `is_active` enum('yes','no') NOT NULL DEFAULT 'yes',
   `assembly_id` int NOT NULL,
-  `created_at` datetime NOT NULL,
-  `created_by` int NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `updated_by` int NOT NULL,
-  `deleted_at` datetime NOT NULL,
-  `deleted_by` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`),
   KEY `assembly_id` (`assembly_id`),
   KEY `designation_id` (`designation_id`),
-  CONSTRAINT `members_ibfk_1` FOREIGN KEY (`assembly_id`) REFERENCES `assemblies` (`id`),
-  CONSTRAINT `members_ibfk_2` FOREIGN KEY (`designation_id`) REFERENCES `designations` (`id`)
+  CONSTRAINT `members_ibfk_1` FOREIGN KEY (`designation_id`) REFERENCES `designations` (`id`),
+  CONSTRAINT `members_ibfk_2` FOREIGN KEY (`assembly_id`) REFERENCES `assemblies` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `menus`;
 CREATE TABLE `menus` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -461,7 +425,6 @@ INSERT INTO `menus` (`id`, `name`, `icon`, `feature_id`, `parent_id`, `visible`,
 (28,	'payment',	'entypo-flag',	29,	0,	'yes',	7,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL),
 (29,	'minister',	'entypo-flag',	30,	0,	'yes',	2,	'2024-06-26 20:27:20',	1,	'2024-06-26 20:27:20',	1,	NULL,	NULL);
 
-DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `version` varchar(255) NOT NULL,
@@ -474,7 +437,6 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `ministers`;
 CREATE TABLE `ministers` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -498,7 +460,6 @@ CREATE TABLE `ministers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `participants`;
 CREATE TABLE `participants` (
   `id` int NOT NULL AUTO_INCREMENT,
   `member_id` int DEFAULT NULL,
@@ -523,7 +484,6 @@ CREATE TABLE `participants` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `payments`;
 CREATE TABLE `payments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `phone` varchar(50) NOT NULL,
@@ -544,7 +504,6 @@ CREATE TABLE `payments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE `permissions` (
   `id` int NOT NULL AUTO_INCREMENT,
   `feature_id` int NOT NULL,
@@ -564,7 +523,6 @@ CREATE TABLE `permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `queue_jobs`;
 CREATE TABLE `queue_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `queue` varchar(64) NOT NULL,
@@ -579,7 +537,6 @@ CREATE TABLE `queue_jobs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `queue_jobs_failed`;
 CREATE TABLE `queue_jobs_failed` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `connection` varchar(64) NOT NULL,
@@ -593,7 +550,6 @@ CREATE TABLE `queue_jobs_failed` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `reportfields`;
 CREATE TABLE `reportfields` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -614,7 +570,6 @@ CREATE TABLE `reportfields` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `reports`;
 CREATE TABLE `reports` (
   `id` int NOT NULL AUTO_INCREMENT,
   `reports_type_id` int NOT NULL,
@@ -637,7 +592,6 @@ CREATE TABLE `reports` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `reporttypes`;
 CREATE TABLE `reporttypes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -655,7 +609,6 @@ CREATE TABLE `reporttypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `reportvalues`;
 CREATE TABLE `reportvalues` (
   `id` int NOT NULL AUTO_INCREMENT,
   `report_field_id` int NOT NULL,
@@ -672,7 +625,6 @@ CREATE TABLE `reportvalues` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `revenues`;
 CREATE TABLE `revenues` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int NOT NULL,
@@ -690,7 +642,6 @@ CREATE TABLE `revenues` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -709,7 +660,6 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `sections`;
 CREATE TABLE `sections` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -730,7 +680,6 @@ CREATE TABLE `sections` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
   `id` int NOT NULL AUTO_INCREMENT,
   `class` varchar(255) NOT NULL,
@@ -744,7 +693,6 @@ CREATE TABLE `settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `subscriptions`;
 CREATE TABLE `subscriptions` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int NOT NULL,
@@ -767,7 +715,6 @@ CREATE TABLE `subscriptions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `subscriptiontypes`;
 CREATE TABLE `subscriptiontypes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -783,7 +730,6 @@ CREATE TABLE `subscriptiontypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int DEFAULT NULL,
@@ -798,7 +744,6 @@ CREATE TABLE `templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `trashes`;
 CREATE TABLE `trashes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `feature_name` int DEFAULT NULL,
@@ -811,10 +756,11 @@ CREATE TABLE `trashes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int DEFAULT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `biography` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `date_of_birth` date NOT NULL,
@@ -845,7 +791,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-DROP TABLE IF EXISTS `visitors`;
 CREATE TABLE `visitors` (
   `id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(200) NOT NULL,
@@ -873,4 +818,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2024-09-09 15:18:44
+-- 2024-10-04 13:19:29
