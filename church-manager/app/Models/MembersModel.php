@@ -89,10 +89,17 @@ class MembersModel extends Model
         $viewQueryFields = $library->setViewQueryFields();
 
         if (!empty($viewQueryFields)) {
-            return $this->select($library->setViewQueryFields()) 
+            $result = $this->select($library->setViewQueryFields()) 
                 ->join('assemblies', 'assemblies.id = members.assembly_id')
+                ->join('designations','designations.id = members.designation_id')
                 ->where('members.id', $member_id)
                 ->first();
+                
+                unset($result['id']);
+                unset($result['assembly_id']);
+                unset($result['designation_id']);
+
+                return $result;
         } else {
             return $this->where('id', $member_id)->first();
         }
