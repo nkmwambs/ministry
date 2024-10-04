@@ -65,15 +65,6 @@ print_r($parent_id);
           <?php 
             }
           ?>
-          
-          <div class="form-group">
-            <label class="control-label col-xs-4" for="member_number">
-              <?= lang('member.member_member_number') ?>
-            </label>
-            <div class="col-xs-6">
-              <input type="text" class="form-control" name="member_number" id="member_number" placeholder="Enter Member Number"></i>
-            </div>
-          </div>
 
           <?php if (!$numeric_designation_id) { ?>
             <div class='form-group'>

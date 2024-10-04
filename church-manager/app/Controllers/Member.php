@@ -77,14 +77,6 @@ class Member extends BaseController
                     'min_length' => 'Last Name must be at least {value} characters long.',
                 ]
             ],
-            'member_number' => [
-                'rules' =>'required|min_length[4]|max_length[255]',
-                'label' => 'Member Number',
-                'errors' => [
-                    'required' => 'Member Number is required.',
-                    'min_length' => 'Member Number must be at least {value} characters long.',
-                ]
-            ],
             'date_of_birth' => 'required',
             'phone' => 'required|min_length[10]|max_length[50]',
         ]);
@@ -93,16 +85,16 @@ class Member extends BaseController
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
-        $hashed_assembly_id = $this->request->getVar('assembly_id');
+        $hashed_assembly_id = $this->request->getPost('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
-        $parent_id = $this->request->getPost('parent_id');
-        log_message('error', $hashed_assembly_id);
+        // $parented_id = $this->request->getPost('parent_id');
+        // log_message('error', $hashed_assembly_id);
 
         $data = [
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
             'assembly_id' => $this->request->getPost('assembly_id'),
-            'member_number' => $this->computeMemberNumber($assembly_id, $parent_id),
+            'member_number' => $this->computeMemberNumber($assembly_id),
             'designation_id' => $this->request->getPost('designation_id'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
             'email' => $this->request->getPost('email'),
@@ -148,14 +140,6 @@ class Member extends BaseController
                     'min_length' => 'Last Name must be at least {value} characters long.',
                 ]
             ],
-            'member_number' => [
-                'rules' =>'required|min_length[4]|max_length[255]',
-                'label' => 'Member Number',
-                'errors' => [
-                    'required' => 'Member Number is required.',
-                    'min_length' => 'Member Number must be at least {value} characters long.',
-                ]
-            ],
             'date_of_birth' => 'required',
             'phone' => 'required|min_length[10]|max_length[50]',
         ]);
@@ -199,7 +183,7 @@ class Member extends BaseController
         return redirect()->to(site_url("member/view/".$hashed_id))->with('message', 'Member updated successfully!');
     }
 
-    private function computeMemberNumber($assembly_id, $parent_id) {
+    private function computeMemberNumber($assembly_id) {
         $memberNumber = '';
 
         $entityModel = new \App\Models\EntitiesModel();
@@ -207,7 +191,7 @@ class Member extends BaseController
         ->join('assemblies', 'assemblies.entity_id = entities.id')
         ->where('assemblies.id', $assembly_id)->first();
 
-        // $assemblyEntityNumber = $assemblyEntity['entity_number'];
+        $assemblyEntityNumber = $assemblyEntity['entity_number'];
         // $maxEntityNumber = $this->model->selectMax('member_number')->where('assembly_id', $entity_id)->first();
 
         $memberCount = $this->model->where('assembly_id',$assembly_id)->countAllResults();
@@ -215,14 +199,14 @@ class Member extends BaseController
 
         $memberCount = str_pad($memberCount,4,'0',STR_PAD_LEFT);
 
-        $parentMember = $this->model->where('id', $parent_id)->first();
-        $parentMemberNumber = $parentMember['member_number'];
+        // $parentMember = $this->model->where('id', $parent_id)->first();
+        // $parentMemberNumber = $parentMember['member_number'];
 
-        $memberNumber = "$parentMemberNumber/$memberCount";
+        $memberNumber = "$assemblyEntityNumber/$memberCount";
 
         while ($this->model->where('member_number', $memberNumber)->countAllResults() > 0) {
             ++$memberCount;
-            $memberNumber = "$parentMemberNumber/$memberCount";
+            $memberNumber = "$assemblyEntityNumber/$memberCount";
         }
 
         return $memberNumber;
