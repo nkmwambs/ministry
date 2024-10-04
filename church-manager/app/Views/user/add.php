@@ -169,7 +169,7 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
 
           <!-- Dynamically Generated Custom Fields -->
           <?php foreach ($customFields as $field): ?>
-            <div class="form-group">
+            <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
               <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
               <div class="col-xs-6">
                 <input type="<?= $field['type'] ?>" name="custom_fields[<?= $field['id'] ?>]" id="<?= $field['field_name'] ?>" class="form-control">
@@ -243,7 +243,16 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
         }
       })
     }
+  })
 
+  $(document).ready(function() {
+    const visible = $('.custom_field_container').attr('id');
+    // console.log(visible);
 
+    if (visible === "yes") {
+      $('.custom_field_container').removeClass('hidden');
+    } else {
+      $('.custom_field_container').addClass('hidden');
+    }
   })
 </script>

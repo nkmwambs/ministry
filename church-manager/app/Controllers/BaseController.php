@@ -187,7 +187,7 @@ abstract class BaseController extends Controller
 
     public function edit(): string {
         $numeric_id = hash_id($this->id,'decode');
-
+        $id = $this->model->find('id');
         if(method_exists($this->model, 'getEditData')){
             $data = $this->model->getEditData($numeric_id);
         }else{
@@ -199,6 +199,15 @@ abstract class BaseController extends Controller
         if(method_exists($this->library,'editExtraData')){
             // Note the editExtraData updates the $page_data by reference
             $this->library->editExtraData($page_data);
+        }
+
+        foreach ((object)$this->tableName as $table_name) {
+            $customFieldLibrary = new \App\Libraries\FieldLibrary();
+            $customFields = $customFieldLibrary->getCustomFieldsForTable($table_name);
+            $customValues = $customFieldLibrary->getCustomFieldValuesForRecord($numeric_id, $table_name);
+            $page_data['customFields'] = $customFields;
+            $page_data['customValues'] = $customValues;
+            // log_message('error', json_encode($customValues));
         }
 
         return view("$this->feature/edit", $page_data);
@@ -231,7 +240,7 @@ abstract class BaseController extends Controller
             $customFieldLibrary = new \App\Libraries\FieldLibrary();
             $customFields = $customFieldLibrary->getCustomFieldsForTable($table_name);
             $page_data['customFields'] = $customFields;
-            log_message('error', json_encode($customFields));
+            // log_message('error', json_encode($customFields));
         }
 
         return view("$this->feature/add", $page_data);

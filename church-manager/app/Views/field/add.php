@@ -81,11 +81,11 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="name">
+                        <label class="control-label col-xs-4" for="field_name">
                             <?= lang("field.customfield_name") ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name">
+                            <input type="text" class="form-control" name="field_name" id="field_name" placeholder="Enter Name">
                         </div>
                     </div>
 
@@ -142,7 +142,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
 
                     <!-- Dynamically Generated Custom Fields -->
                     <?php foreach ($customFields as $field): ?>
-                        <div class="form-group">
+                        <div class="form-group custom_field_container hidden" id="<?= $field['visible']; ?>">
                             <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
                             <div class="col-xs-6">
                                 <input type="<?= $field['field_type'] ?>" name="custom_fields[<?= $field['id'] ?>]" id="<?= $field['field_name'] ?>" class="form-control">

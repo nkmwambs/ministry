@@ -39,7 +39,7 @@
                             <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($customField['id']); ?>')" title="Delete <?= $customField['id']; ?> participant"><i class='fa fa-trash'></i></span>
                         </td>
 
-                        <td><?= ucfirst($customField['name']); ?></td>
+                        <td><?= ucfirst($customField['field_name']); ?></td>
                         <td><?= ucfirst($customField['type']); ?></td>
                         <td><?= ucfirst($customField['options']); ?></td>
                         <td><?= ucfirst($customField['feature_name']); ?></td>

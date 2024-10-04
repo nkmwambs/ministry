@@ -40,6 +40,10 @@ class Minister extends BaseController
         
         $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
 
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,'decode'), $this->tableName, $customFieldValues);
+
         if($this->request->isAJAX()){
             $this->feature = 'minister';
             $this->action = 'list';
@@ -74,6 +78,10 @@ class Minister extends BaseController
 
         // $hashed_denomination_id = $this->request->getPost('denomination_id');
         $assembly_id = $this->request->getPost('assembly_id');//hash_id($hashed_denomination_id, 'decode');
+
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues($insertId, $this->tableName, $customFieldValues);
 
         $data = [
             'name' => $this->request->getPost('name'),
