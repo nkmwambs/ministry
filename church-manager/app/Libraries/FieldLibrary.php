@@ -21,12 +21,12 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['customfields.id','denomination_id','customfields.name','table_name','type','options','feature_id','field_order','visible','features.name as feature_name'];
+        $fields = ['customfields.id','field_name','denomination_id','customfields.name','table_name','type','options','feature_id','field_order','visible','features.name as feature_name'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['customfields.id','denomination_id','customfields.name','table_name','type','options','feature_id','field_order','visible','features.name as feature_name'];
+        $fields = ['customfields.id','field_name','denomination_id','customfields.name','table_name','type','options','feature_id','field_order','visible','features.name as feature_name'];
         return $fields;
     }
 
@@ -58,12 +58,12 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
             $existing = $this->customValueModel
                 ->where('record_id', $recordId)
                 ->where('table_name', $tableName)
-                ->where('field_id', $fieldId)
+                ->where('customfield_id', $fieldId)
                 ->first();
 
             if ($existing) {
                 $update_data = [
-                    'field_value' => $value,
+                    'value' => $value,
                 ];
                 // Update existing custom field value
                 $this->customValueModel->update($existing['id'], (object)$update_data);
@@ -71,8 +71,8 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                 $data = [
                     'record_id'   => $recordId,
                     'table_name'  => $tableName,
-                    'field_id'    => $fieldId,
-                    'field_value' => $value,
+                    'customfield_id'    => $fieldId,
+                    'value' => json_encode($value),
                 ];
                 // Insert new custom field value
                 $this->customValueModel->insert((object)$data);

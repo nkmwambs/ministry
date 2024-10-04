@@ -51,8 +51,9 @@ abstract class BaseController extends Controller
     protected $segments;
     protected $session;
     protected $model = null;
-
     protected $library = null;
+    protected $tableName = null;
+    protected $customFields = null;
     protected $listQueryFields = [];
 
     protected $feature_page_data = [];
@@ -83,6 +84,8 @@ abstract class BaseController extends Controller
             $this->listQueryFields = $this->library->setListQueryFields();
         }
 
+        $this->tableName = plural($this->feature);
+        
     }
 
     private function history_fields(){
@@ -102,6 +105,7 @@ abstract class BaseController extends Controller
         $page_data['action'] = $this->action;
         $page_data['id'] = $this->id;
         $page_data['parent_id'] = $this->parent_id;
+        $page_data['tableName'] = $this->tableName;
 
         $view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature.DIRECTORY_SEPARATOR.$this->action.'.php';
         $view = file_exists($view_path) ?  "$this->feature/$this->action" : "templates/$this->action";
@@ -221,6 +225,13 @@ abstract class BaseController extends Controller
         if(method_exists($this->library,'addExtraData')){
             // Note the addExtraData updates the $page_data by reference
             $this->library->addExtraData($page_data);
+        }
+
+        foreach ((object)$this->tableName as $table_name) {
+            $customFieldLibrary = new \App\Libraries\FieldLibrary();
+            $customFields = $customFieldLibrary->getCustomFieldsForTable($table_name);
+            $page_data['customFields'] = $customFields;
+            log_message('error', json_encode($customFields));
         }
 
         return view("$this->feature/add", $page_data);

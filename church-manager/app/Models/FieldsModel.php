@@ -12,7 +12,7 @@ class FieldsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','denomination_id','name','table_name','type','options','feature_id','field_order','visible'];
+    protected $allowedFields    = ['id','denomination_id','field_name','table_name','type','options','feature_id','field_order','visible'];
 
     protected bool $allowEmptyInserts = true;
     protected bool $updateOnlyChanged = true;

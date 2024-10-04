@@ -151,6 +151,10 @@ class User extends BaseController
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
 
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues($insertId, $this->tableName, $customFieldValues);
+
         if ($this->request->isAJAX()) {
             $this->feature = 'user';
             $this->action = 'list';

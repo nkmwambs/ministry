@@ -62,17 +62,15 @@ class Field extends BaseController
     {
         $insertId = 0;
 
-        $fieldName = $this->request->getPost('name');
-        $fieldType = $this->request->getPost('type');
-
         $data = [
             'denomination_id' => $this->request->getPost('denomination_id'),
-            'name' => $fieldName,
-            'type' => $fieldType,
+            'field_name' => $this->request->getPost('field_name'),
+            'type' => $this->request->getPost('type'),
             'options' => $this->request->getPost('options'),
             'feature_id' => $this->request->getPost('feature_id'),
             'field_order' => $this->request->getPost('field_order'),
             'visible' => $this->request->getPost('visible'),
+            'table_name' => $this->request->getPost('table_name'),
             // 'created_at' => date('Y-m-d H:i:s')
         ];
 
@@ -107,12 +105,13 @@ class Field extends BaseController
 
         $update_data = [
             'denomination_id' => $this->request->getPost('denomination_id'),
-            'name' => $this->request->getPost('name'),
+            'field_name' => $this->request->getPost('field_name'),
             'type' => $this->request->getPost('type'),
             'options' => $this->request->getPost('options'),
             'feature_id' => $this->request->getPost('feature_id'),
             'field_order' => $this->request->getPost('field_order'),
             'visible' => $this->request->getPost('visible'),
+            'table_name' => $this->request->getPost('table_name'),
             // 'created_at' => date('Y-m-d H:i:s')
         ];
 
