@@ -50,6 +50,7 @@ class DesignationsModel extends Model
 
         if (!empty($listQueryFields)) {
             return $this->select($library->setListqueryFields())
+            ->join('denominations', 'denominations.id = designations.denomination_id')
             -> orderBy('designations.created_at desc')
             ->findAll();
         }else{

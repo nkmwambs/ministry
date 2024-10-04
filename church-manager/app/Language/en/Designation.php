@@ -8,11 +8,13 @@ return [
     'delete_designation' => 'Delete Designation',
 
     'designation_action' => 'Action',
-    'designation_name' => 'Name',
+    'designation_name' => 'Designation Name',
     'denomination_id' => 'Denomination Name',
-    'hierarchy_id' => 'Hierarchy Name',
-    'department_id' => ' Department Name',
-    'minister_title_designation' => 'Minister Name',
+    // 'hierarchy_id' => 'Hierarchy Name',
+    // 'department_id' => ' Department Name',
+    'is_minister_title_designation' => 'Is Minister Designation',
+    'is_hierarchy_leader_designation' => 'Is Hierarchy Leader Designation',
+    'is_department_leader_designation' => 'Is Department Leader Designation',
     
 
     'save_designation' => 'Save',

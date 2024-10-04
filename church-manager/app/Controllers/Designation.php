@@ -27,42 +27,35 @@ class Designation extends BaseController
                 'rules' => 'required|min_length[5]|max_length[255]',
                 'label' => 'Designation Name',
                 'errors' => [
-                'required' => 'Designation Name is required.',
-                'min_length' => 'Designation Name must be at least {value} characters long.',
-                'max_length' => 'Designation Name cannot exceed {value} characters.'
+                'required' => '{field} is required.',
+                'min_length' => '{field} must be at least {value} characters long.',
+                'max_length' => '{field} cannot exceed {value} characters.'
                 ]
             ],
             'denomination_id' => [
-                'rules' => 'required|max_length[255]',
+                'rules' => 'required',
                 'label' => 'Denomination Name',
                 'errors' => [
-                'required' => 'Denomination Name is required.',
-                'min_length' => 'Denomination Name must be at least {value} characters long.',
+                'required' => '{field} is required.',                ]
+            ],
+            'is_minister_title_designation' => [
+                'rules' => 'required',
+                'label' => lang('designation.is_minister_title_designation'),
+                'errors' => [
+                'required' => '{field} is required.',                ]
+            ],
+            'is_hierarchy_leader_designation' => [
+                'rules' => 'required',
+                'label' => lang('designation.is_hierarchy_leader_designation'),
+                'errors' => [
+                'required' => '{field} is required.',
                 ]
             ],
-            'hierarchy_id' => [
-                'rules' => 'required|max_length[255]',
-                'label' => 'Hierarchy ID',
+            'is_department_leader_designation' => [
+                'rules' => 'required',
+                'label' => lang('designation.is_department_leader_designation'),
                 'errors' => [
-                'required' => 'Hierarchy ID is required.',
-                'min_length' => 'Hierarchy ID must be at least {value} characters long.',
-                ]
-            ],
-            'department_id' => [
-                'rules' => 'required|max_length[255]',
-                'label' => 'Department Name',
-                'errors' => [
-                'required' => 'Department Name is required.',
-                'min_length' => 'Department Name must be at least {value} characters long.',
-                ]
-            ],
-            'minister_title_designation' => [
-                'rules' => 'required|min_length[5]|max_length[255]',
-                'label' => 'Designation Name',
-                'errors' => [
-                'required' => 'Designation Name is required.',
-                'min_length' => 'Designation Name must be at least {value} characters long.',
-                'max_length' => 'Minister Designation Title Name cannot exceed {value} characters.'
+                'required' => '{field} is required.',
                 ]
             ],
         ]);
@@ -74,9 +67,9 @@ class Designation extends BaseController
         $data = [
             'name' => $this->request->getPost('name'),
             'denomination_id' => $this->request->getPost('denomination_id'),
-            'hierarchy_id' => $this->request->getPost('hierarchy_id	'),
-            'department_id' => $this->request->getPost('department_id	'),
-            'minister_title_designation' => $this->request->getPost('minister_title_designation	'),
+            'is_hierarchy_leader_designation' => $this->request->getPost('is_hierarchy_leader_designation'),
+            'is_department_leader_designation' => $this->request->getPost('is_department_leader_designation'),
+            'is_minister_title_designation' => $this->request->getPost('is_minister_title_designation'),
 
         ];
 

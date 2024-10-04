@@ -34,9 +34,9 @@
                     <th><?= lang('designation.designation_action') ?></th>
                     <th><?= lang('designation.designation_name') ?></th>
                     <th><?= lang('designation.denomination_id') ?></th>
-                    <th><?= lang('designation.designation.hierarchy_id') ?></th>
-                    <th><?= lang('designation.department_id') ?></th>
-                    <th><?= lang('designation.minister_title_designation') ?></th>
+                    <th><?= lang('designation.is_hierarchy_leader_designation') ?></th>
+                    <th><?= lang('designation.is_department_leader_designation') ?></th>
+                    <th><?= lang('designation.is_minister_title_designation') ?></th>
 
                 </tr>
             </thead>
@@ -56,10 +56,10 @@
                 </td>
 
                     <td><?= $designation['name']; ?></td>
-                    <td><?= $designation['denomination_id']; ?></td>
-                    <td><?= $designation['hierarchy_id']; ?></td>
-                    <td><?= $designation['department_id']; ?></td>
-                    <td><?= $designation['minister_title_designation']; ?></td>
+                    <td><?= $designation['denomination_name']; ?></td>
+                    <td><?= $designation['is_hierarchy_leader_designation']; ?></td>
+                    <td><?= $designation['is_department_leader_designation']; ?></td>
+                    <td><?= $designation['is_minister_title_designation']; ?></td>
 
                     <?php } ?>
             </tbody>
