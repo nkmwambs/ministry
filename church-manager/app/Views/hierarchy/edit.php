@@ -47,6 +47,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label col-xs-4" for="hierarchy_code">
+                            <?= lang('hierarchy.hierarchy_code') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input class="form-control" readonly name="hierarchy_code" id="hierarchy_code" placeholder="Enter Hierarchy Code" value="<?=$result['hierarchy_code'];?>" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-xs-4" for="description">
                             <?= lang('hierarchy.hierarchy_description') ?>
                         </label>

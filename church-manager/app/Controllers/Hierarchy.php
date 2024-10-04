@@ -115,6 +115,7 @@ class Hierarchy extends BaseController
         $validation->setRules([
             'name' => 'required|max_length[255]',
             'description'    => 'required|max_length[255]',
+            'hierarchy_code' => 'required|max_length[255]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -124,6 +125,7 @@ class Hierarchy extends BaseController
         $update_data = [
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
+            'hierarchy_code' => $this->request->getPost('hierarchy_code'),
         ];
 
         
@@ -134,7 +136,7 @@ class Hierarchy extends BaseController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('id,name,description,level')
+            ->select('id,name,hierarchy_code,description,level')
             ->orderBy("created_at desc")
             ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))
             ->findAll();
