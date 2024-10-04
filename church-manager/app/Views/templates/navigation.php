@@ -5,7 +5,7 @@
 				<!-- logo -->
 				<div class="logo">
 					<a href="index.html">
-						<img src="<?=base_url();?>assets/images/logo@2x.png" width="120" alt="" />
+						<img src="<?=base_url();?>assets/images/logo.png" width="120" alt="" />
 					</a>
 				</div>
 

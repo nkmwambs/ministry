@@ -12,7 +12,8 @@
     <div class = "login_content">
         <?= form_open(site_url('validate')) ?>
             <div class="imgcontainer">
-                <img src="images/avatar.jpeg" alt="Avatar" class="avatar">
+                <img src="<?=base_url();?>assets/images/logo.png" width="120" alt="" />
+                <!-- <img src="images/logo.png" alt="Avatar" class="avatar"> -->
             </div>
 
             <div class="container">
@@ -23,10 +24,10 @@
                     </div>
                 <?php endif ?>
                 
-                <label for="uname"><b>User Email</b></label>
+                <!-- <label for="uname"><b>User Email</b></label> -->
                 <input type="email" placeholder="Enter Email" value="<?= set_value('email') ?>" name="email" required>
 
-                <label for="psw"><b>Password</b></label>
+                <!-- <label for="psw"><b>Password</b></label> -->
                 <input type="password" placeholder="Enter Password" value="<?= set_value('password') ?>" name="password" required>
 
                 <button type="submit">Login</button>
