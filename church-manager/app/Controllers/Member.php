@@ -77,14 +77,14 @@ class Member extends BaseController
                     'min_length' => 'Last Name must be at least {value} characters long.',
                 ]
             ],
-            'member_number' => [
-                'rules' =>'required|min_length[4]|max_length[255]',
-                'label' => 'Member Number',
-                'errors' => [
-                    'required' => 'Member Number is required.',
-                    'min_length' => 'Member Number must be at least {value} characters long.',
-                ]
-            ],
+            // 'member_number' => [
+            //     'rules' =>'required|min_length[4]|max_length[255]',
+            //     'label' => 'Member Number',
+            //     'errors' => [
+            //         'required' => 'Member Number is required.',
+            //         'min_length' => 'Member Number must be at least {value} characters long.',
+            //     ]
+            // ],
             'date_of_birth' => 'required',
             'phone' => 'required|min_length[10]|max_length[50]',
         ]);
@@ -96,7 +96,7 @@ class Member extends BaseController
         $hashed_assembly_id = $this->request->getVar('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
         $parent_id = $this->request->getPost('parent_id');
-        log_message('error', $hashed_assembly_id);
+        // log_message('error', $hashed_assembly_id);
 
         $data = [
             'first_name' => $this->request->getPost('first_name'),

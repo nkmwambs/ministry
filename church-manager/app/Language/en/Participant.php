@@ -14,6 +14,7 @@ return [
     'participant_payment_code' => 'Payment Code',
     'participant_registration_amount' => 'Registration Amount',
     'participant_status' => 'Status',
+    'participant_is_member' => 'Is Member',
 
     'select_member' => 'Select Member',
     'select_payment' => 'Select Payment',

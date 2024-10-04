@@ -25,6 +25,7 @@
           <tr>
             <th><?= lang('hierarchy.hierarchy_action') ?></th>
             <th><?= lang('hierarchy.hierarchy_name') ?></th>
+            <th><?= lang('hierarchy.hierarchy_code') ?></th>
             <th><?= lang('hierarchy.hierarchy_description') ?></th>
             <th><?= lang('hierarchy.hierarchy_level') ?></th>
           </tr>
@@ -48,6 +49,7 @@
               </td>
 
               <td><?=$hierarchy['name'];?></td>
+              <td><?=$hierarchy['hierarchy_code'];?></td>
               <td><?=$hierarchy['description'];?></td>
               <td><?=$hierarchy['level'];?></td>
 

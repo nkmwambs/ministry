@@ -68,10 +68,14 @@ class DenominationsModel extends Model  implements \App\Interfaces\ModelInterfac
 
     function createHighestHierarchyAndEntity(array $data){
         $topHierarchy = [];
-        $topHierarchy['name'] = "Head Office";
+
+        $hierarchyCode = $data['data']['code']."/".lang('hierarchy.highest_hierarchy_code');
+
+        $topHierarchy['name'] = lang('hierarchy.highest_hierarchy_name');
+        $topHierarchy['hierarchy_code'] = $hierarchyCode;
         $topHierarchy['denomination_id'] = $data['id'];
         $topHierarchy['level'] = 1;
-        $topHierarchy['description'] = "Head Office";
+        $topHierarchy['description'] = lang('hierarchy.highest_hierarchy_name');
 
         $hierarchyModel = new HierarchiesModel();
         $hierarchyModel->insert((object)$topHierarchy);
@@ -79,8 +83,8 @@ class DenominationsModel extends Model  implements \App\Interfaces\ModelInterfac
 
         $entityData = [
             'hierarchy_id' => $hierarchyId,
-            'name' => 'Head Office',
-            'entity_number' => 'H001',
+            'name' => lang('hierarchy.highest_hierarchy_name'),
+            'entity_number' => $hierarchyCode.'/'.'001',
             'parent_id' => null,
             'entity_leader' => null,
         ];

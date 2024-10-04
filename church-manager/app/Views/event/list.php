@@ -50,12 +50,12 @@
                         </td>
 
                         <td><?= $event['name']; ?></td>
-                        <td><?= $event['meeting_id']; ?></td>
+                        <td><?= $event['meeting_name']; ?></td>
                         <td><?= $event['start_date']; ?></td>
                         <td><?= $event['end_date']; ?></td>
                         <td><?= $event['location']; ?></td>
                         <td><?= $event['description']; ?></td>
-                        <td><?= $event['denomination_id']; ?></td>
+                        <td><?= $event['denomination_name']; ?></td>
                         <td><?= $event['registration_fees']; ?></td>
 
                     <?php } ?>

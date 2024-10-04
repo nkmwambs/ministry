@@ -44,24 +44,38 @@ $visitor_sections = array_pop($result);
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="view_event">
-                        <form class="form-horizontal form-groups-bordered" role="form">
-                            <?php foreach ($result as $department => $field_value) { ?>
-                                <div class="form-group">
-                                    <label for="" class="control-label col-xs-4"><?= humanize($department); ?></label>
-                                    <div class="col-xs-6">
-                                        <div class="form_view_field"><?= $field_value; ?></div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-
-                            <div class="form-group">
-                                <div class="col-xs-offset-4 col-xs-6">
-                                    <a href="<?= site_url(plural($feature) . '/edit/' . $id) ?>" class="btn btn-primary">
-                                        <?= lang('event.edit_button') ?>
-                                    </a>
+                        
+                        <div class="row">
+                            <div class="col-xs-12 btn-container">
+                                <div class='btn btn-success' onclick="showAjaxModal('participants','add', '<?= $parent_id; ?>')">
+                                <?= lang('event.event_register'); ?>
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                        
+                        <div class = "row">
+                            <div class = "col-xs-12">
+                                <form class="form-horizontal form-groups-bordered" role="form">
+                                    <?php foreach ($result as $department => $field_value) { ?>
+                                        <div class="form-group">
+                                            <label for="" class="control-label col-xs-4"><?= humanize($department); ?></label>
+                                            <div class="col-xs-6">
+                                                <div class="form_view_field"><?= $field_value; ?></div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <!-- <div class="form-group">
+                                        <div class="col-xs-offset-4 col-xs-6">
+                                            <a href="<?= site_url(plural($feature) . '/edit/' . $id) ?>" class="btn btn-primary">
+                                                <?= lang('event.edit_button') ?>
+                                            </a>
+                                        </div>
+                                    </div> -->
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="tab-pane ajax_main" id="list_participants">

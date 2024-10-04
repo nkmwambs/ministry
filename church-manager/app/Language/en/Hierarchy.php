@@ -12,6 +12,9 @@ return [
     'hierarchy_denomination_id' => 'Denomination Name',
     'hierarchy_description' => 'Description',
     'hierarchy_level' => 'Level',
+    'hierarchy_code' => 'Hierarchy Code',
+    'highest_hierarchy_name' => 'Head Office',
+    'highest_hierarchy_code' => 'HQ',
 
     'no_hierarchies_message' => 'There are not hierarchies available',
 ];

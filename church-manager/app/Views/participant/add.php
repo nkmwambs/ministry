@@ -10,7 +10,7 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
 
       <div class="panel-heading">
         <div class="panel-title">
-          <div class="page-title"><i class='fa fa-plus-circle'></i><?= lang('participant.add_participant') ?></div>
+          <div class="page-title"><i class='fa fa-plus-circle'></i><?= lang('event.event_register') ?></div>
         </div>
 
       </div>
@@ -25,7 +25,18 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
             </div>
           </div>
 
-          <?php if (!$numeric_member_id) { ?>
+          <div class="form-group">
+              <label class="control-label col-xs-4" for="participant_is_member"><?= lang('participant.participant_is_member') ?></label>
+              <div class="col-xs-6">
+                <select class="form-control" name="participant_is_member" id="participant_is_member">
+                  <option value=""><?= lang('participant.participant_is_member') ?></option>
+                  <option value="1"><?= lang(line: 'system.system_yes') ?></option>
+                  <option value="0"><?= lang(line: 'system.system_no') ?></option>
+                </select>
+              </div>
+            </div>
+
+          
             <div class='form-group'>
               <label for="member_id" class="control-label col-xs-4"><?= lang('participant.participant_member_id') ?></label>
               <div class="col-xs-6">
@@ -37,11 +48,6 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
                 </select>
               </div>
             </div>
-          <?php } else { ?>
-            <input type="hidden" name="member_id" id="member_id" value="<?= $member_id; ?>" />
-          <?php } ?>
-        
-          
               
           <?php 
             if(isset($id)){
@@ -97,19 +103,18 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
             </div>
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label class="control-label col-xs-4" for="status">
               <?= lang('participant.participant_status') ?>
             </label>
             <div class="col-xs-6">
               <select class="form-control" name="status" id="status">
-                <!-- <option value="">Select Status</option> -->
                 <option value="registered">Registered</option>
                 <option value="attended">Attended</option>
                 <option value="cancelled" selected>Cancelled</option>
               </select>
             </div>
-          </div>
+          </div> -->
 
         </form>
 
@@ -119,3 +124,16 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
 
   </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+    // $('#member_id').closest('.form-group').hide();
+    // $("#participant_is_member").change(function () {
+    //   if ($(this).val() == 1) {
+    //     $("#member_id").prop('disabled', false);
+    //   } else {
+    //     $("#member_id").prop('disabled', true);
+    //   }
+    // });
+  })
+</script>
