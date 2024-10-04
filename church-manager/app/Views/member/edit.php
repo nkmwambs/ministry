@@ -1,7 +1,6 @@
-<?php
-// $numeric_designation_id = hash_id($designation_id, 'decode');
+<?php 
+// echo json_encode($designations);
 ?>
-
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary" data-collapsed="0">
@@ -46,12 +45,23 @@
                         </div>
                     </div>
 
+                    <div class='form-group'>
+                        <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_gender') ?></label>
+                        <div class="col-xs-6">
+                            <select class="form-control" name="gender" id="gender">
+                                <option value=""><?= lang('member.member_select_gender') ?></option>
+                                <option value="male" <?=$result['gender'] == 'male' ? "selected": "";?> ><?php echo lang('system.gender_male'); ?></option>
+                                <option value="female" <?=$result['gender'] == 'female' ? "selected": "";?> ><?php echo lang('system.gender_female'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="member_number">
                             <?= lang('member.member_member_number') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="member_number" id="member_number" value="<?= $result['member_number']; ?>" placeholder="Enter Member Number">
+                            <input type="text" class="form-control" readonly name="member_number" id="member_number" value="<?= $result['member_number']; ?>" placeholder="Enter Member Number">
                         </div>
                     </div>
 
@@ -59,8 +69,15 @@
                         <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_designation_id') ?></label>
                         <div class="col-xs-6">
                             <select class="form-control" name="designation_id" id="designation_id">
-                                <option value="<?= $result['designation_id'] ?>"><?= $result['designation_id'] ?></option>
 
+                                <?php if(!empty($designations)){
+                                    foreach($designations as $designation){    
+                                ?>
+                                    <option value="<?=$designation['id'];?>" <?=$result['designation_id'] == $designation['id'] ? "selected" : "";?> ><?=$designation['name'];?></option>
+                                <?php 
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
@@ -96,4 +113,4 @@
             </div>
         </div>
     </div>
-</div>
+</d>

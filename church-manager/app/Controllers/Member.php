@@ -22,14 +22,14 @@ class Member extends BaseController
         $members = [];
 
         if($parent_id > 0){
-            $members = $this->model->select('members.id,first_name,last_name,assembly_id,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
             ->where('assembly_id',hash_id($parent_id,'decode') )
             ->join('assemblies','assemblies.id=members.assembly_id','left')
             ->join('designations','designations.id = members.designation_id')
             ->orderBy('members.created_at desc')
             ->findAll();
         }else{
-            $members = $this->model->select('members.id,first_name,last_name,assembly_id,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
             ->join('assemblies','assemblies.id=members.assembly_id','left')
             ->join('designations','designations.id = members.designation_id')
             ->orderBy('members.created_at desc')
@@ -79,6 +79,13 @@ class Member extends BaseController
                     'min_length' => 'Last Name must be at least {value} characters long.',
                 ]
             ],
+            'gender' => [
+                'rules' =>'required',
+                'label' => 'Member.member_gender',
+                'errors' => [
+                    'required' => '{field} is required.',
+                ]
+            ],
             'date_of_birth' => [
                 'rules' => 'required',
                 'label' => 'Date of Birth',
@@ -107,6 +114,7 @@ class Member extends BaseController
         $data = [
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
+            'gender' => $this->request->getPost('gender'),
             'assembly_id' => $assembly_id,
             'member_number' => $this->computeMemberNumber($assembly_id),
             'designation_id' => $this->request->getPost('designation_id'),
@@ -124,7 +132,11 @@ class Member extends BaseController
         if($this->request->isAJAX()){
             $this->feature = 'member';
             $this->action = 'list';
-            $records = $this->model->orderBy("created_at desc")->where('assembly_id', $assembly_id)->findAll();
+            $records = $this->model
+            ->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            ->join('designations','designations.id=members.designation_id')
+            ->join('assemblies','assemblies.id=members.assembly_id')
+            ->orderBy("members.created_at desc")->where('assembly_id', $assembly_id)->findAll();
 
             $page_data = parent::page_data($records, $hashed_assembly_id);
             // $page_data['parent_id'] = hash_id($assembly_id,'encode');
@@ -154,14 +166,13 @@ class Member extends BaseController
                     'min_length' => 'Last Name must be at least {value} characters long.',
                 ]
             ],
-            // 'member_number' => [
-            //     'rules' =>'required|min_length[4]|max_length[255]',
-            //     'label' => 'Member Number',
-            //     'errors' => [
-            //         'required' => 'Member Number is required.',
-            //         'min_length' => 'Member Number must be at least {value} characters long.',
-            //     ]
-            // ],
+           'gender' => [
+                'rules' =>'required',
+                'label' => 'Member.member_gender',
+                'errors' => [
+                    'required' => '{field} is required.',
+                ]
+            ],
             'date_of_birth' => [
                 'rules' =>'required',
                 'label' => 'Date of Birth',
@@ -187,6 +198,7 @@ class Member extends BaseController
         $update_data = [
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
+            'gender' => $this->request->getPost('gender'),
             'member_number' => $this->request->getPost('member_number'),
             'designation_id' => $this->request->getPost('designation_id'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
@@ -201,7 +213,9 @@ class Member extends BaseController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('members.id,members.first_name,members.last_name,members.assembly_id,members.member_number,members.designation_id,members.date_of_birth,members.email,members.phone')
+            ->select('members.id,members.first_name,gender,designations.name as designation_name,assemblies.name as assembly_name,members.last_name,members.assembly_id,members.member_number,members.designation_id,members.date_of_birth,members.email,members.phone')
+            ->join('designations','designations.id=members.designation_id')
+            ->join('assemblies','assemblies.id=members.assembly_id')
             ->orderBy("members.created_at desc")
             ->where('assembly_id', hash_id($hashed_assembly_id,'decode'))
             ->findAll();

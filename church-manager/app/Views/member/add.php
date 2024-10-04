@@ -45,6 +45,17 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
                 placeholder="Enter Last Name">
             </div>
           </div>
+
+          <div class='form-group'>
+              <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_gender') ?></label>
+              <div class="col-xs-6">
+                <select class="form-control" name="gender" id="gender">
+                    <option value=""><?= lang('member.member_select_gender') ?></option>
+                    <option value="male"><?php echo lang('system.gender_male'); ?></option>
+                    <option value="female"><?php echo lang('system.gender_female'); ?></option>
+                </select>
+              </div>
+            </div>
               
           <?php 
             if(isset($parent_id)){

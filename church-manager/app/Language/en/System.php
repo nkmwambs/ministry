@@ -12,5 +12,7 @@ return [
     'back' => 'Back',
     'value_not_set' => 'Value Not Set',
     'system_yes' => 'Yes',
-    'system_no' => 'No'
+    'system_no' => 'No',
+    'gender_male' => 'Male',
+    'gender_female' => 'Female',
 ];

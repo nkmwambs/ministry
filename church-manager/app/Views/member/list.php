@@ -20,10 +20,11 @@
                     <th><?= lang('member.member_action') ?></th>
                     <th><?= lang('member.member_first_name') ?></th>
                     <th><?= lang('member.member_last_name') ?></th>
+                    <th><?= lang('member.member_gender') ?></th>
                     <th><?= lang('member.member_member_number') ?></th>
                     <th><?= lang('member.member_designation_id') ?></th>
+                    <th><?= lang('member.member_assembly_name') ?></th>
                     <th><?= lang('member.member_date_of_birth') ?></th>
-                    <th><?= lang('member.member_email') ?></th>
                     <th><?= lang('member.member_phone') ?></th>
                 </tr>
             </thead>
@@ -46,10 +47,11 @@
 
                         <td><?= $member['first_name']; ?></td>
                         <td><?= $member['last_name']; ?></td>
+                        <td><?= $member['gender']; ?></td>
                         <td><?= $member['member_number']; ?></td>
                         <td><?= $member['designation_name']; ?></td>
+                        <td><?= $member['assembly_name']; ?></td>
                         <td><?= $member['date_of_birth']; ?></td>
-                        <td><?= $member['email']; ?></td>
                         <td><?= $member['phone']; ?></td>
 
                     <?php } ?>
