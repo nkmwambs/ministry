@@ -201,7 +201,7 @@ abstract class BaseController extends Controller
     }
 
     public function delete($id){
-        // log_message('error', $id);
+       
         $numeric_id = hash_id($id,'decode');
 
         if(method_exists($this->model, 'deleteData')){

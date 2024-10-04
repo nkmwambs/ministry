@@ -15,6 +15,7 @@ return [
     'assembly_leader' => 'Assembly Leader',
     'assembly_is_active' => 'Active',
     'assembly_denomination_id' => 'Denomination Name',
+    'assembly_code' => 'Assembly Code',
 
     'save_assembly' => 'Save',
     'save_and_new_assembly' => 'Save and New',

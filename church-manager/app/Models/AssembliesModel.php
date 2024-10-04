@@ -12,7 +12,7 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','name','planted_at','location','entity_id','assembly_leader','is_active'];
+    protected $allowedFields    = ['id','name', 'assembly_code','planted_at','location','entity_id','assembly_leader','is_active'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -91,6 +91,7 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
             return $this->select($library->setViewQueryFields())->where('assemblies.id', $numeric_id)
             ->join('entities','entities.id = assemblies.entity_id')
             ->join('hierarchies','hierarchies.id = entities.hierarchy_id')
+            ->join('ministers','ministers.id = assemblies.assembly_leader', 'left')
             ->first();
         }else{
             return $this->where('id', $this->id)->first();
@@ -139,4 +140,6 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
         ->join('hierarchies','hierarchies.id = entities.hierarchy_id')
         ->findAll();
     }
+
+    
 }
