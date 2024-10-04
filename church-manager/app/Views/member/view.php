@@ -6,7 +6,7 @@ $visitor_sections = array_pop($result);
     <?php if(session()->getFlashdata('message') ) { ?>
         <div class = "col-xs-12 info">
             <p><?= session()->getFlashdata('message');?></p>
-            <a href="<?= site_url(plural($feature).'/edit/' . $id) ?>">
+            <a href="<?= site_url(plural($designation).'/edit/' . $id) ?>">
                 <?= lang('member.edit_again_button') ?>
             </a>
         </div>

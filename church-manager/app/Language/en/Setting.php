@@ -8,6 +8,7 @@ return [
     'view_meetings' => 'List Meetings',
     'view_revenues' => 'List Revenue',
     'view_roles' => 'List Roles',
+    'view_fields' => 'List Custom Fields',
 
     'view_profile_settings' => 'Profile Settings',
 ];

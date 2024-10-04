@@ -49,7 +49,10 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
         $listQueryFields = $library->setListQueryFields();
 
         if(!empty($listQueryFields)){
-            return $this->select($library->setListQueryFields())->orderBy('created_at desc')->findAll();
+            return $this->select($library->setListQueryFields())
+            ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
+            ->orderBy('created_at desc')
+            ->findAll();
         }else{
             return $this->orderBy('created_at desc')->findAll();
         }
@@ -60,7 +63,10 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
         $viewQueryFields = $library->setViewQueryFields();
 
         if(!empty($viewQueryFields)){
-            return $this->select($library->setViewQueryFields())->where('id', $id)->first();
+            return $this->select($library->setViewQueryFields())
+            ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
+            ->where('id', $id)
+            ->first();
         }else{
             return $this->where('id', $id)->first();
         }

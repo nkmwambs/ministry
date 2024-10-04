@@ -118,25 +118,6 @@
         $('.myOption').change(function() {
             updateSelectBackground($(this));
         });
-
-        // $.ajax({
-        //     url,
-        //     method: 'GET',
-        //     data,
-        //     success: function(response) {
-        //         $('.datatable').DataTable({
-        //             stateSave: true,
-        //             columns: [
-        //                 {
-        //                     data: 'status',
-        //                     render: function(data, type) {
-        //                         return '<span style="color:' + data + '">' + data + '</span>';
-        //                     }
-        //                 }
-        //             ]
-        //         });
-        //     }
-        // })
     });
 
     $(document).on('change', '.task_status_labels', function() {

@@ -74,9 +74,9 @@ class Designation extends BaseController
         $data = [
             'name' => $this->request->getPost('name'),
             'denomination_id' => $this->request->getPost('denomination_id'),
-            'hierarchy_id' => $this->request->getPost('hierarchy_id	'),
-            'department_id' => $this->request->getPost('department_id	'),
-            'minister_title_designation' => $this->request->getPost('minister_title_designation	'),
+            'hierarchy_id' => $this->request->getPost('hierarchy_id'),
+            'department_id' => $this->request->getPost('department_id'),
+            'minister_title_designation' => $this->request->getPost('minister_title_designation'),
 
         ];
 
