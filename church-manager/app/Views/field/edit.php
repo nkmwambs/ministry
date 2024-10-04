@@ -126,7 +126,16 @@
                     </div>
 
                     <!-- Dynamically Generated Custom Fields -->
-                    
+                    <?php foreach ($customFields as $field): ?>
+                        <div class="form-group">
+                            <label for="<?= $field['name'] ?>"><?= ucfirst($field['name']) ?></label>
+                            <input type="<?= $field['type'] ?>"
+                                name="custom_fields[<?= $field['id'] ?>]"
+                                id="<?= $field['name'] ?>"
+                                value="<?= $customValues[$field['id']] ?? '' ?>"
+                                class="form-control">
+                        </div>
+                    <?php endforeach; ?>
 
                 </form>
             </div>

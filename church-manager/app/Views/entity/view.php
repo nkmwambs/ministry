@@ -33,7 +33,7 @@
                             <label>Hierarchy Name</label>
                         </div>
                         <div class = "col-xs-8">
-                            <?=$result['hierarchy_name'];?>
+                            <?=$result['hierarchy_id'];?>
                         </div>
                     </div>
 

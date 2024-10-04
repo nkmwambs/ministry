@@ -10,11 +10,52 @@ use Psr\Log\LoggerInterface;
 class Field extends BaseController
 {
     protected $model = null;
+    protected $customfieldLibrary = null;
 
     function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger) {
         parent::initController($request, $response, $logger);
 
         $this->model = new \App\Models\FieldsModel();
+        $this->customfieldLibrary = new \App\Libraries\FieldLibrary();
+    }
+
+    public function add(): string {
+        $page_data = $this->page_data();
+        $page_data['parent_id'] = $this->parent_id;
+
+        if(method_exists($this->library,'addExtraData')){
+            // Note the addExtraData updates the $page_data by reference
+            $this->library->addExtraData($page_data);
+        }
+
+        // Get all custom fields for the 'users' table
+        $customFields = $this->customfieldLibrary->getCustomFieldsForTable('fields');
+        $page_data['customFields'] = $customFields;
+
+        return view("$this->feature/add", $page_data);
+    }
+
+    public function edit(): string {
+        $numeric_id = hash_id($this->id,'decode');
+
+        if(method_exists($this->model, 'getEditData')){
+            $data = $this->model->getEditData($numeric_id);
+        }else{
+            $data = $this->model->getOne($numeric_id);
+        }
+
+        $page_data = $this->page_data($data);
+        
+        if(method_exists($this->library,'editExtraData')){
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->editExtraData($page_data);
+        }
+
+        // Get all custom fields for the 'users' table
+        $customFields = $this->customfieldLibrary->getCustomFieldsForTable('fields');
+        $page_data['customFields'] = $customFields;
+
+        return view("$this->feature/edit", $page_data);
     }
 
     public function post()
