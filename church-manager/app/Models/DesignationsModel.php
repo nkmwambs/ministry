@@ -84,7 +84,7 @@ class DesignationsModel extends Model
     }
 
     public function getViewData($designation_id){
-        $library = new \App\Libraries\MeetingLibrary();
+        $library = new \App\Libraries\DesignationLibrary();
         $viewQueryFields = $library->setViewQueryFields();
 
         if (!empty($viewQueryFields)) {

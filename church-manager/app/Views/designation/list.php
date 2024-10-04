@@ -44,9 +44,8 @@
                 <?php foreach ($result as $designation) { ?>
                 <tr>
                 <td>
-                        <span class='action-icons' title="View <?= $designation['id']; ?> designation">
-                            
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($designation['id']);?>')"></i>
+                        <span class='action-icons' title="View <?=singular($designation['name']);?> designation">
+                            <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($designation['id']);?>')"></i>
                         </span>
                         <span class='action-icons' title="Edit <?= $designation['id']; ?> designation">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($designation['id']); ?>')" class='fa fa-pencil'></i>
