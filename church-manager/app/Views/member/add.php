@@ -1,6 +1,6 @@
 <?php 
 $numeric_designation_id = hash_id($designation_id, 'decode');
-print_r($parent_id);
+// echo hash_id($parent_id,'decode');
 ?>
 
 <div class="row">
@@ -66,14 +66,14 @@ print_r($parent_id);
             }
           ?>
           
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label class="control-label col-xs-4" for="member_number">
               <?= lang('member.member_member_number') ?>
             </label>
             <div class="col-xs-6">
               <input type="text" class="form-control" name="member_number" id="member_number" placeholder="Enter Member Number"></i>
             </div>
-          </div>
+          </div> -->
 
           <?php if (!$numeric_designation_id) { ?>
             <div class='form-group'>

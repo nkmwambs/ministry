@@ -1,6 +1,3 @@
-<?php 
-// print_r($parent_id);
-?>
 <div class="row">
     <div class="col-xs-12 btn-container">
         <div class='btn btn-primary' onclick="showAjaxModal('members','add', '<?= $parent_id; ?>')">
@@ -34,10 +31,11 @@
                 <?php foreach ($result as $member) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $member['first_name']; ?> member">
-                                <!-- <a href="<?= site_url("members/view/" . hash_id($member['id'])); ?>">
-                                <i class='fa fa-search'></i> -->
+                            <!-- <span class='action-icons' title="View <?= $member['first_name']; ?> member">
                                 <i class='fa fa-search' onclick="showAjaxListModal('<?= plural($feature); ?>','view', '<?= hash_id($member['id']); ?>')"></i>
+                            </span> -->
+                            <span class='action-icons' title="View <?=singular($member['first_name']);?> member">
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($member['id']);?>')"></i>
                             </span>
                             <span class='action-icons' title="Edit <?= $member['first_name']; ?> member">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($member['id']); ?>')" class='fa fa-pencil'></i>
@@ -49,7 +47,7 @@
                         <td><?= $member['first_name']; ?></td>
                         <td><?= $member['last_name']; ?></td>
                         <td><?= $member['member_number']; ?></td>
-                        <td><?= $member['designation_id']; ?></td>
+                        <td><?= $member['designation_name']; ?></td>
                         <td><?= $member['date_of_birth']; ?></td>
                         <td><?= $member['email']; ?></td>
                         <td><?= $member['phone']; ?></td>

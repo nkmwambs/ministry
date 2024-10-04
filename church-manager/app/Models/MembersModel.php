@@ -49,7 +49,9 @@ class MembersModel extends Model
         $listQueryFields = $library->setListQueryFields();
 
         if(!empty($listQueryFields)){
-            return $this->select($library->setListQueryFields())->orderBy('created_at desc')->findAll();
+            return $this->select($library->setListQueryFields())
+            ->join('designations','designations.id = members.designation_id')
+            ->orderBy('created_at desc')->findAll();
         }else{
             return $this->orderBy('created_at desc')->findAll();
         }
@@ -73,10 +75,12 @@ class MembersModel extends Model
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
                 ->join('assemblies', 'assemblies.id = members.assembly_id')
+                ->join('designations','designations.id = members.designation_id')
                 ->where('members.id', $member_id)
                 ->first();
         } else {
-            return $this->where('id', $member_id)->first();
+            return $this->join('designations','designations.designation_id = members.designation_id')
+            ->where('id', $member_id)->first();
         }
     }
 
