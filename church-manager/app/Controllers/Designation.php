@@ -27,40 +27,42 @@ class Designation extends BaseController
                 'rules' => 'required|min_length[5]|max_length[255]',
                 'label' => 'Designation Name',
                 'errors' => [
-                'required' => '{field} is required.',
-                'min_length' => '{field} must be at least {value} characters long.',
-                'max_length' => '{field} cannot exceed {value} characters.'
+                'required' => 'Designation Name is required.',
+                'min_length' => 'Designation Name must be at least {value} characters long.',
+                'max_length' => 'Designation Name cannot exceed {value} characters.'
                 ]
             ],
             'denomination_id' => [
                 'rules' => 'required',
                 'label' => 'Denomination Name',
                 'errors' => [
-                'required' => '{field} is required.',                ]
+                'required' => 'Denomination Name is required.'
+                ]
             ],
             'is_minister_title_designation' => [
                 'rules' => 'required',
-                'label' => lang('designation.is_minister_title_designation'),
+                'label' => 'Check Minister',
                 'errors' => [
-                'required' => '{field} is required.',                ]
+                'required' => 'Check Minister is required.'
+                ]
             ],
             'is_hierarchy_leader_designation' => [
                 'rules' => 'required',
-                'label' => lang('designation.is_hierarchy_leader_designation'),
+                'label' => 'Check Hierarchy Leader Designation',
                 'errors' => [
-                'required' => '{field} is required.',
+                'required' => 'Check Hierarchy Leader Designation is required.',
                 ]
             ],
             'is_department_leader_designation' => [
                 'rules' => 'required',
-                'label' => lang('designation.is_department_leader_designation'),
+                'label' => 'Check Department Leader Designation',
                 'errors' => [
-                'required' => '{field} is required.',
+                'required' => 'Check Department Leader Designation is required.',
                 ]
             ],
         ]);
 
-        if ($this->validate($validation->getRules())) {
+        if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
@@ -70,7 +72,6 @@ class Designation extends BaseController
             'is_hierarchy_leader_designation' => $this->request->getPost('is_hierarchy_leader_designation'),
             'is_department_leader_designation' => $this->request->getPost('is_department_leader_designation'),
             'is_minister_title_designation' => $this->request->getPost('is_minister_title_designation'),
-
         ];
 
         $this->model->insert((object)$data);

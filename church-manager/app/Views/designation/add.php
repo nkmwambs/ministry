@@ -1,7 +1,7 @@
 <?php 
 $numeric_denomination_id= hash_id($parent_id, 'decode');
-$numeric_hierarchy_id= hash_id($hierarchy_id, 'decode');
-$numeric_department_id= hash_id($department_id, 'decode');
+// $numeric_hierarchy_id= hash_id($hierarchy_id, 'decode');
+// $numeric_department_id= hash_id($department_id, 'decode');
 
 ?>
 
@@ -62,7 +62,7 @@ $numeric_department_id= hash_id($department_id, 'decode');
                         </label>
                         <div class="col-xs-6">
                             <select class="form-control" id="is_minister_title_designation" name="is_minister_title_designation" >
-                                <option><?=lang('designation.minister_title_designation');?></option>
+                                <option><?=lang('designation.is_minister_title_designation');?></option>
                                 <option value="yes"><?=lang('system.system_yes');?></option>
                                 <option value="no" selected><?=lang('system.system_no');?></option>
                             </select>
