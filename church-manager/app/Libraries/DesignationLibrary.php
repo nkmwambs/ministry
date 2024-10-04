@@ -23,16 +23,16 @@ class  DesignationLibrary implements \App\Interfaces\LibraryInterface {
     function listExtraData(&$page_data) {
         
         $parent_id = 0;
-        $hierarchy_id =0;
-        $department_id =0;
+        // $hierarchy_id =0;
+        // $department_id =0;
 
         if (session()->get('user_denomination_id')) {
             $parent_id = session()->get('user_denomination_id');
         }
 
         $page_data['parent_id'] = hash_id($parent_id,'encode');
-        $page_data['hierarchy_id'] = hash_id($hierarchy_id,'encode');
-        $page_data['department_id'] = hash_id($department_id,'encode');
+        //$page_data['hierarchy_id'] = hash_id($hierarchy_id,'encode');
+        //$page_data['department_id'] = hash_id($department_id,'encode');
     }
 
     function addExtraData(&$page_data) {
@@ -47,19 +47,19 @@ class  DesignationLibrary implements \App\Interfaces\LibraryInterface {
         $denominationsModel = new \App\Models\DenominationsModel();
         $denominations = $denominationsModel->findAll();
 
-        $hierarchiesModel = new \App\Models\HierarchiesModel();
-        $hierarchies = $hierarchiesModel->findAll();
+        // $hierarchiesModel = new \App\Models\HierarchiesModel();
+        // $hierarchies = $hierarchiesModel->findAll();
 
-        $departmentsModel = new \App\Models\DepartmentsModel();
-        $departments = $departmentsModel->findAll();
+        // $departmentsModel = new \App\Models\DepartmentsModel();
+        // $departments = $departmentsModel->findAll();
 
         $page_data['denominations'] = $denominations;
-        $page_data['hierarchies'] = $hierarchies;
-        $page_data['departments'] = $departments;
+        // $page_data['hierarchies'] = $hierarchies;
+        // $page_data['departments'] = $departments;
 
         $page_data['parent_id'] = hash_id($parent_id,'encode');
-        $page_data['hierarchy_id'] = hash_id($hierarchy_id,'encode');
-        $page_data['department_id'] = hash_id($department_id,'encode');
+        // $page_data['hierarchy_id'] = hash_id($hierarchy_id,'encode');
+        // $page_data['department_id'] = hash_id($department_id,'encode');
     }
 
     function editExtraData (&$page_data) {

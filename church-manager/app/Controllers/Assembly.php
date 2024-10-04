@@ -126,6 +126,7 @@ class Assembly extends BaseController
 
         $data = [
             'name' => $this->request->getPost('name'),
+            'assembly_code' => $this->computeAssemblyCode($this->request->getPost('entity_id')),
             'planted_at' => $this->request->getPost('planted_at'),
             'location' => $this->request->getPost('location'),
             'entity_id' => $this->request->getPost('entity_id'),
@@ -150,6 +151,23 @@ class Assembly extends BaseController
         }
 
         return redirect()->to(site_url("assemblies/view/".hash_id($insertId)));
+    }
+
+    private function computeAssemblyCode($entity_id){
+
+        // Count the number of assembly in an entity
+        $assemblyCountNum = $this->model->where('entity_id', $entity_id)->countAllResults() + 1;
+        $assemblyCount = str_pad($assemblyCountNum, 4, '0', STR_PAD_LEFT); 
+
+        // Get the entity number
+        $entityModel = new \App\Models\EntitiesModel();
+        $entity = $entityModel->find($entity_id);
+        $entityNumber = $entity['entity_number'];
+
+        // Assembly Code 
+        $assembly_code = "$entityNumber/$assemblyCount";
+
+        return $assembly_code;
     }
 
     function getAssembliesByDenominationId($denomination_id){

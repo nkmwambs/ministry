@@ -61,6 +61,7 @@ class Denomination extends BaseController
             'name' => 'required|min_length[10]|max_length[255]',
             'email'    => 'required|valid_email|max_length[255]',
             'code' => 'required|min_length[3]',
+            'phone' => 'required|regex_match[/^\+254\d{9}$/]'
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -103,6 +104,7 @@ class Denomination extends BaseController
             'name' => 'required|min_length[10]',
             'email'    => 'required|valid_email|max_length[255]',
             'code' => 'required|min_length[3]',
+            'phone' => 'required|regex_match[/^\+254\d{9}$/]',
         ]);
 
         

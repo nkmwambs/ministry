@@ -1,21 +1,4 @@
 <div class="row">
-    <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("designation"); ?>" class="btn btn-info">
-            <?= lang('designation.back_button') ?>
-        </a>
-    </div>
-</div>
-
-<div class="row">
-    <?php if (session()->getFlashdata('message')) { ?>
-        <div class="col-xs-12 info">
-            <p><?= session()->getFlashdata('message'); ?></p>
-            <a href="<?= site_url(plural($designation) . '/edit/' . $id) ?>"><?= lang('minister.edit_again_button') ?></a>
-        </div>
-    <?php } ?>
-</div>
-
-<div class="row">
     <div class="col-md-12">
 
         <div class="panel panel-primary" data-collapsed="0">
@@ -47,13 +30,13 @@
                                 </div>
                             <?php } ?>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <div class="col-xs-offset-4 col-xs-6">
                                     <a href="<?= site_url(plural($designation) . '/edit/' . $id) ?>" class="btn btn-primary">
                                         <?= lang('designation.edit_button') ?>
                                     </a>
                                 </div>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
 

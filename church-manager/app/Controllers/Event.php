@@ -22,6 +22,8 @@ class Event extends BaseController
         $data = $this->model->getOne(hash_id($id,'decode'));
         if (array_key_exists('id', $data)) {
             unset($data['id']);
+            unset($data['denomination_id']);
+            unset($data['meeting_id']);
         }
     
         // Fetch participants for the event

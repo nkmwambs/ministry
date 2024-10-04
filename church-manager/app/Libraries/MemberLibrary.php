@@ -15,8 +15,8 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
 
     function setListQueryFields(){
         $fields = [
-            'members.id','first_name','last_name','parent_id',
-            'assembly_id','member_number','designation_id',
+            'members.id','first_name','last_name','gender',
+            'assembly_id','member_number','designation_id','designations.name as designation_name',
             'date_of_birth','members.email','members.phone','members.is_active'
         ];
         return $fields;
@@ -24,8 +24,8 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
 
     function setViewQueryFields(){
         $fields = [
-            'members.id','first_name','last_name','parent_id',
-            'assembly_id','member_number','designation_id',
+            'members.id','first_name','last_name','gender',
+            'assembly_id','assemblies.name as assembly_name','member_number','designation_id','designations.name as designation_name',
             'date_of_birth','members.email','members.phone','members.is_active'
         ];
         return $fields;
@@ -61,7 +61,7 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['denominations'] = $denominations;
         $page_data['designations'] = $designations;
 
-        $page_data['parent_id'] = hash_id($parent_id,'encode');
+        // $page_data['parent_id'] = hash_id($parent_id,'encode');
         $page_data['designation_id'] = hash_id($designation_id, 'encode');
     }
 

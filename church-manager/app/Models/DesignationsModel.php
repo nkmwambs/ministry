@@ -12,7 +12,7 @@ class DesignationsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','name','denomination_id','hierarchy_id','department_id','minister_title_designation'];
+    protected $allowedFields    = ['id','name','denomination_id','is_hierarchy_leader_designation','is_department_leader_designation','is_minister_title_designation'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -86,7 +86,7 @@ class DesignationsModel extends Model
     }
 
     public function getViewData($designation_id){
-        $library = new \App\Libraries\MeetingLibrary();
+        $library = new \App\Libraries\DesignationLibrary();
         $viewQueryFields = $library->setViewQueryFields();
 
         if (!empty($viewQueryFields)) {
