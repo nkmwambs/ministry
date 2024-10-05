@@ -1,4 +1,5 @@
 <?php
+// echo $id;
 $visitor_sections = array_pop($result);
 ?>
 <div class="row">
@@ -44,14 +45,6 @@ $visitor_sections = array_pop($result);
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="view_event">
-                        
-                        <div class="row">
-                            <div class="col-xs-12 btn-container">
-                                <div class='btn btn-success' onclick="showAjaxModal('participants','add', '<?= $parent_id; ?>')">
-                                <?= lang('event.event_register'); ?>
-                                </div>
-                            </div>
-                        </div>
                         
                         <div class = "row">
                             <div class = "col-xs-12">

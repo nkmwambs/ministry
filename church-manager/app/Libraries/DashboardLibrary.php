@@ -3,13 +3,9 @@
 namespace App\Libraries;
 
 class DashboardLibrary implements \App\Interfaces\LibraryInterface {
-    function unsetListQueryFields(){
+    function unsetListQueryFields(){}
 
-    }
-
-    function unsetViewQueryFields(){
-
-    }
+    function unsetViewQueryFields(){}
 
     function setListQueryFields(){
         $fields = [];

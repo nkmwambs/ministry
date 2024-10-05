@@ -15,7 +15,7 @@ class ParticipantLibrary implements LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['participants.id','member_id','event_id','payment_id','payment_code','registration_amount','status','members.name as member_name'];
+        $fields = ['participants.id','member_id','event_id','payment_id','payment_code','registration_amount','status','members.first_name as member_name'];
         return $fields;
     }
 
@@ -40,13 +40,15 @@ class ParticipantLibrary implements LibraryInterface {
     }
 
     function addExtraData(&$page_data) {
-        $parent_id = 0;
+        // $parent_id = 0;
         $member_id = 0;
-        $payment_id = 0;
+        // $payment_id = 0;
 
-        if (session()->get('user_denomination_id')) {
-            $parent_id = session()->get('user_denomination_id');
-        }
+        // if (session()->get('user_denomination_id')) {
+        //     $parent_id = session()->get('user_denomination_id');
+        // }
+
+        // log_message('error', json_encode($page_data));
 
         $denominationsModel = new \App\Models\DenominationsModel();
         $denominations = $denominationsModel->findAll();
@@ -54,16 +56,22 @@ class ParticipantLibrary implements LibraryInterface {
         $membersModel = new \App\Models\MembersModel();
         $members = $membersModel->findAll();
 
-        $paymentsModel = new \App\Models\PaymentsModel();
-        $payments = $paymentsModel->findAll();
+        $event_id = hash_id($page_data['parent_id'], 'decode');
+        $eventsModel = new \App\Models\EventsModel();
+        $event = $eventsModel->find($event_id);
+
+        // log_message('error', json_encode($event));
+
+        // $paymentsModel = new \App\Models\PaymentsModel();
+        // $payments = $paymentsModel->findAll();
 
         $page_data['denominations'] = $denominations;
         $page_data['members'] = $members;
-        $page_data['payments'] = $payments;
+        $page_data['registration_fees'] = $event['registration_fees'];
 
-        $page_data['parent_id'] = hash_id($parent_id,'encode');
+        // $page_data['parent_id'] = hash_id($parent_id,'encode');
         $page_data['member_id'] = hash_id($member_id, 'encode');
-        $page_data['payment_id'] = hash_id($payment_id, 'encode');
+        // $page_data['payment_id'] = hash_id($payment_id, 'encode');
     }
 
     function editExtraData (&$page_data) {
@@ -91,5 +99,19 @@ class ParticipantLibrary implements LibraryInterface {
         $page_data['denominations'] = $denominations;
         $page_data['members'] = $members;
         $page_data['payments'] = $payments;
+    }
+
+    function insertParticipants(array $data){
+        $registration_amount = count($data['member_id']) > 1 ? $data['due_registration_amount']/count($data['member_id']) : $data['due_registration_amount'];
+        foreach($data['member_id'] as $memberId){
+            $participantModel = new \App\Models\ParticipantsModel();
+
+            $insert_data['member_id'] = $memberId;
+            $insert_data['event_id'] = $data['event_id'];
+            $insert_data['registration_amount'] = $registration_amount;
+            $insert_data['status'] = 'registered';
+
+            $participantModel->insert((object)$insert_data);
+        }
     }
 }

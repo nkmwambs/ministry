@@ -15,9 +15,13 @@ return [
     'participant_registration_amount' => 'Registration Amount',
     'participant_status' => 'Status',
     'participant_is_member' => 'Is Member',
+    'participant_due_registration_amount' => 'Due Registration Amount',
+    'paying_phone_number' => 'Paying Phone Number',
+    'participant_pay' => 'Make Payment',
 
     'select_member' => 'Select Member',
     'select_payment' => 'Select Payment',
+    'event_register' => 'Register Participant',
 
     'save_participant' => 'Save',
     'save_and_new_event' => 'Save and New',

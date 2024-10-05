@@ -65,8 +65,28 @@ class Participant extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'registration_amount' => 'required',
-            'status' => 'required',
+            'member_id' => [
+                'rules' =>'required',
+                'label' => 'Members',
+                'errors' => [
+                   'required' => 'Members are required.',
+                ]
+            ],
+            'due_registration_amount' => [
+                'rules' =>'required',
+                'label' => 'Registration Due Amount',
+                'errors' => [
+                   'required' => 'Registration Due Amount is required. Please choose a member',
+                ]
+                ],
+                "paying_phone_number" => [
+                    'rules' =>'required|regex_match[/^254\d{9}$/]',
+                    'label' => 'Paying Phone Number',
+                    'errors' => [
+                       'required' => 'Paying Phone Number is required.',
+                       'regex_match' => 'Phone number should be in the format +254XXXXXXXX',
+                    ]
+                ]
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -75,19 +95,24 @@ class Participant extends BaseController
         }
 
         // $numeric_event_id = hash_id($this->request->getPost('event_id'), 'decode');
+        $hashed_event_id = $this->request->getPost('event_id');
+        $numeric_event_id = hash_id($hashed_event_id, 'decode');
+        
         $data = [
             'member_id' => $this->request->getPost('member_id'),
-            'event_id' => $this->request->getPost('event_id'),
-            'payment_id' => $this->request->getPost('payment_id'),
-            'payment_code' => $this->request->getPost('payment_code'),
-            'registration_amount' => $this->request->getPost('registration_amount'),
-            'status' => $this->request->getPost('status'),
+            'event_id' => $numeric_event_id,
+            'due_registration_amount' => $this->request->getPost('due_registration_amount'),
+            'paying_phone_number' => $this->request->getPost('paying_phone_number'),
         ];
 
-        $this->model->insert((object)$data);
-        $insertId = $this->model->getInsertID();
+        // Call MPesa API to send a payment request to the customer phone number
+        $mpesa_response = $this->notifyCustomerForMpesaPayment($data['paying_phone_number'], $data['due_registration_amount']);
+        
+        if($mpesa_response['ResponseCode'] == 0){
+            $participantLibrary = new \App\Libraries\ParticipantLibrary();
+            $participantLibrary->insertParticipants($data);
+            // log_message('error', json_encode($data));
 
-        if($this->request->isAJAX()){
             $this->feature = 'participant';
             $this->action = 'list';
             $records = [];
@@ -100,13 +125,43 @@ class Participant extends BaseController
 
             $this->parent_id = $this->request->getPost('event_id');
             $this->id = hash_id($insertId, 'encode');
-            // $records = $this->model->orderBy("created_at desc")->where('event_id', $event_id)->findAll();
-            // $page_data = parent::page_data($records, $hashed_event_id);
-            // $page_data['id'] = hash_id($event_id,'encode');
             return view("participant/list", parent::page_data($records));
         }
+        
+        // if($this->request->isAJAX()){
+        //     $this->feature = 'participant';
+        //     $this->action = 'list';
+        //     $records = [];
+
+        //     if (method_exists($this->model, 'getAll')) {
+        //         $records = $this->model->getAll();
+        //     } else {
+        //         $records = $this->model->findAll();
+        //     }
+
+        //     $this->parent_id = $this->request->getPost('event_id');
+        //     $this->id = hash_id($insertId, 'encode');
+        //     return view("participant/list", parent::page_data($records));
+        // }
 
         return redirect()->to(site_url("participants/view/".hash_id($insertId)));
+    }
+
+    private function notifyCustomerForMpesaPayment($phone_number, $amount){
+       
+        sleep(3);
+
+        $denomination_code = "COGOP";
+        $payment_purpose = "Payment of Women Conference";
+
+        $mpesaLibrary = new \App\Libraries\MpesaLibrary();
+        // $res = $mpesaLibrary->express($denomination_code,$payment_purpose, $phone_number, $amount);
+
+        // Listen to the STK response for actual payment
+
+        $response = ['ResponseCode' => 0]; //json_decode($res,true);
+
+        return $response;
     }
 
     public function update(){
