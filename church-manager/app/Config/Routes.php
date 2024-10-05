@@ -33,8 +33,6 @@ foreach ($features as $featureObj) {
     });
 }
 
-$routes->get('fields/add', "Field::add");
-
 $routes->get('entities/items/(:segment)/(:segment)', "Entity::getParentEntitiesByDenomination/$1/$2");
 $routes->get('entities/lowestEntities/(:segment)', "Entity::getDenominationLowestEntities/$1");
 $routes->get('entities/hierarchy/(:segment)', "Entity::getEntitiesByHierarchyId/$1");

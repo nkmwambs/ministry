@@ -11,12 +11,12 @@ class  DesignationLibrary implements \App\Interfaces\LibraryInterface {
 
     }
     function setListQueryFields(){
-        $fields = ['designations.id','designations.name','designations.denomination_id','hierarchy_id','department_id','minister_title_designation','hierarchies.name as hierarchy_name','departments.name as department_name','denominations.name as denomination_name'];
+        $fields = ['designations.id as id','designations.name as name','denomination_id','denominations.name as denomination_name','is_hierarchy_leader_designation','is_department_leader_designation','is_minister_title_designation'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['designations.id','designations.name','designations.denomination_id','hierarchy_id','department_id','minister_title_designation','hierarchies.name as hierarchy_name','departments.name as department_name','denominations.name as denomination_name'];
+        $fields = ['designations.id as id','designations.name as name','denomination_id','is_hierarchy_leader_designation','is_department_leader_designation','is_minister_title_designation','denominations.name as denomination_name'];
         return $fields;
     }
 

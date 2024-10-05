@@ -180,7 +180,13 @@ class Member extends BaseController
                    'required' => 'Date of Birth is required.',
                 ]
             ],
-            'phone' => 'required|regex_match[/^\+254\d{9}$/]',
+            'phone' => [
+                'rules' => 'required|regex_match[/^\+254\d{9}$/]',
+                'label' => 'Phone',
+                'errors' => [
+                    'regex_match' => 'Phone number should be in the format +254XXXXXXXX',
+                ]
+            ],
         ]);
 
         if (!$this->validate($validation->getRules())) {
