@@ -51,10 +51,12 @@ class ParticipantsModel extends Model
         if(!empty($listQueryFields)){
             return $this->select($library->setListQueryFields())->orderBy('participants.created_at desc')
             ->join('members', 'members.id=participants.member_id')
+            ->join('events', 'events.id=participants.event_id')
             ->findAll();
         }else{
             return $this->orderBy('participants.created_at desc')
             ->join('members', 'members.id=participants.member_id')
+            ->join('events', 'events.id=participants.event_id')
             ->findAll();
         }
     }

@@ -21,14 +21,16 @@ class Participant extends BaseController
         $participants = [];
 
         if($parent_id > 0){
-            $participants = $this->model->select('participants.id,member_id,event_id,payment_id,payment_code,registration_amount,status')
+            $participants = $this->model->select('participants.id,member_id, CONCAT(members.first_name," ", members.last_name) as member_name,event_id,events.name as event_name,payment_id,payment_code,registration_amount,status')
             ->where('event_id',hash_id($parent_id,'decode'))
             ->join('events','events.id=participants.event_id')
+            ->join('members','members.id=participants.member_id')
             ->orderBy('participants.created_at desc')
             ->findAll();
         }else{
-            $participants = $this->model->select('participants.id,member_id,event_id,payment_id,payment_code,registration_amount,status')
+            $participants = $this->model->select('participants.id,member_id,CONCAT(members.first_name," ", members.last_name) as member_name,event_id,events.name as event_name,payment_id,payment_code,registration_amount,status')
             ->join('events','events.id=participants.event_id')
+            ->join('members','members.id=participants.member_id')
             ->orderBy('participants.created_at desc')
             ->findAll();
         }
@@ -160,7 +162,8 @@ class Participant extends BaseController
         // Listen to the STK response for actual payment
 
         $response = ['ResponseCode' => 0]; //json_decode($res,true);
-
+        // $response = json_decode($res,true);
+        
         return $response;
     }
 

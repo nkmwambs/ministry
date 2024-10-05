@@ -15,7 +15,7 @@ class ParticipantLibrary implements LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['participants.id','member_id','event_id','payment_id','payment_code','registration_amount','status','members.first_name as member_name'];
+        $fields = ['participants.id','member_id','event_id','events.name as event_name','payment_id','payment_code','registration_amount','status','members.first_name as member_name'];
         return $fields;
     }
 
@@ -40,38 +40,37 @@ class ParticipantLibrary implements LibraryInterface {
     }
 
     function addExtraData(&$page_data) {
-        // $parent_id = 0;
         $member_id = 0;
-        // $payment_id = 0;
-
-        // if (session()->get('user_denomination_id')) {
-        //     $parent_id = session()->get('user_denomination_id');
-        // }
-
-        // log_message('error', json_encode($page_data));
+        $event_id = hash_id($page_data['parent_id'], 'decode');
 
         $denominationsModel = new \App\Models\DenominationsModel();
         $denominations = $denominationsModel->findAll();
+        
+        $members = $this->getUnregisteredMembersForEvent($event_id);
 
-        $membersModel = new \App\Models\MembersModel();
-        $members = $membersModel->findAll();
-
-        $event_id = hash_id($page_data['parent_id'], 'decode');
         $eventsModel = new \App\Models\EventsModel();
         $event = $eventsModel->find($event_id);
-
-        // log_message('error', json_encode($event));
-
-        // $paymentsModel = new \App\Models\PaymentsModel();
-        // $payments = $paymentsModel->findAll();
 
         $page_data['denominations'] = $denominations;
         $page_data['members'] = $members;
         $page_data['registration_fees'] = $event['registration_fees'];
-
-        // $page_data['parent_id'] = hash_id($parent_id,'encode');
         $page_data['member_id'] = hash_id($member_id, 'encode');
-        // $page_data['payment_id'] = hash_id($payment_id, 'encode');
+    }
+
+    function getUnregisteredMembersForEvent($eventId){
+     
+        // Subquery to get member IDs that are in the participants table for the given event_id    
+        $participantsModel = new \App\Models\ParticipantsModel();
+        $eventParticipants = $participantsModel
+        ->select('member_id')
+        ->where('event_id', $eventId)
+        ->findAll();
+
+        // Main query to get members whose IDs are not in the subquery
+        $membersModel = new \App\Models\MembersModel();
+        $members = $membersModel->whereNotIn('id', array_column($eventParticipants,'member_id'))
+        ->findAll();
+        return $members;
     }
 
     function editExtraData (&$page_data) {
