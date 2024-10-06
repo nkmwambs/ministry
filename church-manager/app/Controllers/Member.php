@@ -15,7 +15,44 @@ class Member extends BaseController
         
         $this->model = new \App\Models\MembersModel();
     }
-    
+
+    //method to handle server-side data for Datatables
+function fetchMembers($parent_id){
+
+    $request =\Config\Services::request();
+
+    //get parameters sent by Datatables
+    $draw = intval($request->getPost('draw'));
+    $start = intval($request->getPost('start'));
+    $length = intval($request->getPost('length'));
+    $searchValue = $request->getPost('search')['value'];
+
+    $totalRecords = $this->model->where('assembly_id', $parent_id)->countAll();
+
+    if (!empty($searchValue)) {
+        $this->model->like('first_name', $searchValue)
+                    ->orLike('last_name', $searchValue)
+                    ->orLike('code', $searchValue)
+                    ->orLike('email', $searchValue);
+    }
+
+    $totalFiltered = $this->model->countAllResults(false);
+
+    $this->model->limit($length, $start);
+    $data = $this->model->find();
+
+
+    // Prepare response data for DataTables
+     $response = [
+            "draw" => $draw,
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalFiltered,
+            "data" => $data,
+        ];
+
+        // Return JSON response
+          return $this->response->setJSON($response);
+}
     public function index($parent_id = 0): string
     {
         $members = [];
@@ -84,7 +121,7 @@ class Member extends BaseController
                 ]
             ],
             'date_of_birth' => 'required',
-            'email' => 'required|valid_email',
+            // 'email' => 'valid_email',
             'phone' => 'required|min_length[10]|max_length[50]',
         ]);
 
@@ -131,7 +168,7 @@ class Member extends BaseController
             'member_number' => 'required|min_length[4]',
             'designation_id' => 'required',
             'date_of_birth' => 'required',
-            'email' => 'required|valid_email',
+            // 'email' => 'valid_email',
             'phone' => 'required|min_length[10]|max_length[50]',
         ]);
 
@@ -177,5 +214,5 @@ class Member extends BaseController
     // private function computeNextHierarchicalLevel($denomination_id){
     //     $maxLevel = $this->model->selectMax('level')->where('denomination_id', $denomination_id)->first();
     //     return $maxLevel['level'] + 1;
-    // }
+    // }zzz
 }

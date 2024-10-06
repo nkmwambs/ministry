@@ -45,6 +45,10 @@ $routes->get('roles/get_default_role/(:segment)', 'Role::getDefaultRole/$1');
 $routes->get('features/get_allowable_permission_labels/(:segment)', 'Feature::getAllowablePermissionLabels/$1');
 $routes->post('permissions/update_permission', 'Permission::updatePermission/');
 
+$routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
+$routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
+$routes->post('members/fetchMembers/(:num)','Member::fetchMembers/$1');
+$routes->post('denominations/fetchDenominations','Denomination::fetchDenominations');
 $routes->post('users/profile/account/save', "User::updatePublicInfo");
 $routes->post('users/profile/account/update', "User::updatePublicInfo");
 $routes->post('users/profile/account/update', "User::updatePrivateInfo");

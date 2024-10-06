@@ -12,8 +12,44 @@ class Denomination extends BaseController
         $this->model = new \App\Models\DenominationsModel();
     }
 
-    public function index()
-    {
+//method to handle server-side data for Datatables
+    public function fetchDenominations() { 
+ 
+        $request =\Config\Services::request();
+
+        //get parameters sent by Datatables
+        $draw = intval($request->getPost('draw'));
+        $start = intval($request->getPost('start'));
+        $length = intval($request->getPost('length'));
+        $searchValue = $request->getPost('search')['value'];
+
+        $totalRecords = $this->model->countAll();
+
+        if (!empty($searchValue)) {
+            $this->model->like('name', $searchValue)
+                        ->orLike('code', $searchValue)
+                        ->orLike('email', $searchValue);
+        }
+
+        $totalFiltered = $this->model->countAllResults(false);
+
+
+        $this->model->limit($length, $start);
+        $data = $this->model->find();
+
+        // Prepare response data for DataTables
+        $response = [
+            "draw" => $draw,
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalFiltered,
+            "data" => $data,
+        ];
+
+         // Return JSON response
+         return $this->response->setJSON($response);
+    }
+    
+    public function index () {
         $data = [];
 
         if(!session()->get('user_denomination_id')){

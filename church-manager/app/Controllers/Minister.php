@@ -12,6 +12,45 @@ class Minister extends BaseController
         $this->model = new \App\Models\MinistersModel();
     }
 
+    public function fetchMinisters() {
+
+        $request =\Config\Services::request();
+
+        //get parameters sent by Datatables
+        $draw = intval($request->getPost('draw'));
+        $start = intval($request->getPost('start'));
+        $length = intval($request->getPost('length'));
+        $searchValue = $request->getPost('search')['value'];
+
+        $totalRecords = $this->model->countAll();
+
+        if (!empty($searchValue)) {
+            $this->model->like('name', $searchValue)
+                        ->orLike('minister_number', $searchValue)
+                        ->orLike('phone', $searchValue)
+                        ->orLike('assembly_name', $searchValue);
+        }
+
+        $totalFiltered = $this->model->countAllResults(false);
+
+
+        $this->model->limit($length, $start);
+        $data = $this->model->find();
+
+        // Prepare response data for DataTables
+        $response = [
+            "draw" => $draw,
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalFiltered,
+            "data" => $data,
+        ];
+
+         // Return JSON response
+         return $this->response->setJSON($response);
+
+
+    }
+
     public function update(){
 
         $hashed_id = $this->request->getVar('id');

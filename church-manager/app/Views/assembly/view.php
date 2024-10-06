@@ -32,6 +32,7 @@ $member_sections = array_pop($result);
 							<ul class="nav nav-tabs" id ="myTabs">
 								<li class="active"><a href="#view_assembly" id="view_assembly_tab" data-toggle="tab"><?= lang('assembly.view_assembly'); ?></a></li>
 								<li><a href="#list_members" data-item_id = "<?=$id;?>" data-link_id="list_members" data-feature_plural="members" onclick="childrenAjaxLists(this)" id="list_members_tab" data-toggle="tab"><?= lang('member.list_members'); ?></a></li>
+                                <li><a href="#list_reports" data-item_id = "<?=$id;?>" data-link_id="list_reports" data-feature_plural="reports" onclick="childrenAjaxLists(this)" id="list_reports_tab" data-toggle="tab"><?= lang('report.assembly_report'); ?></a></li>
                                 <li><a href="#list_collections" data-item_id = "<?=$id;?>" data-link_id="list_collections" data-feature_plural="collections" onclick="childrenAjaxLists(this)" id="list_collections_tab" data-toggle="tab"><?= lang('collection.list_collections'); ?></a></li>
                             </ul>
 					</div>
