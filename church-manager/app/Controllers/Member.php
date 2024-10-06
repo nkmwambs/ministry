@@ -251,7 +251,7 @@ class Member extends BaseController
         // $parentMember = $this->model->where('id', $entity_id)->first();
         // $parentMemberNumber = $parentMember['member_number'];
 
-        $memberNumber = "$assemblyEntityNumber/$memberCount";
+        $memberNumber = "$assemblyEntityNumber/ME/$memberCount";
 
         // while ($this->model->where('member_number', $memberNumber)->countAllResults() > 0) {
             // ++$memberCount;
