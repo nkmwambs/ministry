@@ -220,6 +220,7 @@ CREATE TABLE `events` (
   `meeting_id` int NOT NULL DEFAULT '1',
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
+  `code` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `location` varchar(100) NOT NULL,
   `description` longtext,
   `denomination_id` int NOT NULL,
@@ -465,15 +466,14 @@ CREATE TABLE `participants` (
   `member_id` int DEFAULT NULL,
   `event_id` int NOT NULL,
   `payment_id` int DEFAULT NULL,
-  `payment_code` varchar(50) DEFAULT NULL,
   `registration_amount` decimal(10,2) DEFAULT '0.00',
-  `status` enum('registered','attended','cancelled') NOT NULL DEFAULT 'registered',
-  `created_at` datetime NOT NULL,
-  `created_by` int NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `updated_by` int NOT NULL,
-  `deleted_at` datetime NOT NULL,
-  `deleted_by` int NOT NULL,
+  `status` enum('registered','cancelled','pending','failed') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'registered',
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `member_id` (`member_id`),
   KEY `event_id` (`event_id`),
@@ -486,16 +486,17 @@ CREATE TABLE `participants` (
 
 CREATE TABLE `payments` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `MerchantRequestID` varchar(100) NOT NULL,
   `phone` varchar(50) NOT NULL,
-  `payment_code` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `payment_code` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `amount` decimal(10,2) NOT NULL,
   `redeemed_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `payment_status` enum('waiting','success','failed','confirmed') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'waiting',
+  `payment_status` enum('pending','success','failed') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'pending',
   `denomination_id` int DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `created_by` int NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `updated_by` int NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -573,8 +574,8 @@ CREATE TABLE `reportfields` (
 CREATE TABLE `reports` (
   `id` int NOT NULL AUTO_INCREMENT,
   `reports_type_id` int NOT NULL,
-  `report_period` int NOT NULL,
-  `report_date` int NOT NULL,
+  `report_period` date NOT NULL COMMENT 'Last date of the month, quarter, year',
+  `report_date` date NOT NULL,
   `status` enum('draft','submitted','approved') NOT NULL DEFAULT 'draft',
   `created_at` datetime NOT NULL,
   `created_by` int NOT NULL,
@@ -586,9 +587,7 @@ CREATE TABLE `reports` (
   KEY `reports_type_id` (`reports_type_id`),
   KEY `report_period` (`report_period`),
   KEY `report_date` (`report_date`),
-  CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`reports_type_id`) REFERENCES `reporttypes` (`id`),
-  CONSTRAINT `reports_ibfk_2` FOREIGN KEY (`report_period`) REFERENCES `reporttypes` (`id`),
-  CONSTRAINT `reports_ibfk_3` FOREIGN KEY (`report_date`) REFERENCES `reporttypes` (`id`)
+  CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`reports_type_id`) REFERENCES `reporttypes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -818,4 +817,4 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2024-10-04 13:19:29
+-- 2024-10-07 15:22:35
