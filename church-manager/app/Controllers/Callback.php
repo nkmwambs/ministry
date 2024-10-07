@@ -19,11 +19,7 @@ class Callback extends BaseController
     // }
 
     function postStk(){
-        // $data = $this->request->getJSON();
-
-        // log_message('error', json_encode($data));
-
-        // $data_array = json_decode($data, true);
+        // $res = $this->request->getJSON();
 
         $res = '{
                 "Body": {
