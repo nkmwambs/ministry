@@ -1,9 +1,9 @@
 <?php
 // log_message('error',json_encode($result));
 ?>
-<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css" />
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css" />
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script> -->
 
 <div class="row">
     <div class="col-xs-12">
