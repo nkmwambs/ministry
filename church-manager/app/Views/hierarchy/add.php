@@ -33,6 +33,15 @@
             </div>
           </div>
               
+          <div class="form-group">
+            <label class="control-label col-xs-4" for="hierarchy_code">
+              <?= lang('hierarchy.hierarchy_code') ?>
+            </label>
+            <div class="col-xs-6">
+              <input type="text" class="form-control" name="hierarchy_code" id="hierarchy_code"
+                placeholder="Enter Hierarchy Code">
+            </div>
+          </div>
 
           <?php 
             if(isset($parent_id)){

@@ -85,7 +85,7 @@ $numeric_meeting_id = hash_id($meeting_id, 'decode');
             </label>
             <div class="col-xs-6">
               <!-- onkeydown="return false;" -->
-              <input type="text" onkeydown="return false;" class="form-control datepicker" name="start_date"
+              <input type="text" onkeydown="return false" class="form-control datepicker" name="start_date"
                 id="start_date" placeholder="Enter Start Date">
             </div>
           </div>

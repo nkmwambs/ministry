@@ -46,6 +46,16 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label col-xs-4" for="assembly_code">
+                            <?= lang('assembly.assembly_code') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" readonly name="assembly_code" id="assembly_code"
+                                value="<?=$result['assembly_code'];?>" placeholder="Enter Assembly Code">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-xs-4" for="planted_at">
                             <?= lang('assembly.assembly_planted_at') ?>
                         </label>

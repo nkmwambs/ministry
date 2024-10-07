@@ -49,7 +49,10 @@ class EventsModel extends Model  implements \App\Interfaces\ModelInterface
         $listQueryFields = $library->setListQueryFields();
 
         if (!empty($listQueryFields)) {
-            return $this->select($library->setListQueryFields())->findAll();
+            return $this->select($library->setListQueryFields())
+            ->join('denominations', 'denominations.id = events.denomination_id')
+            ->join('meetings', 'meetings.id = events.meeting_id')
+            ->findAll();
         } else {
             return $this->findAll();
         }
@@ -60,9 +63,12 @@ class EventsModel extends Model  implements \App\Interfaces\ModelInterface
         $viewQueryFields = $library->setListQueryFields();
 
         if (!empty($viewQueryFields)) {
-            return $this->select($library->setViewQueryFields())->where('id',$id)->first();
+            return $this->select($library->setViewQueryFields())->where('events.id',$id)
+            ->join('denominations', 'denominations.id = events.denomination_id')
+            ->join('meetings', 'meetings.id = events.meeting_id')
+            ->first();
         } else {
-            return $this->where('id', $id)->first();
+            return $this->where('events.id', $id)->first();
         }
     }
 
@@ -75,5 +81,29 @@ class EventsModel extends Model  implements \App\Interfaces\ModelInterface
         ];
         $trashModel->insert((object)$trashData);
         return true;
+    }
+
+    public function getListData(){
+
+        $library = new \App\Libraries\EventLibrary();
+        $listQueryFields = $library->setListQueryFields();
+
+        $events = [];
+
+        if(session()->get('user_denomination_id')){
+            $events = $this->where(['hierarchies.denomination_id' => session()->get('user_denomination_id')])
+            ->select(!empty($listQueryFields) ? $listQueryFields : '*')
+            ->join('denominations', 'denominations.id = events.denomination_id')
+            ->join('meetings', 'meetings.id = events.meeting_id')
+            ->findAll();
+        }else{
+            // $assemblies = $this->getAll();
+            $events = $this->select(!empty($listQueryFields) ? $listQueryFields : '*')
+            ->join('denominations', 'denominations.id = events.denomination_id')
+            ->join('meetings', 'meetings.id = events.meeting_id')
+            ->findAll();
+        }
+
+        return $events;
     }
 }

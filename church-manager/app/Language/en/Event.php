@@ -23,6 +23,7 @@ return [
     'save_event' => 'Save',
     'save_and_new_event' => 'Save and New',
     'reset_event_form' => 'Reset',
+    'event_register' => 'Register Now',
 
     'update_event' => 'Update',
     'update_and_continue' => 'Update and Continue',

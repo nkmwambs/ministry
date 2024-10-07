@@ -1,6 +1,6 @@
 <?php 
 $numeric_designation_id = hash_id($designation_id, 'decode');
-print_r($parent_id);
+// echo hash_id($parent_id,'decode');
 ?>
 
 <div class="row">
@@ -45,6 +45,17 @@ print_r($parent_id);
                 placeholder="Enter Last Name">
             </div>
           </div>
+
+          <div class='form-group'>
+              <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_gender') ?></label>
+              <div class="col-xs-6">
+                <select class="form-control" name="gender" id="gender">
+                    <option value=""><?= lang('member.member_select_gender') ?></option>
+                    <option value="male"><?php echo lang('system.gender_male'); ?></option>
+                    <option value="female"><?php echo lang('system.gender_female'); ?></option>
+                </select>
+              </div>
+            </div>
               
           <?php 
             if(isset($parent_id)){
@@ -65,6 +76,15 @@ print_r($parent_id);
           <?php 
             }
           ?>
+          
+          <!-- <div class="form-group">
+            <label class="control-label col-xs-4" for="member_number">
+              <?= lang('member.member_member_number') ?>
+            </label>
+            <div class="col-xs-6">
+              <input type="text" class="form-control" name="member_number" id="member_number" placeholder="Enter Member Number"></i>
+            </div>
+          </div> -->
 
           <?php if (!$numeric_designation_id) { ?>
             <div class='form-group'>

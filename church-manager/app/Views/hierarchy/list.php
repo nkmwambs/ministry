@@ -25,6 +25,7 @@
           <tr>
             <th><?= lang('hierarchy.hierarchy_action') ?></th>
             <th><?= lang('hierarchy.hierarchy_name') ?></th>
+            <th><?= lang('hierarchy.hierarchy_code') ?></th>
             <th><?= lang('hierarchy.hierarchy_description') ?></th>
             <th><?= lang('hierarchy.hierarchy_level') ?></th>
           </tr>
@@ -34,9 +35,7 @@
             <tr>
               <td>
                 <span class='action-icons' title="View <?=singular($hierarchy['name']);?> hierarchy">
-                  <!-- <a href="<?= site_url("hierarchies/view/".hash_id($hierarchy['id'])); ?>"> -->
                     <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($hierarchy['id']);?>')"></i>
-                  <!-- </a> -->
                 </span>
                 <span class='action-icons' title = "Edit <?=singular($hierarchy['name']);?> hierarchy">
                   <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($hierarchy['id']);?>')" class='fa fa-pencil'></i>
@@ -48,6 +47,7 @@
               </td>
 
               <td><?=$hierarchy['name'];?></td>
+              <td><?=$hierarchy['hierarchy_code'];?></td>
               <td><?=$hierarchy['description'];?></td>
               <td><?=$hierarchy['level'];?></td>
 

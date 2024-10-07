@@ -83,15 +83,15 @@ class Entity extends BaseController
                    'max_length' => 'Entity Name cannot exceed {value} characters.'
                 ]
             ],
-            'entity_number' => [
-                'rules' => 'required|min_length[3]|max_length[255]',
-                'label' => 'Entity Number',
-                'errors' => [
-                    'required' => 'Entity Number is required.',
-                    'min_length' => 'Entity Number must be at least {value} characters long.',
-                    'max_length' => 'Entity Number cannot exceed {value} characters.',
-                ]
-            ],
+            // 'entity_number' => [
+            //     'rules' => 'required|min_length[3]|max_length[255]',
+            //     'label' => 'Entity Number',
+            //     'errors' => [
+            //         'required' => 'Entity Number is required.',
+            //         'min_length' => 'Entity Number must be at least {value} characters long.',
+            //         'max_length' => 'Entity Number cannot exceed {value} characters.',
+            //     ]
+            // ],
             'parent_id' => [
                 'rules' => 'required',
                 'label' => 'Parent Entity',
@@ -254,14 +254,13 @@ class Entity extends BaseController
         $entityNumber = '';
         
         // Get the denomination code for the hierarchy id 
-        $denominationModel = new \App\Models\DenominationsModel();
-        $hierarchyDenomination = $denominationModel->select('denominations.code,hierarchies.level')
-        ->join('hierarchies', 'hierarchies.denomination_id=denominations.id')
+        $hierarchyModel = new \App\Models\HierarchiesModel();
+        $hierarchy = $hierarchyModel->select('hierarchy_code,hierarchies.level')
         ->where('hierarchies.id', $hierarchy_id)
         ->first(); 
 
-        $denominationCode = $hierarchyDenomination['code'];
-        $hierarchyLevel = $hierarchyDenomination['level'];
+        $hierarchyCode = $hierarchy['hierarchy_code'];
+        $hierarchyLevel = $hierarchy['level'];
 
         // Count entities in the hierarchy
         $entityCount = $this->model->where('hierarchy_id', $hierarchy_id)->countAllResults();
@@ -272,12 +271,12 @@ class Entity extends BaseController
 
         if($hierarchyLevel == 2){     
             // Construct the entity number
-            $entityNumber = "$denominationCode/$entityCount";
+            $entityNumber = "$hierarchyCode/$entityCount";
 
             // Check if the constructed entity number already exists in the database
             while($this->model->where('entity_number', $entityNumber)->countAllResults() > 0) {
                 ++$entityCount;
-                $entityNumber = "$denominationCode/$entityCount";
+                $entityNumber = "$hierarchyCode/$entityCount";
             } 
         }elseif($hierarchyLevel > 2){
 

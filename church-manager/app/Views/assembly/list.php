@@ -31,6 +31,7 @@
                 <tr>
                     <th><?= lang('assembly.assembly_action') ?></th>
                     <th><?= lang('assembly.assembly_name') ?></th>
+                    <th><?= lang('assembly.assembly_code') ?></th>
                     <th><?= lang('assembly.assembly_planted_at') ?></th>
                     <th><?= lang('assembly.assembly_location') ?> </th>
                     <th><?= lang('assembly.assembly_entity_id') ?></th>
@@ -52,6 +53,7 @@
                     </td>
 
                     <td><?=$assembly['name'];?></td>
+                    <td><?=$assembly['assembly_code'];?></td>
                     <td><?=$assembly['planted_at'];?></td>
                     <td><?=$assembly['location'];?></td>
                     <td><?=$assembly['entity_name'];?></td>

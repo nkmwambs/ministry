@@ -33,8 +33,6 @@ foreach ($features as $featureObj) {
     });
 }
 
-$routes->get('fields/add', "Field::add");
-
 $routes->get('entities/items/(:segment)/(:segment)', "Entity::getParentEntitiesByDenomination/$1/$2");
 $routes->get('entities/lowestEntities/(:segment)', "Entity::getDenominationLowestEntities/$1");
 $routes->get('entities/hierarchy/(:segment)', "Entity::getEntitiesByHierarchyId/$1");
@@ -71,3 +69,8 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
 
 $routes->post('users/view/(:segment)/pending_tasks/save-task', 'Task::saveTask/$1');
 // $routes->post('update_task_status/', 'Task::updateTaskStatus');
+
+$routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominations');
+$routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
+$routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
+$routes->post('members/fetchMembers/(:num)','Member::fetchMembers/$1');

@@ -22,14 +22,16 @@ class Member extends BaseController
         $members = [];
 
         if($parent_id > 0){
-            $members = $this->model->select('members.id,first_name,last_name,assembly_id,member_number,designation_id,date_of_birth,email,phone')
+            $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
             ->where('assembly_id',hash_id($parent_id,'decode') )
             ->join('assemblies','assemblies.id=members.assembly_id','left')
+            ->join('designations','designations.id = members.designation_id')
             ->orderBy('members.created_at desc')
             ->findAll();
         }else{
-            $members = $this->model->select('members.id,first_name,last_name,assembly_id,member_number,designation_id,date_of_birth,email,phone')
+            $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
             ->join('assemblies','assemblies.id=members.assembly_id','left')
+            ->join('designations','designations.id = members.designation_id')
             ->orderBy('members.created_at desc')
             ->findAll();
         }
@@ -77,8 +79,27 @@ class Member extends BaseController
                     'min_length' => 'Last Name must be at least {value} characters long.',
                 ]
             ],
-            'date_of_birth' => 'required',
-            'phone' => 'required|min_length[10]|max_length[50]',
+            'gender' => [
+                'rules' =>'required',
+                'label' => 'Member.member_gender',
+                'errors' => [
+                    'required' => '{field} is required.',
+                ]
+            ],
+            'date_of_birth' => [
+                'rules' => 'required',
+                'label' => 'Date of Birth',
+                'errors' => [
+                    'required' => 'Date of Birth is required.',
+                ]
+            ],
+            'phone' => [
+                'rules' => 'required|regex_match[/^\+254\d{9}$/]',
+                'label' => 'Phone',
+                'errors' => [
+                    'regex_match' => 'Phone number should be in the format +254XXXXXXXX',
+                ]
+            ],
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -87,13 +108,14 @@ class Member extends BaseController
 
         $hashed_assembly_id = $this->request->getPost('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
-        // $parented_id = $this->request->getPost('parent_id');
-        // log_message('error', $hashed_assembly_id);
+        // $parent_id = $this->request->getPost('parent_id');
+        // log_message('error', $assembly_id);
 
         $data = [
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
-            'assembly_id' => $this->request->getPost('assembly_id'),
+            'gender' => $this->request->getPost('gender'),
+            'assembly_id' => $assembly_id,
             'member_number' => $this->computeMemberNumber($assembly_id),
             'designation_id' => $this->request->getPost('designation_id'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
@@ -110,7 +132,11 @@ class Member extends BaseController
         if($this->request->isAJAX()){
             $this->feature = 'member';
             $this->action = 'list';
-            $records = $this->model->orderBy("created_at desc")->where('assembly_id', $assembly_id)->findAll();
+            $records = $this->model
+            ->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            ->join('designations','designations.id=members.designation_id')
+            ->join('assemblies','assemblies.id=members.assembly_id')
+            ->orderBy("members.created_at desc")->where('assembly_id', $assembly_id)->findAll();
 
             $page_data = parent::page_data($records, $hashed_assembly_id);
             // $page_data['parent_id'] = hash_id($assembly_id,'encode');
@@ -140,8 +166,27 @@ class Member extends BaseController
                     'min_length' => 'Last Name must be at least {value} characters long.',
                 ]
             ],
-            'date_of_birth' => 'required',
-            'phone' => 'required|min_length[10]|max_length[50]',
+           'gender' => [
+                'rules' =>'required',
+                'label' => 'Member.member_gender',
+                'errors' => [
+                    'required' => '{field} is required.',
+                ]
+            ],
+            'date_of_birth' => [
+                'rules' =>'required',
+                'label' => 'Date of Birth',
+                'errors' => [
+                   'required' => 'Date of Birth is required.',
+                ]
+            ],
+            'phone' => [
+                'rules' => 'required|regex_match[/^\+254\d{9}$/]',
+                'label' => 'Phone',
+                'errors' => [
+                    'regex_match' => 'Phone number should be in the format +254XXXXXXXX',
+                ]
+            ],
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -159,6 +204,7 @@ class Member extends BaseController
         $update_data = [
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
+            'gender' => $this->request->getPost('gender'),
             'member_number' => $this->request->getPost('member_number'),
             'designation_id' => $this->request->getPost('designation_id'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
@@ -173,7 +219,9 @@ class Member extends BaseController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('members.id,members.first_name,members.last_name,members.assembly_id,members.member_number,members.designation_id,members.date_of_birth,members.email,members.phone')
+            ->select('members.id,members.first_name,gender,designations.name as designation_name,assemblies.name as assembly_name,members.last_name,members.assembly_id,members.member_number,members.designation_id,members.date_of_birth,members.email,members.phone')
+            ->join('designations','designations.id=members.designation_id')
+            ->join('assemblies','assemblies.id=members.assembly_id')
             ->orderBy("members.created_at desc")
             ->where('assembly_id', hash_id($hashed_assembly_id,'decode'))
             ->findAll();
@@ -191,23 +239,24 @@ class Member extends BaseController
         ->join('assemblies', 'assemblies.entity_id = entities.id')
         ->where('assemblies.id', $assembly_id)->first();
 
+        // log_message('error', json_encode($assembly_id));
+
         $assemblyEntityNumber = $assemblyEntity['entity_number'];
         // $maxEntityNumber = $this->model->selectMax('member_number')->where('assembly_id', $entity_id)->first();
 
         $memberCount = $this->model->where('assembly_id',$assembly_id)->countAllResults();
         ++$memberCount;
-
         $memberCount = str_pad($memberCount,4,'0',STR_PAD_LEFT);
 
-        // $parentMember = $this->model->where('id', $parent_id)->first();
+        // $parentMember = $this->model->where('id', $entity_id)->first();
         // $parentMemberNumber = $parentMember['member_number'];
 
-        $memberNumber = "$assemblyEntityNumber/$memberCount";
+        $memberNumber = "$assemblyEntityNumber/ME/$memberCount";
 
-        while ($this->model->where('member_number', $memberNumber)->countAllResults() > 0) {
-            ++$memberCount;
-            $memberNumber = "$assemblyEntityNumber/$memberCount";
-        }
+        // while ($this->model->where('member_number', $memberNumber)->countAllResults() > 0) {
+            // ++$memberCount;
+            // $memberNumber = "$parentMemberNumber/$memberCount";
+        // }
 
         return $memberNumber;
     }

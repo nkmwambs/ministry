@@ -15,6 +15,9 @@ return [
     'member_date_of_birth' => 'Date of Birth',
     'member_email' => 'Email',
     'member_phone' => 'Phone',
+    'member_assembly_name' => 'Assembly Name',
+    'member_gender' => 'Gender',
+    'member_select_gender' => 'Select a gender',
 
     'select_designation' => 'Select Designation',
 

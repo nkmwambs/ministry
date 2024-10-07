@@ -20,13 +20,13 @@ class Hierarchy extends BaseController
         $hierarchies = [];
 
         if($parent_id > 0){
-            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level, description')
+            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, hierarchies.hierarchy_code, level, description')
             ->where('denomination_id',hash_id($parent_id,'decode'))
             ->join('denominations','denominations.id=hierarchies.denomination_id')
             ->orderBy('hierarchies.created_at desc')
             ->findAll();
         }else{
-            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, level, description')
+            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, hierarchies.hierarchy_code, level, description')
             ->join('denominations','denominations.id=hierarchies.denomination_id')
             ->orderBy('hierarchies.created_at desc')
             ->findAll();
@@ -60,6 +60,7 @@ class Hierarchy extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'name' => 'required|max_length[255]',
+            'hierarchy_code' => 'required|max_length[2]|max_length[10]',
             'description'    => 'required|max_length[255]',
         ]);
 
@@ -71,8 +72,13 @@ class Hierarchy extends BaseController
         $denomination_id = hash_id($hashed_denomination_id,'decode');
         // log_message('error',$denomination_id);
 
+        // Get Denomination Code
+        $denominationModel = new \App\Models\DenominationsModel();
+        $denomination_code = $denominationModel->find($denomination_id)['code'];
+
         $data = [
             'name' => $this->request->getPost('name'),
+            'hierarchy_code' => $denomination_code.'/'.strtoupper($this->request->getPost('hierarchy_code')),
             'level' => $this->computeNextHierarchicalLevel($denomination_id),
             'denomination_id' => $denomination_id,
             'description' => $this->request->getPost('description'),
@@ -109,6 +115,7 @@ class Hierarchy extends BaseController
         $validation->setRules([
             'name' => 'required|max_length[255]',
             'description'    => 'required|max_length[255]',
+            'hierarchy_code' => 'required|max_length[255]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -118,6 +125,7 @@ class Hierarchy extends BaseController
         $update_data = [
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
+            'hierarchy_code' => $this->request->getPost('hierarchy_code'),
         ];
 
         
@@ -128,7 +136,7 @@ class Hierarchy extends BaseController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('id,name,description,level')
+            ->select('id,name,hierarchy_code,description,level')
             ->orderBy("created_at desc")
             ->where('denomination_id', hash_id($hashed_denomination_id,'decode'))
             ->findAll();

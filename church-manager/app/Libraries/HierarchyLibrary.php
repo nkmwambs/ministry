@@ -14,12 +14,12 @@ class HierarchyLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['id','name','denomination_id','level','description'];
+        $fields = ['id','name','hierarchy_code','denomination_id','level','description'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['hierarchies.id','hierarchies.name','hierarchies.denomination_id','denominations.name as denomination_name','hierarchies.level','hierarchies.description'];
+        $fields = ['hierarchies.id','hierarchies.name','hierarchy_code','hierarchies.denomination_id','denominations.name as denomination_name','hierarchies.level','hierarchies.description'];
         return $fields;
     }
 

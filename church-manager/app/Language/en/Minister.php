@@ -15,6 +15,7 @@ return [
     'minister_phone' => 'Phone',
     'minister_is_active' => 'Active',
 
+
     'select_designation' => 'Select Designation',
     'select_assembly' => 'Select Assembly',
     'select_status' => 'Select Status',
