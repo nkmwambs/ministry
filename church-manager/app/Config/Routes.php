@@ -69,3 +69,8 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
 
 $routes->post('users/view/(:segment)/pending_tasks/save-task', 'Task::saveTask/$1');
 // $routes->post('update_task_status/', 'Task::updateTaskStatus');
+
+$routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominations');
+$routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
+$routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
+$routes->post('members/fetchMembers/(:num)','Member::fetchMembers/$1');

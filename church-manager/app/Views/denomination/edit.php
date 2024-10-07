@@ -1,5 +1,5 @@
 <?php 
-echo isset($denomination_entities_count) ? $denomination_entities_count : 0;
+// echo isset($denomination_entities_count) ? $denomination_entities_count : 0;
 ?>
 <div class="row">
     <div class="col-md-12">
