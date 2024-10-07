@@ -15,4 +15,5 @@ return [
     'system_no' => 'No',
     'gender_male' => 'Male',
     'gender_female' => 'Female',
+    'reports' => 'Reports',
 ];
