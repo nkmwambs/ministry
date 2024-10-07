@@ -12,7 +12,7 @@ class PaymentsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['id','MerchantRequestID','phone','payment_code','amount','redeemed_amount','payment_status','denomination_id'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

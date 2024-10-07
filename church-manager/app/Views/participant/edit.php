@@ -56,14 +56,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="control-label col-xs-4" for="payment_code">
                             <?= lang('participant.participant_payment_code') ?>
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="payment_code" id="payment_code" value="<?= $result['payment_code']; ?>" placeholder="Edit Payment Code">
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="registration_amount">

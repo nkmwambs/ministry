@@ -40,7 +40,7 @@
                         </td>
 
                         <td><?= $participant['member_name']; ?></td>
-                        <td><?= $participant['payment_id']; ?></td>
+                        <td><?= $participant['payment_code']; ?></td>
                         <td><?= $participant['event_name']; ?></td>
                         <td><?= $participant['registration_amount']; ?></td>
                         <td><?= $participant['status']; ?></td>

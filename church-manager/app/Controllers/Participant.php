@@ -21,16 +21,18 @@ class Participant extends BaseController
         $participants = [];
 
         if($parent_id > 0){
-            $participants = $this->model->select('participants.id,member_id, CONCAT(members.first_name," ", members.last_name) as member_name,event_id,events.name as event_name,payment_id,payment_code,registration_amount,status')
+            $participants = $this->model->select('participants.id,member_id, CONCAT(members.first_name," ", members.last_name) as member_name,event_id,events.name as event_name,payment_id,registration_amount,status,payments.payment_code as payment_code')
             ->where('event_id',hash_id($parent_id,'decode'))
             ->join('events','events.id=participants.event_id')
             ->join('members','members.id=participants.member_id')
+            ->join('payments','payments.id=participants.payment_id')
             ->orderBy('participants.created_at desc')
             ->findAll();
         }else{
-            $participants = $this->model->select('participants.id,member_id,CONCAT(members.first_name," ", members.last_name) as member_name,event_id,events.name as event_name,payment_id,payment_code,registration_amount,status')
+            $participants = $this->model->select('participants.id,member_id,CONCAT(members.first_name," ", members.last_name) as member_name,event_id,events.name as event_name,payment_id,registration_amount,status,payments.payment_code as payment_code')
             ->join('events','events.id=participants.event_id')
             ->join('members','members.id=participants.member_id')
+            ->join('payments','payments.id=participants.payment_id')
             ->orderBy('participants.created_at desc')
             ->findAll();
         }
@@ -80,15 +82,15 @@ class Participant extends BaseController
                 'errors' => [
                    'required' => 'Registration Due Amount is required. Please choose a member',
                 ]
-                ],
-                "paying_phone_number" => [
-                    'rules' =>'required|regex_match[/^254\d{9}$/]',
+            ],
+            "paying_phone_number" => [
+                'rules' =>'required|regex_match[/^254\d{9}$/]',
                     'label' => 'Paying Phone Number',
                     'errors' => [
                        'required' => 'Paying Phone Number is required.',
                        'regex_match' => 'Phone number should be in the format +254XXXXXXXX',
                     ]
-                ]
+            ]
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -112,7 +114,7 @@ class Participant extends BaseController
         
         if($mpesa_response['ResponseCode'] == 0){
             $participantLibrary = new \App\Libraries\ParticipantLibrary();
-            $participantLibrary->insertParticipants($data);
+            $participantLibrary->insertParticipants($data, $mpesa_response);
             // log_message('error', json_encode($data));
 
             $this->feature = 'participant';
@@ -151,18 +153,18 @@ class Participant extends BaseController
 
     private function notifyCustomerForMpesaPayment($phone_number, $amount){
        
-        sleep(3);
+        // sleep(10);
 
         $denomination_code = "COGOP";
         $payment_purpose = "Payment of Women Conference";
 
         $mpesaLibrary = new \App\Libraries\MpesaLibrary();
-        // $res = $mpesaLibrary->express($denomination_code,$payment_purpose, $phone_number, $amount);
+        $res = $mpesaLibrary->express($denomination_code,$payment_purpose, $phone_number, $amount);
 
         // Listen to the STK response for actual payment
 
-        $response = ['ResponseCode' => 0]; //json_decode($res,true);
-        // $response = json_decode($res,true);
+        // $response = ['ResponseCode' => 0]; //json_decode($res,true);
+        $response = json_decode($res,true);
         
         return $response;
     }
@@ -190,7 +192,6 @@ class Participant extends BaseController
         $update_data = [
             'member_id' => $this->request->getPost('member_id'),
             'payment_id' => $this->request->getPost('payment_id'),
-            'payment_code' => $this->request->getPost('payment_code'),
             'registration_amount' => $this->request->getPost('registration_amount'),
             'status' => $this->request->getPost('status'),
         ];
@@ -202,7 +203,7 @@ class Participant extends BaseController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('participants.id,participants.member_id,participants.event_id,participants.payment_id,participants.payment_code,registration_amount, status')
+            ->select('participants.id,participants.member_id,participants.event_id,participants.payment_id,registration_amount, status')
             ->orderBy("participants.created_at desc")
             ->where('event_id', hash_id($hashed_event_id,'decode'))
             ->findAll();

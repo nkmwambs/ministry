@@ -18,7 +18,7 @@ class MPesa extends BaseController
         echo "Welcome to Mpesa!!!";
     }
 
-    function getExpress($paying_number, $amount){
+    function getExpress(string $paying_number, int $amount){
         
         $endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         $BusinessShortCode = '174379';
@@ -30,7 +30,7 @@ class MPesa extends BaseController
         $PartyA = $paying_number;
         $PartyB = '174379';
         $PhoneNumber = $paying_number;
-        $CallBackURL = $this->base_url.'/payment/stk';
+        $CallBackURL = $this->base_url.'/callback/stk';
         $AccountReference = 'CompanyXLTD';
         $TransactionDesc = 'Payment of X';
 
@@ -83,5 +83,29 @@ class MPesa extends BaseController
         
         return json_decode($response->getBody())->access_token;
     }
+
+    function getRegister_urls(){
+        $endpoint = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl';
+
+        $data = [
+            'validationURL' => $this->base_url.'/callback/confirmation',
+            'confirmationURL' => $this->base_url.'/callback/pay_validation',
+            'responseType' => 'completed',
+            'shortCode' => '174379'
+        ];
+
+        $response = $this->client->request(
+            'POST',
+            $endpoint,
+            [
+                'headers' => ['Authorization' => 'Bearer ' . $this->getAccess_token()],
+                'json' => $data,
+                'http_errors' => false,
+                ]
+            );
+
+        return response()->setJSON($response->getBody());
+    }
+
 }
 

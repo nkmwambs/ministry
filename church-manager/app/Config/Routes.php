@@ -18,7 +18,7 @@ foreach ($features as $featureObj) {
     $feature = $featureObj['name'];
     $ucfirst = ucfirst($feature);
     $group = plural($feature);
-    $routes->group($group, function ($routes) use ($ucfirst) {
+    $routes->group($group, function ($routes) use ($ucfirst, $group) {
             $routes->get('/', "$ucfirst::index");
             $routes->get('(:segment)', "$ucfirst::index/$1");
             $routes->get('add', "$ucfirst::add");
@@ -73,4 +73,4 @@ $routes->post('users/view/(:segment)/pending_tasks/save-task', 'Task::saveTask/$
 
 
 // MPesa routes
-$routes->get('mpesa/express/(:segment)/(:segment)', "MPesa::express/$1/$2");
+// $routes->get('mpesa/express/(:segment)/(:segment)', "MPesa::express/$1/$2");

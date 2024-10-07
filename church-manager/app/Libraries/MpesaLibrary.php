@@ -24,7 +24,7 @@ class MpesaLibrary  implements \App\Interfaces\LibraryInterface {
         $PartyA = $paying_number;
         $PartyB = '174379';
         $PhoneNumber = $paying_number;
-        $CallBackURL = $this->base_url.'/payment/stk';
+        $CallBackURL = $this->base_url.'/callback/stk';
         $AccountReference = $denominationCode;
         $TransactionDesc = $payment_purpose;
 
@@ -76,6 +76,29 @@ class MpesaLibrary  implements \App\Interfaces\LibraryInterface {
        
         
         return json_decode($response->getBody())->access_token;
+    }
+
+    function register_urls(){
+        $endpoint = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl';
+
+        $data = [
+            'validationURL' => $this->base_url.'/callback/confirm',
+            'confirmationURL' => $this->base_url.'/callback/pay_validate',
+            'responseType' => 'Completed',
+            'shortCode' => '174379'
+        ];
+
+        $response = $this->client->request(
+            'POST',
+            $endpoint,
+            [
+                'headers' => ['Authorization' => 'Bearer ' . $this->access_token()],
+                'json' => $data,
+                'http_errors' => false,
+                ]
+            );
+
+        return response()->setJSON($response->getBody());
     }
 
     // Interface methods to be removed later
