@@ -21,14 +21,18 @@ class Participant extends BaseController
         $participants = [];
 
         if($parent_id > 0){
-            $participants = $this->model->select('participants.id,member_id,event_id,payment_id,payment_code,registration_amount,status')
+            $participants = $this->model->select('participants.id,member_id, CONCAT(members.first_name," ", members.last_name) as member_name,event_id,events.name as event_name,payment_id,registration_amount,status,payments.payment_code as payment_code')
             ->where('event_id',hash_id($parent_id,'decode'))
             ->join('events','events.id=participants.event_id')
+            ->join('members','members.id=participants.member_id')
+            ->join('payments','payments.id=participants.payment_id')
             ->orderBy('participants.created_at desc')
             ->findAll();
         }else{
-            $participants = $this->model->select('participants.id,member_id,event_id,payment_id,payment_code,registration_amount,status')
+            $participants = $this->model->select('participants.id,member_id,CONCAT(members.first_name," ", members.last_name) as member_name,event_id,events.name as event_name,payment_id,registration_amount,status,payments.payment_code as payment_code')
             ->join('events','events.id=participants.event_id')
+            ->join('members','members.id=participants.member_id')
+            ->join('payments','payments.id=participants.payment_id')
             ->orderBy('participants.created_at desc')
             ->findAll();
         }
@@ -65,8 +69,28 @@ class Participant extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'registration_amount' => 'required',
-            'status' => 'required',
+            'member_id' => [
+                'rules' =>'required',
+                'label' => 'Members',
+                'errors' => [
+                   'required' => 'Members are required.',
+                ]
+            ],
+            'due_registration_amount' => [
+                'rules' =>'required',
+                'label' => 'Registration Due Amount',
+                'errors' => [
+                   'required' => 'Registration Due Amount is required. Please choose a member',
+                ]
+            ],
+            "paying_phone_number" => [
+                'rules' =>'required|regex_match[/^254\d{9}$/]',
+                    'label' => 'Paying Phone Number',
+                    'errors' => [
+                       'required' => 'Paying Phone Number is required.',
+                       'regex_match' => 'Phone number should be in the format +254XXXXXXXX',
+                    ]
+            ]
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -75,19 +99,24 @@ class Participant extends BaseController
         }
 
         // $numeric_event_id = hash_id($this->request->getPost('event_id'), 'decode');
+        $hashed_event_id = $this->request->getPost('event_id');
+        $numeric_event_id = hash_id($hashed_event_id, 'decode');
+        
         $data = [
             'member_id' => $this->request->getPost('member_id'),
-            'event_id' => $this->request->getPost('event_id'),
-            'payment_id' => $this->request->getPost('payment_id'),
-            'payment_code' => $this->request->getPost('payment_code'),
-            'registration_amount' => $this->request->getPost('registration_amount'),
-            'status' => $this->request->getPost('status'),
+            'event_id' => $numeric_event_id,
+            'due_registration_amount' => $this->request->getPost('due_registration_amount'),
+            'paying_phone_number' => $this->request->getPost('paying_phone_number'),
         ];
 
-        $this->model->insert((object)$data);
-        $insertId = $this->model->getInsertID();
+        // Call MPesa API to send a payment request to the customer phone number
+        $mpesa_response = $this->notifyCustomerForMpesaPayment($data['paying_phone_number'], $data['due_registration_amount']);
+        
+        if($mpesa_response['ResponseCode'] == 0){
+            $participantLibrary = new \App\Libraries\ParticipantLibrary();
+            $participantLibrary->insertParticipants($data, $mpesa_response);
+            // log_message('error', json_encode($data));
 
-        if($this->request->isAJAX()){
             $this->feature = 'participant';
             $this->action = 'list';
             $records = [];
@@ -100,13 +129,49 @@ class Participant extends BaseController
 
             $this->parent_id = $this->request->getPost('event_id');
             $this->id = hash_id($insertId, 'encode');
-            // $records = $this->model->orderBy("created_at desc")->where('event_id', $event_id)->findAll();
-            // $page_data = parent::page_data($records, $hashed_event_id);
-            // $page_data['id'] = hash_id($event_id,'encode');
             return view("participant/list", parent::page_data($records));
         }
+        
+        // if($this->request->isAJAX()){
+        //     $this->feature = 'participant';
+        //     $this->action = 'list';
+        //     $records = [];
+
+        //     if (method_exists($this->model, 'getAll')) {
+        //         $records = $this->model->getAll();
+        //     } else {
+        //         $records = $this->model->findAll();
+        //     }
+
+        //     $this->parent_id = $this->request->getPost('event_id');
+        //     $this->id = hash_id($insertId, 'encode');
+        //     return view("participant/list", parent::page_data($records));
+        // }
 
         return redirect()->to(site_url("participants/view/".hash_id($insertId)));
+    }
+
+    private function notifyCustomerForMpesaPayment($phone_number, $amount){
+       
+        // sleep(10);
+
+        $denomination_code = "COGOP";
+        $payment_purpose = "Payment of Women Conference";
+
+        // $mpesaLibrary = new \App\Libraries\MpesaLibrary();
+        // $res = $mpesaLibrary->express($denomination_code,$payment_purpose, $phone_number, $amount);
+
+        $res = '{
+            "MerchantRequestID":"8ed5-4489-a67f-881890b925f2938781",
+            "CheckoutRequestID":"ws_CO_07102024133119073711808071",
+            "ResponseCode": "0",
+            "ResponseDescription":"Success. Request accepted for processing",
+            "CustomerMessage":"Success. Request accepted for processing"
+        }';
+
+        $response = json_decode($res,true);
+        
+        return $response;
     }
 
     public function update(){
@@ -132,7 +197,6 @@ class Participant extends BaseController
         $update_data = [
             'member_id' => $this->request->getPost('member_id'),
             'payment_id' => $this->request->getPost('payment_id'),
-            'payment_code' => $this->request->getPost('payment_code'),
             'registration_amount' => $this->request->getPost('registration_amount'),
             'status' => $this->request->getPost('status'),
         ];
@@ -144,7 +208,7 @@ class Participant extends BaseController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('participants.id,participants.member_id,participants.event_id,participants.payment_id,participants.payment_code,registration_amount, status')
+            ->select('participants.id,participants.member_id,participants.event_id,participants.payment_id,registration_amount, status')
             ->orderBy("participants.created_at desc")
             ->where('event_id', hash_id($hashed_event_id,'decode'))
             ->findAll();

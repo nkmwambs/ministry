@@ -7,8 +7,12 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class Report extends BaseController
 {
-    public function index()
-    {
-        //
+    protected $model = null;
+
+    function initController(\CodeIgniter\HTTP\RequestInterface $request, ResponseInterface $response, \Psr\Log\LoggerInterface $logger){
+        parent::initController($request, $response, $logger);
+        
+        $this->model = new \App\Models\AssembliesModel();
+
     }
 }

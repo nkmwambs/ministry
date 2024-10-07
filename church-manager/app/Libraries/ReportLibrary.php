@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-class DashboardLibrary implements \App\Interfaces\LibraryInterface {
+class ReportLibrary implements \App\Interfaces\LibraryInterface {
     function unsetListQueryFields(){}
 
     function unsetViewQueryFields(){}

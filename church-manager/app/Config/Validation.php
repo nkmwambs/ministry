@@ -41,4 +41,20 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+
+    public $addEvent = [
+            'name' => 'required|min_length[10]|max_length[255]',
+            'meeting_id' => 'required',
+            'location' => 'required|max_length[255]',
+            'description' => 'required|max_length[255]',
+            'denomination_id' => 'required',
+    ];
+
+    public $editEvent = [
+        'name' => 'required|min_length[10]|max_length[255]',
+        'meeting_id' => 'required',
+        'location' => 'required|max_length[255]',
+        'description' => 'required|max_length[255]',
+        'denomination_id' => 'required',
+    ];
 }

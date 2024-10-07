@@ -58,6 +58,12 @@ abstract class BaseController extends Controller
 
     protected $feature_page_data = [];
 
+    // private $client;
+    // private $base_url;
+    function __construct(){
+        
+    }
+
     /**
      * @return void
      */
@@ -83,9 +89,9 @@ abstract class BaseController extends Controller
             $this->library = new ("App\\Libraries\\" . ucfirst($this->feature) . "Library")();
             $this->listQueryFields = $this->library->setListQueryFields();
         }
-
-        $this->tableName = plural($this->feature);
         
+        $this->tableName = plural($this->feature);
+
     }
 
     private function history_fields(){
@@ -126,6 +132,8 @@ abstract class BaseController extends Controller
         if(!$this->request->isAJAX()){
             $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
         }
+
+        // log_message('error', json_encode($page_data));
 
         return $page_data;
     }

@@ -64,6 +64,27 @@
 					</a>
 				</li>
 
+				<li class="has-sub">
+					<a href="#">
+						<i class="entypo-newspaper"></i>
+						<span class="title"><?=lang("system.reports");?></span>
+					</a>
+					<ul>
+						<li class="active">
+							<a href="<?=site_url("reports");?>">
+								<span class="title">Monthly Report</span>
+							</a>
+						</li>
+
+						<!-- <li>
+							<a href="forms-main.html">
+								<span class="title">Quarterly Report</span>
+							</a>
+						</li> -->
+					</ul>
+				</li>
+
+
 				<li>
 					<a href="<?=site_url("users");?>">
 						<i class="entypo-users"></i>

@@ -15,10 +15,10 @@ $featureModel = new \App\Models\FeaturesModel();
 $features = $featureModel->findAll();
 
 foreach ($features as $featureObj) {
-    $designation = $featureObj['name'];
-    $ucfirst = ucfirst($designation);
-    $group = plural($designation);
-    $routes->group($group, function ($routes) use ($ucfirst) {
+    $feature = $featureObj['name'];
+    $ucfirst = ucfirst($feature);
+    $group = plural($feature);
+    $routes->group($group, function ($routes) use ($ucfirst, $group) {
             $routes->get('/', "$ucfirst::index");
             $routes->get('(:segment)', "$ucfirst::index/$1");
             $routes->get('add', "$ucfirst::add");

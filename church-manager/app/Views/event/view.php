@@ -1,5 +1,5 @@
 <?php
-$visitor_sections = array_pop($result);
+// $visitor_sections = $result->other_details;//array_pop($result);
 ?>
 <div class="row">
     <div class="col-xs-12 btn-container">
@@ -45,22 +45,17 @@ $visitor_sections = array_pop($result);
                 <div class="tab-content">
                     <div class="tab-pane active" id="view_event">
                         
-                        <div class="row">
-                            <div class="col-xs-12 btn-container">
-                                <div class='btn btn-success' onclick="showAjaxModal('participants','add', '<?= $parent_id; ?>')">
-                                <?= lang('event.event_register'); ?>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <div class = "row">
                             <div class = "col-xs-12">
                                 <form class="form-horizontal form-groups-bordered" role="form">
-                                    <?php foreach ($result as $department => $field_value) { ?>
+                                    <?php 
+                                    // echo json_encode($result);
+                                    // echo count($result);
+                                    foreach ($result->toArray() as $key => $value) { ?>
                                         <div class="form-group">
-                                            <label for="" class="control-label col-xs-4"><?= humanize($department); ?></label>
+                                            <label for="" class="control-label col-xs-4"><?= humanize($key); ?></label>
                                             <div class="col-xs-6">
-                                                <div class="form_view_field"><?= $field_value; ?></div>
+                                                <div class="form_view_field"><?php echo $value; ?></div>
                                             </div>
                                         </div>
                                     <?php } ?>

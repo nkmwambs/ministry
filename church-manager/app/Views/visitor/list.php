@@ -1,7 +1,7 @@
 <!-- <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('visitors','add', '<?= $parent_id; ?>')">
-            <?= lang('visitor.add_visitor'); ?>
+        <div class='btn btn-info' onclick="showAjaxModal('visitors','add', '<?= $parent_id; ?>')">
+            <?= lang('event.event_register_guest'); ?>
         </div>
     </div>
 </div> -->

@@ -20,16 +20,15 @@ class Event extends BaseController
     public function view($id): string {
         // Fetch the event details
         $data = $this->model->getOne(hash_id($id,'decode'));
-        if (array_key_exists('id', $data)) {
-            unset($data['id']);
-            unset($data['denomination_id']);
-            unset($data['meeting_id']);
-        }
+
+        unset($data->id);
+        unset($data->denomination_id);
+        unset($data->meeting_id);
     
         // Fetch participants for the event
-        $participantModel = new \App\Models\ParticipantsModel();
-        $data['other_details'] = $participantModel->getParticipantsByEventId(hash_id($id, 'decode'));
-    
+        // $participantModel = new \App\Models\ParticipantsModel();
+        // $data->other_details = $participantModel->getParticipantsByEventId(hash_id($id, 'decode'));
+        // log_message('error', json_encode($data));
         // Pass the data to the view
         $page_data = parent::page_data($data, $id);
         
@@ -40,22 +39,9 @@ class Event extends BaseController
 
         $hashed_id = $this->request->getPost("id");
 
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'name' => 'required|min_length[10]|max_length[255]',
-            'meeting_id' => 'required',
-            'location' => 'required|max_length[255]',
-            'description' => 'required|max_length[255]',
-            'denomination_id' => 'required',
-        ]);
-
-        if (!$this->validate($validation->getRules())) {
-            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-            return response()->setJSON(['errors' => $validation->getErrors()]);
-        }
-
         $update_data = [
             'name'=> $this->request->getPost('name'),
+            'code'=> $this->request->getPost('code'),
             'meeting_id'=> $this->request->getPost('meeting_id'),
             'start_date'=> $this->request->getPost('start_date'),
             'end_date'=> $this->request->getPost('end_date'),
@@ -64,6 +50,10 @@ class Event extends BaseController
             'denomination_id'=> $this->request->getPost('denomination_id'),
             'registration_fees'=> $this->request->getPost('registration_fees'),
         ];
+
+        if (!$this->validateData($update_data,'editEvent')) {
+            return response()->setJSON(['errors' => $this->validator->getErrors()]);
+        }
 
         $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
 
@@ -88,23 +78,9 @@ class Event extends BaseController
     function post() {
         $insertId = 0;
 
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'name' => 'required|min_length[10]|max_length[255]',
-            'meeting_id' => 'required',
-            'location' => 'required|max_length[255]',
-            'description' => 'required|max_length[255]',
-            'denomination_id' => 'required',
-        ]);
-
-        if (!$this->validate($validation->getRules())) {
-            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
-            $validationErrors = $validation->getErrors();
-            return response()->setJSON(['errors' => $validationErrors]);
-        }
-
         $data = [
             'name' => $this->request->getPost('name'),
+            'code'=> $this->request->getPost('code'),
             'meeting_id' => $this->request->getPost('meeting_id'),
             'start_date' => $this->request->getPost('start_date'),
             'end_date' => $this->request->getPost('end_date'),
@@ -114,7 +90,14 @@ class Event extends BaseController
             'registration_fees' => $this->request->getPost('registration_fees'),
         ];
 
-        $this->model->insert((object)$data);
+        if (!$this->validateData($data,'addEvent')) {
+            $validationErrors = $this->validator->getErrors();
+            return response()->setJSON(['errors' => $validationErrors]);
+        }
+
+        $event = new \App\Entities\Event($data);
+
+        $this->model->insert($event);
         $insertId = $this->model->getInsertID();
 
         if ($this->request->isAJAX()) {

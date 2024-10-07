@@ -12,7 +12,7 @@ class ParticipantsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','member_id','event_id','payment_id','payment_code','registration_amount','status'];
+    protected $allowedFields    = ['id','member_id','event_id','payment_id','registration_amount','status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -49,9 +49,17 @@ class ParticipantsModel extends Model
         $listQueryFields = $library->setListQueryFields();
 
         if(!empty($listQueryFields)){
-            return $this->select($library->setListQueryFields())->orderBy('created_at desc')->findAll();
+            return $this->select($library->setListQueryFields())->orderBy('participants.created_at desc')
+            ->join('members', 'members.id=participants.member_id')
+            ->join('events', 'events.id=participants.event_id')
+            ->join('payments','payments.id=participants.payment_id')
+            ->findAll();
         }else{
-            return $this->orderBy('created_at desc')->findAll();
+            return $this->orderBy('participants.created_at desc')
+            ->join('members', 'members.id=participants.member_id')
+            ->join('events', 'events.id=participants.event_id')
+            ->join('payments','payments.id=participants.payment_id')
+            ->findAll();
         }
     }
 
