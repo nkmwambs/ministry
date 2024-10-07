@@ -64,11 +64,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="name">
+                        <label class="control-label col-xs-4" for="field_name">
                             <?= lang('field.customfield_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" value="<?= $result['name']; ?>" id="name"
+                            <input type="text" class="form-control" name="field_name" value="<?= $result['field_name']; ?>" id="field_name"
                                 placeholder="Edit Name">
                         </div>
                     </div>
