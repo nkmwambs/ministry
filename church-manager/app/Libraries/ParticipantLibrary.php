@@ -118,33 +118,6 @@ class ParticipantLibrary implements LibraryInterface
         $page_data['payments'] = $payments;
     }
 
-    // function insertParticipants(array $data, array $mpesa_response){
-
-    //     // Insert the payment request
-    //     $paymentModel = new \App\Models\PaymentsModel();
-    //     $insert_payment_data['MerchantRequestID'] = $mpesa_response['MerchantRequestID'];
-    //     $insert_payment_data['phone'] = $data['paying_phone_number'];
-    //     $insert_payment_data['amount'] = $data['due_registration_amount'];
-    //     $insert_payment_data['status'] = 'pending'; // Awaiting confitmation of payment from Safaricom stk
-    //     $paymentModel->insert((object)$insert_payment_data);
-
-    //     // Get the insert id
-    //     $payment_id = $paymentModel->getInsertID();
-
-    //     $registration_amount = count($data['member_id']) > 1 ? $data['due_registration_amount']/count($data['member_id']) : $data['due_registration_amount'];
-    //     foreach($data['member_id'] as $memberId){
-    //         $participantModel = new \App\Models\ParticipantsModel();
-
-    //         $insert_data['member_id'] = $memberId;
-    //         $insert_data['event_id'] = $data['event_id'];
-    //         $insert_data['payment_id'] = $payment_id;
-    //         $insert_data['registration_amount'] = $registration_amount;
-    //         $insert_data['status'] = 'pending'; // AWaiting confitmation of payment from Safaricom stk
-
-    //         $participantModel->insert((object)$insert_data);
-    //     }
-    // }
-
     function insertParticipants(array $data, array $mpesa_response)
     {
         // Load necessary models

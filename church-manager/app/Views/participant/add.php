@@ -31,8 +31,8 @@
             <div class='form-group'>
               <label for="member_id" class="control-label col-xs-4"><?= lang('participant.participant_member_id') ?></label>
               <div class="col-xs-6">
-                <select class="form-control" name="member_id[]" id="member_id" multiple>
-                  <option value=""><?= lang('participant.select_member') ?></option>
+                <select class="form-control select_fields" name="member_id[]" id="member_id" multiple>
+                  <!-- <option value=""><?= lang('participant.select_member') ?></option> -->
                   <?php foreach ($members as $member) : ?>
                     <option value="<?php echo $member['id']; ?>"><?= $member['first_name']; ?> <?=  $member['last_name']; ?></option>
                   <?php endforeach; ?>

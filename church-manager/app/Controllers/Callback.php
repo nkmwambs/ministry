@@ -9,77 +9,89 @@ class Callback extends BaseController
 {
     public function index()
     {
-        //
+        return "Welcome Home";
     }
 
-    function postStk(){
-        $data = $this->request->getBody();
+    // function getStk(){
+    //     $data = $this->request->getJSON();
 
-        log_message('error', json_encode($data));
+    //     log_message('error', json_encode($data));
+    // }
+
+    function postStk(){
+        // $data = $this->request->getJSON();
+
+        // log_message('error', json_encode($data));
 
         // $data_array = json_decode($data, true);
 
-        // $res = `{    
-        //     "Body": {        
-        //        "stkCallback": {            
-        //           "MerchantRequestID": "29115-34620561-1",            
-        //           "CheckoutRequestID": "ws_CO_191220191020363925",            
-        //           "ResultCode": 0,            
-        //           "ResultDesc": "The service request is processed successfully.",            
-        //           "CallbackMetadata": {                
-        //              "Item": [{                        
-        //                 "Name": "Amount",                        
-        //                 "Value": 1.00                    
-        //              },                    
-        //              {                        
-        //                 "Name": "MpesaReceiptNumber",                        
-        //                 "Value": "NLJ7RT61SV"                    
-        //              },                    
-        //              {                        
-        //                 "Name": "TransactionDate",                        
-        //                 "Value": 20191219102115                    
-        //              },                    
-        //              {                        
-        //                 "Name": "PhoneNumber",                        
-        //                 "Value": 254708374149                    
-        //              }]            
-        //           }        
-        //        }    
-        //     }
-        //  }`;
+        $res = '{
+                "Body": {
+                    "stkCallback": {
+                        "MerchantRequestID": "8ed5-4489-a67f-881890b925f2938781",
+                        "CheckoutRequestID": "ws_CO_07102024140157946711808071",
+                        "ResultCode": 0,
+                        "ResultDesc": "The service request is processed successfully.",
+                        "CallbackMetadata": {
+                            "Item": [
+                                {
+                                    "Name": "Amount",
+                                    "Value": 1
+                                },
+                                {
+                                    "Name": "MpesaReceiptNumber",
+                                    "Value": "SJ778V66XN"
+                                },
+                                {
+                                    "Name": "TransactionDate",
+                                    "Value": 20241007140146
+                                },
+                                {
+                                    "Name": "PhoneNumber",
+                                    "Value": 254711808071
+                                }
+                            ]
+                        }
+                    }
+                }
+            }';
 
-        //  // Update participants information
-        //  $stk_status_code = $data_array['stkCallback']['ResultCode'];
+        $responseObj = json_decode($res, true);
 
-        //  $payment_status = $stk_status_code == 0 ? 'success' : 'failed';
-        //  $participant_status = $stk_status_code == 0 ? 'registered' : 'failed';
+        $responseValues = $responseObj['Body']['stkCallback'];
+        $items = $responseObj['Body']['stkCallback']['CallbackMetadata']['Item'];
 
-        //  $details = $data_array['stkCallback']['CallbackMetadata']['Item'];
+        $itemNames = array_column($items, 'Name');
+        $itemValues  = array_column($items, 'Value');
+        $nameValues = array_combine($itemNames, $itemValues);
 
-        //  $names = array_column($details, 'Name');
-        //  $values = array_column($details, 'Value');
+        // return $this->response->setStatusCode(200)->setJSON($nameValues););
 
-        //  $newData = array_combine($names, $values);
+        $payment_status = $responseValues['ResultCode'] == 0 ? 'success' : 'failed';
+        $payment_code = $responseValues['ResultCode'] == 0 ? $nameValues['MpesaReceiptNumber'] : NULL;
+        $participant_status = $responseValues['ResultCode'] == 0 ? 'registered' : 'failed';
 
-        //  // Load necessary models
-        // $paymentModel = new \App\Models\PaymentsModel();
-        // $participantModel = new \App\Models\ParticipantsModel();
+         // Load necessary models
+        $paymentModel = new \App\Models\PaymentsModel();
+        $participantModel = new \App\Models\ParticipantsModel();
 
-        // $payment = $paymentModel->where('MerchantRequestID', $newData['MerchantRequestID'])->first();
-        // $payment->payment_status = $payment_status;
-        // $payment->payment_code = $stk_status_code == 0 ? $newData['MpesaReceiptNumber'] : NULL;
-        // $paymentModel->save($payment);
+        $payment = (object)$paymentModel->where('MerchantRequestID', $responseValues['MerchantRequestID'])->first();
+        log_message('error', json_encode($payment));
+        $payment->payment_status = $payment_status;
+        $payment->payment_code = $payment_code;
+        $paymentModel->save($payment);
 
-        // $participant = $participantModel->where('payment_id', $payment['id'])->first();
-        // $participant->status = $participant_status;
-        // $participantModel->save($participant);
+        $participant = (object)$participantModel->where('payment_id', $payment->id)->first();
+        $participant->status = $participant_status;
+        $participantModel->save($participant);
         
-        // return $this->response->setStatusCode(200)->setJSON($data);
+        return $this->response->setStatusCode(200)->setJSON($responseObj);
     }
 
     function getConfirmation(){
         $data = $this->request->getJSON();
         log_message('error', json_encode($data));
+        return "Hello";
     }
 
     function getPay_validation(){
