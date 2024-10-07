@@ -12,12 +12,12 @@ class EventLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['events.id as id','events.name as name','meetings.name as meeting_name', '','start_date','end_date','location','events.description as description','events.denomination_id as denomination_id', 'denominations.name as denomination_name','registration_fees'];
+        $fields = ['events.id as id','events.name as name','events.code as event_code','meetings.name as meeting_name', '','start_date','end_date','location','events.description as description','events.denomination_id as denomination_id', 'denominations.name as denomination_name','registration_fees'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['events.id as id','events.name as name','meeting_id','meetings.name as meeting_name','start_date','end_date','location','events.description as description','events.denomination_id as denomination_id','denominations.name as denomination_name','registration_fees'];
+        $fields = ['events.id as id','events.name as name','meeting_id','events.code as event_code','meetings.name as meeting_name','start_date','end_date','location','events.description as description','events.denomination_id as denomination_id','denominations.name as denomination_name','registration_fees'];
         return $fields;
     }
 

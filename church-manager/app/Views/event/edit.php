@@ -43,6 +43,16 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label col-xs-4" for="code">
+                            <?= lang('event.event_code') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="code" value="<?=$result['code'];?>" id="code"
+                                placeholder="<?=lang('event.edit_code');?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-xs-4" for="meeting_id">
                             <?= lang('event.event_meeting_id') ?>
                         </label>

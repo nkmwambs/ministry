@@ -80,6 +80,16 @@ $numeric_meeting_id = hash_id($meeting_id, 'decode');
           </div>
 
           <div class="form-group">
+            <label class="control-label col-xs-4" for="code">
+              <?= lang('event.event_code') ?>
+            </label>
+            <div class="col-xs-6">
+              <input type="text" class="form-control" name="code" id="code"
+                placeholder="<?=lang('event.enter_code')?>">
+            </div>
+          </div>
+
+          <div class="form-group">
             <label class="control-label col-xs-4" for="start_date">
               <?= lang('event.event_start_date') ?>
             </label>

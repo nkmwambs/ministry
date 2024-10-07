@@ -27,6 +27,7 @@
                 <tr>
                     <th><?= lang('event.event_action') ?></th>
                     <th><?= lang('event.event_name') ?></th>
+                    <th><?= lang('event.event_code') ?></th>
                     <th><?= lang('event.event_meeting_id') ?></th>
                     <th><?= lang('event.event_start_date') ?></th>
                     <th><?= lang('event.event_end_date') ?></th>
@@ -41,22 +42,23 @@
                     <tr>
                         <td>
                             <span class='action-icons'>
-                                <a href="<?= site_url("events/view/" . hash_id($event['id'])); ?>"><i class='fa fa-search'></i></a></i>
+                                <a href="<?= site_url("events/view/" . hash_id($event->id)); ?>"><i class='fa fa-search'></i></a></i>
                             </span>
                             <span class='action-icons'>
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($event['id']); ?>')" class='fa fa-pencil'></i>
+                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($event->id); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($event['id']); ?>')" title="Delete <?= $event['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($event->id); ?>')" title="Delete <?= $event->id; ?> participant"><i class='fa fa-trash'></i></span>
                         </td>
 
-                        <td><?= $event['name']; ?></td>
-                        <td><?= $event['meeting_name']; ?></td>
-                        <td><?= $event['start_date']; ?></td>
-                        <td><?= $event['end_date']; ?></td>
-                        <td><?= $event['location']; ?></td>
-                        <td><?= $event['description']; ?></td>
-                        <td><?= $event['denomination_name']; ?></td>
-                        <td><?= $event['registration_fees']; ?></td>
+                        <td><?= $event->name; ?></td>
+                        <td><?= $event->event_code; ?></td>
+                        <td><?= $event->meeting_name; ?></td>
+                        <td><?= $event->start_date; ?></td>
+                        <td><?= $event->end_date; ?></td>
+                        <td><?= $event->location; ?></td>
+                        <td><?= $event->description; ?></td>
+                        <td><?= $event->denomination_name; ?></td>
+                        <td><?= $event->registration_fees; ?></td>
 
                     <?php } ?>
             </tbody>

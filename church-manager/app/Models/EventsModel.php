@@ -9,10 +9,10 @@ class EventsModel extends Model  implements \App\Interfaces\ModelInterface
     protected $table            = 'events';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
+    protected $returnType       = \App\Entities\Event::class; //'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name','meeting_id','start_date','end_date','location','description','denomination_id','registration_fees'];
+    protected $allowedFields    = ['name','meeting_id','start_date','code','end_date','location','description','denomination_id','registration_fees'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
