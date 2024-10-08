@@ -20,6 +20,7 @@ return [
 
     'select_meeting' => 'Select Meeting Name',
     'select_denomination' => 'Select Denomination Name',
+    'enter_code' => 'Enter Code',
 
     'save_event' => 'Save',
     'save_and_new_event' => 'Save and New',

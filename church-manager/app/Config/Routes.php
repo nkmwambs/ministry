@@ -73,6 +73,9 @@ $routes->post('users/view/(:segment)/pending_tasks/save-task', 'Task::saveTask/$
 $routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominations');
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
 $routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
+$routes->post('events/fetchEvents', 'Event::fetchEvents');
+$routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
+$routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
 $routes->post('members/fetchMembers/(:num)','Member::fetchMembers/$1');
 
 $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) {

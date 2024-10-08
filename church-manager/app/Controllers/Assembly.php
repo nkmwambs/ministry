@@ -12,6 +12,50 @@ class Assembly extends BaseController
         $this->model = new \App\Models\AssembliesModel();
     }
 
+    public function fetchAssemblies()
+    {
+        $request = \Config\Services::request();
+
+        // Get parameters sent by Datatables
+        $draw = intval($request->getPost('draw'));
+        $start = intval($request->getPost('start'));
+        $length = intval($request->getPost('length'));
+        $searchValue = $request->getPost('search')['value'];
+
+        // Get the total number of records
+        $totalRecords = $this->model->countAll();
+
+        // Apply search filter if provided
+        if (!empty($searchValue)) {
+            $this->model->like('name', $searchValue)
+                ->orLike('location', $searchValue)
+                ->orLike('is_active', $searchValue);
+        }
+
+        // Get the filtered total
+        $totalFiltered = $this->model->countAllResults(false);
+
+        // Limit the results and fetch the data
+        $this->model->limit($length, $start);
+        $data = $this->model->find();
+
+        // Loop through the data to apply hash_id()
+        foreach ($data as &$assembly) {
+            $assembly['hash_id'] = hash_id($assembly['id']);  // Add hashed ID to each record
+        }
+
+        // Prepare response data for DataTables
+        $response = [
+            "draw" => $draw,
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalFiltered,
+            "data" => $data,  // Now includes 'hash_id' in each record
+        ];
+
+        // Return JSON response
+        return $this->response->setJSON($response);
+    }
+
     public function update(){
 
         $hashed_id = $this->request->getVar('id');
@@ -70,6 +114,10 @@ class Assembly extends BaseController
         ];
         
         $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
+
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,'decode'), $this->tableName, $customFieldValues);
 
         if($this->request->isAJAX()){
             $this->feature = 'assembly';
@@ -136,6 +184,10 @@ class Assembly extends BaseController
 
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
+
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues($insertId, $this->tableName, $customFieldValues);
 
         if($this->request->isAJAX()){
             $this->feature = 'assembly';
