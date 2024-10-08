@@ -8,7 +8,8 @@ return [
     'delete_event' => 'Delete Event',
 
     'event_action' => 'Action',
-    'event_name' => 'Event Name',
+    'event_name' => 'Name',
+    'event_code' => 'Code',
     'event_meeting_id' => 'Meeting Name',
     'event_start_date' => 'Start Date',
     'event_end_date' => 'End Date',
