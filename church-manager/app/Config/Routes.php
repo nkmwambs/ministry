@@ -74,3 +74,11 @@ $routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominati
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
 $routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
 $routes->post('members/fetchMembers/(:num)','Member::fetchMembers/$1');
+
+$routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->get('section_a/(:segment)', 'Report::sectionA/$1');
+    $routes->get('section_b/(:segment)', 'Report::sectionB/$1');
+    $routes->get('section_c/(:segment)', 'Report::sectionC/$1');
+    $routes->get('section_d/(:segment)', 'Report::sectionD/$1');
+    $routes->get('edit_report/(:segment)', "Report::editReport/$1");
+});

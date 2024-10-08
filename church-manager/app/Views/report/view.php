@@ -82,3 +82,31 @@
     </div>
 </div>
 
+<script>
+
+    // $(document).ready(function() {
+    //     $('.list-group-item:first').trigger('click');
+    // })
+
+    // $('.list-group-item-action').on('click', function (ev){
+    //    const url = "<?=site_url("reports")?>"
+
+    //    $.ajax({
+    //     url: url + '/' + $(this).data('section') + '/<?=$id;?>',
+    //     type: 'GET',
+    //     beforeSend: function(){
+    //         $("#overlay").css("display", "block");
+    //     },
+    //     success: function (data) {
+    //         $('#section_data').html(data);
+    //         $("#overlay").css("display", "none");
+    //     },
+    //     error: function(xhr, status, error) {
+    //         $('#section_data').html('<div class="error">Error Occurred</div>');
+    //         $("#overlay").css("display", "none");
+    //     }
+    //    })
+
+    //    ev.preventDefault()
+    // })
+</script>

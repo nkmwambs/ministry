@@ -44,7 +44,7 @@
                                 <a href="<?= site_url("reports/view/" . hash_id($report['id'])); ?>"><i class='fa fa-search'></i></a></i>
                             </span>
                             <span class='action-icons' title="Edit <?= $report['id']; ?> report">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($report['id']); ?>')" class='fa fa-pencil'></i>
+                                <a style="cursor:pointer" href="<?= site_url("reports/edit" . hash_id($report['id'])); ?>"><i class='fa fa-pencil'></i></a>
                             </span>
                             <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($report['id']); ?>')" title="Delete <?= $report['id']; ?> report"><i class='fa fa-trash'></i></span>
                         </td>

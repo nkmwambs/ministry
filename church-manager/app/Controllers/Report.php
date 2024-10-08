@@ -12,7 +12,65 @@ class Report extends BaseController
         parent::initController($request, $response, $logger);
         
         $this->model = new \App\Models\ReportsModel();
+    }    
+
+    public function view($hashed_id): string {
+        $data = [];
+        $numeric_id = hash_id($hashed_id,'decode');
+        
+        if(method_exists($this->model, 'getViewData')){
+            $data = $this->model->getViewData($numeric_id);
+        }else{
+            $data = $this->model->getOne($numeric_id);
+        }
+
+        $page_data = $this->page_data($data);
+        if(method_exists($this->library,'viewExtraData')){  
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->viewExtraData($page_data);
+        }
+
+        // if(array_key_exists('id',$data)){
+        if (isset($data) && is_array($data) && array_key_exists('id', $data)) {
+            unset($data['id']);
+        }
+
+        if($this->request->isAJAX()){
+            return view("$this->feature/view", $page_data);
+        }
+
+        return view('index', $this->page_data($data));
     }
+
+    public function editReport($hashed_id): string {
+        $data = [];
+        $numeric_id = hash_id($hashed_id,'decode');
+        
+        if(method_exists($this->model, 'getViewData')){
+            $data = $this->model->getViewData($numeric_id);
+        }else{
+            $data = $this->model->getOne($numeric_id);
+        }
+
+        $page_data = $this->page_data($data);
+        if(method_exists($this->library,'viewExtraData')){  
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->viewExtraData($page_data);
+        }
+
+        // if(array_key_exists('id',$data)){
+        if (isset($data) && is_array($data) && array_key_exists('id', $data)) {
+            unset($data['id']);
+        }
+
+        if($this->request->isAJAX()){
+            return view("$this->feature/edit", $page_data);
+        }
+
+        return view('index', $this->page_data($data));
+    }
+
+
 
     public function update(){
 
@@ -103,5 +161,21 @@ class Report extends BaseController
         }
 
         return redirect()->to(site_url("report/view/".hash_id($insertId)))->with('message', 'Report added seccessfuly!');;
+    }
+
+    public function sectionA() {
+        return view('report/section/view_a');
+    }
+
+    public function sectionB() {
+        return view('report/section/view_b');
+    }
+
+    public function sectionC() {
+        return view('report/section/view_c');
+    }
+
+    public function sectionD() {
+        return view('report/section/view_d');
     }
 }
