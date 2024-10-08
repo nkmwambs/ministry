@@ -42,32 +42,32 @@ class Report extends BaseController
         return view('index', $this->page_data($data));
     }
 
-    public function editReport($hashed_id): string {
+    public function editReport(): string {
         $data = [];
-        $numeric_id = hash_id($hashed_id,'decode');
-        
-        if(method_exists($this->model, 'getViewData')){
-            $data = $this->model->getViewData($numeric_id);
+        $numeric_id = hash_id($this->id,'decode');
+
+        if(method_exists($this->model, 'getEditData')){
+            $data = $this->model->getEditData($numeric_id);
         }else{
             $data = $this->model->getOne($numeric_id);
         }
 
         $page_data = $this->page_data($data);
-        if(method_exists($this->library,'viewExtraData')){  
+        
+        if(method_exists($this->library,'editExtraData')){
             // Note the editExtraData updates the $page_data by reference
-            $this->library->viewExtraData($page_data);
+            $this->library->editExtraData($page_data);
         }
 
-        // if(array_key_exists('id',$data)){
-        if (isset($data) && is_array($data) && array_key_exists('id', $data)) {
-            unset($data['id']);
+        foreach ((object)$this->tableName as $table_name) {
+            $customFieldLibrary = new \App\Libraries\FieldLibrary();
+            $customFields = $customFieldLibrary->getCustomFieldsForTable($table_name);
+            $customValues = $customFieldLibrary->getCustomFieldValuesForRecord($numeric_id, $table_name);
+            $page_data['customFields'] = $customFields;
+            $page_data['customValues'] = $customValues;
         }
 
-        if($this->request->isAJAX()){
-            return view("$this->feature/edit", $page_data);
-        }
-
-        return view('index', $this->page_data($data));
+        return view("report/edit", $page_data);
     }
 
 
