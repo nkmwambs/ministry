@@ -9,6 +9,7 @@ return [
     'view_revenues' => 'List Revenue',
     'view_roles' => 'List Roles',
     'view_fields' => 'List Custom Fields',
+    'view_types' => 'List Report Types',
 
     'view_profile_settings' => 'Profile Settings',
 ];

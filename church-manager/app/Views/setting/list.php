@@ -36,6 +36,7 @@ $parent_id = hash_id($parent_id, 'encode');
                             <li><a href="#view_revenues" data-item_id="<?=$parent_id;?>" data-link_id="view_revenues" data-feature_plural="revenues" onclick="childrenAjaxLists(this)" id="view_revenues_tab" data-toggle="tab"><?= lang('setting.view_revenues'); ?></a></li>
                             <li><a href="#view_roles" data-item_id="<?=$parent_id;?>" data-link_id="view_roles" data-feature_plural="roles" onclick="childrenAjaxLists(this)" id="list_roles_tab" data-toggle="tab"><?= lang('setting.view_roles'); ?></a></li>
                             <li><a href="#view_fields" data-item_id="<?=$parent_id;?>" data-link_id="view_fields" data-feature_plural="fields" onclick="childrenAjaxLists(this)" id="list_fields_tab" data-toggle="tab"><?= lang('setting.view_fields'); ?></a></li>
+                            <li><a href="#view_types" data-item_id="<?=$parent_id;?>" data-link_id="view_types" data-feature_plural="types" onclick="childrenAjaxLists(this)" id="list_types_tab" data-toggle="tab"><?= lang('setting.view_types'); ?></a></li>
                         </ul>
                     </div>
                 </div>
@@ -63,6 +64,10 @@ $parent_id = hash_id($parent_id, 'encode');
                     </div>
 
                     <div class="tab-pane" id="view_fields">
+                        <!-- <div class='info'>There are no roles available</div> -->
+                    </div>
+
+                    <div class="tab-pane" id="view_types">
                         <!-- <div class='info'>There are no roles available</div> -->
                     </div>
                 </div>
