@@ -81,4 +81,5 @@ $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) 
     $routes->get('section_c/(:segment)', 'Report::sectionC/$1');
     $routes->get('section_d/(:segment)', 'Report::sectionD/$1');
     $routes->get('edit_report/(:segment)', "Report::editReport/$1");
+    $routes->get('load_section', 'Report::load_section');
 });

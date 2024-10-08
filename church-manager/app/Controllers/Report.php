@@ -163,7 +163,30 @@ class Report extends BaseController
         return redirect()->to(site_url("report/view/".hash_id($insertId)))->with('message', 'Report added seccessfuly!');;
     }
 
+    public function load_section()
+    {
+        // $numeric_id = hash_id($id,'decode');
+
+        // if(method_exists($this->model, 'getEditData')){
+        //     $data = $this->model->getEditData($numeric_id);
+        // }else{
+        //     $data = $this->model->getOne($numeric_id);
+        // }
+
+        // $page_data = $this->page_data($data);
+
+        // // log_message('error', json_encode($page_data));
+        
+        // if(method_exists($this->library,'editExtraData')){
+        //     // Note the editExtraData updates the $page_data by reference
+        //     $this->library->editExtraData($page_data);
+        // }
+
+        return view('report/section/view_a');
+    }
+
     public function sectionA() {
+        // $page_data['result'] = ["name" => "James", "status" => "Single"];
         return view('report/section/view_a');
     }
 
