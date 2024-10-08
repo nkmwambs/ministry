@@ -92,7 +92,7 @@ class Report extends BaseController
             'reports_type_id' => $this->request->getPost('reports_type_id'),
             'report_period' => $this->request->getPost('report_period'),
             'report_date' => $this->request->getPost('report_date'),
-            'status' => $this->request->getPost('status'),
+            'status' => 'approved',
         ];
         
         $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);

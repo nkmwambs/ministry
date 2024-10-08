@@ -78,8 +78,9 @@ $numeric_report_type_id = hash_id($reports_type_id, 'decode');
             </label>
             <div class="col-xs-6">
               <select type="text" class="form-control" name="status" id="status">
-                <option value="yes">No</option>
-                <option value="yes">Yes</option>
+                <option value="draft">Draft</option>
+                <option value="submitted">Submitted</option>
+                <option value="approved">Approved</option>
               </select>
             </div>
           </div>

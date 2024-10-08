@@ -14,29 +14,29 @@
 
             <div class="panel-body">
 
-                <form role="form" id="frm_add_assembly" method="post" action="<?=site_url("assemblies/save")?>" class="form-horizontal form-groups-bordered">
+                <form role="form" id="frm_add_assembly" method="post" action="<?= site_url("assemblies/save") ?>" class="form-horizontal form-groups-bordered">
 
                     <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">
-                        
+
                         </div>
                     </div>
 
                     <?php if (session()->get('errors')): ?>
-                    <div class="form-group">
-                        <div class="col-xs-12 error">
-                            <ul>
-                                <?php foreach (session()->get('errors') as $error): ?>
-                                <li><?= esc($error) ?></li>
-                                <?php endforeach ?>
-                            </ul>
+                        <div class="form-group">
+                            <div class="col-xs-12 error">
+                                <ul>
+                                    <?php foreach (session()->get('errors') as $error): ?>
+                                        <li><?= esc($error) ?></li>
+                                    <?php endforeach ?>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
                     <?php endif ?>
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="name">
-                        <?= lang('assembly.assembly_name') ?>
+                            <?= lang('assembly.assembly_name') ?>
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name">
@@ -64,8 +64,8 @@
                         </div>
                     </div>
 
-                    <?php 
-                        if(!session()->get('user_denomination_id')){
+                    <?php
+                    if (!session()->get('user_denomination_id')) {
                     ?>
                         <div class="form-group">
                             <label class="control-label col-xs-4" for="denomination_id">
@@ -74,18 +74,18 @@
                             <div class="col-xs-6">
                                 <select class="form-control" name="parent_id" id="denomination_id">
                                     <option value="0">Select Denomination</option>
-                                    <?php foreach ($denominations as $denomination) :?>
-                                    <option value="<?php echo $denomination['id'];?>"><?php echo $denomination['name'];?></option>
-                                    <?php endforeach;?>
+                                    <?php foreach ($denominations as $denomination) : ?>
+                                        <option value="<?php echo $denomination['id']; ?>"><?php echo $denomination['name']; ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
-                    <?php 
-                        }else{
-                    ?>
-                        <input type="hidden" value="<?=session()->get('user_denomination_id');?>" name="parent_id"  id="denomination_id"/>
                     <?php
-                        }
+                    } else {
+                    ?>
+                        <input type="hidden" value="<?= session()->get('user_denomination_id'); ?>" name="parent_id" id="denomination_id" />
+                    <?php
+                    }
                     ?>
 
                     <div class="form-group">
@@ -95,17 +95,17 @@
                         <div class="col-xs-6">
                             <select class="form-control" name="entity_id" id="entity_id">
                                 <option value="">Select Entity</option>
-                                <?php 
-                                if(!empty($lowest_entities)){
+                                <?php
+                                if (!empty($lowest_entities)) {
                                     foreach ($lowest_entities as $entity) :
                                 ?>
-                                    <option value="<?php echo $entity['id'];?>"><?php echo $entity['name'];?></option>
+                                        <option value="<?php echo $entity['id']; ?>"><?php echo $entity['name']; ?></option>
                                 <?php
                                     endforeach;
                                 }
-                                    
+
                                 ?>
-                    
+
                             </select>
                         </div>
                     </div>
@@ -115,11 +115,21 @@
                             <?= lang('assembly.assembly_leader') ?>
                         </label>
                         <div class="col-xs-6">
-                            <select class="form-control" name="assembly_leader"  id="assembly_leader">
+                            <select class="form-control" name="assembly_leader" id="assembly_leader">
                                 <option value="">Select Leader</option>
                             </select>
                         </div>
                     </div>
+
+                    <!-- Dynamically Generated Custom Fields -->
+                    <?php foreach ($customFields as $field): ?>
+                        <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
+                            <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
+                            <div class="col-xs-6">
+                                <input type="<?= $field['type'] ?>" name="custom_fields[<?= $field['id'] ?>]" id="<?= $field['field_name'] ?>" class="form-control">
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
 
                     <!-- <div class="form-group">
                         <label class="control-label col-xs-4" for="is_active">
@@ -146,12 +156,12 @@
         const numeric_denomination_id = $(this).val()
 
         $.ajax({
-            url: "<?= site_url('entities/lowestEntities')?>/" + numeric_denomination_id,
+            url: "<?= site_url('entities/lowestEntities') ?>/" + numeric_denomination_id,
             type: 'GET',
             success: function(response) {
                 let options = "<option value='0'>Select Entity</option>"
 
-                $.each(response, function(index, elem){
+                $.each(response, function(index, elem) {
                     options += "<option value='" + elem.id + "'>" + elem.name + "</option>";
                 })
 
