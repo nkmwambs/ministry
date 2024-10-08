@@ -147,6 +147,7 @@ abstract class BaseController extends Controller
         }else{
             method_exists($this->model, 'getAll') ?
             $data = $this->model->getAll() :
+            log_message('error', json_encode($data));
             $data = $this->model->findAll();
         }
         

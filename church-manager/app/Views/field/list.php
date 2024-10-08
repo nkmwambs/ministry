@@ -30,13 +30,13 @@
                 <?php foreach ($result as $customField) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $customField['id']; ?> custom field">
+                            <span class='action-icons' title="View <?= $customField['name']; ?> custom field">
                                 <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($customField['id']);?>')"></i>
                             </span>
-                            <span class='action-icons'>
+                            <span class='action-icons' title="Edit <?= $customField['name']; ?> custom field">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($customField['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($customField['id']); ?>')" title="Delete <?= $customField['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($customField['id']); ?>')" title="Delete <?= $customField['name']; ?> custom field"><i class='fa fa-trash'></i></span>
                         </td>
 
                         <td><?= ucfirst($customField['field_name']); ?></td>
