@@ -14,7 +14,7 @@ class HierarchyLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['id','name','hierarchy_code','denomination_id','level','description'];
+        $fields = ['hierarchies.id','hierarchies.name','hierarchies.hierarchy_code','hierarchies.denomination_id','hierarchies.level','hierarchies.description'];
         return $fields;
     }
 

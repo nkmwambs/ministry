@@ -31,7 +31,7 @@ class EntityLibrary implements \App\Interfaces\LibraryInterface {
         $hierarchy_id = hash_id($page_data['parent_id'],'decode');
         
         $hierarchyModel = new \App\Models\HierarchiesModel();
-        $hierarchy = $hierarchyModel->where('id', $hierarchy_id)->first();
+        $hierarchy = $hierarchyModel->where('hierarchies.id', $hierarchy_id)->first();
 
         $hierarchy_id = $hierarchy['id'];
         $upper_hierarchy_level = $hierarchy['level'] - 1;

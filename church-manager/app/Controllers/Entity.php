@@ -51,11 +51,19 @@ class Entity extends BaseController
         if(method_exists($this->library, 'getLookUpItems')){
             $this->library->getLookUpItems($page_data);
         }
+
+        foreach ((object)$this->tableName as $table_name) {
+            $customFieldLibrary = new \App\Libraries\FieldLibrary();
+            $customFields = $customFieldLibrary->getCustomFieldsForTable($table_name);
+            $page_data['customFields'] = $customFields;
+            // log_message('error', json_encode($customFields));
+        }
         
         return view('entity/add', $page_data);
     }
 
     public function edit(): string {
+        $numeric_id = hash_id($this->id, 'decode');
         $data = $this->model->getOne(hash_id($this->id,'decode'));
 
         $this->parent_id = hash_id($data['hierarchy_id'],'encode');
@@ -63,6 +71,15 @@ class Entity extends BaseController
         $page_data = $this->page_data($data);
         if(method_exists($this->library, 'getLookUpItems')){
             $this->library->getLookUpItems($page_data);
+        }
+
+        foreach ((object)$this->tableName as $table_name) {
+            $customFieldLibrary = new \App\Libraries\FieldLibrary();
+            $customFields = $customFieldLibrary->getCustomFieldsForTable($table_name);
+            $customValues = $customFieldLibrary->getCustomFieldValuesForRecord($numeric_id, $table_name);
+            $page_data['customFields'] = $customFields;
+            $page_data['customValues'] = $customValues;
+            // log_message('error', json_encode($customValues));
         }
 
         return view('entity/edit', $page_data);
@@ -263,7 +280,7 @@ class Entity extends BaseController
         
         // Get the denomination code for the hierarchy id 
         $hierarchyModel = new \App\Models\HierarchiesModel();
-        $hierarchy = $hierarchyModel->select('hierarchy_code,hierarchies.level')
+        $hierarchy = $hierarchyModel->select('hierarchies.hierarchy_code,hierarchies.level')
         ->where('hierarchies.id', $hierarchy_id)
         ->first(); 
 

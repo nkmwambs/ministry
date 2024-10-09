@@ -12,7 +12,7 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ["hierarchy_id","entity_number","name","parent_id","entity_leader"];
+    protected $allowedFields    = ["id","hierarchy_id","entity_number","name","parent_id","entity_leader"];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -51,7 +51,7 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
         if(!empty($listQueryFields)){
             return $this->select($library->setListQueryFields())
             ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
-            ->orderBy('created_at desc')
+            ->orderBy('entities.created_at desc')
             ->findAll();
         }else{
             return $this->orderBy('created_at desc')->findAll();
@@ -65,7 +65,7 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
         if(!empty($viewQueryFields)){
             return $this->select($library->setViewQueryFields())
             ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
-            ->where('id', $id)
+            ->where('entities.id', $id)
             ->first();
         }else{
             return $this->where('id', $id)->first();
