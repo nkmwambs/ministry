@@ -56,169 +56,7 @@
                     <!-- Placeholder divs for dynamic sections -->
                     <!-- section_a.php -->
                     <div class="tab-pane" id="view_section_a">
-                        <form class="form-horizontal form-groups-bordered" role="form">
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Number of Saved</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">133</div>
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Number of Sanctified</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">67</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Number filled with Holy Ghost</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">123</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Number Baptised of Water</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">123</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Member Transferred Away</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">123</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Member Transferred In</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">123</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Number of Deceased</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">123</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Number of Added</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">123</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Number of Excluded</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">123</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Average Sunday School Attendance</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">123</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Number of Weekly Attenders</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">123</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Proportion od Children and Youth Attenders</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">123</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Enclosed Any News to Share?</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">Yes</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Department of Pastoral Care</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">No</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Youth Ministries</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">Yes</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Children Ministries</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">Yes</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Sunday School (Christian Education)</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">No</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Women Ministries</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">Yes</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">First Sunday Offering</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">No</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Second Sunday Missions</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">Yes</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Fourth Sunday</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">No</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Revival This Month</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">Yes</div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="control-label col-xs-4">Number of Bible Study/Training Programmes this month</label>
-                                <div class="col-xs-6">
-                                    <div class="form_view_field">Yes</div>
-                                </div>
-                            </div>
-
-                        </form>
                     </div>
 
                     <div class="tab-pane" id="view_section_b"></div>
@@ -233,17 +71,17 @@
 
 <script>
     $(document).ready(function() {
-        // Load section A content via AJAX
-        $('#view_section_a_tab').on('shown.bs.tab', function(e) {
+        $('#view_section_a_tab').on('shown.bs.tab', function(e) { // e is defined here
             $.ajax({
-                url: '<?= site_url('path_to_section_a_view') ?>',
+                url: '<?= site_url('reports/sections/a') ?>',
                 method: 'GET',
                 success: function(response) {
                     $('#view_section_a').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error loading section A: ', error);
                 }
             });
         });
-
-        // Similarly, you can add AJAX handlers for other tabs if needed
     });
 </script>

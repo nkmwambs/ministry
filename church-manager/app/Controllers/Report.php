@@ -163,16 +163,17 @@ class Report extends BaseController
         return redirect()->to(site_url("report/view/".hash_id($insertId)))->with('message', 'Report added seccessfuly!');;
     }
 
-    public function load_section($section)
-    {
-        // Construct the section view path
-        $viewPath = 'field/section/' . $section;
-
-        // Check if the view exists
-        if (file_exists(APPPATH . 'Views/' . $viewPath . '.php')) {
-            return view($viewPath); // Return the section view
-        } else {
-            return '<div class="error">Section not found.</div>'; // Error if view doesn't exist
+    public function loadSection($section) {
+        // Use $section to determine which view to load
+        // switch($section) {
+        //     case 'section_a':
+        //         return view('report/section/view_a');
+        //     // Add other sections as needed
+        //     default:
+        //         return view('report/section/view_a');
+        // }
+        if ($section === 'a') {
+            return view('report/section/view_a');
         }
     }
 
