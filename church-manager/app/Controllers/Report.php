@@ -163,42 +163,33 @@ class Report extends BaseController
         return redirect()->to(site_url("report/view/".hash_id($insertId)))->with('message', 'Report added seccessfuly!');;
     }
 
-    public function load_section()
+    public function load_section($section)
     {
-        // $numeric_id = hash_id($id,'decode');
+        // Construct the section view path
+        $viewPath = 'field/section/' . $section;
 
-        // if(method_exists($this->model, 'getEditData')){
-        //     $data = $this->model->getEditData($numeric_id);
-        // }else{
-        //     $data = $this->model->getOne($numeric_id);
-        // }
-
-        // $page_data = $this->page_data($data);
-
-        // // log_message('error', json_encode($page_data));
-        
-        // if(method_exists($this->library,'editExtraData')){
-        //     // Note the editExtraData updates the $page_data by reference
-        //     $this->library->editExtraData($page_data);
-        // }
-
-        return view('report/section/view_a');
+        // Check if the view exists
+        if (file_exists(APPPATH . 'Views/' . $viewPath . '.php')) {
+            return view($viewPath); // Return the section view
+        } else {
+            return '<div class="error">Section not found.</div>'; // Error if view doesn't exist
+        }
     }
 
-    public function sectionA() {
-        // $page_data['result'] = ["name" => "James", "status" => "Single"];
-        return view('report/section/view_a');
-    }
-
-    public function sectionB() {
-        return view('report/section/view_b');
-    }
-
-    public function sectionC() {
-        return view('report/section/view_c');
-    }
-
-    public function sectionD() {
-        return view('report/section/view_d');
-    }
+     // Load Section A view
+     public function section_a()
+     {
+         // Fetch data for Section A if needed
+        //  $data['result'] = $this->reportModel->getSectionAData();
+         
+         // Return the Section A view
+         return view('report/section/view_a');
+     }
+ 
+     // Similarly, add a method for Section B, etc.
+     public function section_b()
+     {
+        //  $data['result'] = $this->reportModel->getSectionBData();
+         return view('report/section/view_b');
+     }
 }

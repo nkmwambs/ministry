@@ -84,5 +84,9 @@ $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) 
     $routes->get('section_c/(:segment)', 'Report::sectionC/$1');
     $routes->get('section_d/(:segment)', 'Report::sectionD/$1');
     $routes->get('edit', "Report::editReport");
-    $routes->get('load_section', 'Report::load_section');
+    $routes->get('load_section/(:seg)', 'Report::load_section/$1');
 });
+
+$routes->get('reports/section_a', 'Report::section_a');
+$routes->get('reports/section_b', 'Report::section_b');
+// Add more routes for other sections as needed
