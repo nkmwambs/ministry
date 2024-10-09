@@ -72,6 +72,13 @@ $routes->post('users/view/(:segment)/pending_tasks/save-task', 'Task::saveTask/$
 
 $routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominations');
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
+$routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
+$routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
+$routes->post('events/fetchEvents', 'Event::fetchEvents');
+$routes->post('users/fetchUsers', 'User::fetchUsers');
+$routes->post('departments/fetchDepartments', 'Department::fetchDepartments');
+// $routes->post('designations/fetchDesignations', 'Designation::fetchDesignations');
+$routes->post('reports/fetchReports', 'Report::fetchReports');
 $routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
 $routes->post('members/fetchMembers/(:num)','Member::fetchMembers/$1');
 
@@ -81,5 +88,10 @@ $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) 
     $routes->get('section_c/(:segment)', 'Report::sectionC/$1');
     $routes->get('section_d/(:segment)', 'Report::sectionD/$1');
     $routes->get('edit', "Report::editReport");
-    $routes->get('load_section', 'Report::load_section');
+    // $routes->get('section_a/(:seg)', 'Report::load_section/$1');
 });
+
+// $routes->get('reports/section_a', 'Report::section_a');
+// $routes->get('reports/section_b', 'Report::section_b');
+// Add more routes for other sections as needed
+$routes->get('reports/sections/(:seg)', 'Report::load_section/$1');

@@ -42,7 +42,7 @@ class LogmailsModel extends Model
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $afterDelete    = ['updateRecycleBin'];
 
     function logEmails($email, $subject, $body){
         // Log email to database

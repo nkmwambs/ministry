@@ -127,6 +127,10 @@ class Member extends BaseController
         $insertId = $this->model->getInsertID();
         // log_message('error', $insertId);
 
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+
         $this->parent_id = $hashed_assembly_id;
 
         if($this->request->isAJAX()){
@@ -213,6 +217,10 @@ class Member extends BaseController
         ];
         
         $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
+
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,'decode'), $this->tableName, $customFieldValues);
 
         if($this->request->isAJAX()){
             $this->feature = 'member';

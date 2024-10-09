@@ -24,12 +24,12 @@
             <div class="panel-heading">
                 <div class="panel-title">
                     <div class="page-title">
-                        <i class='fa fa-eye'></i><?= lang('report.view_report'); ?>
+                        <i class='fa fa-eye'></i><?= lang('report.edit_report'); ?>
                     </div>
                     <div class="panel-options">
 							
 							<ul class="nav nav-tabs" id ="myTabs">
-								<li class="active"><a href="#view_report" id="view_report_tab" data-toggle="tab"><?= lang('report.view_report'); ?></a></li>
+								<li class="active"><a href="#view_report" id="view_report_tab" data-toggle="tab"><?= lang('report.edit_report'); ?></a></li>
 								<li><a href="#view_section_a" data-item_id = "<?=$id;?>" data-link_id="view_section_a" onclick="childrenAjaxLists(this)" id="view_section_a_tab" data-toggle="tab"><?= lang('report.section_A'); ?></a></li>
                                 <li><a href="#view_section_a" data-item_id = "<?=$id;?>" data-link_id="view_section_b" onclick="childrenAjaxLists(this)" id="view_section_b_tab" data-toggle="tab"><?= lang('report.section_B'); ?></a></li>
                                 <li><a href="#view_section_c" data-item_id = "<?=$id;?>" data-link_id="view_section_c" onclick="childrenAjaxLists(this)" id="view_section_c_tab" data-toggle="tab"><?= lang('report.section_C'); ?></a></li>

@@ -48,13 +48,13 @@
                                 </div>
                             <?php } ?>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <div class="col-xs-offset-4 col-xs-6">
                                     <a href="<?= site_url(plural($feature) . '/edit/' . $id) ?>" class="btn btn-primary">
                                         <?= lang('minister.edit_button') ?>
                                     </a>
                                 </div>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
 

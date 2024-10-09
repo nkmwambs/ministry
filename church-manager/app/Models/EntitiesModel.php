@@ -42,7 +42,7 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $afterDelete    = ['updateRecycleBin'];
 
     public function getAll(){
         $library = new \App\Libraries\EntityLibrary();

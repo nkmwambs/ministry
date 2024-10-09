@@ -1,16 +1,16 @@
-<div class="tab-pane show" id="section_a">
+<!-- <div class="tab-pane show" id="section_a"> -->
     <form class="form-horizontal form-groups-bordered" role="form">
         <div class="form-group">
             <label for="" class="control-label col-xs-4">Number of Saved</label>
             <div class="col-xs-6">
-                <div class="form_view_field"><?= $result['name'] ?></div>
+                <div class="form_view_field">123</div>
             </div>
         </div>
 
         <div class="form-group">
             <label for="" class="control-label col-xs-4">Number of Sanctified</label>
             <div class="col-xs-6">
-                <div class="form_view_field"><?= $result['status'] ?></div>
+                <div class="form_view_field">123</div>
             </div>
         </div>
 
@@ -167,4 +167,4 @@
                                 </div>
                             </div>  -->
     </form>
-</div>
+<!-- </div> -->

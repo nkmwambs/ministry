@@ -57,7 +57,10 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
               <?= lang('visitor.visitor_gender') ?>
             </label>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="gender" id="gender" placeholder="Enter Gender">
+              <select class="form-control" name="date_of_birth" id="date_of_birth">
+                <option value="male"><?= lang('system.gender_male') ?></option>
+                <option value="female"><?= lang('system.gender_female') ?></option>
+              </select>
             </div>
 
             <label class="control-label col-xs-2" for="date_of_birth">
@@ -130,78 +133,3 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
     </div>
   </div>
 </div>
-
-
-
-<!-- <script>
-  var currentTab = 0; // Current tab is set to be the first tab (0)
-  showTab(currentTab); // Display the current tab
-
-  function showTab(n) {
-    // This function will display the specified tab of the form ...
-    var $x = $(".tab");
-    $x.eq(n).css("display", "block");
-    // ... and fix the Previous/Next buttons:
-    if (n == 0) {
-      $("#prevBtn").css("display", "none");
-    } else {
-      $("#prevBtn").css("display", "inline");
-    }
-    if (n == ($x.length - 1)) {
-      $("#nextBtn").html("Submit");
-    } else {
-      $("#nextBtn").html("Next");
-    }
-    // ... and run a function that displays the correct step indicator:
-    fixStepIndicator(n);
-  }
-
-  function nextPrev(n) {
-    // This function will figure out which tab to display
-    var $x = $(".tab");
-    // Exit the function if any field in the current tab is invalid:
-    if (n == 1 && !validateForm()) return false;
-    // Hide the current tab:
-    $x.eq(currentTab).css("display", "none");
-    // Increase or decrease the current tab by 1:
-    currentTab = currentTab + n;
-    // if you have reached the end of the form... :
-    if (currentTab >= $x.length) {
-      //...the form gets submitted:
-      $("#frm_add_visitor").submit();
-      return false;
-    }
-    // Otherwise, display the correct tab:
-    showTab(currentTab);
-  }
-
-  function validateForm() {
-    // This function deals with validation of the form fields
-    var $x, $y, i, valid = true;
-    $x = $(".tab");
-    $y = $x.eq(currentTab).find("input");
-    // A loop that checks every input field in the current tab:
-    $y.each(function() {
-      // If a field is empty...
-      if ($(this).val() == "") {
-        // add an "invalid" class to the field:
-        $(this).addClass("invalid");
-        // and set the current valid status to false:
-        valid = false;
-      }
-    });
-    // If the valid status is true, mark the step as finished and valid:
-    if (valid) {
-      $(".step").eq(currentTab).addClass("finish");
-    }
-    return valid; // return the valid status
-  }
-
-  function fixStepIndicator(n) {
-    // This function removes the "active" class of all steps...
-    var $x = $(".step");
-    $x.removeClass("active");
-    //... and adds the "active" class to the current step:
-    $x.eq(n).addClass("active");
-  }
-</script> -->

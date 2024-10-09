@@ -42,7 +42,7 @@ class FieldsModel extends Model
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $afterDelete    = ['updateRecycleBin'];
 
     public function getAll(){
         $library = new \App\Libraries\FieldLibrary();

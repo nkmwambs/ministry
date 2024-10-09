@@ -42,7 +42,7 @@ class TasksModel extends Model  implements \App\Interfaces\ModelInterface
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $afterDelete    = ['updateRecycleBin'];
 
     function getAll(){
         $library = new \App\Libraries\TaskLibrary();

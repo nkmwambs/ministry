@@ -10,7 +10,7 @@ class MinistersModel extends Model  implements \App\Interfaces\ModelInterface
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['id','name','minister_number','assembly_id','designation_id','phone','is_active'];
 
@@ -42,7 +42,7 @@ class MinistersModel extends Model  implements \App\Interfaces\ModelInterface
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $afterDelete    = ['updateRecycleBin'];
 
     public function getAll(){
         $library = new \App\Libraries\MinisterLibrary();

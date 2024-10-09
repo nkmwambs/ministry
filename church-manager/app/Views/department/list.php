@@ -14,7 +14,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <table class="table table-striped datatable">
+        <table class="table table-striped" id="dataTable">
             <thead>
                 <tr>
                     <th><?= lang('department.department_action') ?></th>
@@ -23,27 +23,37 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($result as $department) { ?>
-                    <tr>
-                        <td>
-                            <span class='action-icons' title="View <?= $department['id']; ?> department">
-                                <!-- <a href="<?= site_url("departments/view/" . hash_id($department['id'])); ?>">
-                                    <i class='fa fa-search'></i>
-                                </a> -->
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($department['id']);?>')"></i>
-                            </span>
-                            <span class='action-icons' title="Edit <?= $department['id']; ?> department">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($department['id']); ?>')" class='fa fa-pencil'></i>
-                            </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($department['id']); ?>')" title="Delete <?= $department['id']; ?> department"><i class='fa fa-trash'></i></span>
-
-                        </td>
-
-                        <td><?= $department['name']; ?></td>
-                        <td><?= $department['description']; ?></td>
-                        </tr>
-                <?php } ?>
+                
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+$(document).ready(function (){
+    $('#dataTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo site_url('departments/fetchDepartments')?>",
+            "type": "POST"
+        },
+        "columns": [
+            {
+                data: null,
+                render: function(data, type, row) {
+                    return '<span class="action-icons">' +
+                        '<a href="<?= site_url("departments/view/") ?>' + row.hash_id + '"><i class="fa fa-search"></i></a>' +
+                        '</span>' +
+                        '<span class="action-icons">' +
+                        '<i style="cursor:pointer" onclick="showAjaxModal(\'<?= plural($feature); ?>\', \'edit\', \'' + row.hash_id + '\')" class="fa fa-pencil"></i>' +
+                        '</span>' +
+                        '<span class="action-icons" onclick="deleteItem(\'<?= plural($feature); ?>\', \'delete\', \'' + row.hash_id + '\')" title="Delete ' + row.hash_id + ' department"><i class="fa fa-trash"></i></span>';
+                }
+            },
+            { data: "name" },
+            { data: "description" }
+        ]
+    });
+});
+</script>

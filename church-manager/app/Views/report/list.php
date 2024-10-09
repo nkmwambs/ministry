@@ -26,7 +26,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <table class="table table-striped datatable">
+        <table class="table table-striped" id="dataTable">
             <thead>
                 <tr>
                     <th><?= lang('report.report_action') ?></th>
@@ -37,25 +37,39 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($result as $report) { ?>
-                    <tr>
-                        <td>
-                            <span class='action-icons' title="View <?= $report['id']; ?> report">
-                                <a href="<?= site_url("reports/view/" . hash_id($report['id'])); ?>"><i class='fa fa-search'></i></a>
-                            </span>
-                            <span class='action-icons' title="Edit <?= $report['id']; ?> report">
-                                <a href="<?= site_url("reports/edit/" . hash_id($report['id'])); ?>"><i class='fa fa-pencil'></i></a>
-                            </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($report['id']); ?>')" title="Delete <?= $report['id']; ?> report"><i class='fa fa-trash'></i></span>
-                        </td>
-
-                        <td><?= $report['reports_type_id']; ?></td>
-                        <td><?= $report['report_period']; ?></td>
-                        <td><?= $report['report_date']; ?></td>
-                        <td><?= $report['status']; ?></td>
-
-                    <?php } ?>
+                
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+$(document).ready(function (){
+    $('#dataTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo site_url('reports/fetchReports')?>",
+            "type": "POST"
+        },
+        "columns": [
+            {
+                data: null,
+                render: function(data, type, row) {
+                    return '<span class="action-icons">' +
+                        '<a href="<?= site_url("reports/view/") ?>' + row.hash_id + '"><i class="fa fa-search"></i></a>' +
+                        '</span>' +
+                        '<span class="action-icons">' +
+                        '<i style="cursor:pointer" onclick="showAjaxModal(\'<?= plural($feature); ?>\', \'edit\', \'' + row.hash_id + '\')" class="fa fa-pencil"></i>' +
+                        '</span>' +
+                        '<span class="action-icons" onclick="deleteItem(\'<?= plural($feature); ?>\', \'delete\', \'' + row.hash_id + '\')" title="Delete ' + row.hash_id + ' report"><i class="fa fa-trash"></i></span>';
+                }
+            },
+            { data: "reports_type_id" },
+            { data: "report_period" },
+            { data: "report_date" },
+            { data: "status" }
+        ]
+    });
+});
+</script>
