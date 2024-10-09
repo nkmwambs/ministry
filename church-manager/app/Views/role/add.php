@@ -1,4 +1,4 @@
-<?php 
+<?php
 $numeric_denomination_id = hash_id($parent_id, 'decode');
 ?>
 
@@ -28,12 +28,12 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                     </div>
 
                     <?php if (!$numeric_denomination_id) { ?>
-                        <div class = 'form-group'>
-                            <label for="denomination_id" class = "control-label col-xs-4"><?= lang('role.role_denomination_name') ?></label>
-                            <div class = "col-xs-6">
-                                <select class = "form-control" name = "denomination_id" id = "denomination_id">
-                                    <option value =""><?= lang('role.select_denomination') ?></option>
-                                    <option value ="0"><?= lang('role.system_denomination') ?></option>
+                        <div class='form-group'>
+                            <label for="denomination_id" class="control-label col-xs-4"><?= lang('role.role_denomination_name') ?></label>
+                            <div class="col-xs-6">
+                                <select class="form-control" name="denomination_id" id="denomination_id">
+                                    <option value=""><?= lang('role.select_denomination') ?></option>
+                                    <option value="0"><?= lang('role.system_denomination') ?></option>
                                     <?php foreach ($denominations as $denomination) : ?>
                                         <option value="<?php echo $denomination['id']; ?>"><?php echo $denomination['name']; ?></option>
                                     <?php endforeach; ?>
@@ -41,7 +41,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             </div>
                         </div>
                     <?php } else { ?>
-                        <input type="hidden" name="denomination_id" id = "denomination_id" value="<?= $parent_id; ?>" />
+                        <input type="hidden" name="denomination_id" id="denomination_id" value="<?= $parent_id; ?>" />
                     <?php } ?>
 
                     <div class="form-group">
@@ -65,7 +65,17 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             </select>
                         </div>
                     </div>
-                    
+
+                    <!-- Dynamically Generated Custom Fields -->
+                    <?php foreach ($customFields as $field): ?>
+                        <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
+                            <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
+                            <div class="col-xs-6">
+                                <input type="<?= $field['type'] ?>" name="custom_fields[<?= $field['id'] ?>]" id="<?= $field['field_name'] ?>" class="form-control">
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+
                 </form>
 
             </div>
@@ -76,29 +86,29 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
 </div>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
-        if($('#default_role').val() == 'no'){
-            
+        if ($('#default_role').val() == 'no') {
+
         }
 
-        $('#denomination_id').change(function () {
-                const denomination_id = $(this).val();
-                const base_url = '<?= site_url("roles/get_default_role/");?>';
-                $.ajax({
-                    url: base_url + denomination_id,
-                    type: 'GET',
-                    success: function (response) {
-                        // console.log(response.denominationHasDefaultRole);
-                        if (response.denominationHasDefaultRole) {
-                            $('#default_role').attr('readonly', 'readonly');
-                            $('#default_role').val('no')
-                            
-                        } else {
-                            $('#default_role').removeAttr('readonly');
-                        }
+        $('#denomination_id').change(function() {
+            const denomination_id = $(this).val();
+            const base_url = '<?= site_url("roles/get_default_role/"); ?>';
+            $.ajax({
+                url: base_url + denomination_id,
+                type: 'GET',
+                success: function(response) {
+                    // console.log(response.denominationHasDefaultRole);
+                    if (response.denominationHasDefaultRole) {
+                        $('#default_role').attr('readonly', 'readonly');
+                        $('#default_role').val('no')
+
+                    } else {
+                        $('#default_role').removeAttr('readonly');
                     }
-        
+                }
+
             });
         })
     });
