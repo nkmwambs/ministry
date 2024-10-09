@@ -61,6 +61,10 @@ class Revenue extends BaseController
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
 
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+
         if ($this->request->isAJAX()) {
 
             $this->feature = 'revenue';
@@ -122,6 +126,10 @@ class Revenue extends BaseController
         ];
 
         $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
+
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,'decode'), $this->tableName, $customFieldValues);
 
         if ($this->request->isAJAX()) {
             

@@ -58,51 +58,51 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
 
           <!-- User Information Fields -->
           <div class="form-group">
-            <label class="control-label col-xs-2" for="first_name">First Name</label>
+            <label class="control-label col-xs-2" for="first_name"><?= lang('user.user_first_name') ?></label>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name" required>
+              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="<?= lang('user.enter_first_name') ?>" required>
             </div>
 
-            <label class="control-label col-xs-2" for="last_name">Last Name</label>
+            <label class="control-label col-xs-2" for="last_name"><?= lang('user.user_last_name') ?></label>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name" required>
+              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="<?= lang('user.enter_last_name') ?>" required>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="control-label col-xs-2" for="date_of_birth">Date Of Birth</label>
+            <label class="control-label col-xs-2" for="date_of_birth"><?= lang('user.user_dob') ?></label>
             <div class="col-xs-3">
-              <input type="text" class="form-control datepicker" name="date_of_birth" id="date_of_birth" placeholder="Date of birth">
+              <input type="text" class="form-control datepicker" name="date_of_birth" id="date_of_birth" placeholder="<?= lang('user.enter_dob') ?>">
             </div>
 
-            <label class="control-label col-xs-2" for="gender">Gender</label>
+            <label class="control-label col-xs-2" for="gender"><?= lang('user.user_gender') ?></label>
             <div class="col-xs-3">
               <select class="form-control" name="gender" id="gender">
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value=""><?= lang('user.select_gender') ?></option>
+                <option value="male"><?= lang('system.gender_male') ?></option>
+                <option value="female"><?= lang('system.gender_female') ?></option>
               </select>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="control-label col-xs-2" for="email">Email</label>
+            <label class="control-label col-xs-2" for="email"><?= lang('user.user_email') ?></label>
             <div class="col-xs-3">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email" required>
+              <input type="email" class="form-control" name="email" id="email" placeholder="<?= lang('user.enter_email') ?>" required>
             </div>
 
-            <label class="control-label col-xs-2" for="phone">Phone</label>
+            <label class="control-label col-xs-2" for="phone"><?= lang('user.user_phone') ?></label>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Phone" required>
+              <input type="text" class="form-control" name="phone" id="phone" placeholder="<?= lang('user.enter_phone') ?>" required>
             </div>
           </div>
 
           <!-- Roles -->
           <div class="form-group">
-            <label class="control-label col-xs-4" for="roles">Roles</label>
+            <label class="control-label col-xs-4" for="roles"><?= lang('user.user_roles') ?></label>
             <div class="col-xs-6">
               <select class="form-control select_fields" name="roles[]" id="roles" multiple>
-                <option value="">Select roles</option>
+                <option value=""><?= lang('user.select_role') ?></option>
                 <?php foreach ($roles as $role) : ?>
                   <option value="<?php echo $role['id']; ?>"><?php echo $role['name']; ?></option>
                 <?php endforeach; ?>
@@ -113,12 +113,12 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
           <!-- System Administrator -->
           <?php if (!$numeric_denomination_id) { ?>
             <div class="form-group">
-              <label class="control-label col-xs-4" for="is_system_admin">Is system Administrator</label>
+              <label class="control-label col-xs-4" for="is_system_admin"><?= lang('user.user_is_system_admin') ?></label>
               <div class="col-xs-6">
                 <select class="form-control" name="is_system_admin" id="is_system_admin">
-                  <option value="">Select option</option>
-                  <option value="yes">Yes</option>
-                  <option value="no" selected>No</option>
+                  <option value=""><?= lang('user.select_option') ?></option>
+                  <option value="no"><?= lang('system.system_no') ?></option>
+                  <option value="yes"><?= lang('system.system_yes') ?></option>
                 </select>
               </div>
             </div>
@@ -126,10 +126,10 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
 
           <!-- Permitted Entities -->
           <div class="form-group">
-            <label for="permitted_entities" class="control-label col-xs-4">User Hierachies Level</label>
+            <label for="hierarchy_id" class="control-label col-xs-4"><?= lang('user.user_hierarchical_level') ?></label>
             <div class="col-xs-6">
               <select class="form-control" name="" id="hierarchy_id">
-                <option value="">Select a Hierarchy Level</option>
+                <option value=""><?= lang('user.select_hierarchical_level') ?></option>
                 <?php if ($numeric_denomination_id) { ?>
                   <?php foreach ($hierarchies as $hierarchy) : ?>
                     <option value="<?php echo $hierarchy['id']; ?>"><?php echo $hierarchy['name']; ?></option>
@@ -142,7 +142,7 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
 
 
           <div class="form-group hidden">
-            <label for="permitted_entities" class="control-label col-xs-4">Permitted Entities:</label>
+            <label for="permitted_entities" class="control-label col-xs-4"><?= lang('user.user_permitted_entities') ?></label>
             <div class="col-xs-6">
               <select id="permitted_entities" name="permitted_entities[]" class="form-control select_fields" multiple>
                 <?php foreach ($entities as $hierarchy_name => $hierarchy_entities): ?>
@@ -159,10 +159,10 @@ $numeric_entity_id = hash_id($entity_id, 'decode');
 
           <!-- Permitted Assemblies -->
           <div class="form-group hidden">
-            <label class="control-label col-xs-4" for="permitted_assemblies">Permitted Assemblies</label>
+            <label class="control-label col-xs-4" for="permitted_assemblies"><?= lang('user.user_permitted_assemblies') ?></label>
             <div class="col-xs-6">
               <select class="form-control select_fields" name="permitted_assemblies[]" id="permitted_assemblies" multiple>
-                <option value="">Select Assemblies</option>
+                <option value=""><?= lang('user.select_assemblies') ?></option>
               </select>
             </div>
           </div>

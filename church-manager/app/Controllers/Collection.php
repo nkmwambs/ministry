@@ -76,7 +76,8 @@ class Collection extends BaseController
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
-        $assembly_id = hash_id($this->request->getPost('assembly_id'),'decode');
+        $hashed_assembly_id = $this->request->getPost('assembly_id');
+        $assembly_id = hash_id($hashed_assembly_id, 'decode');
 
         $data = [
             'return_date' => $this->request->getPost('return_date'),
@@ -94,13 +95,24 @@ class Collection extends BaseController
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
 
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+
+        $this->parent_id = $hashed_assembly_id;
+
         if($this->request->isAJAX()){
             $this->feature = 'collection';
             $this->action = 'list';
-            $records = $this->model->orderBy("created_at desc")->findAll();
-            $page_data = parent::page_data($records);
-            $page_data['id'] = hash_id($assembly_id,'encode');
-            // log_message('error', json_encode($page_data));
+            $records = $this->model->select('return_date,period_start_date,period_end_Date,assembly_id,assemblies.name as assembly_name,revenue_id,revenues.name as revenue_name,designations.amount,designations.status,collection_reference,designations.description,collection_method')
+            ->join('assemblies', 'assemblies.id = designations.assembly_id')
+            ->join('revenues', 'revenues.id = designations.revenue_id')
+            ->orderBy("designations.created_at desc")
+            ->where('assembly_id', $assembly_id)
+            ->findAll();
+            
+            $page_data = parent::page_data($records, $hashed_assembly_id);
+
             return view("collection/list", $page_data);
         }
 
@@ -145,14 +157,19 @@ class Collection extends BaseController
         
         $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
 
+        $customFieldLibrary = new \App\Libraries\FieldLibrary();
+        $customFieldValues = $this->request->getPost('custom_fields');
+        $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,'decode'), $this->tableName, $customFieldValues);
+
         if($this->request->isAJAX()){
             $this->feature = 'collection';
             $this->action = 'list';
 
-            $records = $this->model
-            ->select('collections.id,collections.return_date,collections.period_start_date,collections.period_end_date,collections.assembly_id,collections.revenue_id,collections.amount,collections.status,collections.collection_reference,collections.description,collections.collection_method')
-            ->orderBy("collections.created_at desc")
-            ->where('assembly_id', hash_id($hashed_assembly_id,'decode'))
+            $records = $this->model->select('return_date,period_start_date,period_end_Date,assembly_id,assemblies.name as assembly_name,revenue_id,revenues.name as revenue_name,designations.amount,designations.status,collection_reference,designations.description,collection_method')
+            ->join('assemblies', 'assemblies.id = designations.assembly_id')
+            ->join('revenues', 'revenues.id = designations.revenue_id')
+            ->orderBy("designations.created_at desc")
+            ->where('assembly_id', hash_id($hashed_assembly_id, 'decode'))
             ->findAll();
             return view("collection/list", parent::page_data($records));
         }

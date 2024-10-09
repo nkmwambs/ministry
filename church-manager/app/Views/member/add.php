@@ -129,6 +129,16 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
             </div>
           </div>
 
+          <!-- Dynamically Generated Custom Fields -->
+          <?php foreach ($customFields as $field): ?>
+            <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
+              <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
+              <div class="col-xs-6">
+                <input type="<?= $field['type'] ?>" name="custom_fields[<?= $field['id'] ?>]" id="<?= $field['field_name'] ?>" class="form-control">
+              </div>
+            </div>
+          <?php endforeach; ?>
+
         </form>
 
       </div>

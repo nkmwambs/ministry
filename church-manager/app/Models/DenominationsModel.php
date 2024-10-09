@@ -42,7 +42,7 @@ class DenominationsModel extends Model  implements \App\Interfaces\ModelInterfac
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $afterDelete    = ['updateRecycleBin'];
 
     public function getAll(){
         $library = new \App\Libraries\DenominationLibrary();

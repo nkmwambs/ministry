@@ -10,7 +10,7 @@ class PaymentsModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
+    protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['id','MerchantRequestID','phone','payment_code','amount','redeemed_amount','payment_status','denomination_id'];
 

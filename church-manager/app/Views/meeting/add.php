@@ -1,4 +1,4 @@
-<?php 
+<?php
 $numeric_denomination_id = hash_id($parent_id, 'decode');
 ?>
 
@@ -28,11 +28,11 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                     </div>
 
                     <?php if (!$numeric_denomination_id) { ?>
-                        <div class = 'form-group'>
-                            <label for="denomination_id" class = "control-label col-xs-4">Denomination Name</label>
-                            <div class = "col-xs-6">
-                                <select class = "form-control" name = "denomination_id" id = "denomination_id">
-                                    <option value ="">Select a denomination</option>
+                        <div class='form-group'>
+                            <label for="denomination_id" class="control-label col-xs-4">Denomination Name</label>
+                            <div class="col-xs-6">
+                                <select class="form-control" name="denomination_id" id="denomination_id">
+                                    <option value="">Select a denomination</option>
                                     <?php foreach ($denominations as $denomination) : ?>
                                         <option value="<?php echo $denomination['id']; ?>"><?php echo $denomination['name']; ?></option>
                                     <?php endforeach; ?>
@@ -40,7 +40,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             </div>
                         </div>
                     <?php } else { ?>
-                        <input type="hidden" name="denomination_id" id = "denomination_id" value="<?= $parent_id; ?>" />
+                        <input type="hidden" name="denomination_id" id="denomination_id" value="<?= $parent_id; ?>" />
                     <?php } ?>
 
 
@@ -62,7 +62,17 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             <textarea type="text" class="form-control" name="description" id="description" placeholder="Enter Description"></textarea>
                         </div>
                     </div>
-                    
+
+                    <!-- Dynamically Generated Custom Fields -->
+                    <?php foreach ($customFields as $field): ?>
+                        <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
+                            <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
+                            <div class="col-xs-6">
+                                <input type="<?= $field['type'] ?>" name="custom_fields[<?= $field['id'] ?>]" id="<?= $field['field_name'] ?>" class="form-control">
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+
                 </form>
 
             </div>

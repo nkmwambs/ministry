@@ -15,14 +15,14 @@
 
       <div class="panel-body">
 
-        <form role="form" id = "frm_add_hierarchy" method="post" action="<?=site_url("hierarchies/save")?>" class="form-horizontal form-groups-bordered">
-          
+        <form role="form" id="frm_add_hierarchy" method="post" action="<?= site_url("hierarchies/save") ?>" class="form-horizontal form-groups-bordered">
+
           <div class="form-group hidden error_container">
-              <div class="col-xs-12 error">
-              
-              </div>
+            <div class="col-xs-12 error">
+
+            </div>
           </div>
-        
+
           <div class="form-group">
             <label class="control-label col-xs-4" for="denomination_name">
               <?= lang('hierarchy.hierarchy_name') ?>
@@ -32,7 +32,7 @@
                 placeholder="Enter Name">
             </div>
           </div>
-              
+
           <div class="form-group">
             <label class="control-label col-xs-4" for="hierarchy_code">
               <?= lang('hierarchy.hierarchy_code') ?>
@@ -43,12 +43,12 @@
             </div>
           </div>
 
-          <?php 
-            if(isset($parent_id)){
+          <?php
+          if (isset($parent_id)) {
           ?>
-            <input type="hidden" name="denomination_id" value="<?=$parent_id;?>" />
-          <?php 
-            }else{
+            <input type="hidden" name="denomination_id" value="<?= $parent_id; ?>" />
+          <?php
+          } else {
           ?>
             <div class="form-group">
               <label class="control-label col-xs-4" for="denomination_id">
@@ -57,14 +57,14 @@
               <div class="col-xs-6">
                 <select class="form-control" name="denomination_id" id="denomination_id">
                   <option value=""><?= lang('hierarchy.select_denomination') ?></option>
-                  
+
                 </select>
               </div>
             </div>
-          <?php 
-            }
+          <?php
+          }
           ?>
-          
+
 
           <div class="form-group">
             <label class="control-label col-xs-4" for="description">
@@ -75,6 +75,16 @@
             </div>
           </div>
         </form>
+
+        <!-- Dynamically Generated Custom Fields -->
+        <?php foreach ($customFields as $field): ?>
+          <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
+            <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
+            <div class="col-xs-6">
+              <input type="<?= $field['type'] ?>" name="custom_fields[<?= $field['id'] ?>]" id="<?= $field['field_name'] ?>" class="form-control">
+            </div>
+          </div>
+        <?php endforeach; ?>
 
       </div>
 

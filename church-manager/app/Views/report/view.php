@@ -31,7 +31,7 @@
                             <li>
                                 <a href="#view_section_d" id="view_section_d_tab" data-toggle="tab"><?= lang('report.section_D'); ?></a>
                             </li>
-                            <!-- Other tabs go here -->
+                            
                         </ul>
                     </div>
                 </div>
