@@ -22,7 +22,7 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <table class="table table-striped datatable">
+        <table class="table table-striped " id="dataTable">
             <thead>
                 <tr>
                     <th><?= lang('event.event_action') ?></th>
@@ -50,18 +50,42 @@
                             <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($event->id); ?>')" title="Delete <?= $event->id; ?> participant"><i class='fa fa-trash'></i></span>
                         </td>
 
-                        <td><?= $event->name; ?></td>
-                        <td><?= $event->event_code; ?></td>
-                        <td><?= $event->meeting_name; ?></td>
-                        <td><?= $event->start_date; ?></td>
-                        <td><?= $event->end_date; ?></td>
-                        <td><?= $event->location; ?></td>
-                        <td><?= $event->description; ?></td>
-                        <td><?= $event->denomination_name; ?></td>
-                        <td><?= $event->registration_fees; ?></td>
-
                     <?php } ?>
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "<?php echo site_url('events/fetchEvents')?>",
+                type: "POST"
+            },
+            columns: [
+                {data:null, "render": function(data,type, row) {
+                    return '<span class="action-icons">'+
+                        '<a href="<?php echo site_url("events/view/");?>'+hash_id(row.id)+'"><i class="fa fa-search"></i></a></i>'+
+                        '<span class="action-icons">'+
+                        '<i style="cursor:pointer" onclick="showAjaxModal(\'<?= plural($feature); ?>\',\'edit\', \''+hash_id(row.id)+'\')" class="fa fa-pencil"></i>'+
+                        '</span>'+
+                        '<span class="action-icons" onclick="deleteItem(\'<?= plural($feature); ?>\',\'delete\', \''+hash_id(row.id)+'\')" title="Delete '+row.id+' participant"><i class="fa fa-trash"></i></span>'+
+                        '</span>';
+                }},
+                {data: "event_name"},
+                {data: "event_code"},
+                {data: "meeting_name"},
+                {data: "start_date"},
+                {data: "end_date"},
+                {data: "location"},
+                {data: "description"},
+                {data: "denomination_name"},
+                {data: "registration_fees"},
+            ]
+            
+        });
+    });
+</script>

@@ -20,7 +20,7 @@
 
   <div class="row">
     <div class="col-xs-12">
-      <table class="table table-striped datatable">
+      <table class="table table-striped " id="dataTable">
         <thead>
           <tr>
             <th><?= lang('hierarchy.hierarchy_action') ?></th>
@@ -45,14 +45,47 @@
                   <!-- <span onclick="showAjaxListModal('entities','list', '<?=hash_id($hierarchy['id'], 'encode');?>')" class='action-icons' title = "List <?=plural($hierarchy['name']);?>"><i class='fa fa-plus'></i></span> -->
                 <?php }?>
               </td>
-
+<!-- 
               <td><?=$hierarchy['name'];?></td>
               <td><?=$hierarchy['hierarchy_code'];?></td>
               <td><?=$hierarchy['description'];?></td>
-              <td><?=$hierarchy['level'];?></td>
+              <td><?=$hierarchy['level'];?></td> -->
 
           <?php } ?>
         </tbody>
       </table>
     </div>
   </div>
+
+  <script>
+$(document).ready(function (){
+    $('#dataTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?php echo site_url('denominations/" + denominationId + "/hierarchies')?>",
+            "type": "POST"
+        },
+        "columns": [
+            {
+                data: null,
+                render: function(data, type, row) {
+                  return `<span class='action-icons' title="View <?=singular($hierarchy['name']);?> hierarchy">
+            <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($hierarchy['id']);?>')"></i>
+          </span>
+          <span class='action-icons' title="Edit <?=singular($hierarchy['name']);?> hierarchy">
+            <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($hierarchy['id']);?>')" class='fa fa-pencil'></i>
+          </span>
+          <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($hierarchy['id']); ?>')" title="Delete <?= $hierarchy['id']; ?> participant">
+            <i class='fa fa-trash'></i>
+          </span>`;
+                }
+            },
+            { data: "name" },
+            { data: "hierarchy_code" },
+            { data: "description" },
+            { data: "level" }
+        ]
+    });
+});
+</script>

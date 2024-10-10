@@ -12,6 +12,51 @@ class Minister extends BaseController
         $this->model = new \App\Models\MinistersModel();
     }
 
+    public function fetchMinisters(){
+        $request = \Config\Services::request();
+
+        // Get parameters sent by Datatables
+        $draw = intval($request->getPost('draw'));
+        $start = intval($request->getPost('start'));
+        $length = intval($request->getPost('length'));
+        $searchValue = $request->getPost('search')['value'];
+
+        // Get the total number of records
+        $totalRecords = $this->model->countAll();
+
+        // Apply search filter if provided
+        if (!empty($searchValue)) {
+            $this->model->like('name', $searchValue)
+                ->orLike('minister_number', $searchValue)
+                ->orLike('assembly_id', $searchValue)
+                ->orLike('designation_id', $searchValue)
+                ->orLike('phone', $searchValue);
+        }
+
+        // Get the filtered total
+        $totalFiltered = $this->model->countAllResults(false);
+
+        // Limit the results and fetch the data
+        $this->model->limit($length, $start);
+        $data = $this->model->find();
+
+        // Loop through the data to apply hash_id()
+        foreach ($data as &$minister) {
+            $minister['hash_id'] = hash_id($minister['id']);  // Add hashed ID to each record
+        }
+
+        // Prepare response data for DataTables
+        $response = [
+            "draw" => $draw,
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalFiltered,
+            "data" => $data,  // Now includes 'hash_id' in each record
+        ];
+
+        // Return JSON response
+        return $this->response->setJSON($response);
+    }
+
     public function update(){
 
         $hashed_id = $this->request->getVar('id');
