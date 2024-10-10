@@ -16,6 +16,9 @@ return [
     'gender_male' => 'Male',
     'gender_female' => 'Female',
     'reports' => 'Reports',
+    'system_approved' => 'Approved',
+    'system_draft' => 'Draft',
+    'system_submitted' => 'Submitted',
 
     'system_enter_name' => 'Enter Name',
 ];
