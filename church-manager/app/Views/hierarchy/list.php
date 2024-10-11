@@ -45,11 +45,6 @@
                   <!-- <span onclick="showAjaxListModal('entities','list', '<?=hash_id($hierarchy['id'], 'encode');?>')" class='action-icons' title = "List <?=plural($hierarchy['name']);?>"><i class='fa fa-plus'></i></span> -->
                 <?php }?>
               </td>
-<!-- 
-              <td><?=$hierarchy['name'];?></td>
-              <td><?=$hierarchy['hierarchy_code'];?></td>
-              <td><?=$hierarchy['description'];?></td>
-              <td><?=$hierarchy['level'];?></td> -->
 
           <?php } ?>
         </tbody>
@@ -59,11 +54,12 @@
 
   <script>
 $(document).ready(function (){
+  
     $('#dataTable').DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "<?php echo site_url('denominations/" + denominationId + "/hierarchies')?>",
+            "url": "<?php echo site_url('denominations/fetchHierarchies/'.$parent_id)?>",
             "type": "POST"
         },
         "columns": [
