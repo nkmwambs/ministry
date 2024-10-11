@@ -21,4 +21,5 @@ return [
     'system_submitted' => 'Submitted',
 
     'system_enter_name' => 'Enter Name',
+    'system_back_button' => 'Back',
 ];

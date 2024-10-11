@@ -29,7 +29,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
 
                     <?php if (!$numeric_denomination_id) { ?>
                         <div class='form-group'>
-                            <label for="denomination_id" class="control-label col-xs-4">Denomination Name</label>
+                            <label for="denomination_id" class="control-label col-xs-4"><?= lang('meeting.denomination_name') ?></label>
                             <div class="col-xs-6">
                                 <select class="form-control" name="denomination_id" id="denomination_id">
                                     <option value="">Select a denomination</option>

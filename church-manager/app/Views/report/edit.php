@@ -1,11 +1,6 @@
 <?php
 // echo json_encode($result);
 ?>
-<div class="row">
-    <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("reports"); ?>" class="btn btn-info">Back</a>
-    </div>
-</div>
 
 <div class="row">
     <?php if (session()->getFlashdata('message')) { ?>
@@ -45,7 +40,7 @@
                         <form id="frm_edit_report" method="post" action="<?= site_url('reports/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="reports_type_id">
-                                    <?= lang('meeting.meeting_name') ?>
+                                    <?= lang('report.report_type_id') ?>
                                 </label>
                                 <div class="col-xs-6">
                                     <input type="text" class="form-control" name="reports_type_id" id="reports_type_id" value="<?= $result['reports_type_id']; ?>">
@@ -54,7 +49,7 @@
 
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="report_period">
-                                    <?= lang('meeting.meeting_description') ?>
+                                    <?= lang('report.report_period') ?>
                                 </label>
                                 <div class="col-xs-6">
                                     <input type="text" class="form-control datepicker" name="report_period" id="report_period" value="<?= $result['report_period']; ?>">

@@ -26,7 +26,7 @@
 
                     <?php if(!$numeric_denomination_id){?>
                         <div class = 'form-group'>
-                            <label for="denomination_id" class = "control-label col-xs-4">Denomination Name</label>
+                            <label for="denomination_id" class = "control-label col-xs-4"><?= lang('meeting.denomination_name') ?></label>
                             <div class = "col-xs-6">
                                 <select class = "form-control" name = "denomination_id" id = "denomination_id">
                                     <option value =""><?= lang('denomination.select_denomination') ?></option>
@@ -56,7 +56,7 @@
                             <?= lang('meeting.meeting_description') ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="description" id="description" value = "<?=$result['description'];?>" placeholder="Enter Description"><?=$result['description'];?></textarea>
+                            <textarea type="text" class="form-control" name="description" id="description" value = "<?=$result['description'];?>"><?=$result['description'];?></textarea>
                         </div>
                     </div>
 

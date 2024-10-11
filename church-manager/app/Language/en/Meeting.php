@@ -10,6 +10,7 @@ return [
     'meeting_name' => 'Name',
     'meeting_description' => 'Description',
     'meeting_action' => 'Actions',
+    'denomination_name' => 'Denomination',
 
     'add_meeting_success' => 'Meeting added successfully!',
     'edit_meeting_success' => 'Meeting updated successfully!',
