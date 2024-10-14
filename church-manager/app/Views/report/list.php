@@ -59,9 +59,6 @@ $(document).ready(function (){
                     return '<span class="action-icons">' +
                         '<a href="<?= site_url("reports/view/") ?>' + row.hash_id + '"><i class="fa fa-search"></i></a>' +
                         '</span>' +
-                        '<span class="action-icons">' +
-                        '<i style="cursor:pointer" onclick="showAjaxModal(\'<?= plural($feature); ?>\', \'edit\', \'' + row.hash_id + '\')" class="fa fa-pencil"></i>' +
-                        '</span>' +
                         '<span class="action-icons" onclick="deleteItem(\'<?= plural($feature); ?>\', \'delete\', \'' + row.hash_id + '\')" title="Delete ' + row.hash_id + ' report"><i class="fa fa-trash"></i></span>';
                 }
             },
