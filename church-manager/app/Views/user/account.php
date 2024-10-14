@@ -18,8 +18,8 @@
         </div>
 
         <div class="card-body">
-            <div class="panel-body account-content">
-                <form role="form" id="frm_edit_user" method="post" action="<?= site_url('users/update/public/'); ?>" class="form-horizontal form-groups-bordered">
+            <div class="panel-body public-content">
+                <form role="form" id="frm_edit_public" method="post" action="<?= site_url('users/update/public/'); ?>" class="form-horizontal form-groups-bordered">
 
                     <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">
@@ -79,8 +79,8 @@
         </div>
         
         <div class="card-body">
-            <div class="panel-body account-content">
-                <form role="form" id="frm_edit_user" method="post" action="<?= site_url('users/update/private/'); ?>" class="form-horizontal form-groups-bordered">
+            <div class="panel-body private-content">
+                <form role="form" id="frm_edit_private" method="post" action="<?= site_url('users/update/private/'); ?>" class="form-horizontal form-groups-bordered">
 
                     <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">
@@ -139,3 +139,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).on('click', 'public_account_save', function() {
+        var form = $('#frm_edit_public');
+        var error_container = form.find('.error_container');
+        error_container.removeClass('hidden');
+    })
+</script>

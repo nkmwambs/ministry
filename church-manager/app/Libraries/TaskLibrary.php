@@ -42,31 +42,31 @@ class TaskLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['parent_id'] = hash_id($parent_id,'encode');
     }
 
-    function viewExtraData(&$page_data){
-        $tasks = [];
+    // function viewExtraData(&$page_data){
+    //     $tasks = [];
 
-        $tasksModel = new \App\Models\TasksModel();
-        $tasks = $tasksModel->findAll();
+    //     $tasksModel = new \App\Models\TasksModel();
+    //     $tasks = $tasksModel->findAll();
 
-        $statusesModel = new \App\Models\StatusesModel();
-        $statusAssignedTasks = $statusesModel
-        ->select('statuses.id,tasks.id as task_id,user_id,tasks.name as task_name,status_label')
-        ->join('tasks', 'tasks.id=statuses.task_id')
-        ->where('user_id', $page_data['result']['id'])->findAll();
-        log_message('error', json_encode($statusAssignedTasks));
+    //     $statusesModel = new \App\Models\StatusesModel();
+    //     $statusAssignedTasks = $statusesModel
+    //     ->select('statuses.id,tasks.id as task_id,user_id,tasks.name as task_name,status_label')
+    //     ->join('tasks', 'tasks.id=statuses.task_id')
+    //     ->where('user_id', $page_data['result']['id'])->findAll();
+    //     log_message('error', json_encode($statusAssignedTasks));
 
-        $statusAssignedTasksIds = array_column($statusAssignedTasks, 'task_id');
+    //     $statusAssignedTasksIds = array_column($statusAssignedTasks, 'task_id');
 
-        foreach ($tasks as $key => $task) {
-            if (in_array($task['id'], $statusAssignedTasksIds)) {
-                unset($task[$key]);
-            }
-        }
+    //     foreach ($tasks as $key => $task) {
+    //         if (in_array($task['id'], $statusAssignedTasksIds)) {
+    //             unset($task[$key]);
+    //         }
+    //     }
 
-        $page_data['tasks'] = $tasks;
+    //     $page_data['tasks'] = $tasks;
 
-        $page_data['status_assigned_tasks'] = $statusAssignedTasks;
-    }
+    //     $page_data['status_assigned_tasks'] = $statusAssignedTasks;
+    // }
 
     function addExtraData(&$page_data) {
         $parent_id = 0;

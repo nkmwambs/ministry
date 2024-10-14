@@ -70,18 +70,16 @@ class Task extends BaseController
         return redirect()->to(site_url('users/profile' . hash_id($insertID)))->with('message', 'Task added successfully!');
     }
 
-    // public function updateStatus()
-    // {
-    //     $numeric_id = $this->request->getPost('id');
-    //     // $hashed_id = hash_id($hashed_id, 'decode');
-    //     $task_status = [
-    //         'status' => $this->request->getPost('status')
-    //     ];
-    //     log_message('error', json_encode($this->request->getPost()));
+    public function updateStatus()
+    {
+        $numeric_id = $this->request->getPost('id');
+        // $hashed_id = hash_id($hashed_id, 'decode');
+        $task_status = [
+            'status' => $this->request->getPost('status')
+        ];
+        // log_message('error', json_encode($this->request->getPost()));
 
-    //     // if ()) {
-    //     $this->model->save($this->request->getPost());
-    //     // }
+        $this->model->save($this->request->getPost());
 
     //     if ($this->request->isAJAX()) {
     //         $this->feature = 'task';

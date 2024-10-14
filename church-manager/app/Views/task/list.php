@@ -55,7 +55,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
                                 <?php foreach ($result as $task): ?>
                                     <tr data-task-id="<?= $task['id']; ?>">
                                         <td>

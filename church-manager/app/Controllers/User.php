@@ -171,18 +171,18 @@ class User extends BaseController
 
     public function updatePublicInfo()
     {
-        $hashed_id = $this->request->getPost('id');
+        $numeric_id = $this->request->getPost('id');
 
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'username' => 'required|min_length[3]|max_length[255]',
-            'biography' => 'required|min_length[3]|max_length[255]',
-            // 'profile_picture' => 'required',
-        ]);
+        // $validation = \Config\Services::validation();
+        // $validation->setRules([
+        //     'username' => 'required|min_length[3]|max_length[255]',
+        //     'biography' => 'required|min_length[3]|max_length[255]',
+        //     // 'profile_picture' => 'required',
+        // ]);
 
-        if (!$this->validate($validation->getRules())) {
-            return response()->setJSON(['errors' => $this->validator->getErrors()]);
-        }
+        // if (!$this->validate($validation->getRules())) {
+        //     return response()->setJSON(['errors' => $this->validator->getErrors()]);
+        // }
 
         $originalDate = Time::now('America/Chicago', 'en_US');
         $newDateString = $originalDate->format('Y-m-d H:i:s');
@@ -194,7 +194,8 @@ class User extends BaseController
             // 'profile_picture' => $this->request->getPost('profile_picture')?: NULL, // This line prevents NULL values from being inserted into the database. It should be handled elsewhere in your application. If you want to remove this line, make sure to handle NULL values appropriately in your application.
         ];
 
-        $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
+        // $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
+        $this->model->save($this->request->getPost());
 
         if ($this->model->isAJAX() > 0) {
             $this->feature = 'user';
@@ -211,26 +212,26 @@ class User extends BaseController
             return view('user/account', parent::page_data($records));
         }
 
-        return redirect()->to(site_url('users/view' . $hashed_id))->with('message', 'User Public Info updated successfuly!');
+        return redirect()->to(site_url('users/view' . hash_id($numeric_id, 'encode')))->with('message', 'User Public Info updated successfuly!');
     }
 
     public function updatePrivateInfo()
     {
         $hashed_id = $this->request->getPost('id');
 
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'first_name' => 'required|min_length[3]|max_length[255]',
-            'last_name' => 'required|min_length[3]|max_length[255]',
-            'phone' => 'required',
-            'email' => 'required|valid_email',
-            'gender' => 'required|min_length[4]|max_length[6]',
-            'date_of_birth' => 'required',
-        ]);
+        // $validation = \Config\Services::validation();
+        // $validation->setRules([
+        //     'first_name' => 'required|min_length[3]|max_length[255]',
+        //     'last_name' => 'required|min_length[3]|max_length[255]',
+        //     'phone' => 'required',
+        //     'email' => 'required|valid_email',
+        //     'gender' => 'required|min_length[4]|max_length[6]',
+        //     'date_of_birth' => 'required',
+        // ]);
 
-        if (!$this->validate($validation->getRules())) {
-            return response()->setJSON(['errors' => $this->validator->getErrors()]);
-        }
+        // if (!$this->validate($validation->getRules())) {
+        //     return response()->setJSON(['errors' => $this->validator->getErrors()]);
+        // }
 
         $originalDate = Time::now('America/Chicago', 'en_US');
         $newDateString = $originalDate->format('Y-m-d H:i:s');
@@ -246,7 +247,7 @@ class User extends BaseController
             'updated_at' => $newDateString,
         ];
 
-        $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
+        $this->model->save( $this->request->getPost());
 
         if ($this->model->isAJAX() > 0) {
             $this->feature = 'user';
@@ -354,12 +355,10 @@ class User extends BaseController
             $tasks = $tasksModel->select('tasks.id,tasks.name,tasks.status')
             ->where('tasks.user_id', hash_id($user_id, 'decode'))
             ->join('users', 'users.id = tasks.user_id')
-            // ->join('statuses','statuses.task_id = tasks.id', 'left')
             ->orderBy('tasks.created_at asc')->findAll();
         } else {
             $tasks = $tasksModel->select('tasks.id,tasks.name,tasks.status')
             ->join('users', 'users.id = tasks.user_id')
-            // ->join('statuses','statuses.task_id = tasks.id', 'left')
             ->orderBy('tasks.created_at asc')->findAll();
         }
 
