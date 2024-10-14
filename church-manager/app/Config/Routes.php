@@ -70,6 +70,10 @@ $routes->post('users/update/private/', 'User::updatePrivateInfo');
 
 $routes->post('/tasks/updateStatus', 'Task::updateStatus');
 
+$routes->get('users/downloadUserData/(:num)', 'UserController::downloadUserData/$1', ['as' => 'downloadUserData']);
+$routes->get('users/deleteAccount/(:num)', 'UserController::deleteAccount/$1', ['as' => 'deleteAccount']);
+
+
 
 $routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominations');
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');

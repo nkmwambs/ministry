@@ -19,3 +19,15 @@
 
     </div>
 </div>
+
+<script>
+
+    $(document).on('click',function() {
+        $('#data_button').click(function() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                // Redirect to the delete account route
+                window.location.href = "<?= site_url('users/deleteAccount'); ?>";
+            }
+        });
+    });
+</script>

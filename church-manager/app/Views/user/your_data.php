@@ -19,3 +19,14 @@
 
     </div>
 </div>
+
+<script>
+    
+    $(document).on('click',function() {
+        // Bind the Download button click
+        $('#data_button').click(function() {
+            // Redirect to the download route
+            window.location.href = "<?= site_url('users/downloadUserData'); ?>";
+        });
+    })
+</script>

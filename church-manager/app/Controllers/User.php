@@ -34,7 +34,7 @@ class User extends BaseController
         // Apply search filter if provided
         if (!empty($searchValue)) {
             $this->model->like('first_name', $searchValue)
-                ->orLike('last_name', $searchValue)    
+                ->orLike('last_name', $searchValue)
                 ->orLike('phone', $searchValue)
                 ->orLike('email', $searchValue)
                 ->orLike('is_active', $searchValue);
@@ -64,15 +64,16 @@ class User extends BaseController
         return $this->response->setJSON($response);
     }
 
-    function generateRandomString($length = 10) {
+    function generateRandomString($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
-    
+
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[random_int(0, $charactersLength - 1)];
         }
-    
+
         return $randomString;
     }
 
@@ -106,7 +107,7 @@ class User extends BaseController
         $templateLibrary =  new \App\Libraries\TemplateLibrary();
         $first_name = $this->request->getPost('first_name');
         $email = $this->request->getPost('email');
-        $mailTemplate = $templateLibrary->getEmailTemplate(short_name:'new_user_account', template_vars:compact('password','first_name','email'), denomination_id: $numeric_denomination_id);
+        $mailTemplate = $templateLibrary->getEmailTemplate(short_name: 'new_user_account', template_vars: compact('password', 'first_name', 'email'), denomination_id: $numeric_denomination_id);
 
         $logMailsModel = new \App\Models\LogmailsModel();
         // $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
@@ -120,8 +121,8 @@ class User extends BaseController
             'gender' => $this->request->getPost('gender'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
             'roles' => json_encode($this->request->getPost('roles')),
-            'permitted_entities' => json_encode($this->request->getPost('permitted_entities'))?:NULL,
-            'permitted_assemblies' => $this->request->getPost('permitted_assemblies')?:NULL,
+            'permitted_entities' => json_encode($this->request->getPost('permitted_entities')) ?: NULL,
+            'permitted_assemblies' => $this->request->getPost('permitted_assemblies') ?: NULL,
             'is_system_admin' => $this->request->getPost('is_system_admin') ?: NULL,
             'password' => $hashed_password,
             'created_at' => date('Y-m-d H:i:s'),
@@ -143,7 +144,7 @@ class User extends BaseController
 
             // Save non-null custom field values
             if (!empty($nonNullCustomFields)) {
-                $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+                $customFieldLibrary->saveCustomFieldValues(hash_id($insertId, 'decode'), $this->tableName, $customFieldValues);
             }
         }
 
@@ -247,7 +248,7 @@ class User extends BaseController
             'updated_at' => $newDateString,
         ];
 
-        $this->model->save( $this->request->getPost());
+        $this->model->save($this->request->getPost());
 
         if ($this->model->isAJAX() > 0) {
             $this->feature = 'user';
@@ -267,25 +268,25 @@ class User extends BaseController
         return redirect()->to(site_url('users/view' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
     }
 
-    
+
 
 
     public function getAccount($id)
     {
         // log_message('error', 'here');
-        $numeric_id = hash_id($id,'decode');
+        $numeric_id = hash_id($id, 'decode');
 
-        if(method_exists($this->model, 'getEditData')){
+        if (method_exists($this->model, 'getEditData')) {
             $data = $this->model->getEditData($numeric_id);
-        }else{
+        } else {
             $data = $this->model->getOne($numeric_id);
         }
 
         $page_data = $this->page_data($data);
 
         // log_message('error', json_encode($page_data));
-        
-        if(method_exists($this->library,'editExtraData')){
+
+        if (method_exists($this->library, 'editExtraData')) {
             // Note the editExtraData updates the $page_data by reference
             $this->library->editExtraData($page_data);
         }
@@ -293,7 +294,8 @@ class User extends BaseController
         return view('user/account', $page_data);
     }
 
-    function passwordVerify(){
+    function passwordVerify()
+    {
         $user_password = $this->request->getPost('user_password');
         $user_id = $this->request->getPost('user_id');
         $numeric_user_id = hash_id($user_id, 'decode');
@@ -301,10 +303,10 @@ class User extends BaseController
         $user = $this->model->find($numeric_user_id);
 
         $validPassword = false;
-        if($user){
+        if ($user) {
             $current_password = addslashes($user['password']);
             // log_message('error', json_encode(compact('user_password','current_password')));
-            $validPassword = password_verify(trim($user_password), $current_password);  
+            $validPassword = password_verify(trim($user_password), $current_password);
         }
 
         return response()->setJSON(['success' => $validPassword]);
@@ -313,11 +315,11 @@ class User extends BaseController
     public function passwordReset($id)
     {
         // log_message('error', 'here');
-        $numeric_id = hash_id($id,'decode');
+        $numeric_id = hash_id($id, 'decode');
 
-        if(method_exists($this->model, 'getEditData')){
+        if (method_exists($this->model, 'getEditData')) {
             $data = $this->model->getEditData($numeric_id);
-        }else{
+        } else {
             $data = $this->model->getOne($numeric_id);
         }
 
@@ -326,15 +328,15 @@ class User extends BaseController
         $page_data = $this->page_data($data);
 
         // log_message('error', json_encode($page_data));
-        
-        if(method_exists($this->library,'editExtraData')){
+
+        if (method_exists($this->library, 'editExtraData')) {
             // Note the editExtraData updates the $page_data by reference
             $this->library->editExtraData($page_data);
         }
         // return redirect()->to(site_url('users/profile/account' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
         return view('user/password_reset', $page_data);
     }
-    
+
     public function privacy()
     {
         return view('user/privacy');
@@ -353,13 +355,13 @@ class User extends BaseController
 
         if ($user_id > 0) {
             $tasks = $tasksModel->select('tasks.id,tasks.name,tasks.status')
-            ->where('tasks.user_id', hash_id($user_id, 'decode'))
-            ->join('users', 'users.id = tasks.user_id')
-            ->orderBy('tasks.created_at asc')->findAll();
+                ->where('tasks.user_id', hash_id($user_id, 'decode'))
+                ->join('users', 'users.id = tasks.user_id')
+                ->orderBy('tasks.created_at asc')->findAll();
         } else {
             $tasks = $tasksModel->select('tasks.id,tasks.name,tasks.status')
-            ->join('users', 'users.id = tasks.user_id')
-            ->orderBy('tasks.created_at asc')->findAll();
+                ->join('users', 'users.id = tasks.user_id')
+                ->orderBy('tasks.created_at asc')->findAll();
         }
 
         if (!$tasks) {
@@ -377,7 +379,7 @@ class User extends BaseController
         return view('task/list', $page_data);
     }
 
-    public function widgets() 
+    public function widgets()
     {
         return view('user/widget');
     }
@@ -387,8 +389,39 @@ class User extends BaseController
         return view('user/your_data');
     }
 
+    public function downloadUserData($userId)
+    {
+        $userData = $this->model->find($userId);
+
+        if (!$userData) {
+            return redirect()->back()->with('error', 'User not found');
+        }
+
+        // Format data as JSON (or CSV as needed)
+        $jsonData = json_encode($userData);
+
+        // Set file headers
+        return $this->response->setHeader('Content-Type', 'application/json')
+            ->setHeader('Content-Disposition', 'attachment; filename="user_data.json"')
+            ->setBody($jsonData);
+    }
+
+
     public function deleteAccount()
     {
         return view('user/delete_account');
+    }
+
+    public function deleteMyAccount($userId)
+    {
+        // Delete the user account
+        if ($this->model->delete($userId)) {
+            // Optionally, you can handle session destruction after account deletion
+            session()->destroy();
+
+            return redirect()->to('/')->with('message', 'Account successfully deleted');
+        } else {
+            return redirect()->back()->with('error', 'Failed to delete account');
+        }
     }
 }
