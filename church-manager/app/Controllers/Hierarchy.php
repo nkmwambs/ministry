@@ -13,32 +13,77 @@ class Hierarchy extends BaseController
         
         $this->model = new \App\Models\HierarchiesModel();
     }
+
+    public function fetchHierarchies($parent_id) {
+        
+        $request = \Config\Services::request();
+
+        // Get parameters sent by Datatables
+        $draw = intval($request->getPost('draw'));
+        $start = intval($request->getPost('start'));
+        $length = intval($request->getPost('length'));
+        $searchValue = isset($request->getPost('search')['value']) ? $request->getPost('search')['value'] : '';
+
+        // Get the total number of records
+        $totalRecords = $this->model->where('denomination_id', hash_id($parent_id, 'decode'))->countAllResults();
+
+        // Apply search filter if provided
+        $totalFiltered = $totalRecords;
+        if (!empty($searchValue)) {
+            $totalFiltered = $this->model->like('name', $searchValue)
+                ->orLike('hierarchy_code', $searchValue)
+                ->orLike('level', $searchValue)
+                ->where('denomination_id', hash_id($parent_id, 'decode'))
+                ->countAllResults(false);
+        }
+
+
+        // Limit the results and fetch the data
+        $this->model->limit($length, $start);
+        $data = $this->model->where('denomination_id', hash_id($parent_id, 'decode'))->find();
+
+        // Loop through the data to apply hash_id()
+        foreach ($data as &$hierarchy) {
+            $hierarchy['hash_id'] = hash_id($hierarchy['id']);  // Add hashed ID to each record
+        }
+
+        // Prepare response data for DataTables
+        $response = [
+            "draw" => $draw,
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalFiltered,
+            "data" => $data,  // Now includes 'hash_id' in each record
+        ];
+
+        // Return JSON response
+        return $this->response->setJSON($response);
+    }
     public function index($parent_id = 0): string
     {
         // Parent Id the denomination primary key of hierarchies
 
-        $hierarchies = [];
+        // $hierarchies = [];
 
-        if($parent_id > 0){
-            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, hierarchies.hierarchy_code, level, description')
-            ->where('denomination_id',hash_id($parent_id,'decode'))
-            ->join('denominations','denominations.id=hierarchies.denomination_id')
-            ->orderBy('hierarchies.created_at desc')
-            ->findAll();
-        }else{
-            $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, hierarchies.hierarchy_code, level, description')
-            ->join('denominations','denominations.id=hierarchies.denomination_id')
-            ->orderBy('hierarchies.created_at desc')
-            ->findAll();
-        }
+        // if($parent_id > 0){
+        //     $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, hierarchies.hierarchy_code, level, description')
+        //     ->where('denomination_id',hash_id($parent_id,'decode'))
+        //     ->join('denominations','denominations.id=hierarchies.denomination_id')
+        //     ->orderBy('hierarchies.created_at desc')
+        //     ->findAll();
+        // }else{
+        //     $hierarchies = $this->model->select('hierarchies.id,hierarchies.name, hierarchies.hierarchy_code, level, description')
+        //     ->join('denominations','denominations.id=hierarchies.denomination_id')
+        //     ->orderBy('hierarchies.created_at desc')
+        //     ->findAll();
+        // }
        
-        if(!$hierarchies){
-            $page_data['result'] = [];
-        }else{
-            $page_data['result'] = $hierarchies;
-        }
+        // if(!$hierarchies){
+        // $page_data['result'] = [];
+        // }else{
+            // $page_data['result'] = $hierarchies;
+        // }
 
-        $page_data['result'] = $hierarchies;
+        $page_data['result'] = ['hierarchy.hierarchy_action','hierarchy.hierarchy_name','hierarchy.hierarchy_code', 'hierarchy.hierarchy_description', 'hierarchy.hierarchy_level']; //$hierarchies;
         $page_data['feature'] = 'hierarchy';
         $page_data['action'] = 'list';
         

@@ -71,6 +71,7 @@ $routes->post('users/view/(:segment)/pending_tasks/save-task', 'Task::saveTask/$
 // $routes->post('update_task_status/', 'Task::updateTaskStatus');
 
 $routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominations');
+$routes->post('denominations/fetchHierarchies/(:segment)', 'Hierarchy::fetchHierarchies/$1');
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
 $routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');

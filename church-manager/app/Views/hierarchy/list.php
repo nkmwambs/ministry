@@ -20,39 +20,50 @@
 
   <div class="row">
     <div class="col-xs-12">
-      <table class="table table-striped datatable">
+      <table class="table table-striped " id="hierarchy_dataTable">
         <thead>
           <tr>
-            <th><?= lang('hierarchy.hierarchy_action') ?></th>
-            <th><?= lang('hierarchy.hierarchy_name') ?></th>
-            <th><?= lang('hierarchy.hierarchy_code') ?></th>
-            <th><?= lang('hierarchy.hierarchy_description') ?></th>
-            <th><?= lang('hierarchy.hierarchy_level') ?></th>
+            <?php 
+              foreach($result as $column){
+              ?>
+                  <th><?= lang($column) ?></th>
+              <?php
+              }
+            ?>
           </tr>
         </thead>
         <tbody>
-          <?php foreach($result as $hierarchy){?>
-            <tr>
-              <td>
-                <span class='action-icons' title="View <?=singular($hierarchy['name']);?> hierarchy">
-                    <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($hierarchy['id']);?>')"></i>
-                </span>
-                <span class='action-icons' title = "Edit <?=singular($hierarchy['name']);?> hierarchy">
-                  <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($hierarchy['id']);?>')" class='fa fa-pencil'></i>
-                </span>
-                <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($hierarchy['id']); ?>')" title="Delete <?= $hierarchy['id']; ?> participant"><i class='fa fa-trash'></i></span>
-                <?php if($hierarchy['level'] != 1) {?>
-                  <!-- <span onclick="showAjaxListModal('entities','list', '<?=hash_id($hierarchy['id'], 'encode');?>')" class='action-icons' title = "List <?=plural($hierarchy['name']);?>"><i class='fa fa-plus'></i></span> -->
-                <?php }?>
-              </td>
-
-              <td><?=$hierarchy['name'];?></td>
-              <td><?=$hierarchy['hierarchy_code'];?></td>
-              <td><?=$hierarchy['description'];?></td>
-              <td><?=$hierarchy['level'];?></td>
-
-          <?php } ?>
+        
         </tbody>
       </table>
     </div>
   </div>
+<script>
+  $(document).ready(function() {
+    $('#hierarchy_dataTable').DataTable({
+      processing: true,
+      serverSide: true,
+      saveState : true,
+      ajax: {
+        url: "<?php echo base_url('denominations/fetchHierarchies/'.$parent_id)?>",
+        type: "POST"
+      },
+
+      "columns":  [
+        { data: "id", render: function (data, type, row){
+          return    `<span class='action-icons' title="View ${row.name} hierarchy">
+                    <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', ${row.id})"></i>
+                </span>
+                <span class='action-icons' title = "Edit ${row.name} hierarchy">
+                  <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', ${row.id})" class='fa fa-pencil'></i>
+                </span>
+                <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete', ${row.id})" title="Delete ${row.id} participant"><i class='fa fa-trash'></i></span> `;
+          
+        } },
+        { data: "name" },
+        { data: "hierarchy_code" },
+        { data: "description" },
+        { data: "level" }] 
+    });
+  } );
+</script>
