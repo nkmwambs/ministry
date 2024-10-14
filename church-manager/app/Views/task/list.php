@@ -55,8 +55,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php echo json_encode($result); ?>
-
+                                
                                 <?php foreach ($result as $task): ?>
                                     <tr data-task-id="<?= $task['id']; ?>">
                                         <td>
@@ -67,7 +66,7 @@
                                         </td>
                                         <td><?= humanize($task['name']); ?></td>
                                         <td>
-                                            <form class="update_status_form" action="<?= site_url('/tasks/updateStatus') ?>" method="post">
+                                            <form class="update_status_form" action="<?= site_url('/ajax') ?>" method="post">
                                                 <input type="hidden" name="id" value="<?= esc($task['id']) ?>">
                                                 <select class="form-control task_status_labels mySelect" id="task_<?= $task['id']; ?>" name="status">
                                                     <option class="myOption" value="Not Started" <?= $task['status'] == 'Not Started' ? 'selected' : ''; ?>><?= lang('task.not_started') ?></option>
@@ -181,7 +180,11 @@
         $.ajax({
             url: url,
             type: 'POST',
-            data: data,
+            data: {
+                controller: 'tasks',
+                method: 'updateStatus',
+                data
+            },
             success: function(data) {
                 // console.log(data);
             }

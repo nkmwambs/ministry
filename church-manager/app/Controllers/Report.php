@@ -182,6 +182,7 @@ class Report extends BaseController
 
     public function loadSection($sectionId)
     {
+        log_message('error', $sectionId);
         // Load the appropriate section view based on the section ID
         if ($sectionId === 'view_section_a') {
             return view('report/section/view_a');

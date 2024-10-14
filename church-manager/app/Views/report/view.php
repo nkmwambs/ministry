@@ -116,16 +116,20 @@
         // Handle tab clicks and AJAX calls
         $(document).on('click', '.nav-tabs a', function(e) {
             e.preventDefault();
-            var tabId = $(this).attr('href');
-            // $(this).tab('show');
-
+            let tabId = $(this).attr('href').split('#')[1];
+            let url  = "<?=site_url('reports/load_section')?>/" + tabId // Adjust the URL as needed
+       
             // Load the corresponding section view using AJAX
-            $.ajax({
-                url: '/reports/load_section/' + tabId, // Adjust the URL as needed
-                success: function(response) {
-                    $(tabId).html(response);
-                }
-            });
+            if(tabId!='view_report'){
+                $.ajax({
+                    url,
+                    success: function(response) {
+                        // console.log(response);
+                        $("#"+tabId).html(response);
+                    }
+                });
+            }
+            
         });
 
         // Initial tab selection

@@ -51,31 +51,33 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
      * @param array $customFieldValues
      * @return bool
      */
-    public function saveCustomFieldValues(int $recordId, string $tableName, array $customFieldValues): bool
+    public function saveCustomFieldValues(int $recordId, string $tableName, ?array $customFieldValues): bool
     {
-        foreach ($customFieldValues as $fieldId => $value) {
-            // Check if the custom field value already exists for this record
-            $existing = $this->customValueModel
-                ->where('record_id', $recordId)
-                ->where('table_name', $tableName)
-                ->where('customfield_id', $fieldId)
-                ->first();
-
-            if ($existing) {
-                $update_data = [
-                    'value' => $value,
-                ];
-                // Update existing custom field value
-                $this->customValueModel->update($existing['id'], (object)$update_data);
-            } else {
-                $data = [
-                    'record_id'   => $recordId,
-                    'table_name'  => $tableName,
-                    'customfield_id'    => $fieldId,
-                    'value' => json_encode($value),
-                ];
-                // Insert new custom field value
-                $this->customValueModel->insert((object)$data);
+        if($customFieldValues && sizeOf($customFieldValues) > 0){
+            foreach ($customFieldValues as $fieldId => $value) {
+                // Check if the custom field value already exists for this record
+                $existing = $this->customValueModel
+                    ->where('record_id', $recordId)
+                    ->where('table_name', $tableName)
+                    ->where('customfield_id', $fieldId)
+                    ->first();
+    
+                if ($existing) {
+                    $update_data = [
+                        'value' => $value,
+                    ];
+                    // Update existing custom field value
+                    $this->customValueModel->update($existing['id'], (object)$update_data);
+                } else {
+                    $data = [
+                        'record_id'   => $recordId,
+                        'table_name'  => $tableName,
+                        'customfield_id'    => $fieldId,
+                        'value' => json_encode($value),
+                    ];
+                    // Insert new custom field value
+                    $this->customValueModel->insert((object)$data);
+                }
             }
         }
 

@@ -94,3 +94,9 @@ $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) 
 
 
 $routes->get('reports/load_section/(:any)', 'Report::loadSection/$1');
+
+
+$routes->group('ajax', static function($routes){
+    $routes->post('/','WebController::ajax');
+    $routes->get('(:segment)/(:segment)/(:any)','WebController::ajax/$1/$2/$3');
+});

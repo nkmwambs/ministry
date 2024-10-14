@@ -4,6 +4,14 @@ namespace App\Libraries;
 
 class TaskLibrary implements \App\Interfaces\LibraryInterface {
 
+    private $request;
+    private $model = null;
+
+    function __construct(){
+        $this->request = service('request');
+        $this->model = new \App\Models\TasksModel();
+    }
+
     function unsetListQueryFields(){
 
     }
@@ -98,5 +106,17 @@ class TaskLibrary implements \App\Interfaces\LibraryInterface {
 
     function viewEditExtraData(&$page_data) {
         // $page_data['feature_id'] = hash_id($feature_id,'encode');
+    }
+
+
+    public function updateStatus()
+    {
+        $data = $this->request->getPost('data');
+        $names = array_column($data, 'name');
+        $values = array_column($data, 'value');
+        $postArr = array_combine($names, $values);
+      
+        $this->model->save($postArr);
+        
     }
 }

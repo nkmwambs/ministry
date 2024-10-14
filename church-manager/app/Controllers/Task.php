@@ -70,37 +70,37 @@ class Task extends BaseController
         return redirect()->to(site_url('users/profile' . hash_id($insertID)))->with('message', 'Task added successfully!');
     }
 
-    public function updateStatus()
-    {
-        $numeric_id = $this->request->getPost('id');
-        // $hashed_id = hash_id($hashed_id, 'decode');
-        $task_status = [
-            'status' => $this->request->getPost('status')
-        ];
-        log_message('error', json_encode($this->request->getPost()));
+    // public function updateStatus()
+    // {
+    //     $numeric_id = $this->request->getPost('id');
+    //     // $hashed_id = hash_id($hashed_id, 'decode');
+    //     $task_status = [
+    //         'status' => $this->request->getPost('status')
+    //     ];
+    //     log_message('error', json_encode($this->request->getPost()));
 
-        // if ()) {
-        $this->model->save($this->request->getPost());
-        // }
+    //     // if ()) {
+    //     $this->model->save($this->request->getPost());
+    //     // }
 
-        if ($this->request->isAJAX()) {
-            $this->feature = 'task';
-            $this->action = 'list';
+    //     if ($this->request->isAJAX()) {
+    //         $this->feature = 'task';
+    //         $this->action = 'list';
 
-            $records = [];
-            if (method_exists($this->model, 'getAll')) {
-                $records = $this->model->getAll();
-            } else {
-                $records = $this->model->findAll();
-            }
+    //         $records = [];
+    //         if (method_exists($this->model, 'getAll')) {
+    //             $records = $this->model->getAll();
+    //         } else {
+    //             $records = $this->model->findAll();
+    //         }
 
-            $this->parent_id = $this->request->getPost('user_id');
+    //         $this->parent_id = $this->request->getPost('user_id');
 
-            return view('task/list', parent::page_data($records));
-        }
+    //         return view('task/list', parent::page_data($records));
+    //     }
 
-        return redirect()->to(site_url('users/profile' . hash_id($numeric_id, 'encode')))->with('message', 'Task Status updated successfully!');
-    }
+    //     return redirect()->to(site_url('users/profile' . hash_id($numeric_id, 'encode')))->with('message', 'Task Status updated successfully!');
+    // }
 
     // public function updateTask() {
     //     $hashed_id = $this->request->getVar('id');
