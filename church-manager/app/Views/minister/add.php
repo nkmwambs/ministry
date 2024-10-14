@@ -11,16 +11,16 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
       <div class="panel-heading">
         <div class="panel-title">
           <div class="page-title"><i class='fa fa-plus-circle'></i>
-          <?= lang('minister.add_minister') ?>
-        </div>
+            <?= lang('minister.add_minister') ?>
+          </div>
         </div>
 
       </div>
 
       <div class="panel-body">
 
-        <form role="form" id = "frm_add_minister" method="post" action="<?=site_url("ministers/save")?>" class="form-horizontal form-groups-bordered">
-          
+        <form role="form" id="frm_add_minister" method="post" action="<?= site_url("ministers/save") ?>" class="form-horizontal form-groups-bordered">
+
           <!-- <?php if (session()->get('errors')): ?>
               <div class="form-group">
                   <div class="col-xs-12 error">
@@ -35,10 +35,10 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
 
           <div class="form-group hidden error_container">
             <div class="col-xs-12 error">
-              
+
             </div>
           </div>
-        
+
           <div class="form-group">
             <label class="control-label col-xs-4" for="name">
               <?= lang("minister.minister_name") ?>
@@ -101,16 +101,18 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
               </select>
             </div>
           </div>
-          
+
           <!-- Dynamically Generated Custom Fields -->
-          <?php foreach ($customFields as $field): ?>
-            <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
-              <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
-              <div class="col-xs-6">
-                <input type="<?= $field['type'] ?>" name="custom_fields[<?= $field['id'] ?>]" id="<?= $field['field_name'] ?>" class="form-control">
+          <?php if ($customFields): ?>
+            <?php foreach ($customFields as $field): ?>
+              <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
+                <label class="control-label col-xs-4" for="<?= $field['field_name']; ?>"><?= ucfirst($field['field_name']); ?></label>
+                <div class="col-xs-6">
+                  <input type="<?= $field['type']; ?>" name="custom_fields[<?= $field['id']; ?>]" id="<?= $field['field_name']; ?>" class="form-control">
+                </div>
               </div>
-            </div>
-          <?php endforeach; ?>
+            <?php endforeach; ?>
+          <?php endif; ?>
 
         </form>
 

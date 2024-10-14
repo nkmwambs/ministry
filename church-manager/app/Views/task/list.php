@@ -55,6 +55,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php echo json_encode($result); ?>
 
                                 <?php foreach ($result as $task): ?>
                                     <tr data-task-id="<?= $task['id']; ?>">
@@ -66,12 +67,15 @@
                                         </td>
                                         <td><?= humanize($task['name']); ?></td>
                                         <td>
-                                            <select class="form-control task_status_labels mySelect" id="task_<?= $task['id']; ?>">
-                                                <option class="myOption" value="Not Started" <?= $task['status'] == 'Not Started' ? 'selected' : ''; ?>><?= lang('task.not_started') ?></option>
-                                                <option class="myOption" value="In Progress" <?= $task['status'] == 'In Progress' ? 'selected' : ''; ?>><?= lang('task.in_progress') ?></option>
-                                                <option class="myOption" value="Completed" <?= $task['status'] == 'Completed' ? 'selected' : ''; ?>><?= lang('task.completed') ?></option>
-                                                <option class="myOption" value="Rejected" <?= $task['status'] == 'Rejected' ? 'selected' : ''; ?>><?= lang('task.rejected') ?></option>
-                                            </select>
+                                            <form class="update_status_form" action="<?= site_url('/tasks/updateStatus') ?>" method="post">
+                                                <input type="hidden" name="id" value="<?= esc($task['id']) ?>">
+                                                <select class="form-control task_status_labels mySelect" id="task_<?= $task['id']; ?>" name="status">
+                                                    <option class="myOption" value="Not Started" <?= $task['status'] == 'Not Started' ? 'selected' : ''; ?>><?= lang('task.not_started') ?></option>
+                                                    <option class="myOption" value="In Progress" <?= $task['status'] == 'In Progress' ? 'selected' : ''; ?>><?= lang('task.in_progress') ?></option>
+                                                    <option class="myOption" value="Completed" <?= $task['status'] == 'Completed' ? 'selected' : ''; ?>><?= lang('task.completed') ?></option>
+                                                    <option class="myOption" value="Rejected" <?= $task['status'] == 'Rejected' ? 'selected' : ''; ?>><?= lang('task.rejected') ?></option>
+                                                </select>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -120,30 +124,30 @@
         });
     });
 
-    $(document).on('change', '.task_status_labels', function() {
-        const status_label = $(this).val();
-        const row_index = $(this).closest('tr').index();
-        const user_id = $(this).attr('id');
-        const url = "<?= site_url("users/profile/pending_tasks/update_task_status"); ?>";
+    // $(document).on('change', '.task_status_labels', function() {
+    //     const status_label = $(this).val();
+    //     const row_index = $(this).closest('tr').index();
+    //     const user_id = $(this).attr('id');
+    //     const url = "<?= site_url("/tasks/updateStatus"); ?>";
 
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: {
-                status_label,
-                user_id
-            },
-            beforeSend: function() {
-                $('#overlay').css("display", "block");
-            },
-            success: function(response) {
-                $('#overlay').css('display', 'block');
-            },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
-            }
-        })
-    })
+    //     $.ajax({
+    //         url: url,
+    //         type: "POST",
+    //         data: {
+    //             status_label,
+    //             user_id
+    //         },
+    //         beforeSend: function() {
+    //             $('#overlay').css("display", "block");
+    //         },
+    //         success: function(response) {
+    //             $('#overlay').css('display', 'block');
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.log(xhr.responseText);
+    //         }
+    //     })
+    // })
 
     // Add new task via AJAX
     $('#btn_add_feature').on('click', function() {
@@ -168,4 +172,20 @@
     $('.datatable').DataTable({
         stateSave: true,
     });
+
+    $('.mySelect').on('change', function(ev) {
+        const form = $(this).closest('form');
+        const data = form.serializeArray();
+        const url = form.attr('action');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(data) {
+                // console.log(data);
+            }
+        })
+        ev.preventDefault();
+    })
 </script>

@@ -144,7 +144,19 @@ class Entity extends BaseController
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
-        $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+        // $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+
+        if (!empty($customFieldValues)) {
+            // Filter out null or empty custom fields
+            $nonNullCustomFields = array_filter($customFieldValues, function ($value) {
+                return !is_null($value) && $value !== '';
+            });
+
+            // Save non-null custom field values
+            if (!empty($nonNullCustomFields)) {
+                $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+            }
+        }
        
         $this->parent_id = $hashed_hierarchy_id;
 
@@ -223,7 +235,22 @@ class Entity extends BaseController
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
-        $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,'decode'), $this->tableName, $customFieldValues);
+        // $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,dir: 'decode'), $this->tableName, $customFieldValues);
+
+        // Only save custom fields if they are not null
+        if (!empty($customFieldValues)) {
+            // Filter out null or empty custom fields
+            $nonNullCustomFields = array_filter($customFieldValues, function ($value) {
+                return !is_null($value) && $value !== '';
+            });
+
+            // Save non-null custom field values
+            if (!empty($nonNullCustomFields)) {
+                $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,dir: 'decode'), $this->tableName, $customFieldValues);
+            }
+        }
+
+        $customFieldValuesInDB = $customFieldLibrary->getCustomFieldValuesForRecord(hash_id($hashed_id,dir: 'decode'), 'users');
 
         $this->parent_id = $hashed_hierarchy_id;
 

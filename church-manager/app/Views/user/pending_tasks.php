@@ -39,58 +39,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    Server Maintenance
-                                </td>
-                                <td>
-                                    <select class="form-control permission_labels mySelect" id="">
-                                        <option value="not_started" selected>Not Started</option>
-                                        <option value="in_progress">In Progress</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="rejected">Rejected</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Charity
-                                </td>
-                                <td>
-                                    <select class="form-control permission_labels mySelect" id="">
-                                        <option value="not_started">Not Started</option>
-                                        <option value="in_progress" selected>In Progress</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="rejected">Rejected</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    App Development
-                                </td>
-                                <td>
-                                    <select class="form-control permission_labels mySelect" id="">
-                                        <option value="not_started">Not Started</option>
-                                        <option value="in_progress">In Progress</option>
-                                        <option value="completed" selected>Completed</option>
-                                        <option value="rejected">Rejected</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Procurement
-                                </td>
-                                <td>
-                                    <select class="form-control permission_labels mySelect" id="">
-                                        <option value="not_started">Not Started</option>
-                                        <option value="in_progress">In Progress</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="rejected" selected>Rejected</option>
-                                    </select>
-                                </td>
-                            </tr>
+                            <?php foreach ($result as $task): ?>
+                                <tr>
+                                    <td><?= esc($task['task_name']) ?></td>
+                                    <td>
+                                        <form action="<?= site_url('/tasks/updateStatus') ?>" method="post">
+                                            <input type="hidden" name="task_id" value="<?= esc($task['id']) ?>">
+                                            <select name="status_label" onchange="this.form.submit()">
+                                                <option value="Not Started" <?= $task['status_label'] == 'Not Started' ? 'selected' : '' ?>>Not Started</option>
+                                                <option value="In Progress" <?= $task['status_label'] == 'In Progress' ? 'selected' : '' ?>>In Progress</option>
+                                                <option value="Completed" <?= $task['status_label'] == 'Completed' ? 'selected' : '' ?>>Completed</option>
+                                                <option value="Rejected" <?= $task['status_label'] == 'Rejected' ? 'selected' : '' ?>>Rejected</option>                                                
+                                            </select>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </form>

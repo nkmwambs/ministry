@@ -1,4 +1,4 @@
-<?php 
+<?php
 $numeric_designation_id = hash_id($designation_id, 'decode');
 // echo hash_id($parent_id,'decode');
 ?>
@@ -17,14 +17,14 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
 
       <div class="panel-body">
 
-        <form role="form" id = "frm_add_member" method="post" action="<?=site_url("members/save")?>" class="form-horizontal form-groups-bordered">
-          
+        <form role="form" id="frm_add_member" method="post" action="<?= site_url("members/save") ?>" class="form-horizontal form-groups-bordered">
+
           <div class="form-group hidden error_container">
             <div class="col-xs-12 error">
-              
+
             </div>
           </div>
-        
+
           <div class="form-group">
             <label class="control-label col-xs-4" for="first_name">
               <?= lang('member.member_first_name') ?>
@@ -47,36 +47,36 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
           </div>
 
           <div class='form-group'>
-              <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_gender') ?></label>
-              <div class="col-xs-6">
-                <select class="form-control" name="gender" id="gender">
-                    <option value=""><?= lang('member.member_select_gender') ?></option>
-                    <option value="male"><?php echo lang('system.gender_male'); ?></option>
-                    <option value="female"><?php echo lang('system.gender_female'); ?></option>
-                </select>
-              </div>
+            <label for="designation_id" class="control-label col-xs-4"><?= lang('member.member_gender') ?></label>
+            <div class="col-xs-6">
+              <select class="form-control" name="gender" id="gender">
+                <option value=""><?= lang('member.member_select_gender') ?></option>
+                <option value="male"><?php echo lang('system.gender_male'); ?></option>
+                <option value="female"><?php echo lang('system.gender_female'); ?></option>
+              </select>
             </div>
-              
-          <?php 
-            if(isset($parent_id)){
+          </div>
+
+          <?php
+          if (isset($parent_id)) {
           ?>
-            <input type="hidden" name="assembly_id" value="<?=$parent_id;?>" />
-          <?php 
-            }else{
+            <input type="hidden" name="assembly_id" value="<?= $parent_id; ?>" />
+          <?php
+          } else {
           ?>
             <div class="form-group">
               <label class="control-label col-xs-4" for="assembly_id"><?= lang('member.member_assembly_id') ?></label>
               <div class="col-xs-6">
                 <select class="form-control" name="assembly_id" id="assembly_id">
                   <option value=""><?= lang('assembly.select_assembly') ?></option>
-                  
+
                 </select>
               </div>
             </div>
-          <?php 
-            }
+          <?php
+          }
           ?>
-          
+
           <!-- <div class="form-group">
             <label class="control-label col-xs-4" for="member_number">
               <?= lang('member.member_member_number') ?>
@@ -130,14 +130,16 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
           </div>
 
           <!-- Dynamically Generated Custom Fields -->
-          <?php foreach ($customFields as $field): ?>
-            <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
-              <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
-              <div class="col-xs-6">
-                <input type="<?= $field['type'] ?>" name="custom_fields[<?= $field['id'] ?>]" id="<?= $field['field_name'] ?>" class="form-control">
+          <?php if ($customFields): ?>
+            <?php foreach ($customFields as $field): ?>
+              <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
+                <label class="control-label col-xs-4" for="<?= $field['field_name']; ?>"><?= ucfirst($field['field_name']); ?></label>
+                <div class="col-xs-6">
+                  <input type="<?= $field['type']; ?>" name="custom_fields[<?= $field['id']; ?>]" id="<?= $field['field_name']; ?>" class="form-control">
+                </div>
               </div>
-            </div>
-          <?php endforeach; ?>
+            <?php endforeach; ?>
+          <?php endif; ?>
 
         </form>
 

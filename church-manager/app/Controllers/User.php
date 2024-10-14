@@ -64,72 +64,6 @@ class User extends BaseController
         return $this->response->setJSON($response);
     }
 
-    private function getUsers(){
-
-        $start = intval(request()->getPost('start'));
-        $length = intval(request()->getPost('length'));
-        $searchValue = request()->getPost('search')['value'];
-
-        $users = [];
-
-        if ($searchValue == "") {
-            $users = $this->model
-            ->limit($length, $start)
-            ->findAll();
-        }else{
-            $users = $this->model
-            ->like('name', $searchValue)
-            ->orLike('email', $searchValue)
-            ->limit($length, $start)
-            ->findAll();
-        }
-
-        // log_message('error', json_encode($users[0]->name));
-
-        return $users; 
-    }
-
-    private function countAllUsers(){
-        
-        $searchValue = request()->getPost('search')['value'];
-        $usersCount = 10;
-
-        if ($searchValue == "") {
-            $usersCount = $this->model
-            ->countAllResults();
-        }else{
-            $usersCount = $this->model
-            ->like('first_name', $searchValue)
-            ->orLike('last_name', $searchValue)
-            ->orLike('phone', $searchValue)
-            ->orLike('email', $searchValue)
-            ->countAllResults();
-        }
-
-        return $usersCount;
-    }
-
-    // public function index(): ResponseInterface
-    // {
-    
-    //     $draw = intval(request()->getPost('draw'));
-    //     $allUsers = $this->countAllUsers();
-        
-    //     // Return array of users with id, name and email 
-    //     $users = $this->getUsers();
-
-    //     $response = [
-    //         "draw" => $draw,
-    //         "recordsTotal" => $allUsers,
-    //         "recordsFiltered" => $allUsers,
-    //         "data" => $users
-    //     ];
-
-    //     return response()->setJSON($response);
-    // }
-
-
-
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -199,7 +133,19 @@ class User extends BaseController
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
-        $customFieldLibrary->saveCustomFieldValues($insertId, $this->tableName, $customFieldValues);
+        // $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+
+        if (!empty($customFieldValues)) {
+            // Filter out null or empty custom fields
+            $nonNullCustomFields = array_filter($customFieldValues, function ($value) {
+                return !is_null($value) && $value !== '';
+            });
+
+            // Save non-null custom field values
+            if (!empty($nonNullCustomFields)) {
+                $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+            }
+        }
 
         if ($this->request->isAJAX()) {
             $this->feature = 'user';
@@ -222,25 +168,6 @@ class User extends BaseController
     }
 
     /// Update Controllers
-
-    public function editProfile($id): string {
-        $numeric_id = hash_id($id,'decode');
-
-        if(method_exists($this->model, 'getEditData')){
-            $data = $this->model->getEditData($numeric_id);
-        }else{
-            $data = $this->model->getOne($numeric_id);
-        }
-
-        $page_data = $this->page_data($data);
-        
-        if(method_exists($this->library,'editExtraData')){
-            // Note the editExtraData updates the $page_data by reference
-            $this->library->editExtraData($page_data);
-        }
-
-        return view("$this->feature/profile/account", $page_data);
-    }
 
     public function updatePublicInfo()
     {
@@ -339,6 +266,8 @@ class User extends BaseController
         return redirect()->to(site_url('users/view' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
     }
 
+    
+
 
     public function getAccount($id)
     {
@@ -421,15 +350,17 @@ class User extends BaseController
 
         $tasksModel = new \App\Models\TasksModel();
 
-        // Fetch tasks from the database
         if ($user_id > 0) {
-            $tasks = $tasksModel
-            ->where('user_id', hash_id($user_id, 'decode'))
+            $tasks = $tasksModel->select('tasks.id,tasks.name,tasks.status')
+            ->where('tasks.user_id', hash_id($user_id, 'decode'))
             ->join('users', 'users.id = tasks.user_id')
+            // ->join('statuses','statuses.task_id = tasks.id', 'left')
             ->orderBy('tasks.created_at asc')->findAll();
         } else {
-            $tasks = $tasksModel->join('users', 'users.id = tasks.user_id')->
-            orderBy('tasks.created_at asc')->findAll();
+            $tasks = $tasksModel->select('tasks.id,tasks.name,tasks.status')
+            ->join('users', 'users.id = tasks.user_id')
+            // ->join('statuses','statuses.task_id = tasks.id', 'left')
+            ->orderBy('tasks.created_at asc')->findAll();
         }
 
         if (!$tasks) {

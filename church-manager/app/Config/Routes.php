@@ -51,8 +51,8 @@ $routes->post('users/profile/account/update_private_info', "User::updatePrivateI
 
 $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('account/(:segment)', 'User::getAccount/$1');
-    $routes->get('account', 'User::editAccount');      // Display the account edit form
-    $routes->post('account/update_public_info', 'User::updatePrivateInfo');  // Handle the account update form submission
+    $routes->get('account', 'User::editAccount');
+    $routes->post('account/update_public_info', 'User::updatePrivateInfo');
     $routes->post('account/update_private_info', 'User::updatePrivateInfo');
     $routes->post('account/save', 'User::postPrivateInfo');
     $routes->get('password_reset/(:segment)', "User::passwordReset/$1");
@@ -60,15 +60,16 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
     $routes->get('email_notifications/(:segment)', "User::emailNotifications/$1");
     $routes->get('pending_tasks/(:segment)', 'User::pendingTasks/$1');
     $routes->post('save_task', 'Task::saveTask');
-    $routes->post('update_task', 'Task::updateTask');
-    $routes->post('update_task_status/', 'Task::updateTaskStatus');
     $routes->get('privacy/(:segment)', "User::privacy/$1");
     $routes->get('your_data/(:segment)', "User::yourData/$1");
     $routes->get('delete_account/(:segment)', "User::deleteAccount/$1");
 });
 
-$routes->post('users/view/(:segment)/pending_tasks/save-task', 'Task::saveTask/$1');
-// $routes->post('update_task_status/', 'Task::updateTaskStatus');
+$routes->post('users/update/public/', 'User::updatePrivateInfo'); 
+$routes->post('users/update/private/', 'User::updatePrivateInfo');
+
+$routes->post('/tasks/updateStatus', 'Task::updateStatus');
+
 
 $routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominations');
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
@@ -87,11 +88,9 @@ $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) 
     $routes->get('section_b/(:segment)', 'Report::sectionB/$1');
     $routes->get('section_c/(:segment)', 'Report::sectionC/$1');
     $routes->get('section_d/(:segment)', 'Report::sectionD/$1');
-    $routes->get('edit', "Report::editReport");
+    $routes->get('edit/(:segment)', "Report::edit/$1");
     // $routes->get('section_a/(:seg)', 'Report::load_section/$1');
 });
 
-// $routes->get('reports/section_a', 'Report::section_a');
-// $routes->get('reports/section_b', 'Report::section_b');
-// Add more routes for other sections as needed
-$routes->get('reports/sections/(:seg)', 'Report::load_section/$1');
+
+$routes->get('reports/load_section/(:any)', 'Report::loadSection/$1');

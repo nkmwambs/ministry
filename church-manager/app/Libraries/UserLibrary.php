@@ -15,12 +15,12 @@ class UserLibrary implements LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ["users.id","users.denomination_id","first_name","last_name","username","biography","date_of_birth","users.email","gender","users.phone","roles","access_count","is_active","permitted_entities","permitted_assemblies","password"];
+        $fields = ["users.id","users.denomination_id","first_name","last_name","username","biography","date_of_birth","users.email","gender","users.phone","roles","access_count","is_active","permitted_entities","permitted_assemblies","password","users.updated_at"];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ["users.id","users.denomination_id","first_name","last_name","username","biography","date_of_birth","users.email","gender","users.phone","roles","access_count","is_active","permitted_entities","permitted_assemblies","password"];
+        $fields = ["users.id","users.denomination_id","first_name","last_name","username","biography","date_of_birth","users.email","gender","users.phone","roles","access_count","is_active","permitted_entities","permitted_assemblies","password","users.updated_at"];
         return $fields;
     }
 

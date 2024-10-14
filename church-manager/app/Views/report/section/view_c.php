@@ -5,6 +5,7 @@
 </div>
 
 <form class="form-horizontal form-groups-bordered" role="form">
+    
     <div class="form-group">
         <label class="switcher">
             <span class="switcher-label">Licence held</span>

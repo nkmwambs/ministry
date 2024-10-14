@@ -61,16 +61,20 @@
                     </div>
 
                     <!-- Dynamically Generated Custom Fields -->
-                    <?php foreach ($customFields as $field): ?>
-                        <div class="form-group">
-                            <label for="<?= $field['name'] ?>"><?= ucfirst($field['name']) ?></label>
-                            <input type="<?= $field['type'] ?>"
-                                name="custom_fields[<?= $field['id'] ?>]"
-                                id="<?= $field['name'] ?>"
-                                value="<?= $customValues[$field['id']] ?? '' ?>"
-                                class="form-control">
-                        </div>
-                    <?php endforeach; ?>
+                    <?php if (!empty($customFields)): ?>
+                        <?php foreach ($customFields as $field): ?>
+                            <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
+                                <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
+                                <div class="col-xs-6">
+                                    <input type="<?= $field['type'] ?>"
+                                        name="custom_fields[<?= $field['id'] ?>]"
+                                        id="<?= $field['field_name'] ?>"
+                                        value="<?= $customFieldValuesInDB['value'] ?? '' ?>"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 
                 </form> 
             </div>

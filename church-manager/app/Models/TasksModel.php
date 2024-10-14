@@ -12,7 +12,7 @@ class TasksModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['tasks.id','tasks.name','tasks.status','user_id'];
+    protected $allowedFields    = ['id','name','status','user_id'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -50,9 +50,10 @@ class TasksModel extends Model  implements \App\Interfaces\ModelInterface
 
         if (!empty($setQueryFields)) {
             return $this->select($library->setListQueryFields())
+            // ->join('statuses','statuses.task_id = tasks.id')
             ->orderBy('tasks.created_at desc')->findAll();
         } else {
-            return $this->orderBy('created_at desc')->findAll();
+            return $this->orderBy('tasks.created_at desc')->findAll();
         }
     }
 
@@ -62,9 +63,10 @@ class TasksModel extends Model  implements \App\Interfaces\ModelInterface
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
-            ->where('id', $id)->first();
+            // ->join('statuses','statuses.task_id = tasks.id')
+            ->where('tasks.id', $id)->first();
         } else {
-            return $this->where('id', $id)->first();
+            return $this->where('tasks.id', $id)->first();
         }
     }
     
@@ -97,6 +99,24 @@ class TasksModel extends Model  implements \App\Interfaces\ModelInterface
         }
     }
 
+    // public function saveStatus($taskId, $statusLabel)
+    // {
+    //     $existingStatus = $this->where('task_id', $taskId)->first();
+
+    //     if ($existingStatus) {
+    //         $this->update(hash_id($existingStatus['id'], 'decode'), (object)['status' => $statusLabel]);
+    //     } else {
+    //         $this->insert((object)['task_id' => $taskId, 'status' => $statusLabel]);
+    //     }
+    // }
+
+    // public function getStatusesWithTasks()
+    // {
+    //     return $this->select('statuses.*, tasks.name as task_name')
+    //                 ->join('tasks', 'tasks.id = statuses.task_id')
+    //                 ->findAll();
+    // }
+
     function updateRecycleBin($data){
 
         $trashModel = new \App\Models\TrashesModel();
@@ -107,4 +127,6 @@ class TasksModel extends Model  implements \App\Interfaces\ModelInterface
         $trashModel->insert((object)$trashData);
         return true;
     }
+
+
 }

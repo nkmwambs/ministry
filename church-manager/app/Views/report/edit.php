@@ -24,11 +24,21 @@
                     <div class="panel-options">
 
                         <ul class="nav nav-tabs" id="myTabs">
-                            <li class="active"><a href="#view_report" id="view_report_tab" data-toggle="tab"><?= lang('report.edit_report'); ?></a></li>
-                            <li><a href="#view_section_a" data-item_id="<?= $id; ?>" data-link_id="view_section_a" onclick="childrenAjaxLists(this)" id="view_section_a_tab" data-toggle="tab"><?= lang('report.section_A'); ?></a></li>
-                            <li><a href="#view_section_a" data-item_id="<?= $id; ?>" data-link_id="view_section_b" onclick="childrenAjaxLists(this)" id="view_section_b_tab" data-toggle="tab"><?= lang('report.section_B'); ?></a></li>
-                            <li><a href="#view_section_c" data-item_id="<?= $id; ?>" data-link_id="view_section_c" onclick="childrenAjaxLists(this)" id="view_section_c_tab" data-toggle="tab"><?= lang('report.section_C'); ?></a></li>
-                            <li><a href="#view_section_d" data-item_id="<?= $id; ?>" data-link_id="view_section_d" onclick="childrenAjaxLists(this)" id="view_section_d_tab" data-toggle="tab"><?= lang('report.section_D'); ?></a></li>
+                            <li class="active">
+                                <a href="#edit_report" id="edit_report_tab" data-toggle="tab"><?= lang('report.edit_report'); ?></a>
+                            </li>
+                            <li>
+                                <a href="#edit_section_a" id="edit_section_a_tab" data-toggle="tab"><?= lang('report.section_A'); ?></a>
+                            </li>
+                            <li>
+                                <a href="#edit_section_b" id="edit_section_b_tab" data-toggle="tab"><?= lang('report.section_B'); ?></a>
+                            </li>
+                            <li>
+                                <a href="#edit_section_c" id="edit_section_c_tab" data-toggle="tab"><?= lang('report.section_C'); ?></a>
+                            </li>
+                            <li>
+                                <a href="#edit_section_d" id="edit_section_d_tab" data-toggle="tab"><?= lang('report.section_D'); ?></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -36,7 +46,7 @@
             <div class="panel-body">
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="view_report">
+                    <div class="tab-pane active" id="edit_report">
                         <form id="frm_edit_report" method="post" action="<?= site_url('reports/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="reports_type_id">
@@ -100,20 +110,28 @@
                         </form>
                     </div>
 
-                    <div class="tab-pane" id="view_section_a">
-                        <div class='info'><?= lang('report.section_A') ?></div>
+                    <div class="tab-pane" id="edit_section_a">
+                        <form id="frm_edit_section_a" method="post" action="<?= site_url('reports/sections/a/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
+
+                        </form>
                     </div>
 
-                    <div class="tab-pane" id="view_section_b">
-                        <div class='info'><?= lang('report.section_B') ?></div>
+                    <div class="tab-pane" id="edit_section_b">
+                        <form id="frm_edit_section_b" method="post" action="<?= site_url('reports/sections/b/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
+
+                        </form>
                     </div>
 
-                    <div class="tab-pane" id="view_section_s">
-                        <div class='info'><?= lang('report.section_C') ?></div>
+                    <div class="tab-pane" id="edit_section_c">
+                        <form id="frm_edit_section_c" method="post" action="<?= site_url('reports/sections/c/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
+
+                        </form>
                     </div>
 
-                    <div class="tab-pane" id="view_section_d">
-                        <div class='info'><?= lang('report.section_D') ?></div>
+                    <div class="tab-pane" id="edit_section_d">
+                        <form id="frm_edit_section_d" method="post" action="<?= site_url('reports/sections/d/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
+
+                        </form>
                     </div>
                 </div>
             </div>

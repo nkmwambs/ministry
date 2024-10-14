@@ -9,6 +9,8 @@ return [
     'delete_user' => "Delete User",
 
     // Labels
+    'user_name' => 'Username',
+    'user_biography' => 'Biography',
     'user_first_name' => 'First Name',
     'user_last_name' => 'Last Name',
     'user_dob' => 'Date of Birth',
@@ -20,6 +22,8 @@ return [
     'user_hierarchical_level' => 'Hierarchical Level',
     'user_permitted_assemblies' => 'Permitted Assemblies',
     'user_permitted_entities' => 'Permitted Entities',
+
+    'image_format' => 'For best results, use an image at least 128px by 128px in .jpg format',
 
     // Placeholders
     'enter_first_name' => 'Enter First Name',

@@ -61,7 +61,7 @@
             <div class="col-xs-3">
               <input type="text" class="form-control" name="description" id="description" placeholder="Enter Description">
             </div>
-          
+
             <label class="control-label col-xs-2" for="collection_method"><?= lang('collection.collection_collection_method') ?></label>
             <div class="col-xs-3">
               <select type="text" class="form-control" name="collection_method" id="collection_method">
@@ -105,14 +105,16 @@
             ?>
 
             <!-- Dynamically Generated Custom Fields -->
-          <?php foreach ($customFields as $field): ?>
-            <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
-              <label class="control-label col-xs-4" for="<?= $field['field_name'] ?>"><?= ucfirst($field['field_name']) ?></label>
-              <div class="col-xs-6">
-                <input type="<?= $field['type'] ?>" name="custom_fields[<?= $field['id'] ?>]" id="<?= $field['field_name'] ?>" class="form-control">
-              </div>
-            </div>
-          <?php endforeach; ?>
+            <?php if ($customFields): ?>
+              <?php foreach ($customFields as $field): ?>
+                <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
+                  <label class="control-label col-xs-4" for="<?= $field['field_name']; ?>"><?= ucfirst($field['field_name']); ?></label>
+                  <div class="col-xs-6">
+                    <input type="<?= $field['type']; ?>" name="custom_fields[<?= $field['id']; ?>]" id="<?= $field['field_name']; ?>" class="form-control">
+                  </div>
+                </div>
+              <?php endforeach; ?>
+            <?php endif; ?>
 
         </form>
       </div>

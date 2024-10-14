@@ -221,8 +221,44 @@
 
     })
 
-    $(document).on('click', '#account_save', function() {
-        const account_content = $(this).closest('.account_content');
+    $(document).on('click', '#public_account_save', function() {
+        const account_content = $(this).closest('.account-content');
+        const frm_id =account_content.find('form').attr('id');
+        const frm = $('#' + frm_id);
+        const data = frm.serializeArray();
+        const url = frm.attr('action');
+
+        $.ajax({
+            url,
+            type: 'POST',
+            data,
+            success: function(response) {
+                console.log(response);
+                if (typeof response == 'object') {
+                    if (response.hasOwnProperty('errors')) {
+                        const error_container = $('.error_container');
+
+                        if (!isEmpty(response.errors)) {
+                            error_container.removeClass('hidden');
+                            let ul = "<ul>";
+                            $.each(response.errors, function(index, value) {
+                                ul += "<li>" + value + "</li>";
+                            })
+                            ul += "</ul>";
+                            error_container.find('.error').html(ul);
+                        } else {
+                            error_container.addClass('hidden');
+                        }
+                    }
+
+                    return false;
+                }
+            }
+        })
+    })
+
+    $(document).on('click', '#private_account_save', function() {
+        const account_content = $(this).closest('.account-content');
         const frm_id =account_content.find('form').attr('id');
         const frm = $('#' + frm_id);
         const data = frm.serializeArray();
