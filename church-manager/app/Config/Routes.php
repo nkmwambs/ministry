@@ -97,7 +97,7 @@ $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) 
 });
 
 
-$routes->get('reports/load_section/(:any)', 'Report::loadSection/$1');
+$routes->get('reports/details/(:any)', 'Report::viewDetails/$1');
 
 
 $routes->group('ajax', static function($routes){

@@ -11,8 +11,6 @@
 	<link rel="icon" href="assets/images/favicon.ico">
 
 	<title><?=humanize($feature);?> | <?=humanize($action);?></title>
-
-	
 	
 
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
@@ -81,7 +79,12 @@
 		
 		<hr />
 		<div class="main">
-        	<?=$content;?>
+        	<?php 
+				// $content Has been replace with a view
+				// All non-ajax responses MUST place the page_data in a compact method
+				// All viewExtraData results for non-ajax responses MUST be sub items of extra_data
+				echo view($page_data['view'], $page_data);
+			?>
 		</div>
 	
 		<!-- Footer -->

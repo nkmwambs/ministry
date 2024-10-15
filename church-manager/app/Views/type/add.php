@@ -105,8 +105,8 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
         for (let i = 0; i < section_count; i++) {
             let section = section_template.clone();
             section.removeClass("hidden");
-            section.find('.section_content').find('.section_number').val(i+1)
-            section.find('.section_content').find('.div_section_title').find('.section_title').prop('name', `layout[${i + 1}][section_title]`)
+            section.find('.section_content').find('.section_number').val(i)
+            section.find('.section_content').find('.div_section_title').find('.section_title').prop('name', `layout[${i}][section_title]`)
             $("#frm-view_types").append(section);
         }
     });
@@ -143,14 +143,14 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                     
                     for (let i = 0; i < section_parts_count; i++) {
                         let part = part_template.clone();
-                        let partNum = i+1
-                        let multiClass = 'multi_fields_' + section_number + '_' + partNum
-                        let partClass = 'part_' + section_number + '_' + partNum
+                        let partNum = i
+                        let multiClass = 'multi_fields_' + section_number + '_' + i
+                        let partClass = 'part_' + section_number + '_' + i
                         part.removeClass("hidden");
-                        part.find('.part_number').val(i+1);
+                        part.find('.part_number').val(i);
 
-                        part.find('.div_part_title').find('.part_title').prop('name', `layout[${section_number}][section_parts][${partNum}][part_title]`)
-                        part.find('.div_part_fields').find('.part_fields').prop('name', `layout[${section_number}][section_parts][${partNum}][part_fields][]`)
+                        part.find('.div_part_title').find('.part_title').prop('name', `layout[${section_number}][section_parts][${i}][part_title]`)
+                        part.find('.div_part_fields').find('.part_fields').prop('name', `layout[${section_number}][section_parts][${i}][part_fields][]`)
 
                         part.find('.multi_fields').select2({
                             placeholder: 'Select Fields',

@@ -62,4 +62,6 @@ class TypeLibrary implements \App\Interfaces\LibraryInterface {
 
         $page_data['denominations'] = $denominations;
     }
+
+    
 }

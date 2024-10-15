@@ -84,4 +84,32 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
 
         return ['status' => 'success', 'message' => 'Fields found successful', 'fields' => $fields];
     }
+
+    function viewExtraData(&$page_data){
+
+        $numericReportId = $page_data['result']['id'];
+        // Get report Type 
+        $reportModel = new \App\Models\ReportsModel();
+        $report = $reportModel->find($numericReportId);
+        $reportTypeId = $report['reports_type_id'];
+
+        // Get report layout from report type
+        $reportTypeModel = new \App\Models\TypesModel();
+        $reportType = $reportTypeModel->find($reportTypeId);
+        $reportLayout = json_decode($reportType['report_layout'], true);
+        
+        // Build the report object with fields info
+        $typeLibrary = new \App\Libraries\FieldLibrary();
+        for($i = 0; $i < count($reportLayout); $i++){
+            for($j = 0; $j < count($reportLayout[$i]['section_parts']); $j++){
+                $reportLayout[$i]['section_parts'][$j]['part_fields'] = explode(',',$reportLayout[$i]['section_parts'][$j]['part_fields'][0]);
+                $reportLayout[$i]['section_parts'][$j]['part_fields'] = array_map(function($fieldTypeId) use($typeLibrary){
+                    return $typeLibrary->getFieldUI($fieldTypeId);
+                }, $reportLayout[$i]['section_parts'][$j]['part_fields']);
+            }   
+        }
+        
+        $page_data['extra_data']['report_fields'] = $reportLayout;
+        return $page_data;
+    }
 }
