@@ -1,3 +1,15 @@
+<style>
+    .section_template{
+        margin-top: 10px;
+        border: 2px groove #fafafa;
+        padding: 5px;
+    }
+    .layout_title {
+        text-align: left;
+        font-weight: bold;
+    }
+</style>
+
 <?php
 $numeric_denomination_id = hash_id($parent_id, 'decode');
 ?>
@@ -62,17 +74,18 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                         </div>
                     </div>
 
-                    <!-- Dynamically Generated Custom Fields -->
-                    <?php if ($customFields): ?>
-                        <?php foreach ($customFields as $field): ?>
-                            <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
-                                <label class="control-label col-xs-4" for="<?= $field['field_name']; ?>"><?= ucfirst($field['field_name']); ?></label>
-                                <div class="col-xs-6">
-                                    <input type="<?= $field['type']; ?>" name="custom_fields[<?= $field['id']; ?>]" id="<?= $field['field_name']; ?>" class="form-control">
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="section_count">
+                            <?= lang("type.section_count") ?>
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="number" class="form-control" name="section_count" id="section_count"
+                                placeholder="Enter Section Count">
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="btn btn-success" id = "create_layout">Create Layout</div>
+                        </div>
+                    </div>
 
                 </form>
 
@@ -82,3 +95,124 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
 
     </div>
 </div>
+
+<script>
+    
+    $("#create_layout").click(function () {
+        let section_count = $("#section_count").val();
+        let section_template = $(".section_template").clone();
+
+        for (let i = 0; i < section_count; i++) {
+            let section = section_template.clone();
+            section.removeClass("hidden");
+            section.find('.section_content').find('.section_number').val(i+1)
+            section.find('.section_content').find('.div_section_title').find('.section_title').prop('name', `layout[${i + 1}][section_title]`)
+            $("#frm-view_types").append(section);
+        }
+    });
+
+
+    $(document).on("click",".btn_create_parts", function () {
+        let section_parts_count = $(this).parent().siblings(".div_section_parts_count").find('.section_parts_count').val();
+        let part_template = $("#span_part_template").find('.part_template').clone();
+        let parts_section = $(this).parent().closest(".form-group").siblings('.parts');
+        let parts_header = $(this).parent().closest(".form-group").siblings(".parts_header")
+        let section_number = $(this).parent().siblings(".section_number").val();
+        let denomination_id = $("#denomination_id").val()
+
+        let url = "<?= site_url('ajax')?>";
+       
+        if(parts_section.children().length == 0) {
+            parts_header.removeClass("hidden");
+            
+            $.ajax({
+                url,
+                method: 'POST',
+                data: {
+                    controller: 'reports',
+                    method: 'getReportFields',
+                    data: {
+                        denomination_id: denomination_id
+                    }
+                },
+                success: function(response) {
+        
+                    const fields = response.fields;
+
+                    // console.log(fields);
+                    
+                    for (let i = 0; i < section_parts_count; i++) {
+                        let part = part_template.clone();
+                        let partNum = i+1
+                        let multiClass = 'multi_fields_' + section_number + '_' + partNum
+                        let partClass = 'part_' + section_number + '_' + partNum
+                        part.removeClass("hidden");
+                        part.find('.part_number').val(i+1);
+
+                        part.find('.div_part_title').find('.part_title').prop('name', `layout[${section_number}][section_parts][${partNum}][part_title]`)
+                        part.find('.div_part_fields').find('.part_fields').prop('name', `layout[${section_number}][section_parts][${partNum}][part_fields][]`)
+
+                        part.find('.multi_fields').select2({
+                            placeholder: 'Select Fields',
+                            allowClear: true,
+                            multiple: true,
+                            data: fields
+                        });
+
+                        parts_section.append(part);
+                    }
+                }
+            })
+            
+        }
+        
+    });
+
+</script>
+
+<!-- Section Template -->
+<section class = "hidden section_template">
+    <div class = "form-group section_header">
+        <div class = "layout_title col-xs-4" for="">Section Title</div>
+        <div class = "layout_title col-xs-4" for="">Section Parts Count</div>
+        <div class = "layout_title col-xs-4" for="">Action</div>
+    </div>
+    <div class = "form-group section_content">
+        <div class="col-xs-4 div_section_title">
+            <input type="text" class="form-control section_title" name="" placeholder="Enter Section Title">
+        </div>
+        <div class="col-xs-4 div_section_parts_count">
+            <input type="number" class="form-control section_parts_count" placeholder="Enter Section Parts Count">  
+        </div>
+        <div class="col-xs-4">
+            <div class="btn btn-success btn_create_parts">Create Parts</div>
+        </div>
+        <input type="hidden" class="section_number" placeholder="Section Number" />
+    </div>
+
+    <div class = "form-group parts_header hidden">
+        <div class = "layout_title col-xs-6" for="">Part Title</div>
+        <div class = "layout_title col-xs-6" for="">Fields</div>
+    </div>
+
+    <section class = "parts"></section>
+    
+</section>
+
+
+<span id = "span_part_template">
+    <div class = "form-group part_template hidden">
+        <div class="col-xs-6 div_part_title">
+            <input type="text" class="form-control part_title" name=""  placeholder="Enter Part Title">
+        </div>
+
+        <div class="col-xs-6 div_part_fields">
+            <!-- <select class="form-control multi_fields" name="part_fields[]" id="part_fields" multiple>
+                <option value="">Select Fields</option>
+            </select> -->
+            <input class="form-control part_fields multi_fields" name=""  />
+        </div>
+        <input type="hidden" class="part_number" placeholder="Part Number" />
+    </div>
+</span>
+

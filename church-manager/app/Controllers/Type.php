@@ -48,6 +48,8 @@ class Type extends BaseController
             ]
         ]);
 
+        // log_message('error', json_encode($this->request->getPost('layout')));
+
         if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
@@ -55,7 +57,8 @@ class Type extends BaseController
         $data = [
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
-            'denomination_id' => $this->request->getPost('denomination_id')
+            'denomination_id' => $this->request->getPost('denomination_id'),
+            'report_layout' => json_encode($this->request->getPost('layout')),
         ];
 
         $this->model->insert((object)$data);

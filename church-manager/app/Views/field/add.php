@@ -59,7 +59,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                         <div class='form-group'>
                             <label for="feature_id" class="control-label col-xs-4"><?= lang('field.customfield_feature_id') ?></label>
                             <div class="col-xs-6">
-                                <select class="form-control" name="feature_id" id="feature_id">
+                                <select class="form-control select_fields" name="feature_id" id="feature_id">
                                     <option value=""><?= lang('field.select_feature') ?></option>
                                     <?php foreach ($features as $designation) : ?>
                                         <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
@@ -90,13 +90,30 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label col-xs-4" for="field_code">
+                            <?= lang("field.customfield_code") ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="field_code" id="field_code" placeholder="Enter Code">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="helptip">
+                            <?= lang("field.customfield_helptip") ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="helptip" id="helptip" placeholder="Enter Help Tip">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-xs-4" for="type">
                             <?= lang("field.customfield_type") ?>
                         </label>
                         <div class="col-xs-6">
                             <select name="type" id="type" class="form-control" required>
                                 <option value="text">Text</option>
-                                <option value="number">Number</option>
                                 <option value="float">Float</option>
                                 <option value="date">Date</option>
                                 <option value="datetime">DateTime</option>
@@ -110,7 +127,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="control-label col-xs-4" for="visible">
                             <?= lang("field.customfield_visible") ?>
                         </label>
@@ -120,7 +137,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                                 <option value="yes">Yes</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="options">
@@ -131,14 +148,14 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="control-label col-xs-4" for="field_order">
                             <?= lang("field.customfield_field_order") ?>
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="field_order" id="field_order" placeholder="Enter Options">
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Dynamically Generated Custom Fields -->
                     <?php foreach ($customFields as $field): ?>

@@ -21,12 +21,12 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['customfields.id','field_name','denomination_id','table_name','type','options','feature_id','field_order','visible','features.name as feature_name'];
+        $fields = ['customfields.id','field_name','field_code','helptip','denomination_id','table_name','type','options','feature_id','field_order','visible','features.name as feature_name'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['customfields.id','field_name','denomination_id','table_name','type','options','feature_id','field_order','visible','features.name as feature_name'];
+        $fields = ['customfields.id','field_name','field_code','helptip','denomination_id','table_name','type','options','feature_id','field_order','visible','features.name as feature_name'];
         return $fields;
     }
 

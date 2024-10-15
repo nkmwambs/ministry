@@ -1,8 +1,9 @@
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <style>
-  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
-  .toggle.ios .toggle-handle { border-radius: 20px; }
+  .popover-header{
+    background-color:aqua;
+  }
 </style>
 <?php 
 $fields = [
@@ -14,6 +15,7 @@ $fields = [
             'label' => 'Total Membership',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [
                 'readonly' => 'readonly'
             ],
@@ -22,6 +24,7 @@ $fields = [
             'type' => 'input',
             'label' => 'Number Saved',
             'value' => '',
+            'helptip' => 'Enter the total number of members',
             'class' => '',
             'attributes' => [],
         ],
@@ -29,6 +32,7 @@ $fields = [
             'type' => 'input',
             'label' => 'Number Sanctified',
             'value' => '',
+            'helptip' => 'Enter the total number of members',
             'class' => '',
             'attributes' => [],
         ],
@@ -37,6 +41,7 @@ $fields = [
             'label' => 'Number filled with Holy Ghost',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         'number_baptised_of_water' => [
@@ -44,6 +49,7 @@ $fields = [
             'label' => 'Number Baptised of Water',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         'number_transfered_away' => [
@@ -51,6 +57,7 @@ $fields = [
             'label' => 'Number Transfered Away',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         'number_transfered_in' => [
@@ -58,6 +65,7 @@ $fields = [
             'label' => 'Number Transfered In',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         'number_deceased' => [
@@ -65,6 +73,7 @@ $fields = [
             'label' => 'Number Of Deceased',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         'number_added' => [
@@ -72,6 +81,7 @@ $fields = [
             'label' => 'Number Of Added',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         'number_excluded' => [
@@ -79,6 +89,7 @@ $fields = [
             'label' => 'Number Of Excluded',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         'avg_sunday_school_attendance' => [
@@ -86,6 +97,7 @@ $fields = [
             'label' => 'Average Sunday School Attendance',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         'number_weekly_attendance' => [
@@ -93,6 +105,7 @@ $fields = [
             'label' => 'Number of weekly Attendance',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         'proportion_children_youth_attendance' => [
@@ -100,6 +113,7 @@ $fields = [
             'label' => 'Proportion of Children and Youth Attendance',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         'enclosed_news' => [
@@ -107,6 +121,7 @@ $fields = [
             'label' => 'Enclosed any news to share?',
             'value' => '',
             'class' => '',
+            'helptip' => 'Enter the total number of members',
             'attributes' => [],
         ],
         ]
@@ -119,6 +134,7 @@ $fields = [
                 'label' => 'Department of Pastoral Care',
                 'value' => '',
                 'class' => '',
+                'helptip' => 'Enter the total number of members',
                 'attributes' => [],
             ],
             'youth_ministry' => [
@@ -126,6 +142,7 @@ $fields = [
                 'label' => 'Youth Ministries',
                 'value' => '',
                 'class' => '',
+                'helptip' => 'Enter the total number of members',
                 'attributes' => [],
             ],
             'children_ministry' => [
@@ -133,6 +150,7 @@ $fields = [
                 'label' => 'Children Ministries',
                 'value' => '',
                 'class' => '',
+                'helptip' => 'Enter the total number of members',
                 'attributes' => [],
             ],
             'sunday_school_education' => [
@@ -140,6 +158,7 @@ $fields = [
                 'label' => 'Sunday School (Christian Education)',
                 'value' => '',
                 'class' => '',
+                'helptip' => 'Enter the total number of members',
                 'attributes' => [],
             ],
             'women_ministries' => [
@@ -147,6 +166,7 @@ $fields = [
                 'label' => 'Women Ministries',
                 'value' => '',
                 'class' => '',
+                'helptip' => 'Enter the total number of members',
                 'attributes' => [],
             ],
             'first_sunday_offering' => [
@@ -154,6 +174,7 @@ $fields = [
                 'label' => 'First Sunday Offering',
                 'value' => '',
                 'class' => '',
+                'helptip' => 'Enter the total number of members',
                 'attributes' => [],
             ],
             'second_sunday_missions' => [
@@ -161,6 +182,7 @@ $fields = [
                 'label' => 'Second Sunday Missions',
                 'value' => '',
                 'class' => '',
+                'helptip' => 'Enter the total number of members',
                 'attributes' => [],
             ],
             'fourth_sunday' => [
@@ -168,6 +190,7 @@ $fields = [
                 'label' => 'Fourth Sunday',
                 'value' => '',
                 'class' => '',
+                'helptip' => 'Enter the total number of members',
                 'attributes' => [],
             ],
             'revival_month' => [
@@ -175,6 +198,7 @@ $fields = [
                 'label' => 'Revival This Month',
                 'value' => '',
                 'class' => '',
+                'helptip' => 'Enter the total number of members',
                 'attributes' => [],
             ],
             'bible_study_training' => [
@@ -182,6 +206,7 @@ $fields = [
                 'label' => 'Number of Bible Study/Training Programmes this month',
                 'value' => '',
                 'class' => '',
+                'helptip' => 'Enter the total number of members',
                 'attributes' => [],
             ]
         ]
@@ -213,9 +238,13 @@ $fields = [
             <div class="form-group">
                 <label for="" class="control-label col-xs-4"><?=$metadata['label'];?></label>
                 <div class="col-xs-6">
-                    <div class="form_view_field">
-                        <?php if($metadata['type'] == 'input'){?>
-                            <input class = "form-control <?=$metadata['class'];?>" <?=$attributes;?> name="<?=$id;?>" id = "<?=$id;?>" />
+                    <div class="input-group form_view_field">
+                        <div class="input-group-addon">
+							<a href="#" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="<?=$metadata['helptip'];?>" data-original-title="Help Tip"><i class="entypo-help"></i>
+                            </a>
+						</div>
+                        <?php if($metadata['type'] == 'input'){?>				
+                                <input class = "form-control <?=$metadata['class'];?>" <?=$attributes;?> name="<?=$id;?>" id = "<?=$id;?>" />
                         <?php }else{?>
                             <input type="checkbox" name="<?=$id;?>" id = "<?=$id;?>" data-toggle="toggle"  data-on="Yes" data-off="No">
                         <?php }?>
@@ -232,6 +261,8 @@ $fields = [
 <!-- </div> -->
 
 <script>
-    $(document).ready(function() {
+   
+    $(function () {
+        $('[data-toggle="popover"]').popover()
     })
 </script>

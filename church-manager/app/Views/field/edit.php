@@ -73,6 +73,26 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="field_code">
+                            <?= lang('field.customfield_code') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="field_code" value="<?= $result['field_code']; ?>" id="field_code"
+                                placeholder="Edit Code">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="helptip">
+                            <?= lang('field.customfield_helptip') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="helptip" value="<?= $result['helptip']; ?>" id="helptip"
+                                placeholder="Edit Code">
+                        </div>
+                    </div>
+
                     <div class='form-group'>
                         <label for="type" class="control-label col-xs-4">
                             <?= lang('field.customfield_type') ?>
@@ -102,7 +122,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="control-label col-xs-4" for="field_order">
                             <?= lang('field.customfield_field_order') ?>
                         </label>
@@ -110,7 +130,7 @@
                             <input type="text" class="form-control" name="field_order" value="<?= $result['field_order']; ?>" id="field_order"
                                 placeholder="Edit Field Order">
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="visible">

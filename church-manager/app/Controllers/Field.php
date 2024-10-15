@@ -65,11 +65,13 @@ class Field extends BaseController
         $data = [
             'denomination_id' => $this->request->getPost('denomination_id'),
             'field_name' => $this->request->getPost('field_name'),
+            'field_code' => $this->request->getPost('field_code'),
+            'helptip' => $this->request->getPost('helptip'),
             'type' => $this->request->getPost('type'),
             'options' => $this->request->getPost('options'),
             'feature_id' => $this->request->getPost('feature_id'),
-            'field_order' => $this->request->getPost('field_order'),
-            'visible' => $this->request->getPost('visible'),
+            // 'field_order' => $this->request->getPost('field_order'),
+            // 'visible' => $this->request->getPost('visible'),
             'table_name' => $this->request->getPost('table_name'),
             // 'created_at' => date('Y-m-d H:i:s')
         ];
@@ -106,10 +108,12 @@ class Field extends BaseController
         $update_data = [
             'denomination_id' => $this->request->getPost('denomination_id'),
             'field_name' => $this->request->getPost('field_name'),
+            'field_code' => $this->request->getPost('field_code'),
+            'helptip' => $this->request->getPost('helptip'),
             'type' => $this->request->getPost('type'),
             'options' => $this->request->getPost('options'),
             'feature_id' => $this->request->getPost('feature_id'),
-            'field_order' => $this->request->getPost('field_order'),
+            // 'field_order' => $this->request->getPost('field_order'),
             'visible' => $this->request->getPost('visible'),
             'table_name' => $this->request->getPost('table_name'),
             // 'created_at' => date('Y-m-d H:i:s')

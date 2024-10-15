@@ -70,4 +70,18 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['numeric_denomination_id'] = $numeric_denomination_id;
         $page_data['numeric_report_type_id'] = $numeric_report_type_id;
     }
+    function getReportFields ($data) {
+
+        $featureModel = new \App\Models\FeaturesModel();
+        $feature_id = $featureModel->where('name', 'report')->first()['id'];
+
+        $fieldModel = new \App\Models\FieldsModel();
+        $fields = $fieldModel
+        ->select('id,field_name as text')
+        ->where('denomination_id', $data['denomination_id'])
+        ->where('feature_id', $feature_id)
+        ->findAll();
+
+        return ['status' => 'success', 'message' => 'Fields found successful', 'fields' => $fields];
+    }
 }
