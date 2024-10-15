@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<?php extract($page_data);?>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 	<meta charset="utf-8">

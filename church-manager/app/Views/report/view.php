@@ -1,5 +1,5 @@
 <?php 
-echo json_encode($extra_data);
+echo json_encode($extra_data['report_fields']);
 // echo $parent_id;
 ?>
 <div class="row">

@@ -132,7 +132,7 @@ abstract class BaseController extends Controller
        
         $page_data['extra_data'] = [];
         if(!$this->request->isAJAX()){
-            $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
+            // $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
         }
 
         // log_message('error', json_encode($page_data));
@@ -149,7 +149,7 @@ abstract class BaseController extends Controller
         }else{
             method_exists($this->model, 'getAll') ?
             $data = $this->model->getAll() :
-            log_message('error', json_encode($data));
+            // log_message('error', json_encode($data));
             $data = $this->model->findAll();
         }
         
@@ -163,6 +163,8 @@ abstract class BaseController extends Controller
         if ($this->request->isAJAX()) {
             return view("$this->feature/list", $page_data);
         }
+
+        // log_message('error', json_encode($page_data));
  
         return view('index', compact('page_data'));
     }

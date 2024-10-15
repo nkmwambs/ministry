@@ -180,51 +180,6 @@ class Report extends BaseController
         return redirect()->to(site_url("report/view/".hash_id($insertId)))->with('message', 'Report added seccessfuly!');;
     }
 
-    // public function viewDetails($hashedReportId){
-    //     $numericReportId = hash_id($hashedReportId, 'decode');
-
-    //     // Get report Type 
-    //     $report = $this->model->find($numericReportId);
-    //     $reportTypeId = $report['reports_type_id'];
-
-    //     // Get report layout from report type
-    //     $reportTypeModel = new \App\Models\TypesModel();
-    //     $reportType = $reportTypeModel->find($reportTypeId);
-    //     $reportLayout = json_decode($reportType['report_layout'], true);
-        
-    //     // Build the report object
-    //     $typeLibrary = new \App\Libraries\FieldLibrary();
-    //     for($i = 0; $i < count($reportLayout); $i++){
-    //         for($j = 0; $j < count($reportLayout[$i]['section_parts']); $j++){
-    //             $reportLayout[$i]['section_parts'][$j]['part_fields'] = explode(',',$reportLayout[$i]['section_parts'][$j]['part_fields'][0]);
-    //             $reportLayout[$i]['section_parts'][$j]['part_fields'] = array_map(function($fieldTypeId) use($typeLibrary){
-    //                 return $typeLibrary->getFieldUI($fieldTypeId);
-    //             }, $reportLayout[$i]['section_parts'][$j]['part_fields']);
-    //         }   
-    //     }
-       
-    //     return view('report/build_report_view', ['result' => $reportLayout]);
-
-    // }
-
-    // public function loadSection($sectionId)
-    // {
-    //     // log_message('error', $sectionId);
-    //     // Load the appropriate section view based on the section ID
-    //     if ($sectionId === 'view_section_a') {
-    //         return view('report/section/view_a');
-    //     } elseif ($sectionId === 'view_section_b') {
-    //         return view('report/section/view_b');
-    //     } elseif ($sectionId === 'view_section_c') {
-    //         return view('report/section/view_c');
-    //     } elseif ($sectionId === 'view_section_d') {
-    //         return view('report/section/view_d');
-    //     } else {
-    //         // Handle invalid section ID
-    //         return 'Invalid section ID';
-    //     }
-    // }
-
      public function section_a()
      {
         //  $data['result'] = $this->reportModel->getSectionAData();

@@ -108,7 +108,7 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
                 }, $reportLayout[$i]['section_parts'][$j]['part_fields']);
             }   
         }
-        
+        // $page_data['extra_data']['others'] = [];
         $page_data['extra_data']['report_fields'] = $reportLayout;
         return $page_data;
     }
