@@ -19,13 +19,6 @@ class Task extends BaseController
         $insertID = 0;
         // $validation = \Config\Services::validation();
         // $validation->setRules([
-        //     'user_id' => [
-        //         'rules' => 'required',
-        //         'label' => 'User Name',
-        //         'errors' => [
-        //             'required' => 'Department Name is required'
-        //         ]
-        //     ],
         //     'name' => [
         //         'rules'=> 'required|min_length[5]|max_length[255]',
         //         'label' => 'Name',
@@ -73,11 +66,10 @@ class Task extends BaseController
     public function updateStatus()
     {
         $numeric_id = $this->request->getPost('id');
-        // $hashed_id = hash_id($hashed_id, 'decode');
+
         $task_status = [
             'status' => $this->request->getPost('status')
         ];
-        // log_message('error', json_encode($this->request->getPost()));
 
         $this->model->save($this->request->getPost());
 
@@ -99,58 +91,6 @@ class Task extends BaseController
 
         return redirect()->to(site_url('users/profile' . hash_id($numeric_id, 'encode')))->with('message', 'Task Status updated successfully!');
     }
-
-    // public function updateTask() {
-    //     $hashed_id = $this->request->getVar('id');
-
-    //     // Validations
-
-    //     $update_data = [
-    //         'name' => $this->request->getPost('name'),
-    //         'status' => $this->request->getPost('status'),
-    //         'user_id' => $this->request->getPost('user_id')
-    //     ];
-
-    //     // $db = db_connect();
-    //     // $builder = $db->table('tasks');
-
-    //     $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
-
-    //     if ($this->request->isAJAX()) {
-    //         $this->feature = 'task';
-    //         $this->action = 'list';
-
-    //         $records = [];
-
-    //         if (method_exists($this->model, 'getAll')) {
-    //             $records = $this->model->getAll();
-    //         } else {
-    //             $records = $this->model->findAll();
-    //         }
-
-    //         $this->parent_id =  $this->request->getPost('user_id');
-
-    //         return view('task/list', parent::page_data($records));
-    //     }
-    //     return redirect()->to(site_url('users/profile' . $hashed_id))->with('message', 'Role updated successfully!');
-    // }
-
-    // public function updateTaskStatus() {
-
-    //     $statusesModel = new \App\Models\StatusesModel();
-    //     $user_id = $this->request->getPost('user_id');
-    //     $task_status = $this->request->getPost('status');
-
-    //     $countTaskStatuses = $statusesModel->where('user_id', $user_id)->countAllResults();
-    //     // log_message('error', json_encode($countTaskStatuses));
-    //     if ($countTaskStatuses == 0) {
-    //         $this->model->insert((object)['status' => $this->request->getPost('status')]);
-    //     } else {
-    //         $task_id = $statusesModel->where('user_id', $user_id)->first()['id'];
-    //         // log_message('error', json_encode($task_id));
-    //         $statusesModel->update($task_id, (object)['status' => $task_status]);
-    //     }
-    // }  
 
     function getTaskStatuses($task_id){
         $task_statuses = $this->model->where('id', $task_id)->first()['status'];
