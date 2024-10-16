@@ -38,9 +38,10 @@ class Report extends BaseController
         // Get the filtered total
         $totalFiltered = $this->model->countAllResults(false);
 
+        $numericReportTypeId = hash_id($this->request->getPost('reportTypeId'),'decode');
         // Limit the results and fetch the data
         $this->model->limit($length, $start);
-        $data = $this->model->find();
+        $data = $this->model->where('reports_type_id', $numericReportTypeId)->find();
 
         // Loop through the data to apply hash_id()
         foreach ($data as &$report) {
@@ -178,6 +179,21 @@ class Report extends BaseController
         }
 
         return redirect()->to(site_url("report/view/".hash_id($insertId)))->with('message', 'Report added seccessfuly!');;
+    }
+
+    function list($hashedReportTypeId){
+        $this->feature = 'report';
+        $this->action = 'list';
+        // $reportsByTypeId = [];
+
+        // Get Reports by ReportTypeId 
+        $reportsByTypeId = $this->model->where('reports_type_id', hash_id($hashedReportTypeId, 'decode'))->findAll();
+
+        $page_data = parent::page_data($reportsByTypeId);
+
+        log_message('error', json_encode($page_data));
+
+        return view("index", compact('page_data'));
     }
 
     //  public function section_a()

@@ -1,5 +1,5 @@
 <?php 
-// log_message('error', json_encode($result));
+log_message('error', json_encode($result));
 ?>
 
 <div class="row">
@@ -45,12 +45,16 @@
 
 <script>
 $(document).ready(function (){
+
     $('#dataTable').DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": {
             "url": "<?php echo site_url('reports/fetchReports')?>",
-            "type": "POST"
+            "type": "POST",
+            data: function (d){
+                d.reportTypeId = '<?=service('uri')->getSegments()[2];?>'
+            }
         },
         "columns": [
             {

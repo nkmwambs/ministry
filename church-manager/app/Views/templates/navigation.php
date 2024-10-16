@@ -24,17 +24,22 @@
 				<?php 
 					foreach($navigation_items as $navigation_name => $navigation_item){
 						$hasSub = array_key_exists('children', $navigation_item);
+						$parentUri = array_key_exists('uri',$navigation_item) && $navigation_item['uri'] != "" ? $navigation_item['uri'] : '';
 				?>
 					<li class = "<?=$hasSub ? 'has-sub' : ''?>">
-						<a href="<?=site_url($navigation_name);?>">
+						<a href="<?=site_url($navigation_name.DS.$parentUri );?>">
 							<i class="<?=$navigation_item['iconClass']?>"></i>
 							<span class="title"><?=lang("system.$navigation_name");?></span>
 						</a>
 						<?php if($hasSub){?>
 							<ul>
-								<?php foreach($navigation_item['children'] as $child_name => $child_item){?>
+								<?php 
+									foreach($navigation_item['children'] as $child_name => $child_item){
+										$childUri = array_key_exists('uri',$child_item) && $child_item['uri']!= ""? $child_item['uri'] : '';
+                                ?>
+								
                                     <li>
-                                        <a href="<?=site_url($navigation_name.'/'.$child_name);?>">
+                                        <a href="<?=site_url($navigation_name.DS.$childUri.DS.$child_name);?>">
                                             <span class="title"><?=$child_item['label'];?></span>
                                         </a>
                                     </li>
