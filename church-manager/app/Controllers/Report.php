@@ -180,15 +180,15 @@ class Report extends BaseController
         return redirect()->to(site_url("report/view/".hash_id($insertId)))->with('message', 'Report added seccessfuly!');;
     }
 
-     public function section_a()
-     {
-        //  $data['result'] = $this->reportModel->getSectionAData();
-        return view('report/section/view_a');
-     }
+    //  public function section_a()
+    //  {
+    //     //  $data['result'] = $this->reportModel->getSectionAData();
+    //     return view('report/section/view_a');
+    //  }
  
-     public function section_b()
-     {
-        //  $data['result'] = $this->reportModel->getSectionBData();
-         return view('report/section/view_b');
-     }
+    //  public function section_b()
+    //  {
+    //     //  $data['result'] = $this->reportModel->getSectionBData();
+    //      return view('report/section/view_b');
+    //  }
 }

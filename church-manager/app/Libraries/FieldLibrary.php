@@ -178,9 +178,11 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['numeric_feature_id'] = $numeric_feature_id;
     }
 
-    function getFieldUI($fieldTypeId){
-        $fieldModel = new \App\Models\FieldsModel();
+    function getFieldUIElementProperties($fieldTypeId, $fieldModel): array|bool{
         $field = $fieldModel->where('visible', 'yes')->find($fieldTypeId);
+        if (!$field) {
+            return false;
+        }
         extract($field);
         $fieldObj = [
                 'type' => $type,

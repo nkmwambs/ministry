@@ -105,7 +105,7 @@ abstract class BaseController extends Controller
         ];
     }
 
-    protected function page_data($data = [], $id = ''){
+    final protected function page_data($data = [], $id = ''){
         $page_data['result'] = $data;
         $page_data['feature'] = $this->feature;
         $page_data['action'] = $this->action;
@@ -131,9 +131,9 @@ abstract class BaseController extends Controller
         }
        
         // $page_data['extra_data'] = [];
-        if(!$this->request->isAJAX()){
+        // if(!$this->request->isAJAX()){
             // $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
-        }
+        // }
 
         // log_message('error', json_encode($page_data));
 
