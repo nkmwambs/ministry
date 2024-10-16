@@ -15,34 +15,86 @@ class Member extends BaseController
         
         $this->model = new \App\Models\MembersModel();
     }
-    
-   
-    public function index($parent_id = ''): string
-    {
-        $members = [];
 
-        if($parent_id > 0){
-            $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+    public function fetchMembers($parent_id){
+
+        $request = \Config\Services::request();
+
+            // Get parameters sent by Datatables
+            $draw = intval($request->getPost('draw'));
+            $start = intval($request->getPost('start'));
+            $length = intval($request->getPost('length'));
+            $searchValue = isset($request->getPost('search')['value']) ? $request->getPost('search')['value'] : '';
+    
+            // Get the total number of records
+            $totalRecords = $this->model->where('assembly_id', hash_id($parent_id, 'decode'))->countAllResults();
+    
+            // Apply search filter if provided
+            $totalFiltered = $totalRecords;
+            if (!empty($searchValue)) {
+                $totalFiltered = $this->model->like('first_name', $searchValue)
+                    ->orLike('last_name',$searchValue)
+                    ->orLike('member_number', $searchValue)
+                    ->orLike('gender', $searchValue)
+                    ->orLike('assembly_id')
+                    ->where('assembly_Id', hash_id($parent_id, 'decode'))
+                    ->countAllResults(false);
+            }
+    
+    
+            // Limit the results and fetch the data
+            $this->model->limit($length, $start);
+            $data = $this->model->where('assembly_id', hash_id($parent_id, 'decode'))->find();
+            $data = $this->model->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
             ->where('assembly_id',hash_id($parent_id,'decode') )
             ->join('assemblies','assemblies.id=members.assembly_id','left')
             ->join('designations','designations.id = members.designation_id')
-            ->orderBy('members.created_at desc')
+            // ->orderBy('members.created_at desc')
             ->findAll();
-        }else{
-            $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
-            ->join('assemblies','assemblies.id=members.assembly_id','left')
-            ->join('designations','designations.id = members.designation_id')
-            ->orderBy('members.created_at desc')
-            ->findAll();
-        }
-       
-        if(!$members){
-            $page_data['result'] = [];
-        }else{
-            $page_data['result'] = $members;
-        }
 
-        $page_data['result'] = $members;
+            // Loop through the data to apply hash_id()
+            foreach ($data as &$member) {
+                $member['hash_id'] = hash_id($member['id']);  // Add hashed ID to each record
+            }
+    
+            // Prepare response data for DataTables
+            $response = [
+                "draw" => $draw,
+                "recordsTotal" => $totalRecords,
+                "recordsFiltered" => $totalFiltered,
+                "data" => $data,  
+            ];
+        // Return JSON response
+        return $this->response->setJSON($response);
+    }
+    
+   
+    public function index($parent_id = 0): string
+    {
+        // $members = [];
+
+        // if($parent_id > 0){
+        //     $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            // ->where('assembly_id',hash_id($parent_id,'decode') )
+            // ->join('assemblies','assemblies.id=members.assembly_id','left')
+            // ->join('designations','designations.id = members.designation_id')
+            // ->orderBy('members.created_at desc')
+            // ->findAll();
+        // }else{
+        //     $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+        //     ->join('assemblies','assemblies.id=members.assembly_id','left')
+        //     ->join('designations','designations.id = members.designation_id')
+        //     ->orderBy('members.created_at desc')
+        //     ->findAll();
+        // }
+       
+        // if(!$members){
+        //     $page_data['result'] = [];
+        // }else{
+        //     $page_data['result'] = $members;
+        // }
+
+        $page_data['result'] =['member.member_action','member.member_first_name','member.member_last_name', 'member.member_gender', 'member.member_member_number','member.member_designation_id','member.member_assembly_name','member.member_date_of_birth','member.member_phone'];
         $page_data['feature'] = 'member';
         $page_data['action'] = 'list';
         

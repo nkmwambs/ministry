@@ -14,48 +14,55 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <table class="table table-striped datatable">
-            <thead>
-                <tr>
-                    <th><?= lang('member.member_action') ?></th>
-                    <th><?= lang('member.member_first_name') ?></th>
-                    <th><?= lang('member.member_last_name') ?></th>
-                    <th><?= lang('member.member_gender') ?></th>
-                    <th><?= lang('member.member_member_number') ?></th>
-                    <th><?= lang('member.member_designation_id') ?></th>
-                    <th><?= lang('member.member_assembly_name') ?></th>
-                    <th><?= lang('member.member_date_of_birth') ?></th>
-                    <th><?= lang('member.member_phone') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($result as $member) { ?>
-                    <tr>
-                        <td>
-                            <!-- <span class='action-icons' title="View <?= $member['first_name']; ?> member">
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?= plural($feature); ?>','view', '<?= hash_id($member['id']); ?>')"></i>
-                            </span> -->
-                            <span class='action-icons' title="View <?=singular($member['first_name']);?> member">
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($member['id']);?>')"></i>
-                            </span>
-                            <span class='action-icons' title="Edit <?= $member['first_name']; ?> member">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($member['id']); ?>')" class='fa fa-pencil'></i>
-                            </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($member['id']); ?>')" title="Delete <?= $member['id']; ?> participant"><i class='fa fa-trash'></i></span>
-
-                        </td>
-
-                        <td><?= $member['first_name']; ?></td>
-                        <td><?= $member['last_name']; ?></td>
-                        <td><?= $member['gender']; ?></td>
-                        <td><?= $member['member_number']; ?></td>
-                        <td><?= $member['designation_name']; ?></td>
-                        <td><?= $member['assembly_name']; ?></td>
-                        <td><?= $member['date_of_birth']; ?></td>
-                        <td><?= $member['phone']; ?></td>
-
-                    <?php } ?>
-            </tbody>
-        </table>
+      <table class="table table-striped " id="member_dataTable">
+        <thead>
+          <tr>
+            <?php 
+              foreach($result as $column){
+              ?>
+                  <th><?= lang($column) ?></th> 
+              <?php
+              }
+            ?>
+          </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+      </table>
     </div>
-</div>
+  </div>
+
+<script>
+    $(document).ready(function(){
+        $('#member_dataTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '<?= site_url('assemblies/fetchMembers/'. $parent_id);?>',
+                type: 'POST'
+            },
+            columns:[
+                { data:null, render: function(data, type, row){
+                    return '<span class="action-icons">' +
+                        '<a href="<?= site_url("members/view/") ?>' + row.hash_id + '"><i class="fa fa-search"></i></a>' +
+                        '</span>' +
+                        '<span class="action-icons">' +
+                        '<i style="cursor:pointer" onclick="showAjaxModal(\'<?= plural($feature); ?>\', \'edit\', \'' + row.hash_id + '\')" class="fa fa-pencil"></i>' +
+                        '</span>' +
+                        '<span class="action-icons" onclick="deleteItem(\'<?= plural($feature); ?>\', \'delete\', \'' + row.hash_id + '\')" title="Delete ' + row.hash_id + ' participant"><i class="fa fa-trash"></i></span>';
+                }},
+                { data: 'first_name'},
+                { data: 'last_name'},
+                { data: 'gender' },
+                { data:'member_number'},
+                { data: 'designation_name' },
+                { data: 'assembly_name'},
+                { data: 'date_of_birth'},
+                { data: 'phone'},
+            ],
+        },
+        )
+    })
+
+</script>
