@@ -112,7 +112,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
     });
 
 
-    $(document).on("click",".btn_create_parts", function () {
+    $(document).on("click",".btn_create_parts", function (ev) {
         let section_parts_count = $(this).parent().siblings(".div_section_parts_count").find('.section_parts_count').val();
         let part_template = $("#span_part_template").find('.part_template').clone();
         let parts_section = $(this).parent().closest(".form-group").siblings('.parts');
@@ -121,6 +121,8 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
         let denomination_id = $("#denomination_id").val()
 
         let url = "<?= site_url('ajax')?>";
+
+        // alert(section_parts_count)
        
         if(parts_section.children().length == 0) {
             parts_header.removeClass("hidden");
@@ -136,13 +138,10 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                     }
                 },
                 success: function(response) {
-        
                     const fields = response.fields;
-
-                    // console.log(fields);
-                    
                     for (let i = 0; i < section_parts_count; i++) {
                         let part = part_template.clone();
+                        // console.log(part);
                         let partNum = i
                         let multiClass = 'multi_fields_' + section_number + '_' + i
                         let partClass = 'part_' + section_number + '_' + i
@@ -165,7 +164,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
             })
             
         }
-        
+        ev.preventDefault();
     });
 
 </script>
@@ -182,7 +181,13 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
             <input type="text" class="form-control section_title" name="" placeholder="Enter Section Title">
         </div>
         <div class="col-xs-4 div_section_parts_count">
-            <input type="number" class="form-control section_parts_count" placeholder="Enter Section Parts Count">  
+            <!-- <input type="number" class="form-control section_parts_count" placeholder="Enter Section Parts Count">   -->
+             <select class="form-control section_parts_count">
+                <option value = "1">1</option>
+                <option value = "2">2</option>
+                <option value = "3">3</option>
+                <option value = "4">4</option>
+             </select>
         </div>
         <div class="col-xs-4">
             <div class="btn btn-success btn_create_parts">Create Parts</div>

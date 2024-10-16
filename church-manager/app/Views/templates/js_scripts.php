@@ -85,6 +85,11 @@
         });
     }
 
+    $("#modal_ajax").on('hidden.bs.modal', function () {
+        // $(this).data('bs.modal', null);
+        window.location.reload();
+    });
+
 
     function showAjaxListModal(plural_feature, action, id = '') {
 

@@ -58,7 +58,7 @@
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 	
 	<div class="sidebar-menu">
-		<?=view("templates/navigation.php");?>
+		<?=view("templates/navigation.php", $page_data);?>
 	</div>
 
 	<div class="main-content">

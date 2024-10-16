@@ -42,6 +42,7 @@ class Report extends BaseController
         // Get the filtered total
         $totalFiltered = $this->model->countAllResults(false);
 
+        $numericReportTypeId = hash_id($this->request->getPost('reportTypeId'),'decode');
         // Limit the results and fetch the data
         $this->model->limit($length, $start);
         $data = $this->model->select('reports.*,assemblies.name as assembly_name,reporttypes.name as reporttype_name,denominations.name as denomination_name')
@@ -161,4 +162,31 @@ class Report extends BaseController
 
         return redirect()->to(site_url("report/view/".hash_id($insertId)))->with('message', 'Report added seccessfuly!');;
     }
+
+    function list($hashedReportTypeId){
+        $this->feature = 'report';
+        $this->action = 'list';
+        // $reportsByTypeId = [];
+
+        // Get Reports by ReportTypeId 
+        $reportsByTypeId = $this->model->where('reports_type_id', hash_id($hashedReportTypeId, 'decode'))->findAll();
+
+        $page_data = parent::page_data($reportsByTypeId);
+
+        log_message('error', json_encode($page_data));
+
+        return view("index", compact('page_data'));
+    }
+
+    //  public function section_a()
+    //  {
+    //     //  $data['result'] = $this->reportModel->getSectionAData();
+    //     return view('report/section/view_a');
+    //  }
+ 
+    //  public function section_b()
+    //  {
+    //     //  $data['result'] = $this->reportModel->getSectionBData();
+    //      return view('report/section/view_b');
+    //  }
 }

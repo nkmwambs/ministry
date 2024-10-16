@@ -54,7 +54,8 @@
                                             </div>
                                             <?php 
                                                 foreach($report_fields[$i]['section_parts'][$j]['part_fields'] as $metadata){
-                                                    // echo log_message('error',json_encode($metadata));
+                                                    if(!$metadata) continue;
+                                                    
                                             ?>
 
                                                 <div class="form-group">
