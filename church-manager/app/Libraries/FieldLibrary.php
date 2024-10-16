@@ -183,15 +183,14 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         $field = $fieldModel->where('visible', 'yes')->find($fieldTypeId);
         extract($field);
         $fieldObj = [
-            $field_code => [
                 'type' => $type,
+                'field_code' => $field_code,
                 'label' => $field_name,
                 'helptip' => $helptip,
                 'value' => '',
                 'visible' => $visible,
                 'class' => $field_code,
                 'attributes' => []
-            ]
         ];
 
         return $fieldObj;

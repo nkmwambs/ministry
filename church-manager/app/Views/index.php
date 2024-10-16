@@ -50,7 +50,8 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
-
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 </head>
 <body class="page-body  page-fade" data-url="http://neon.dev">
 
@@ -83,7 +84,6 @@
         	<?php 
 				// $content Has been replace with a view
 				// All non-ajax responses MUST place the page_data in a compact method
-				// All viewExtraData results for non-ajax responses MUST be sub items of extra_data
 				echo view($page_data['view'], $page_data);
 			?>
 		</div>
