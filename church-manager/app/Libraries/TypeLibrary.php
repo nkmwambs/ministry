@@ -13,12 +13,12 @@ class TypeLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['reporttypes.id','denomination_id','reporttypes.name','reporttypes.description'];
+        $fields = ['reporttypes.id','denomination_id','reporttypes.name','reporttypes.type_code'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['reporttypes.id','denomination_id','reporttypes.name','reporttypes.description','denominations.name as denomination_name'];
+        $fields = ['reporttypes.id','denomination_id','reporttypes.name','reporttypes.type_code','denominations.name as denomination_name'];
         return $fields;
     }
 

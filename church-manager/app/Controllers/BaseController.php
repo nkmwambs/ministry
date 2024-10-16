@@ -130,6 +130,8 @@ abstract class BaseController extends Controller
             $page_data['fields'] = $table_field;
         }
        
+        $featureLibrary = new \App\Libraries\FeatureLibrary();
+        $page_data['navigation_items'] = $featureLibrary->navigationItems();
         // $page_data['extra_data'] = [];
         // if(!$this->request->isAJAX()){
             // $page_data['content'] = view($view, $page_data); // Use in the index page to load content 

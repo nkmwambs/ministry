@@ -12,7 +12,7 @@ class TypesModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','denomination_id','report_layout','name','description'];
+    protected $allowedFields    = ['id','denomination_id','report_layout','name','type_code'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
