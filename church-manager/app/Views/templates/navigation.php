@@ -27,7 +27,7 @@
 						$parentUri = array_key_exists('uri',$navigation_item) && $navigation_item['uri'] != "" ? $navigation_item['uri'] : '';
 				?>
 					<li class = "<?=$hasSub ? 'has-sub' : ''?>">
-						<a href="<?=site_url($navigation_name.DS.$parentUri );?>">
+						<a href="<?=site_url($navigation_name.'/'.$parentUri );?>">
 							<i class="<?=$navigation_item['iconClass']?>"></i>
 							<span class="title"><?=lang("system.$navigation_name");?></span>
 						</a>
@@ -39,7 +39,7 @@
                                 ?>
 								
                                     <li>
-                                        <a href="<?=site_url($navigation_name.DS.$childUri.DS.$child_name);?>">
+                                        <a href="<?=site_url($navigation_name.'/'.$childUri.'/'.$child_name);?>">
                                             <span class="title"><?=$child_item['label'];?></span>
                                         </a>
                                     </li>
