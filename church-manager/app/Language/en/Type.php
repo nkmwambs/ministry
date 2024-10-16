@@ -10,6 +10,7 @@ return [
     'type_name' => 'Name',
     'type_description' => 'Description',
     'type_action' => 'Actions',
+    'type_code' => 'Type Code',
 
     'add_type_success' => 'Type added successfully!',
     'edit_type_success' => 'Type updated successfully!',

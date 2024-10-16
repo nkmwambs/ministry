@@ -30,6 +30,8 @@
             <thead>
                 <tr>
                     <th><?= lang('report.report_action') ?></th>
+                    <th><?= lang('report.report_denomination_id') ?></th>
+                    <th><?= lang('report.report_assembly_id') ?></th>
                     <th><?= lang('report.report_type_id') ?></th>
                     <th><?= lang('report.report_period') ?></th>
                     <th><?= lang('report.report_date') ?></th>
@@ -62,7 +64,9 @@ $(document).ready(function (){
                         '<span class="action-icons" onclick="deleteItem(\'<?= plural($feature); ?>\', \'delete\', \'' + row.hash_id + '\')" title="Delete ' + row.hash_id + ' report"><i class="fa fa-trash"></i></span>';
                 }
             },
-            { data: "reports_type_id" },
+            { data: "denomination_name" },
+            { data: "assembly_name" },
+            { data: "reporttype_name" },
             { data: "report_period" },
             { data: "report_date" },
             { data: "status" }

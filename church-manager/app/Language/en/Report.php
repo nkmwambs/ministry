@@ -8,12 +8,16 @@ return [
     'delete_report' => 'Delete Report',
 
     'report_action' => 'Action',
+    'report_denomination_id' => 'Denomination Name',
+    'report_assembly_id' => 'Assembly Name',
     'report_type_id' => 'Report Type Name',
     'report_period' => 'Report Period',
     'report_date' => 'Report Date',
     'report_status' => 'Status',
 
     'select_report_type' => 'Select Report Type',
+    'select_assembly' => 'Select an Assembly',
+    'select_denomination' => 'Select a denomination',
 
     'section_A' => 'Section A',
     'section_B' => 'Section B',

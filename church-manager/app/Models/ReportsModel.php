@@ -12,7 +12,7 @@ class ReportsModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','reports_type_id','report_period','report_date','status'];
+    protected $allowedFields    = ['id','reports_type_id','assembly_id','denomination_id','report_period','report_date','status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -50,7 +50,9 @@ class ReportsModel extends Model  implements \App\Interfaces\ModelInterface
 
         if(!empty($listQueryFields)){
             return $this->select($library->setListQueryFields())
-            ->join('reporttypes', 'reporttypes.id = reports.reports_type_id')
+            ->join('reporttypes', 'reporttypes.id = reports.reports_type_id','LEFT')
+            ->join('assemblies', 'assemblies.id = reports.assembly_id','LEFT')
+            ->join('denominations', 'denominations.id = reports.denomination_id', 'LEFT')
             ->orderBy('reports.created_at desc')
             ->findAll();
         }else{
@@ -64,8 +66,6 @@ class ReportsModel extends Model  implements \App\Interfaces\ModelInterface
 
         if(!empty($viewQueryFields)){
             return $this->select($library->setViewQueryFields())
-            ->join('reporttypes', 'reporttypes.id = reports.reports_type_id')
-            ->orderBy('reports.created_at desc')
             ->where('reports.id', $id)
             ->first();
         }else{
@@ -80,6 +80,8 @@ class ReportsModel extends Model  implements \App\Interfaces\ModelInterface
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
                 ->join('reporttypes', 'reporttypes.id = reports.reports_type_id')
+                ->join('assemblies', 'assemblies.id = reports.assembly_id')
+                ->join('denominations', 'denominations.id = reports.denomination_id', 'LEFT')
                 ->where('reports.id', $report_id)
                 ->first();
         } else {
@@ -94,6 +96,8 @@ class ReportsModel extends Model  implements \App\Interfaces\ModelInterface
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields()) 
                 ->join('reporttypes', 'reporttypes.id = reports.reports_type_id')
+                ->join('assemblies', 'assemblies.id = reports.assembly_id')
+                ->join('denominations', 'denominations.id = reports.denomination_id', 'LEFT')
                 ->where('reports.id', $minister_id)
                 ->first();
         } else {
