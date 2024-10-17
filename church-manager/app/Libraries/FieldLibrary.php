@@ -214,15 +214,26 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         
         // Use the commented JSON above to create a CodeIgniter 4 Query 
         if(count($query_obj)){
+            
 
             extract($report); // assembly_id, reports_type_id, report_period
 
             $query_obj_items = (array)$query_obj[0];
             extract($query_obj_items);
 
+            $featureModel = new \App\Models\FeaturesModel();
+            $feature = $featureModel->where('name', singular($table))->first();
+            $feature_id = $feature['id'];
+
             $modelName = ucfirst($table).'Model';
             $model = new ("\\App\Models\\$modelName")();
             $queryResult = $model;
+
+            
+            // $queryResult->join('customvalues', 'customvalues.record_id = members.id', 'left');
+            // $queryResult->join('customfields','customfields.id=customvalues.customfield_id', 'left');
+            // $queryResult->where('customvalues.feature_id', $feature_id); 
+            
 
             if($select == 'count'){
                 $queryResult->select('count(*');
@@ -231,16 +242,33 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
             if(count($conditions)){
                 foreach($conditions as $condition){
                     if($condition->operator == 'equals'){
+
+                        // CHeck if the first part of the string has c_ 
+                        
+
                         if($condition->key == 'assembly_id'){
                             $queryResult->where($condition->key, $assembly_id);
+                        }elseif(strpos($condition->key, 'c_') == 0){
+                            // $field_key = substr($condition->key, 2);
+                            // $queryResult->where('field_code', $field_key);
+                            // $queryResult->where('value', $condition->value);
                         }else{
                             $queryResult->where($condition->key, $condition->value);
                         }
+
                     }
 
                     if($condition->operator == 'in_month'){
-                        $queryResult->where("$condition->key >=", date('Y-m-01',strtotime($report_period)))
-                        ->where("$condition->key <=", date('Y-m-t',strtotime($report_period)));
+                        if(strpos($condition->key, 'c_') == 0){
+                            // $field_key = substr($condition->key, 2);
+                            // $queryResult->where('field_code', $field_key);
+                            // $queryResult->where("value >=", date('Y-m-01',strtotime($report_period)))
+                            // ->where("value <=", date('Y-m-t',strtotime($report_period)));
+                        }else{
+                            $queryResult->where("$condition->key >=", date('Y-m-01',strtotime($report_period)))
+                            ->where("$condition->key <=", date('Y-m-t',strtotime($report_period)));
+                        }
+                        
                     }
                 }
             }
