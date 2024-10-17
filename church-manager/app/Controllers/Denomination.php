@@ -70,14 +70,15 @@ class Denomination extends BaseController
             $data = $this->model->where('id', session()->get('user_denomination_id'))->findAll();
         }
         
+        $page_data = $this->page_data($data);
 
         if ($this->request->isAJAX()) {
             // $page_data['id'] = $id;
-            $page_data = $this->page_data($data);
-            return view("$this->feature/list", $page_data);
+            // $page_data = $this->page_data($data);
+            return view("$this->feature/list", compact('page_data'));
         }
 
-        return view('index', $this->page_data($data));
+        return view('index', compact('page_data'));
     }
 
     public function view($id): string {
@@ -93,7 +94,7 @@ class Denomination extends BaseController
 
         $page_data = parent::page_data($data);
     
-        return view('index', $page_data);
+        return view('index', compact('page_data'));
     }
 
     public function update(){

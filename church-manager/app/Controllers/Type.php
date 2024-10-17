@@ -38,12 +38,12 @@ class Type extends BaseController
                     'max_length' => 'Meeting Name cannot exceed {value} characters long'
                 ]
             ],
-            'description' => [
-                'rules' =>'max_length[255]',
-                'label' => 'Description',
+            'type_code' => [
+                'rules' =>'max_length[50]',
+                'label' => 'Type Code',
                 'errors' => [
-                    'required' => 'Description is required.',
-                    'max_length' => 'Description cannot exceed {value} characters long'
+                    'required' => 'Type Code is required.',
+                    'max_length' => 'Type Code cannot exceed {value} characters long'
                 ]
             ]
         ]);
@@ -56,7 +56,7 @@ class Type extends BaseController
 
         $data = [
             'name' => $this->request->getPost('name'),
-            'description' => $this->request->getPost('description'),
+            'type_code' => $this->request->getPost('type_code'),
             'denomination_id' => $this->request->getPost('denomination_id'),
             'report_layout' => json_encode($this->request->getPost('layout')),
         ];
@@ -118,13 +118,13 @@ class Type extends BaseController
                    'max_length' => 'Meeting Name cannot exceed {value} characters long'
                 ],
             ],
-            'description' => [
-                'rules' =>'max_length[255]',
-                'label' => 'Description',
+            'type_code' => [
+                'rules' =>'max_length[50]',
+                'label' => 'Type Code',
                 'errors' => [
-                   'required' => 'Description is required.',
-                   'max_length' => 'Description cannot exceed {value} characters long'
-                ],
+                    'required' => 'Type Code is required.',
+                    'max_length' => 'Type Code cannot exceed {value} characters long'
+                ]
             ],
         ]);
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<?php extract($page_data);?>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 	<meta charset="utf-8">
@@ -11,8 +12,6 @@
 	<link rel="icon" href="assets/images/favicon.ico">
 
 	<title><?=humanize($feature);?> | <?=humanize($action);?></title>
-
-	
 	
 
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
@@ -51,14 +50,15 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
-
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 </head>
 <body class="page-body  page-fade" data-url="http://neon.dev">
 
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 	
 	<div class="sidebar-menu">
-		<?=view("templates/navigation.php");?>
+		<?=view("templates/navigation.php", $page_data);?>
 	</div>
 
 	<div class="main-content">
@@ -81,7 +81,11 @@
 		
 		<hr />
 		<div class="main">
-        	<?=$content;?>
+        	<?php 
+				// $content Has been replace with a view
+				// All non-ajax responses MUST place the page_data in a compact method
+				echo view($page_data['view'], $page_data);
+			?>
 		</div>
 	
 		<!-- Footer -->

@@ -19,7 +19,7 @@
                 <tr>
                     <th><?= lang('type.type_action') ?></th>
                     <th><?= lang('type.type_name') ?></th>
-                    <th><?= lang('type.type_description') ?></th>
+                    <th><?= lang('type.type_code') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -37,7 +37,7 @@
                         </td>
 
                         <td><?= $type['name']; ?></td>
-                        <td><?= $type['description']; ?></td>
+                        <td><?= $type['type_code']; ?></td>
                     </tr>
                 <?php } ?>
             </tbody>
