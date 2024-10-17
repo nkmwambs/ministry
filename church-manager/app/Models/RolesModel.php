@@ -50,6 +50,7 @@ class RolesModel extends Model  implements \App\Interfaces\ModelInterface
 
         if (!empty($setQueryFields)) {
             return $this->select($library->setListQueryFields())
+            ->join('denominations', 'denominations.id = roles.denomination_id')
             ->orderBy('roles.created_at desc')->findAll();
         } else {
             return $this->orderBy('created_at desc')->findAll();
@@ -62,7 +63,8 @@ class RolesModel extends Model  implements \App\Interfaces\ModelInterface
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
-            ->where('id', $id)->first();
+            ->join('denominations', 'denominations.id = roles.denomination_id')
+            ->where('roles.id', $id)->first();
         } else {
             return $this->where('id', $id)->first();
         }

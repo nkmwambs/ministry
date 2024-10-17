@@ -13,7 +13,7 @@ class RoleLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['roles.id','roles.name','default_role','denomination_id'];
+        $fields = ['roles.id','roles.name','default_role','denomination_id','denominations.name as denomination_name'];
         return $fields;
     }
 

@@ -76,13 +76,39 @@ class FieldsModel extends Model
         if(!empty($viewQueryFields)){
             return $this->select($library->setViewQueryFields())
             ->join('features', 'features.id = customfields.feature_id')
-            ->orderBy('customfields.created_at desc')
             ->where('customfields.id', $id)->first();
         }else{
             return $this->where('id', $id)->first();
         }
     }
 
+    public function getEditData($customfield_id){
+        $library = new \App\Libraries\FieldLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields())
+                ->join('features', 'features.id = customfields.feature_id')
+                ->where('customfields.id', $customfield_id)
+                ->first();
+        } else {
+            return $this->where('id', $customfield_id)->first();
+        }
+    }
+
+    public function getViewData($customfield_id){
+        $library = new \App\Libraries\FieldLibrary();
+        $viewQueryFields = $library->setViewQueryFields();
+
+        if (!empty($viewQueryFields)) {
+            return $this->select($library->setViewQueryFields()) 
+                ->join('features', 'features.id = customfields.feature_id')
+                ->where('customfields.id', $customfield_id)
+                ->first();
+        } else {
+            return $this->where('id', $customfield_id)->first();
+        }
+    }
 
     function updateRecycleBin($data){
 
