@@ -169,11 +169,16 @@ class Report extends BaseController
         // $reportsByTypeId = [];
 
         // Get Reports by ReportTypeId 
-        $reportsByTypeId = $this->model->where('reports_type_id', hash_id($hashedReportTypeId, 'decode'))->findAll();
+        $reportsByTypeId = $this->model
+        ->select('reports.*,assemblies.name as assembly_name,reporttypes.name as reporttype_name,denominations.name as denomination_name')
+        ->join('reporttypes', 'reporttypes.id = reports.reports_type_id','LEFT')
+        ->join('assemblies', 'assemblies.id = reports.assembly_id','LEFT')
+        ->join('denominations', 'denominations.id = reports.denomination_id', 'LEFT')
+        ->where('reports_type_id', hash_id($hashedReportTypeId, 'decode'))->findAll();
 
         $page_data = parent::page_data($reportsByTypeId);
 
-        log_message('error', json_encode($page_data));
+        // log_message('error', json_encode($page_data));
 
         return view("index", compact('page_data'));
     }
