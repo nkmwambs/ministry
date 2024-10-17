@@ -11,6 +11,7 @@ return [
     'type_description' => 'Description',
     'type_action' => 'Actions',
     'type_code' => 'Type Code',
+    'section_count' => 'Section Count',
 
     'add_type_success' => 'Type added successfully!',
     'edit_type_success' => 'Type updated successfully!',
