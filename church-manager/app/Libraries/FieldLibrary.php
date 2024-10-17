@@ -188,6 +188,9 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         if (!$field) {
             return false;
         }
+
+        // log_message('error', json_encode($field));
+
         extract($field);
         $fieldObj = [
                 'type' => $type,
@@ -208,14 +211,15 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}]}]
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "gender", "value": "female", "operator": "equals"}]}]
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "saved_date", "operator": "in_month"}]}]
+        // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "c__sanctified_date", "operator": "in_month"}]}]
 
         $query_obj = json_decode($query_builder);
+
         $value = '';
         
         // Use the commented JSON above to create a CodeIgniter 4 Query 
         if(count($query_obj)){
             
-
             extract($report); // assembly_id, reports_type_id, report_period
 
             $query_obj_items = (array)$query_obj[0];
@@ -229,12 +233,6 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
             $model = new ("\\App\Models\\$modelName")();
             $queryResult = $model;
 
-            
-            // $queryResult->join('customvalues', 'customvalues.record_id = members.id', 'left');
-            // $queryResult->join('customfields','customfields.id=customvalues.customfield_id', 'left');
-            // $queryResult->where('customvalues.feature_id', $feature_id); 
-            
-
             if($select == 'count'){
                 $queryResult->select('count(*');
             }
@@ -242,16 +240,18 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
             if(count($conditions)){
                 foreach($conditions as $condition){
                     if($condition->operator == 'equals'){
-
-                        // CHeck if the first part of the string has c_ 
-                        
-
                         if($condition->key == 'assembly_id'){
                             $queryResult->where($condition->key, $assembly_id);
-                        }elseif(strpos($condition->key, 'c_') == 0){
-                            // $field_key = substr($condition->key, 2);
-                            // $queryResult->where('field_code', $field_key);
-                            // $queryResult->where('value', $condition->value);
+                        }elseif(strpos($condition->key, 'c__') !== false){
+
+                            $queryResult->join('customvalues', 'customvalues.record_id = members.id', 'left');
+                            $queryResult->join('customfields','customfields.id=customvalues.customfield_id');
+                            $queryResult->where('customvalues.feature_id', $feature_id); 
+                            
+                            $field_key = substr($condition->key, 3);
+                            $queryResult->where('field_code', $field_key);
+                            $queryResult->where('value', $condition->value);
+                            // log_message('error', $condition->key);
                         }else{
                             $queryResult->where($condition->key, $condition->value);
                         }
@@ -259,11 +259,17 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                     }
 
                     if($condition->operator == 'in_month'){
-                        if(strpos($condition->key, 'c_') == 0){
-                            // $field_key = substr($condition->key, 2);
-                            // $queryResult->where('field_code', $field_key);
-                            // $queryResult->where("value >=", date('Y-m-01',strtotime($report_period)))
-                            // ->where("value <=", date('Y-m-t',strtotime($report_period)));
+                        if(strpos($condition->key, 'c__') !== false){
+
+                            $queryResult->join('customvalues', 'customvalues.record_id = members.id', 'left');
+                            $queryResult->join('customfields','customfields.id=customvalues.customfield_id');
+                            $queryResult->where('customvalues.feature_id', $feature_id); 
+                            
+                            $field_key = substr($condition->key, 3);
+                            $queryResult->where('customfields.field_code', $field_key);
+                            $queryResult->where("customvalues.value >=", date('Y-m-01',strtotime($report_period)))
+                            ->where("customvalues.value <=", date('Y-m-t',strtotime($report_period)));
+                            // log_message('error', $condition->key);
                         }else{
                             $queryResult->where("$condition->key >=", date('Y-m-01',strtotime($report_period)))
                             ->where("$condition->key <=", date('Y-m-t',strtotime($report_period)));

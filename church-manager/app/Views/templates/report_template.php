@@ -18,7 +18,7 @@
             <div class="panel-heading">
                 <div class="panel-title">
                     <div class="page-title">
-                        <i class='fa fa-eye'></i><?= lang('report.view_report'); ?>
+                        <i class='fa fa-eye'></i><?= lang('report.view_report'); ?> : <?=$report_prefix;?> : <?=date('jS F Y',strtotime($report_period));?>
                     </div>
                     <div class="panel-options">
                         <ul class="nav nav-tabs" id="myTabs">

@@ -1,3 +1,3 @@
 <?php 
     
-    echo report_template('monthly_report',$report_fields);
+    echo report_template($report_type_name,$report_fields, $report_period);
