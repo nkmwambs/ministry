@@ -46,7 +46,7 @@
                         <td><?= $collection['return_date']; ?></td>
                         <td><?= $collection['period_start_date']; ?></td>
                         <td><?= $collection['period_end_date']; ?></td>
-                        <td><?= $collection['revenue_id']; ?></td>
+                        <td><?= $collection['revenue_name']; ?></td>
                         <td><?= $collection['amount']; ?></td>
                         <td><?= $collection['status']; ?></td>
                         <td><?= $collection['collection_reference']; ?></td>

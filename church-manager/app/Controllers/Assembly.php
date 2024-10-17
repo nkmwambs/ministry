@@ -29,7 +29,8 @@ class Assembly extends BaseController
         if (!empty($searchValue)) {
             $this->model->like('name', $searchValue)
                 ->orLike('location', $searchValue)
-                ->orLike('is_active', $searchValue);
+                ->orLike('is_active', $searchValue)
+                ->join('entities','entities.id=assemblies.entity_id', 'left');
         }
 
         // Get the filtered total
@@ -37,7 +38,9 @@ class Assembly extends BaseController
 
         // Limit the results and fetch the data
         $this->model->limit($length, $start);
-        $data = $this->model->find();
+        $data = $this->model->select('assemblies.*,entities.name as entity_name')
+        ->join('entities','entities.id=assemblies.entity_id', 'left')
+        ->find();
 
         // Loop through the data to apply hash_id()
         foreach ($data as &$assembly) {
