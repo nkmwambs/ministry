@@ -100,7 +100,6 @@
                         <div class="col-xs-6">
                             <select name="type" id="type" class="form-control" required>
                                 <option value="<?= $result['type']; ?>"><?= ucfirst($result['type']); ?></option>
-                                <option value="number">Number</option>
                                 <option value="date">Date</option>
                                 <option value="datetime">DateTime</option>
                                 <option value="timestamp">TimeStamp</option>
@@ -108,6 +107,7 @@
                                 <option value="numeric">Numeric</option>
                                 <option value="email">Email</option>
                                 <option value="dropdown">Dropdown</option>
+                                <option value="enum">ENUM</option>
                             </select>
                         </div>
                     </div>
