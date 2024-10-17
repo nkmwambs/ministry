@@ -1,5 +1,5 @@
 <?php 
-// log_message('error', json_encode($result));
+// echo json_encode($result);
 ?>
 
 <div class="row">

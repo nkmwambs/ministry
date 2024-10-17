@@ -102,7 +102,7 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
 
         // log_message('error', json_encode($page_data));
 
-        $numericReportId = 8;//$page_data['result']['id'];
+        $numericReportId = $page_data['result']['id'];
         // Get report Type 
         $reportModel = new \App\Models\ReportsModel();
         $report = $reportModel->find($numericReportId);

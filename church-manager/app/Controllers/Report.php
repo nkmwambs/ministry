@@ -49,6 +49,7 @@ class Report extends BaseController
         ->join('reporttypes', 'reporttypes.id = reports.reports_type_id','LEFT')
         ->join('assemblies', 'assemblies.id = reports.assembly_id','LEFT')
         ->join('denominations', 'denominations.id = reporttypes.denomination_id', 'LEFT')
+        ->where('reports.reports_type_id', $numericReportTypeId)
         ->find();
 
         // Loop through the data to apply hash_id()

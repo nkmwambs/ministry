@@ -92,17 +92,21 @@ class ReportsModel extends Model  implements \App\Interfaces\ModelInterface
     public function getViewData($minister_id){
         $library = new \App\Libraries\ReportLibrary();
         $viewQueryFields = $library->setViewQueryFields();
-
+        $result = [];
         if (!empty($viewQueryFields)) {
-            return $this->select($library->setViewQueryFields()) 
+            $result = $this->select($library->setViewQueryFields()) 
                 ->join('reporttypes', 'reporttypes.id = reports.reports_type_id')
                 ->join('assemblies', 'assemblies.id = reports.assembly_id')
-                ->join('denominations', 'denominations.id = reporttypes.denomination_id', 'LEFT')
+                ->join('denominations', 'denominations.id = reporttypes.denomination_id')
                 ->where('reports.id', $minister_id)
                 ->first();
         } else {
-            return $this->where('id', $minister_id)->first();
+            $result = $this->where('id', $minister_id)->first();
         }
+
+        // log_message('error', json_encode($result));
+
+        return $result;
     }
 
     function updateRecycleBin($data){
