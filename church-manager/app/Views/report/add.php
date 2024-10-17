@@ -1,6 +1,6 @@
 <?php
 
-// echo $reports_type_id;
+echo $parent_id;
 
 $numeric_denomination_id = hash_id($parent_id, 'decode');
 $numeric_assembly_id = hash_id($assembly_id, 'decode');

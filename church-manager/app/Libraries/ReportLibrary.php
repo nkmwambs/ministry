@@ -32,8 +32,8 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function addExtraData(&$page_data) {
-        $parent_id = 0;
-        $reports_type_id = service('uri')->getSegments()[2];
+        $parent_id = $page_data['parent_id'];
+        $reports_type_id = 0; // service('uri')->getSegments()[2];
         $assembly_id = 0;
 
         if (session()->get('user_denomination_id')) {

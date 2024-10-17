@@ -100,6 +100,13 @@ class Member extends BaseController
                     'regex_match' => 'Phone number should be in the format +254XXXXXXXX',
                 ]
             ],
+            'saved_date' => [
+                'rules' => 'required',
+                'label' => 'Date Saved',
+                'errors' => [
+                    'required' => 'Date saved is required.',
+                ]
+            ]
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -120,7 +127,8 @@ class Member extends BaseController
             'designation_id' => $this->request->getPost('designation_id'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
             'email' => $this->request->getPost('email'),
-            'phone' => $this->request->getPost('phone'),
+            'saved_date' => $this->request->getPost('saved_date'),
+
         ];
 
         $this->model->insert((object)$data);
@@ -196,6 +204,13 @@ class Member extends BaseController
                    'required' => 'Date of Birth is required.',
                 ]
             ],
+            'saved_date' => [
+                'rules' =>'required',
+                'label' => 'Saved Date',
+                'errors' => [
+                   'required' => 'Saved Date is required.',
+                ]
+            ],
             'phone' => [
                 'rules' => 'required|regex_match[/^\+254\d{9}$/]',
                 'label' => 'Phone',
@@ -226,6 +241,7 @@ class Member extends BaseController
             'date_of_birth' => $this->request->getPost('date_of_birth'),
             'email' => $this->request->getPost('email'),
             'phone' => $this->request->getPost('phone'),
+            'saved_date' => $this->request->getPost('saved_date'),
         ];
         
         $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
