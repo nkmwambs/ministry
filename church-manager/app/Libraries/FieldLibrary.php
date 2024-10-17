@@ -53,12 +53,17 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
      */
     public function saveCustomFieldValues(int $recordId, string $tableName, ?array $customFieldValues): bool
     {
+
+        $featureModel = new \App\Models\FeaturesModel();
+        $feature = $featureModel->where('name', singular($tableName))->first();
+        $featureId = $feature['id'];
+
         if($customFieldValues && sizeOf($customFieldValues) > 0){
             foreach ($customFieldValues as $fieldId => $value) {
                 // Check if the custom field value already exists for this record
                 $existing = $this->customValueModel
                     ->where('record_id', $recordId)
-                    ->where('table_name', $tableName)
+                    ->where('feature_id', $featureId)
                     ->where('customfield_id', $fieldId)
                     ->first();
     
@@ -71,7 +76,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                 } else {
                     $data = [
                         'record_id'   => $recordId,
-                        'table_name'  => $tableName,
+                        'feature_id'  => $featureId,
                         'customfield_id'    => $fieldId,
                         'value' => json_encode($value),
                     ];
@@ -199,9 +204,11 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function computeFieldValue(string $query_builder, array $report) {
+        
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}]}]
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "gender", "value": "female", "operator": "equals"}]}]
-        // log_message('error', $query_builder);
+        // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "saved_date", "operator": "in_month"}]}]
+
         $query_obj = json_decode($query_builder);
         $value = '';
         
@@ -229,6 +236,11 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                         }else{
                             $queryResult->where($condition->key, $condition->value);
                         }
+                    }
+
+                    if($condition->operator == 'in_month'){
+                        $queryResult->where("$condition->key >=", date('Y-m-01',strtotime($report_period)))
+                        ->where("$condition->key <=", date('Y-m-t',strtotime($report_period)));
                     }
                 }
             }

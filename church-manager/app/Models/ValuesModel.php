@@ -12,7 +12,7 @@ class ValuesModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','record_id','customfield_id','value'];
+    protected $allowedFields    = ['id','feature_id','record_id','customfield_id','value'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

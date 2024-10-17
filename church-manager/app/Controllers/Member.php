@@ -147,7 +147,7 @@ class Member extends BaseController
 
             // Save non-null custom field values
             if (!empty($nonNullCustomFields)) {
-                $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+                $customFieldLibrary->saveCustomFieldValues($insertId, $this->tableName, $customFieldValues);
             }
         }
 
