@@ -32,16 +32,18 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function addExtraData(&$page_data) {
-        $parent_id = $page_data['parent_id'];
-        $reports_type_id = 0; // service('uri')->getSegments()[2];
+        // $parent_id = $page_data['parent_id'];
+        $denomination_id = 0; // service('uri')->getSegments()[2];
         $assembly_id = 0;
 
-        if (session()->get('user_denomination_id')) {
-            $parent_id = session()->get('user_denomination_id');
-        }
-
         $denominationsModel = new \App\Models\DenominationsModel();
-        $denominations = $denominationsModel->findAll();
+        $denominationsQuery = $denominationsModel;
+        if (session()->get('user_denomination_id')) {
+            $denomination_id = session()->get('user_denomination_id');
+            $denominationsQuery->where('reporttypes.denomination_id', $denomination_id);
+            $denominationsQuery->join('reporttypes', 'reporttypes.denomination_id = reports.reports_type_id');
+        }
+        $denominations = $denominationsQuery->findAll();
 
         $typesModel = new \App\Models\TypesModel();
         $types = $typesModel->findAll();
@@ -53,8 +55,8 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['types'] = $types;
         $page_data['assemblies'] = $assemblies;
 
-        $page_data['parent_id'] = hash_id($parent_id,'encode');
-        $page_data['reports_type_id'] = hash_id($reports_type_id, 'encode');
+        // $page_data['parent_id'] = hash_id($parent_id,'decode');
+        $page_data['denomination_id'] = $denomination_id;
         $page_data['assembly_id'] = hash_id($assembly_id, 'encode');
 
     }

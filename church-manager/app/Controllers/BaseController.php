@@ -247,7 +247,7 @@ abstract class BaseController extends Controller
 
     public function add(): string {
         $page_data = $this->page_data();
-        $page_data['parent_id'] = $this->parent_id;
+        // $page_data['parent_id'] = $this->parent_id;
 
         if(method_exists($this->library,'addExtraData')){
             // Note the addExtraData updates the $page_data by reference
@@ -261,6 +261,8 @@ abstract class BaseController extends Controller
             // log_message('error', json_encode($customFields));
         }
 
+        
+        // log_message('error', json_encode($page_data));
         return view("$this->feature/add", $page_data);
     }
 

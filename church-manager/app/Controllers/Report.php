@@ -172,6 +172,7 @@ class Report extends BaseController
         // Get Reports by ReportTypeId 
         $reportsByTypeId = $this->model->where('reports_type_id', hash_id($hashedReportTypeId, 'decode'))->findAll();
 
+        $this->parent_id = $hashedReportTypeId;
         $page_data = parent::page_data($reportsByTypeId);
 
         // log_message('error', json_encode($page_data));

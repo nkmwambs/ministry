@@ -1,9 +1,8 @@
 <?php
-
-echo $parent_id;
-
-$numeric_denomination_id = hash_id($parent_id, 'decode');
+// echo $parent_id;
+$numeric_denomination_id = $denomination_id;
 $numeric_assembly_id = hash_id($assembly_id, 'decode');
+
 ?>
 
 <div class="row">
@@ -42,7 +41,7 @@ $numeric_assembly_id = hash_id($assembly_id, 'decode');
             </div>
           </div>
 
-          <input type="text" name="reports_type_id" id="reports_type_id" value="" />
+          <input type="hidden" name="reports_type_id" id="reports_type_id" value="<?=$parent_id;?>" />
 
           <?php if (!$numeric_denomination_id) { ?>
             <div class='form-group'>
