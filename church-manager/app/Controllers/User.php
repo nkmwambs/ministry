@@ -174,17 +174,6 @@ class User extends BaseController
     {
         $numeric_id = $this->request->getPost('id');
 
-        // $validation = \Config\Services::validation();
-        // $validation->setRules([
-        //     'username' => 'required|min_length[3]|max_length[255]',
-        //     'biography' => 'required|min_length[3]|max_length[255]',
-        //     // 'profile_picture' => 'required',
-        // ]);
-
-        // if (!$this->validate($validation->getRules())) {
-        //     return response()->setJSON(['errors' => $this->validator->getErrors()]);
-        // }
-
         $originalDate = Time::now('America/Chicago', 'en_US');
         $newDateString = $originalDate->format('Y-m-d H:i:s');
 

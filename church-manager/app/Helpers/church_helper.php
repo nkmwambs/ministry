@@ -13,3 +13,9 @@ if(!function_exists('hash_id')){
         }
     }
 }
+
+if(!function_exists('report_template')){
+    function report_template(string $report_prefix, array $report_fields): string {
+        return view('templates/report_template', compact('report_prefix', 'report_fields'));
+    }
+}

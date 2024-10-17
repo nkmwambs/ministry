@@ -67,11 +67,11 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="description">
-                            <?= lang("type.type_description") ?>
+                        <label class="control-label col-xs-4" for="type_code">
+                            <?= lang("type.type_code") ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="description" id="description" placeholder="Enter Description"></textarea>
+                            <textarea type="text" class="form-control" name="type_code" id="type_code" placeholder="Enter Type Code"></textarea>
                         </div>
                     </div>
 
@@ -105,14 +105,14 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
         for (let i = 0; i < section_count; i++) {
             let section = section_template.clone();
             section.removeClass("hidden");
-            section.find('.section_content').find('.section_number').val(i + 1)
+            section.find('.section_content').find('.section_number').val(i+1)
             section.find('.section_content').find('.div_section_title').find('.section_title').prop('name', `layout[${i + 1}][section_title]`)
             $("#frm-view_types").append(section);
         }
     });
 
 
-    $(document).on("click", ".btn_create_parts", function() {
+    $(document).on("click",".btn_create_parts", function () {
         let section_parts_count = $(this).parent().siblings(".div_section_parts_count").find('.section_parts_count').val();
         let part_template = $("#span_part_template").find('.part_template').clone();
         let parts_section = $(this).parent().closest(".form-group").siblings('.parts');
@@ -120,9 +120,9 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
         let section_number = $(this).parent().siblings(".section_number").val();
         let denomination_id = $("#denomination_id").val()
 
-        let url = "<?= site_url('ajax') ?>";
-
-        if (parts_section.children().length == 0) {
+        let url = "<?= site_url('ajax')?>";
+       
+        if(parts_section.children().length == 0) {
             parts_header.removeClass("hidden");
 
             $.ajax({
@@ -136,21 +136,21 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                     }
                 },
                 success: function(response) {
-
+        
                     const fields = response.fields;
 
                     // console.log(fields);
-
+                    
                     for (let i = 0; i < section_parts_count; i++) {
                         let part = part_template.clone();
-                        let partNum = i + 1
+                        let partNum = i+1
                         let multiClass = 'multi_fields_' + section_number + '_' + partNum
                         let partClass = 'part_' + section_number + '_' + partNum
                         part.removeClass("hidden");
-                        part.find('.part_number').val(i + 1);
+                        part.find('.part_number').val(i+1);
 
-                        part.find('.div_part_title').find('.part_title').prop('name', `layout[${section_number}][section_parts][${partNum}][part_title]`)
-                        part.find('.div_part_fields').find('.part_fields').prop('name', `layout[${section_number}][section_parts][${partNum}][part_fields][]`)
+                        part.find('.div_part_title').find('.part_title').prop('name', `layout[${section_number}][section_parts][${i}][part_title]`)
+                        part.find('.div_part_fields').find('.part_fields').prop('name', `layout[${section_number}][section_parts][${i}][part_fields][]`)
 
                         part.find('.multi_fields').select2({
                             placeholder: 'Select Fields',
@@ -165,7 +165,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
             })
 
         }
-
+        
     });
 </script>
 
@@ -181,7 +181,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
             <input type="text" class="form-control section_title" name="" placeholder="Enter Section Title">
         </div>
         <div class="col-xs-4 div_section_parts_count">
-            <input type="number" class="form-control section_parts_count" placeholder="Enter Section Parts Count">
+            <input type="number" class="form-control section_parts_count" placeholder="Enter Section Parts Count">  
         </div>
         <div class="col-xs-4">
             <div class="btn btn-success btn_create_parts">Create Parts</div>

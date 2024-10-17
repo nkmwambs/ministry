@@ -78,7 +78,7 @@ class Event extends BaseController
         // Pass the data to the view
         $page_data = parent::page_data($data, $id);
         
-        return view('index', $page_data);
+        return view('index', compact('page_data'));
     }    
 
     public function update(){

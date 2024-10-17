@@ -88,16 +88,17 @@ $routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
 $routes->post('members/fetchMembers/(:num)','Member::fetchMembers/$1');
 
 $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) {
-    $routes->get('section_a/(:segment)', 'Report::sectionA/$1');
-    $routes->get('section_b/(:segment)', 'Report::sectionB/$1');
-    $routes->get('section_c/(:segment)', 'Report::sectionC/$1');
-    $routes->get('section_d/(:segment)', 'Report::sectionD/$1');
-    $routes->get('edit/(:segment)', "Report::edit/$1");
+    // $routes->get('section_a/(:segment)', 'Report::sectionA/$1');
+    // $routes->get('section_b/(:segment)', 'Report::sectionB/$1');
+    // $routes->get('section_c/(:segment)', 'Report::sectionC/$1');
+    // $routes->get('section_d/(:segment)', 'Report::sectionD/$1');
+    // $routes->get('edit/(:segment)', "Report::edit/$1");
     // $routes->get('section_a/(:seg)', 'Report::load_section/$1');
+    $routes->get('list/(:segment)', 'Report::list/$1');
 });
 
 
-$routes->get('reports/load_section/(:any)', 'Report::loadSection/$1');
+$routes->get('reports/details/(:any)', 'Report::viewDetails/$1');
 
 
 $routes->group('ajax', static function($routes){

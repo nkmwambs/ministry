@@ -52,11 +52,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="description">
-                            <?= lang('type.type_description') ?>
+                        <label class="control-label col-xs-4" for="type_code">
+                            <?= lang('type.type_code') ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="description" id="description" value = "<?=$result['description'];?>" placeholder="Enter Description"><?=$result['description'];?></textarea>
+                            <textarea type="text" class="form-control" name="type_code" id="type_code" value = "<?=$result['type_code'];?>" placeholder="Enter Type Code"><?=$result['description'];?></textarea>
                         </div>
                     </div>
 

@@ -10,6 +10,8 @@ return [
     'type_name' => 'Name',
     'type_description' => 'Description',
     'type_action' => 'Actions',
+    'type_code' => 'Type Code',
+
     'section_count' => 'Number of Sections',
 
     'add_type_success' => 'Type added successfully!',

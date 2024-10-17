@@ -1,5 +1,7 @@
 <?php
-$numeric_report_type_id = hash_id($reports_type_id, 'decode');
+// $numeric_report_type_id = hash_id($reports_type_id, 'decode');
+$numeric_denomination_id = hash_id($parent_id, 'decode');
+$numeric_assembly_id = hash_id($assembly_id, 'decode');
 ?>
 
 <div class="row">
@@ -10,16 +12,16 @@ $numeric_report_type_id = hash_id($reports_type_id, 'decode');
       <div class="panel-heading">
         <div class="panel-title">
           <div class="page-title"><i class='fa fa-plus-circle'></i>
-          <?= lang('report.add_report') ?>
-        </div>
+            <?= lang('report.add_report') ?>
+          </div>
         </div>
 
       </div>
 
       <div class="panel-body">
 
-        <form role="form" id = "frm_add_report" method="post" action="<?=site_url("reports/save")?>" class="form-horizontal form-groups-bordered">
-          
+        <form role="form" id="frm_add_report" method="post" action="<?= site_url("reports/save") ?>" class="form-horizontal form-groups-bordered">
+
           <!-- <?php if (session()->get('errors')): ?>
               <div class="form-group">
                   <div class="col-xs-12 error">
@@ -34,24 +36,40 @@ $numeric_report_type_id = hash_id($reports_type_id, 'decode');
 
           <div class="form-group hidden error_container">
             <div class="col-xs-12 error">
-              
+
             </div>
           </div>
 
-          <?php if (!$numeric_report_type_id) { ?>
+          <?php if (!$numeric_denomination_id) { ?>
             <div class='form-group'>
-              <label for="reports_type_id" class="control-label col-xs-4"><?= lang('report.report_type_id') ?></label>
+              <label for="denomination_id" class="control-label col-xs-4"><?= lang('report.report_denomination_id') ?></label>
               <div class="col-xs-6">
-                <select class="form-control" name="reports_type_id" id="reports_type_id">
-                  <option value=""><?= lang('report.select_report_type') ?></option>
-                  <?php foreach ($types as $type) : ?>
-                    <option value="<?php echo $type['id']; ?>"><?php echo $type['name']; ?></option>
+                <select class="form-control" name="denomination_id" id="denomination_id">
+                  <option value=""><?= lang('report.select_denomination') ?></option>
+                  <?php foreach ($denominations as $denomination) : ?>
+                    <option value="<?php echo $denomination['id']; ?>"><?php echo $denomination['name']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
             </div>
           <?php } else { ?>
-            <input type="hidden" name="reports_type_id" id="reports_type_id" value="<?= $reports_type_id; ?>" />
+            <input type="hidden" name="denomination_id" id="denomination_id" value="<?= $parent_id; ?>" />
+          <?php } ?>
+
+          <?php if (!$numeric_assembly_id) { ?>
+            <div class='form-group'>
+              <label for="assembly_id" class="control-label col-xs-4"><?= lang('report.report_assembly_id') ?></label>
+              <div class="col-xs-6">
+                <select class="form-control" name="assembly_id" id="assembly_id">
+                  <option value=""><?= lang('report.select_assembly') ?></option>
+                  <?php foreach ($assemblies as $assembly) : ?>
+                    <option value="<?php echo $assembly['id']; ?>"><?php echo $assembly['name']; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+          <?php } else { ?>
+            <input type="hidden" name="assembly_id" id="assembly_id" value="<?= $assembly_id; ?>" />
           <?php } ?>
 
           <div class="form-group">
@@ -72,19 +90,6 @@ $numeric_report_type_id = hash_id($reports_type_id, 'decode');
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-xs-4" for="status">
-              <?= lang('report.report_status') ?>
-            </label>
-            <div class="col-xs-6">
-              <select type="text" class="form-control" name="status" id="status">
-                <option value="draft">Draft</option>
-                <option value="submitted">Submitted</option>
-                <option value="approved">Approved</option>
-              </select>
-            </div>
-          </div>
-          
           <!-- Dynamically Generated Custom Fields -->
           <?php foreach ($customFields as $field): ?>
             <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
