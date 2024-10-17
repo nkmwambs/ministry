@@ -109,6 +109,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="saved_date">
+                        <?= lang('member.saved_date') ?>
+                        </label>
+                        <div class="col-xs-6">
+                        <input type="text" class="form-control datepicker" name="saved_date" id="saved_date" value="<?= $result['saved_date']; ?>" placeholder="Enter Saved Date"></i>
+                        </div>
+                    </div>
+
                     <?php if (!empty($customFields)): ?>
                         <?php foreach ($customFields as $field): ?>
                             <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">

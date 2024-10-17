@@ -1,5 +1,6 @@
 <?php 
 $visitor_sections = array_pop($result);
+
 ?>
 
 <div class = "row">

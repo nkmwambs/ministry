@@ -1,5 +1,5 @@
 <?php 
-// echo json_encode($result);
+// echo $parent_id;
 ?>
 
 <div class="row">
@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('<?= plural($feature); ?>','add')">
+        <div class='btn btn-primary' onclick="showAjaxModal('<?= plural($feature); ?>','add','<?=$parent_id;?>')">
             <?= lang('report.add_report'); ?>
         </div>
     </div>
@@ -55,7 +55,7 @@ $(document).ready(function (){
             "url": "<?php echo site_url('reports/fetchReports')?>",
             "type": "POST",
             data: function (d){
-                d.reportTypeId = '<?=service('uri')->getSegments()[2];?>'
+                d.reportTypeId = '<?=$parent_id;?>'
             }
         },
         "columns": [
