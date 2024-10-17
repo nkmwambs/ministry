@@ -86,7 +86,7 @@ class Report extends BaseController
         }
 
         $update_data = [
-            'denomination_id' => $this->request->getPost('denomination_id'),
+            // 'denomination_id' => $this->request->getPost('denomination_id'),
             'assembly_id' => $this->request->getPost('assembly_id'),
             'reports_type_id' => $this->request->getPost('reports_type_id'),
             'report_period' => $this->request->getPost('report_period'),
@@ -133,9 +133,9 @@ class Report extends BaseController
         }
 
         $data = [
-            'denomination_id' => $this->request->getPost('denomination_id'),
+            // 'denomination_id' => $this->request->getPost('denomination_id'),
             'assembly_id' => $this->request->getPost('assembly_id'),
-            'reports_type_id' => $this->request->getPost('reports_type_id'),
+            'reports_type_id' => hash_id($this->request->getPost('reports_type_id'),'decode'),
             'report_period' => $this->request->getPost('report_period'),
             'report_date' => $this->request->getPost('report_date'),
             // 'status' => $this->request->getPost('status'),

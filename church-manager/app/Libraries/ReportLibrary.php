@@ -33,7 +33,7 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
 
     function addExtraData(&$page_data) {
         $parent_id = 0;
-        $reports_type_id = 0;
+        $reports_type_id = service('uri')->getSegments()[2];
         $assembly_id = 0;
 
         if (session()->get('user_denomination_id')) {
@@ -56,6 +56,7 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['parent_id'] = hash_id($parent_id,'encode');
         $page_data['reports_type_id'] = hash_id($reports_type_id, 'encode');
         $page_data['assembly_id'] = hash_id($assembly_id, 'encode');
+
     }
 
     function editExtraData (&$page_data) {
@@ -130,4 +131,6 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['report_fields'] = $reportLayout;
         return $page_data;
     }
+
+   
 }
