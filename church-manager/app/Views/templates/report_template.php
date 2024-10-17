@@ -67,7 +67,7 @@
                                                                 </a>
                                                             </div>
                                                             <?php if($metadata['type'] == 'numeric' || $metadata['type'] == 'text'){?>				
-                                                                    <input class = "form-control <?=$metadata['class'];?>" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" />
+                                                                    <input class = "form-control <?=$metadata['class'];?>" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" value="<?=$metadata['value'];?>" <?=$metadata['value'] != '' ? 'readonly' : ''?> />
                                                             <?php }else{?>
                                                                 <input type="checkbox" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" data-toggle="toggle"  data-on="Yes" data-off="No">
                                                             <?php }?>

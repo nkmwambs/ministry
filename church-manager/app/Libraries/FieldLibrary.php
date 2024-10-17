@@ -178,7 +178,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['numeric_feature_id'] = $numeric_feature_id;
     }
 
-    function getFieldUIElementProperties($fieldTypeId, $fieldModel): array|bool{
+    function getFieldUIElementProperties($fieldTypeId, $fieldModel, $report): array|bool{
         $field = $fieldModel->where('visible', 'yes')->find($fieldTypeId);
         if (!$field) {
             return false;
@@ -189,12 +189,56 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                 'field_code' => $field_code,
                 'label' => $field_name,
                 'helptip' => $helptip,
-                'value' => '',
+                'value' => $this->computeFieldValue($query_builder, $report),
                 'visible' => $visible,
                 'class' => $field_code,
                 'attributes' => []
         ];
 
         return $fieldObj;
+    }
+
+    function computeFieldValue(string $query_builder, array $report) {
+        // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}]}]
+        // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "gender", "value": "female", "operator": "equals"}]}]
+        // log_message('error', $query_builder);
+        $query_obj = json_decode($query_builder);
+        $value = '';
+        
+        // Use the commented JSON above to create a CodeIgniter 4 Query 
+        if(count($query_obj)){
+
+            extract($report); // assembly_id, reports_type_id, report_period
+
+            $query_obj_items = (array)$query_obj[0];
+            extract($query_obj_items);
+
+            $modelName = ucfirst($table).'Model';
+            $model = new ("\\App\Models\\$modelName")();
+            $queryResult = $model;
+
+            if($select == 'count'){
+                $queryResult->select('count(*');
+            }
+
+            if(count($conditions)){
+                foreach($conditions as $condition){
+                    if($condition->operator == 'equals'){
+                        if($condition->key == 'assembly_id'){
+                            $queryResult->where($condition->key, $assembly_id);
+                        }else{
+                            $queryResult->where($condition->key, $condition->value);
+                        }
+                    }
+                }
+            }
+
+            $result = $queryResult->countAllResults();
+
+            $value = $result;
+        }
+        
+
+        return $value; // Placeholder for actual field value computation
     }
 }

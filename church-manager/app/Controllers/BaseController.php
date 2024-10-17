@@ -198,7 +198,7 @@ abstract class BaseController extends Controller
         if($this->request->isAJAX()){
             return view("$this->feature/view", $page_data);
         }
-        log_message('error', json_encode($page_data));
+        // log_message('error', json_encode($page_data));
 
         return view('index', compact('page_data'));
     }

@@ -121,8 +121,8 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
                 // Taking the string of custom fields Ids to an individual array elemement
                 $reportLayout[$i]['section_parts'][$j]['part_fields'] = explode(',',$reportLayout[$i]['section_parts'][$j]['part_fields'][0]);
                 // $reportLayout[$i]['section_parts'][$j]['part_fields'] is an array of custom fields Ids
-                $reportLayout[$i]['section_parts'][$j]['part_fields'] = array_map(function($fieldTypeId) use($typeLibrary, $fieldModel){
-                    return $typeLibrary->getFieldUIElementProperties($fieldTypeId, $fieldModel);
+                $reportLayout[$i]['section_parts'][$j]['part_fields'] = array_map(function($fieldTypeId) use($typeLibrary, $fieldModel, $report){
+                    return $typeLibrary->getFieldUIElementProperties($fieldTypeId, $fieldModel, $report);
                 }, $reportLayout[$i]['section_parts'][$j]['part_fields']);
             }   
         }
