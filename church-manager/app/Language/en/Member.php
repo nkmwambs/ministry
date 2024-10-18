@@ -18,6 +18,8 @@ return [
     'member_assembly_name' => 'Assembly Name',
     'member_gender' => 'Gender',
     'member_select_gender' => 'Select a gender',
+    'membership_date' => 'Membership Date',
+    'saved_date' => 'Saved Date',
 
     'select_designation' => 'Select Designation',
 

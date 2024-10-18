@@ -6,7 +6,7 @@
   }
 </style>
 
-<?php 
+<?php
 $numeric_revenue_id = hash_id($revenue_id, 'decode');
 ?>
 
@@ -53,68 +53,9 @@ $numeric_revenue_id = hash_id($revenue_id, 'decode');
             ?>
 
             <div class="form-group">
-              <label class="control-label col-xs-2" for="return_date"><?= lang('collection.collection_return_date') ?></label>
-              <div class="col-xs-3">
-                <input type="text" class="form-control datepicker" name="return_date" id="return_date" placeholder="Enter Return Date">
-              </div>
-
-              <!-- <label class="control-label col-xs-2" for="period_start_date"><?= lang('collection.collection_period_start_date') ?></label>
-            <div class="col-xs-3">
-              <input type="text" class="form-control datepicker" name="period_start_date" id="period_start_date" placeholder="Enter Period Start Date">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="control-label col-xs-2" for="period_end_date"><?= lang('collection.collection_period_end_date') ?></label>
-            <div class="col-xs-3">
-              <input type="text" class="form-control datepicker" name="period_end_date" id="period_end_date" placeholder="Enter Period End Date">
-            </div> -->
-
-              <?php if (!$numeric_revenue_id) { ?>
-                <label for="revenue_id" class="control-label col-xs-2"><?= lang('collection.collection_revenue_id') ?></label>
-                <div class="col-xs-3">
-                  <select class="form-control" name="revenue_id" id="revenue_id">
-                    <option value=""><?= lang('collection.select_revenue') ?></option>
-                    <?php foreach ($revenues as $revenue) : ?>
-                      <option value="<?php echo $revenue['id']; ?>"><?php echo $revenue['name']; ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-              <?php } else { ?>
-                <input type="hidden" name="revenue_id" id="revenue_id" value="<?= $revenue_id; ?>" />
-              <?php } ?>
-            </div>
-
-            <div class="form-group">
-              <label class="control-label col-xs-2" for="collection_method"><?= lang('collection.collection_collection_method') ?></label>
-              <div class="col-xs-3">
-                <select type="text" class="form-control" name="collection_method" id="collection_method">
-                  <option value="" selected>Select Collection Method</option>
-                  <option value="bank">Bank</option>
-                  <option value="mobile">Mobile</option>
-                  <option value="in-person">In Person</option>
-                </select>
-              </div>
-
-              <!-- <label class="control-label col-xs-2" for="collection_reference"><?= lang('collection.collection_collection_reference') ?></label>
-            <div class="col-xs-3">
-              <input type="text" class="form-control" name="collection_reference" id="collection_reference" placeholder="Enter Collection Reference">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="control-label col-xs-2" for="description"><?= lang('collection.collection_description') ?></label>
-            <div class="col-xs-3">
-              <input type="text" class="form-control" name="description" id="description" placeholder="Enter Description">
-            </div> -->
-
-              <label class="control-label col-xs-2" for="status"><?= lang('collection.collection_status') ?></label>
-              <div class="col-xs-3">
-                <select type="text" class="form-control" name="status" id="status">
-                  <option value="" selected>Select Status</option>
-                  <option value="approved">Approved</option>
-                  <option value="submitted">Submitted</option>
-                </select>
+              <label class="control-label col-xs-4" for="return_date">Choose a Sunday</label>
+              <div class="col-xs-6">
+                <input type="text" class="form-control datepicker" name="return_date" id="return_date" placeholder="Enter a Sunday">
               </div>
             </div>
 
@@ -131,9 +72,16 @@ $numeric_revenue_id = hash_id($revenue_id, 'decode');
                     <i class="fa fa-plus-circle"></i>
                   </div>
                 </div>
-                <div class="col-xs-5">
-                  <input type="text" class="form-control" name="name[]" id="name" placeholder="Enter Collection Name">
-                </div>
+                <?php if (!$numeric_revenue_id) { ?>
+                  <div class="col-xs-5">
+                    <select class="form-control" name="revenue_id" id="revenue_id">
+                      <option value=""><?= lang('collection.select_revenue') ?></option>
+                      <?php foreach ($revenues as $revenue) : ?>
+                        <option value="<?php echo $revenue['id']; ?>"><?php echo $revenue['name']; ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                <?php } ?>
                 <div class="col-xs-5">
                   <input type="number" class="form-control" name="amount[]" id="amount" placeholder="Enter Amount">
                 </div>
