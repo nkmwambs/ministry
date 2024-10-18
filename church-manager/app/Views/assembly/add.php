@@ -122,7 +122,7 @@
                     </div>
 
                     <!-- Dynamically Generated Custom Fields -->
-                    <?php if ($customFields): ?>
+                    <!-- <?php if ($customFields): ?>
                         <?php foreach ($customFields as $field): ?>
                             <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
                                 <label class="control-label col-xs-4" for="<?= $field['field_name']; ?>"><?= ucfirst($field['field_name']); ?></label>
@@ -131,18 +131,7 @@
                                 </div>
                             </div>
                         <?php endforeach; ?>
-                    <?php endif; ?>
-
-                    <!-- <div class="form-group">
-                        <label class="control-label col-xs-4" for="is_active">
-                            <?= lang('assembly.assembly_is_active') ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="email" class="form-control" name="is_active" id="is_active"
-                                placeholder="Enter Active?">
-                        </div>
-                    </div> -->
-
+                    <?php endif; ?> -->
 
                 </form>
 

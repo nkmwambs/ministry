@@ -21,14 +21,16 @@ class Collection extends BaseController
         $collections = [];
 
         if($parent_id > 0){
-            $collections = $this->model->select('collections.id,return_date,period_start_date,period_end_date,assembly_id,revenue_id,amount,status,collection_reference,description,collection_method')
+            $collections = $this->model->select('collections.*,revenues.name as revenue_name')
             ->where('assembly_id',hash_id($parent_id,'decode'))
-            ->join('assemblies','assemblies.id=collections.assembly_id')
+            // ->join('assemblies','assemblies.id=collections.assembly_id')
+            ->join('revenues','revenues.id = collections.revenue_id','left')
             ->orderBy('collections.created_at desc')
             ->findAll();
         }else{
-            $collections = $this->model->select('collections.id,return_date,period_start_date,assembly_id,period_end_date,revenue_id,amount,status,collection_reference,description,collection_method')
-            ->join('assemblies','assemblies.id=collections.assembly_id')
+            $collections = $this->model->select('collections.*,revenues.name as revenue_name')
+            // ->join('assemblies','assemblies.id=collections.assembly_id')
+            ->join('revenues','revenues.id = collections.revenue_id','left')
             ->orderBy('collections.created_at desc')
             ->findAll();
         }
@@ -61,13 +63,13 @@ class Collection extends BaseController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'return_date' => 'required',
-            'period_start_date' => 'required',
-            'period_end_date' => 'required',
+            // 'period_start_date' => 'required',
+            // 'period_end_date' => 'required',
             'revenue_id' => 'required',
             'amount' => 'required',
             'status' => 'required',
-            'collection_reference' => 'required',
-            'description' => 'required|min_length[10]',
+            // 'collection_reference' => 'required',
+            // 'description' => 'required|min_length[10]',
             'collection_method' => 'required',
         ]);
 
@@ -81,14 +83,14 @@ class Collection extends BaseController
 
         $data = [
             'return_date' => $this->request->getPost('return_date'),
-            'period_start_date' => $this->request->getPost('period_start_date'),
-            'period_end_date' => $this->request->getPost('period_end_date'),
-            'assembly_id' => $assembly_id,
+            // 'period_start_date' => $this->request->getPost('period_start_date'),
+            // 'period_end_date' => $this->request->getPost('period_end_date'),
+            // 'assembly_id' => $assembly_id,
             'revenue_id' => $this->request->getPost('revenue_id'),
             'amount' => $this->request->getPost('amount'),
             'status' => $this->request->getPost('status'),
-            'collection_reference' => $this->request->getPost('collection_reference'),
-            'description' => $this->request->getPost('description'),
+            // 'collection_reference' => $this->request->getPost('collection_reference'),
+            // 'description' => $this->request->getPost('description'),
             'collection_method' => $this->request->getPost('collection_method'),
         ];
 
@@ -116,7 +118,7 @@ class Collection extends BaseController
         if($this->request->isAJAX()){
             $this->feature = 'collection';
             $this->action = 'list';
-            $records = $this->model->select('return_date,period_start_date,period_end_Date,assembly_id,assemblies.name as assembly_name,revenue_id,revenues.name as revenue_name,designations.amount,designations.status,collection_reference,designations.description,collection_method')
+            $records = $this->model->select('collections.*,revenues.name as revenue_name')
             ->join('assemblies', 'assemblies.id = designations.assembly_id')
             ->join('revenues', 'revenues.id = designations.revenue_id')
             ->orderBy("designations.created_at desc")

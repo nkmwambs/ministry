@@ -63,7 +63,9 @@ class DesignationsModel extends Model
         $viewQueryFields = $library->setViewQueryFields();
 
         if(!empty ($viewQueryFields)) {
-            return $this->select($library->setViewQueryFields()) -> where('id', $id)-> first();
+            return $this->select($library->setViewQueryFields())
+            ->join('denominations','denominations.id = designations.denomination_id', 'left')
+            -> where('id', $id)-> first();
         }else {
             return $this->where('id', $id) ->first();
         }

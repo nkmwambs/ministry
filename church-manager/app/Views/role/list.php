@@ -39,7 +39,7 @@
 
                         <td><?= $role['name']; ?></td>
                         <td><?= $role['default_role']; ?></td>
-                        <td><?= $role['denomination_id']; ?></td>
+                        <td><?= $role['denomination_name']; ?></td>
                     </tr>
                 <?php } ?>
             </tbody>

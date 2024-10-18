@@ -12,12 +12,12 @@ class AssemblyLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['assemblies.id','assemblies.name','assembly_code','assemblies.planted_at','assemblies.location','assemblies.entity_id','entities.name entity_name','assemblies.assembly_leader','assemblies.is_active', 'hierarchies.denomination_id as denomination_id'];
+        $fields = ['assemblies.id','assemblies.name','assembly_code','planted_at','assemblies.location','assemblies.entity_id','entities.name as entity_name','assemblies.assembly_leader','assemblies.is_active'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['assemblies.id','assemblies.name','assembly_code','planted_at','location','entities.id as entity_id','entities.name as entity_name','ministers.name as assembly_leader','assemblies.is_active','hierarchies.denomination_id as denomination_id'];
+        $fields = ['assemblies.id','assemblies.name','assembly_code','planted_at','assemblies.location','assemblies.entity_id','entities.name as entity_name','assemblies.assembly_leader','assemblies.is_active'];
         return $fields;
     }
 

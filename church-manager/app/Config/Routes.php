@@ -65,7 +65,7 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
     $routes->get('delete_account/(:segment)', "User::deleteAccount/$1");
 });
 
-$routes->post('users/update/public/', 'User::updatePrivateInfo'); 
+$routes->post('users/update/public/', 'User::updatePublicInfo'); 
 $routes->post('users/update/private/', 'User::updatePrivateInfo');
 
 $routes->post('/tasks/updateStatus', 'Task::updateStatus');
@@ -88,12 +88,6 @@ $routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
 $routes->post('members/fetchMembers/(:num)','Member::fetchMembers/$1');
 
 $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) {
-    // $routes->get('section_a/(:segment)', 'Report::sectionA/$1');
-    // $routes->get('section_b/(:segment)', 'Report::sectionB/$1');
-    // $routes->get('section_c/(:segment)', 'Report::sectionC/$1');
-    // $routes->get('section_d/(:segment)', 'Report::sectionD/$1');
-    // $routes->get('edit/(:segment)', "Report::edit/$1");
-    // $routes->get('section_a/(:seg)', 'Report::load_section/$1');
     $routes->get('list/(:segment)', 'Report::list/$1');
 });
 
