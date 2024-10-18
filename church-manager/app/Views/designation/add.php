@@ -32,10 +32,10 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
 
                     <?php if (!$numeric_denomination_id) { ?>
                         <div class = 'form-group'>
-                            <label for="denomination_id" class = "control-label col-xs-4">Denomination Name</label>
+                            <label for="denomination_id" class = "control-label col-xs-4"><?= lang('designation.denomination_id') ?></label>
                             <div class = "col-xs-6">
                                 <select class = "form-control" name = "denomination_id" id = "denomination_id">
-                                    <option value ="">Select a denomination</option>
+                                    <option value =""><?= lang('designation.select_denomination') ?></option>
                                     <?php foreach ($denominations as $denomination) : ?>
                                         <option value="<?php echo $denomination['id']; ?>"><?php echo $denomination['name']; ?></option>
                                     <?php endforeach; ?>
@@ -102,7 +102,7 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
                         </label>
                         <div class="col-xs-6">
                             <select class="form-control" id="designation_department" name="designation_department" disabled>
-                                <option><?=lang('designation.designation_department');?></option>
+                                <option><?=lang('designation.select_department');?></option>
                                 <?php foreach($departments as $department){?>
                                     <option value="<?=$department['id'];?>"><?=$department['name'];?></option>
                                 <?php }?>

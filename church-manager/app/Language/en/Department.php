@@ -11,6 +11,7 @@ return [
     'department_name' => 'Name',
     'department_description' => 'Description',
     'department_action' => 'Actions',
+    'department_code' => 'Department Code',
 
     'back_button' => 'Back',
     'edit_button' => 'Edit',

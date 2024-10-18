@@ -15,7 +15,10 @@ return [
     'is_minister_title_designation' => 'Is Minister Designation',
     'is_hierarchy_leader_designation' => 'Is Hierarchy Leader Designation',
     'is_department_leader_designation' => 'Is Department Leader Designation',
-    
+    'designation_department' => 'Department Name',
+
+    'select_department' => 'Select Department',
+    'select_denomination' => 'Select Denomination',
 
     'save_designation' => 'Save',
     'save_and_new_designation' => 'Save and New',

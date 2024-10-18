@@ -15,6 +15,8 @@ return [
     'customfield_feature_id' => 'Feature Name',
     'customfield_field_order' => 'Field Order',
     'customfield_visible' => 'Visible',
+    'customfield_code' => 'Field Code',
+    'customfield_helptip' => 'Field Helptip',
 
     'select_feature' => 'Select Feature',
     'select_denomination' => 'Select Denomination',
