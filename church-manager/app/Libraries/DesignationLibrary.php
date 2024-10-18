@@ -50,12 +50,15 @@ class  DesignationLibrary implements \App\Interfaces\LibraryInterface {
         // $hierarchiesModel = new \App\Models\HierarchiesModel();
         // $hierarchies = $hierarchiesModel->findAll();
 
-        // $departmentsModel = new \App\Models\DepartmentsModel();
-        // $departments = $departmentsModel->findAll();
+        $departmentsModel = new \App\Models\DepartmentsModel();
+        if($parent_id > 0){
+            $departmentsModel->where('denomination_id', $parent_id);
+        }
+        $departments = $departmentsModel->findAll();
 
         $page_data['denominations'] = $denominations;
         // $page_data['hierarchies'] = $hierarchies;
-        // $page_data['departments'] = $departments;
+        $page_data['departments'] = $departments;
 
         $page_data['parent_id'] = hash_id($parent_id,'encode');
         // $page_data['hierarchy_id'] = hash_id($hierarchy_id,'encode');
