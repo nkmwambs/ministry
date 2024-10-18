@@ -355,6 +355,11 @@
     
 
     $(document).ready(function($) {
+
+        $(".btn_back").on('click',function(){
+            window.history.back();
+        })
+
         // Sample Toastr Notification
         // setTimeout(function() {
         //     var opts = {
