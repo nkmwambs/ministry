@@ -12,12 +12,12 @@ class DepartmentLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['departments.id','denomination_id','departments.name','departments.description'];
+        $fields = ['departments.id','denomination_id','departments.name','departments.description','department_code'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['departments.id','denomination_id','departments.name','departments.description', 'denominations.name as denomination_name'];
+        $fields = ['departments.id','denomination_id','departments.name','departments.description', 'denominations.name as denomination_name','department_code'];
         return $fields;
     }
 

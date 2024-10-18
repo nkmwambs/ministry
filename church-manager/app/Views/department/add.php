@@ -54,6 +54,15 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label col-xs-4" for="department_code">
+                            <?= lang('department.department_code') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="department_code" id="department_code" placeholder="Enter Description" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-xs-4" for="description">
                             <?= lang('department.department_description') ?>
                         </label>

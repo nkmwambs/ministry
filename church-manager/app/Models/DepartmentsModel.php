@@ -12,7 +12,7 @@ class DepartmentsModel extends Model implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','denomination_id','name','description'];
+    protected $allowedFields    = ['id','denomination_id','name','description','department_code'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
