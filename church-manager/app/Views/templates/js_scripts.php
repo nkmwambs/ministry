@@ -87,7 +87,7 @@
 
     $("#modal_ajax").on('hidden.bs.modal', function () {
         // $(this).data('bs.modal', null);
-        window.location.reload();
+        // window.location.reload();
     });
 
 
