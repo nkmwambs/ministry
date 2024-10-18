@@ -74,7 +74,7 @@ extract($report_metadata);
                                                             <?php if($metadata['type'] == 'numeric' || $metadata['type'] == 'text'){?>				
                                                                     <input class = "form-control <?=$metadata['class'];?>" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" value="<?=$metadata['value'];?>" <?=$metadata['value'] != '' ? 'readonly' : '';?> />
                                                             <?php }else{?>
-                                                                <input type="checkbox" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" data-toggle="toggle" <?=$metadata['value'] ? 'checked' : '' ;?> <?=$metadata['value'] != '' ? 'disabled' : '';?> value="<?=$metadata['value'];?>"  data-on="Yes" data-off="No">
+                                                                <input type="checkbox" data-onstyle='success' data-offstyle='danger'  name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" data-toggle="toggle" <?=$metadata['value'] ? 'checked' : '' ;?> <?=$metadata['value'] != '' ? 'disabled' : '';?> value="<?=$metadata['value'];?>"  data-on="Yes" data-off="No">
                                                             <?php }?>
                                                         </div>
                                                     </div>
