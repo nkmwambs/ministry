@@ -56,7 +56,7 @@
                             <?= lang('type.type_code') ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="type_code" id="type_code" value = "<?=$result['type_code'];?>" placeholder="Enter Type Code"><?=$result['description'];?></textarea>
+                            <input type="text" class="form-control" name="type_code" id="type_code" value = "<?=$result['type_code'];?>" placeholder="Enter Type Code">
                         </div>
                     </div>
 

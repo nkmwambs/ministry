@@ -26,7 +26,7 @@
                             <label><?= lang('denomination.denomination_name') ?></label>
                         </div>
                         <div class = "col-xs-8">
-                            <?=$result['denomination_name'];?>
+                            <?=$result['denomination_id'];?>
                         </div>
                     </div>
 
@@ -35,7 +35,7 @@
                             <label><?= lang('type.type_description') ?></label>
                         </div>
                         <div class = "col-xs-8">
-                            <?=$result['description'];?>
+                            <?=$result['type_code'];?>
                         </div>
                     </div>
                 </form>

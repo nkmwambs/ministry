@@ -26,13 +26,13 @@
                 <?php foreach ($result as $type) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $type['name']; ?> type">
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($type['id']);?>')"></i>
+                        <span class='action-icons' title="View <?= singular($type['name']); ?> type">
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?= plural($feature); ?>','view', '<?= hash_id($type['id']); ?>')"></i>
                             </span>
-                            <span class='action-icons' title="Edit <?= $type['name']; ?> type">
+                            <span class='action-icons' title="Edit <?= $type['id']; ?> designation">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($type['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($type['id']); ?>')" title="Delete <?= $type['name']; ?> type"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($type['id']); ?>')" title="Delete <?= $type['id']; ?> type"><i class='fa fa-trash'></i></span>
 
                         </td>
 
