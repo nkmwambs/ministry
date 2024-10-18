@@ -4,7 +4,7 @@
 
   <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?=$parent_id;?>')">
+        <div class='btn btn-primary' onclick="showAjaxModal('entities''','add', '<?=$parent_id;?>')">
               <?= lang('entity.add_entity'); ?>
         </div>
     </div>
@@ -18,46 +18,62 @@
 
   <div class="row">
     <div class="col-xs-12">
-      <table class="table table-striped datatable<?=$parent_id;?>">
+      <table class="table table-striped " id="entity_dataTable" <?=$parent_id;?>>
         <thead>
           <tr>
-            <th>Action</th>
-            <th>Entity Number</th>
-            <th>Name</th>
-            <th>Belongs To</th>
+            <?php 
+              foreach($result as $column){
+              ?>
+                  <th><?= lang($column) ?></th>
+              <?php
+              }
+            ?>
           </tr>
         </thead>
         <tbody>
-          <?php foreach($result as $entity){?>
-            <tr>
-              <td>
-                <span class='action-icons' title="View <?=singular($entity['entity_name']);?> hierarchy">
-                  <!-- <a href="<?= site_url("entities/view/".hash_id($entity['id'])); ?>"> -->
-                    <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($entity['id']);?>')"></i>
-                  <!-- </a> -->
-                </span>
-                <span class='action-icons' title = "Edit <?=singular($entity['entity_name']);?> hierarchy">
-                  <i style="cursor:pointer" onclick="showAjaxModal('<?=plural($feature);?>','edit', '<?=hash_id($entity['id']);?>')" class='fa fa-pencil'></i>
-                </span>
-                <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($entity['id']); ?>')" title="Delete <?= $entity['id']; ?> participant"><i class='fa fa-trash'></i></span>
-              </td>
-
-              <td><?=$entity['entity_number'];?></td>
-              <td><?=$entity['entity_name'];?></td>
-              <td><?=$entity['parent_name'];?></td>
-
-          <?php } ?>
+        
         </tbody>
       </table>
     </div>
   </div>
 
-  <script>
-    const parent_id = "<?=$parent_id;?>"
+<script>
+$(document).ready(function() {
+    $('#entity_dataTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "<?php echo site_url('denominations/fetchEntities/'.$parent_id); ?>",
+            type: "POST"
+        },
+        columns: [
+            // { data: 'id' },
+            // <?php 
+            // foreach($result as $column){
+            //     echo "{ data: '". $column. "' },";
+            // }
+            // ?>,
+            // { data: 'action', searchable: true, orderable: false },
+            {data:null, "render": function(data, type, row){
+              return `
+            <span class="action-icons">
+                <a href="<?= site_url("entities/view/") ?>">
+                    <i class="fa fa-search"></i>
+                </a>
+            </span>
+            <span class="action-icons">
+                <i style="cursor:pointer" onclick="showAjaxModal('${row.feature_plural}', 'edit', '${row.hash_id}')" class="fa fa-pencil"></i>
+            </span>
+            <span class="action-icons" onclick="deleteItem('${row.feature_plural}', 'delete', '${row.hash_id}')" title="Delete ${row.hash_id} participant">
+                <i class="fa fa-trash"></i>
+            </span>`;
 
-    $(document).ready(function() {
-      $('.datatable'+parent_id).DataTable({
-        stateSave: true
-      });
-    });
-  </script>
+            }},
+            {data:"entity_number"},
+            {data:"entity_name"},
+            {data:"parent_name"},
+        ],
+    })
+});
+
+</script>

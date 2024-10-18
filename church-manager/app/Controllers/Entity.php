@@ -14,29 +14,88 @@ class Entity extends BaseController
         
         $this->model = new \App\Models\EntitiesModel();
     }
+
+    public function fetchEntities ($hashed_id = '') {
+
+        $request = \Config\Services::request();
+
+        // Get parameters sent by Datatables
+        $draw = intval($request->getPost('draw'));
+        $start = intval($request->getPost('start'));
+        $length = intval($request->getPost('length'));
+        $searchValue = isset($request->getPost('search')['value']) ? $request->getPost('search')['value'] : '';
+
+        // Get the total number of records
+        $totalRecords=$hierarchy_id = hash_id($hashed_id,'decode');
+        // $totalRecords = $this->model->where('heirarchy_id', hash_id($hashed_id, 'decode'))->countAllResults();
+        
+        // Apply search filter if provided
+        $totalFiltered = $totalRecords;
+        if (!empty($searchValue)) {
+        $totalFiltered = $this->model
+        ->where('denominations.hierarchy_id', $hierarchy_id) // Filter by hierarchy first
+        ->groupStart() 
+            ->like('entity_number', $searchValue)
+            ->orLike('name', $searchValue)
+            ->orLike('hierarchy_id', $searchValue)
+             ->groupEnd()
+        ->countAllResults(false);
+        }
+
+
+
+        // Limit the results and fetch the data
+        if($hashed_id != '') {
+            $entities = $this->model
+                ->where('entities.hierarchy_id', $hierarchy_id)
+                ->join('entities parent', 'parent.id = entities.parent_id')
+                ->select('entities.id, entities.hierarchy_id, entities.entity_number, entities.name as entity_name, parent.name as parent_name, entities.entity_leader')
+                ->orderBy('entities.created_at', 'desc')
+                ->findAll();
+        } else {
+            // Handle case where $hashed_id is empty, if needed
+        }
+        
+        // Loop through the data to apply hash_id()
+        foreach ($entities as &$entity) {
+            $entity['hash_id'] = hash_id($entity['id']);  // Add hashed ID to each record
+        }
+
+        // Prepare response data for DataTables
+        $response = [
+            "draw" => $draw,
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalFiltered,
+            "data" => $entities,  
+        ];
+
+    // Return JSON response
+    return $this->response->setJSON($response);
+
+    }
+
     public function index($hashed_id = ''): string
     {
         $entities = [];
-        $hierarchy_id = hash_id($hashed_id,'decode');
+        // $hierarchy_id = hash_id($hashed_id,'decode');
 
-        if($hashed_id != ''){
-            $entities = $this->model
-            ->where('entities.hierarchy_id', $hierarchy_id)
-            ->join('entities parent','parent.id=entities.parent_id')
-            ->select('entities.id,entities.hierarchy_id,entities.entity_number,entities.name as entity_name,parent.name as parent_name,entities.entity_leader')
-            ->orderBy('entities.created_at desc')
-            ->findAll();
-        }else{
-            $entities = $this->model
-            ->where('entities.hierarchy_id', $hierarchy_id)
-            ->join('entities parent','parent.id=entities.parent_id')
-            ->select('entities.id,entities.hierarchy_id,entities.entity_number,entities.name as entity_name,parent.name as parent_name,entities.entity_leader')
-            ->orderBy('entities.created_at desc')
-            ->findAll();
-        }
+        // if($hashed_id != ''){
+        //     $entities = $this->model
+        //     ->where('entities.hierarchy_id', $hierarchy_id)
+        //     ->join('entities parent','parent.id=entities.parent_id')
+        //     ->select('entities.id,entities.hierarchy_id,entities.entity_number,entities.name as entity_name,parent.name as parent_name,entities.entity_leader')
+        //     ->orderBy('entities.created_at desc')
+        //     ->findAll();
+        // }else{
+        //     $entities = $this->model
+        //     ->where('entities.hierarchy_id', $hierarchy_id)
+        //     ->join('entities parent','parent.id=entities.parent_id')
+        //     ->select('entities.id,entities.hierarchy_id,entities.entity_number,entities.name as entity_name,parent.name as parent_name,entities.entity_leader')
+        //     ->orderBy('entities.created_at desc')
+        //     ->findAll();
+        // }
 
-        $page_data['result'] = $entities;
-        $page_data['feature'] = 'entity';
+        $page_data['result'] = ['entity.entity_action','entity.entity_number','entity.entity_name','entity.hierarchy_code',];
         $page_data['action'] = 'list';
 
         if($this->request->isAJAX()){
