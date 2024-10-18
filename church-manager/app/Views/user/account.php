@@ -1,3 +1,7 @@
+<?php
+// echo json_encode($result['username']);
+?>
+
 <div class="tab-pane show" id="account" role="tabpanel">
     <div class="card">
         <div class="card-header">
@@ -21,11 +25,13 @@
             <div class="panel-body public-content">
                 <form role="form" id="frm_edit_public" method="post" action="<?= site_url('users/update/public/'); ?>" class="form-horizontal form-groups-bordered">
 
-                    <div class="form-group hidden error_container">
+                    <div class="form-group hidden error_container public">
                         <div class="col-xs-12 error">
 
                         </div>
                     </div>
+
+                    <input type="hidden" name="id" value="<?= $parent_id ?>">
 
                     <div class="row">
                         <div class="col-md-8">
@@ -54,7 +60,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" id="public_account_save" data-item_id="" data-feature_plural="" class="btn btn-success">Save Changes</button>
+                        <button type="button" id="public_account_save" class="btn btn-success">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -82,11 +88,13 @@
             <div class="panel-body private-content">
                 <form role="form" id="frm_edit_private" method="post" action="<?= site_url('users/update/private/'); ?>" class="form-horizontal form-groups-bordered">
 
-                    <div class="form-group hidden error_container">
+                    <div class="form-group hidden error_container private">
                         <div class="col-xs-12 error">
 
                         </div>
                     </div>
+
+                    <input type="hidden" name="id" value="<?= $parent_id ?>">
 
                     <div class="form-group">
                         <div class="form-group col-md-6">
@@ -132,7 +140,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" id="private_account_save" data-item_id="" data-feature_plural="" class="btn btn-success">Save Changes</button>
+                        <button type="button" id="private_account_save" class="btn btn-success">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -141,9 +149,41 @@
 </div>
 
 <script>
-    $(document).on('click', 'public_account_save', function() {
-        var form = $('#frm_edit_public');
-        var error_container = form.find('.error_container');
-        error_container.removeClass('hidden');
+    $(document).on('click', '#public_account_save', function() {
+        let form = $('#frm_edit_public');
+        let data = form.serializeArray();
+        let error_container = form.find('.error_container .public');
+        let url = form.attr('action');
+
+        $.ajax({
+            url,
+            type: 'POST',
+            data,
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status,error) {
+                error_container.removeClass('hidden');
+            }
+        })
+    })
+
+    $(document).on('click', '#private_account_save', function() {
+        let form = $('#frm_edit_private');
+        let data = form.serializeArray();
+        let error_container = form.find('.error_container .private');
+        let url = form.attr('action');
+
+        $.ajax({
+            url,
+            type: 'POST',
+            data,
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                error_container.removeClass('hidden').text('An error occured' + error);
+            }
+        })
     })
 </script>

@@ -40,7 +40,6 @@
                         <input type="hidden" name="denomination_id" id = "denomination_id" value="<?=$parent_id;?>" />
                     <?php }?>
 
-
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="name">
                             <?= lang('type.type_name') ?>
