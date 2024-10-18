@@ -91,6 +91,14 @@ class Department extends BaseController
                     'required' => 'Department description is required.',
                     'max_length' => 'Description cannot exceed {value} characters long'
                 ]
+            ],
+            'department_code' => [
+                'rules' =>'max_length[50]',
+                'label' => 'Department Code',
+                'errors' => [
+                    'required' => 'Department Code is required.',
+                    'max_length' => 'Department Code cannot exceed {value} characters long'
+                ]
             ]
         ]);
 
@@ -102,7 +110,8 @@ class Department extends BaseController
         $data = [
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
-            'denomination_id' => $this->request->getPost('denomination_id')
+            'denomination_id' => $this->request->getPost('denomination_id'),
+            'department_code' => $this->request->getPost('department_code'),
         ];
 
         $this->model->insert((object)$data);
@@ -170,6 +179,14 @@ class Department extends BaseController
                    'required' => 'Department description is required.',
                    'max_length' => 'Description cannot exceed {value} characters long'
                 ]
+            ],
+            'department_code' => [
+                'rules' =>'max_length[50]',
+                'label' => 'Department Code',
+                'errors' => [
+                    'required' => 'Department Code is required.',
+                    'max_length' => 'Department Code cannot exceed {value} characters long'
+                ]
             ]
         ]);
 
@@ -181,6 +198,7 @@ class Department extends BaseController
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
             'denomination_id' => $this->request->getPost('denomination_id'),
+            'department_code' => $this->request->getPost('department_code'),
         ];
 
         $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
