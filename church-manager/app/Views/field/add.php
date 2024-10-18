@@ -122,7 +122,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                                 <option value="numeric">Numeric</option>
                                 <option value="email">Email</option>
                                 <option value="dropdown">Dropdown</option>
-                                <option value="enum">ENUM</option>
+                                <option value="boolean">Multiple Choice</option>
                             </select>
                         </div>
                     </div>

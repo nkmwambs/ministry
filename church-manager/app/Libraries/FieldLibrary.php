@@ -197,7 +197,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                 'field_code' => $field_code,
                 'label' => $field_name,
                 'helptip' => $helptip,
-                'value' => $this->computeFieldValue($query_builder, $report),
+                'value' => $query_builder != NULL ? $this->computeFieldValue($query_builder, $report): '',
                 'visible' => $visible,
                 'class' => $field_code,
                 'attributes' => []
