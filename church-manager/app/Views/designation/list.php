@@ -28,23 +28,23 @@
             </thead>
             <tbody>
                 <?php foreach ($result as $designation) { ?>
-                <tr>
-                <td>
-                        <span class='action-icons' title="View <?=singular($designation['name']);?> designation">
-                            <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($designation['id']);?>')"></i>
-                        </span>
-                        <span class='action-icons' title="Edit <?= $designation['id']; ?> designation">
+                    <tr>
+                        <td>
+                            <span class='action-icons' title="View <?= singular($designation['name']); ?> designation">
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?= plural($feature); ?>','view', '<?= hash_id($designation['id']); ?>')"></i>
+                            </span>
+                            <span class='action-icons' title="Edit <?= $designation['id']; ?> designation">
                                 <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($designation['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
                             <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($designation['id']); ?>')" title="Delete <?= $designation['id']; ?> designation"><i class='fa fa-trash'></i></span>
 
                         </td>
 
-                    <td><?= $designation['name']; ?></td>
-                    <td><?= $designation['denomination_id']; ?></td>
-                    <td><?= $designation['is_hierarchy_leader_designation']; ?></td>
-                    <td><?= $designation['is_department_leader_designation']; ?></td>
-                    <td><?= $designation['is_minister_title_designation']; ?></td>
+                        <td><?= $designation['name']; ?></td>
+                        <td><?= $designation['denomination_name']; ?></td>
+                        <td><?= $designation['is_hierarchy_leader_designation']; ?></td>
+                        <td><?= $designation['is_department_leader_designation']; ?></td>
+                        <td><?= $designation['is_minister_title_designation']; ?></td>
 
                     <?php } ?>
             </tbody>
@@ -58,7 +58,7 @@ $(document).ready(function (){
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "<?php echo site_url('designations/fetchDesignations')?>",
+            "url": "<?php echo site_url('designations/fetchDesignations') ?>",
             "type": "POST"
         },
         "columns": [

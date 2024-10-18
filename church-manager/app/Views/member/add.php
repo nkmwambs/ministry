@@ -57,6 +57,13 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
             </div>
           </div>
 
+          <div class='form-group'>
+            <label for="membership_date" class="control-label col-xs-4"><?= lang('member.membership_date') ?></label>
+            <div class="col-xs-6">
+              <input type="text" class="form-control datepicker" id="membership_date" name="membership_date"  />
+            </div>
+          </div>
+
           <?php
           if (isset($parent_id)) {
           ?>
@@ -137,6 +144,7 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
               <input type="text" class="form-control datepicker" name="saved_date" id="saved_date" placeholder="Enter Saved Date"></i>
             </div>
           </div>
+
 
           <!-- Dynamically Generated Custom Fields -->
           <?php if ($customFields): ?>

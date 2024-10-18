@@ -49,7 +49,9 @@ class CollectionsModel extends Model
         $listQueryFields = $library->setListQueryFields();
 
         if(!empty($listQueryFields)){
-            return $this->select($library->setListQueryFields())->orderBy('created_at desc')->findAll();
+            return $this->select($library->setListQueryFields())
+            ->join('revenues','revenues.id = collections.revenue_id','left')
+            ->orderBy('created_at desc')->findAll();
         }else{
             return $this->orderBy('created_at desc')->findAll();
         }
@@ -60,7 +62,9 @@ class CollectionsModel extends Model
         $viewQueryFields = $library->setViewQueryFields();
 
         if(!empty($viewQueryFields)){
-            return $this->select($library->setViewQueryFields())->where('id', $id)->first();
+            return $this->select($library->setViewQueryFields())
+            ->join('revenues','revenues.id = collections.revenue_id','left')
+            ->where('id', $id)->first();
         }else{
             return $this->where('id', $id)->first();
         }
@@ -72,7 +76,7 @@ class CollectionsModel extends Model
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
-                ->join('denominations', 'denominations.id = collections.denomination_id')
+                ->join('revenues','revenues.id = collections.revenue_id','left')
                 ->where('collections.id', $collection_id)
                 ->first();
         } else {
@@ -86,7 +90,7 @@ class CollectionsModel extends Model
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields()) 
-                ->join('denominations', 'denominations.id = collections.denomination_id')
+                ->join('revenues','revenues.id = collections.revenue_id','left')
                 ->where('collections.id', $collection_id)
                 ->first();
         } else {

@@ -128,6 +128,7 @@ class Member extends BaseController
             'date_of_birth' => $this->request->getPost('date_of_birth'),
             'email' => $this->request->getPost('email'),
             'saved_date' => $this->request->getPost('saved_date'),
+            'membership_date' => $this->request->getPost('membership_date'),
 
         ];
 
@@ -242,6 +243,10 @@ class Member extends BaseController
             'email' => $this->request->getPost('email'),
             'phone' => $this->request->getPost('phone'),
             'saved_date' => $this->request->getPost('saved_date'),
+            'is_active' => $this->request->getPost('is_active'),
+            'inactivation_reason' => $this->request->getPost('inactivation_reason'),
+            'membership_date' => $this->request->getPost('membership_date'),
+            'inactivation_date' => $this->request->getPost('is_active') == 'no' ? date('Y-m-d') : NULL,
         ];
         
         $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);

@@ -96,6 +96,20 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
                         </div>
                     </div>
 
+                    <div class="form-group hidden" id = "grp_designation_department">
+                        <label class="control-label col-xs-4" for="designation_department">
+                            <?= lang('designation.designation_department') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <select class="form-control" id="designation_department" name="designation_department" disabled>
+                                <option><?=lang('designation.designation_department');?></option>
+                                <?php foreach($departments as $department){?>
+                                    <option value="<?=$department['id'];?>"><?=$department['name'];?></option>
+                                <?php }?>
+                            </select>
+                        </div>
+                    </div>
+
                     <!-- Dynamically Generated Custom Fields -->
                     <?php if ($customFields): ?>
                         <?php foreach ($customFields as $field): ?>
@@ -116,3 +130,17 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $("#is_department_leader_designation").on("change", function(){
+            if($(this).val() == "yes"){
+                $("#grp_designation_department").removeClass("hidden");
+                $("#designation_department").prop("disabled", false);
+            } else {
+                $("#grp_designation_department").addClass("hidden");
+                $("#designation_department").prop("disabled", true);
+            }
+        })
+    })
+</script>

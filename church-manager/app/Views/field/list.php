@@ -46,7 +46,7 @@
                         <td><?= ucfirst($customField['field_name']); ?></td>
                         <td><?= ucfirst($customField['type']); ?></td>
                         <td><?= ucfirst($customField['options']); ?></td>
-                        <td><?= ucfirst($customField['feature_id']); ?></td>
+                        <td><?= ucfirst($customField['feature_name']); ?></td>
                         <td><?= ucfirst($customField['field_order']); ?></td>
                         <td><?= ucfirst($customField['visible']); ?></td>
 

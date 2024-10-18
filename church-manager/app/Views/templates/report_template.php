@@ -1,3 +1,8 @@
+<?php 
+// echo json_encode($report_period);
+extract($report_metadata);
+?>
+
 <style>
     .part_header{
         font-weight: bold;
@@ -6,9 +11,9 @@
 </style>
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("reports"); ?>" class="btn btn-info">
+        <div class="btn btn-info btn_back">
             <?= lang('report.back_button') ?>
-        </a>
+        </div>
     </div>
 </div>
 
@@ -18,13 +23,13 @@
             <div class="panel-heading">
                 <div class="panel-title">
                     <div class="page-title">
-                        <i class='fa fa-eye'></i><?= lang('report.view_report'); ?>
+                        <i class='fa fa-eye'></i><?= lang('report.view_report'); ?> : <?=$type_name;?> : <?=date('jS F Y',strtotime($report_period));?>
                     </div>
                     <div class="panel-options">
                         <ul class="nav nav-tabs" id="myTabs">
                             <?php for ($i = 0; $i < count($report_fields); $i++) { ?>
                                 <li class="<?= $i == 0 ? 'active' : ''; ?>">
-                                    <a href="#<?=$report_prefix?>_section_<?= $i; ?>" id="section_<?= $i; ?>_tab"
+                                    <a href="#<?=$type_code?>_section_<?= $i; ?>" id="section_<?= $i; ?>_tab"
                                         data-toggle="tab"><?= $report_fields[$i]['section_title']; ?></a>
                                 </li>
                             <?php } ?>
@@ -40,7 +45,7 @@
                         <?php
                         for ($i = 0; $i < count($report_fields); $i++) {
                             ?>
-                            <div class="tab-pane" id="<?=$report_prefix?>_section_<?= $i; ?>">
+                            <div class="tab-pane" id="<?=$type_code?>_section_<?= $i; ?>">
                                 <div class="row">
                                     <?php
                                     $section_parts_count = count($report_fields[$i]['section_parts']);
@@ -98,6 +103,6 @@
 
     $(document).ready(function () {
         // Initial tab selection
-        $('#<?=$report_prefix?>_section_0').addClass('active');
+        $('#<?=$type_code;?>_section_0').addClass('active');
     });
 </script>

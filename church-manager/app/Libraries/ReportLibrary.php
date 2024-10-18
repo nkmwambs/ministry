@@ -108,7 +108,11 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         $numericReportId = $page_data['result']['id'];
         // Get report Type 
         $reportModel = new \App\Models\ReportsModel();
-        $report = $reportModel->find($numericReportId);
+        $report = $reportModel
+        ->select('reports.id, assembly_id, reports_type_id, reporttypes.name as report_type_name,reporttypes.type_code, reports.report_date, reports.report_period')
+        ->join('reporttypes','reporttypes.id=reports.reports_type_id')
+        ->find($numericReportId);
+        
         $reportTypeId = $report['reports_type_id'];
 
         // Get report layout from report type
@@ -131,6 +135,10 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         }
         
         $page_data['report_fields'] = $reportLayout;
+        $page_data['type_code'] = $report['type_code'];
+        $page_data['report_type_name'] = $report['report_type_name'];
+        $page_data['report_period'] = $report['report_period'];
+
         return $page_data;
     }
 
