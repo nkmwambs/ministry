@@ -97,11 +97,11 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
                     </div>
 
                     <div class="form-group hidden" id = "grp_designation_department">
-                        <label class="control-label col-xs-4" for="designation_department">
+                        <label class="control-label col-xs-4" for="department_id">
                             <?= lang('designation.designation_department') ?>
                         </label>
                         <div class="col-xs-6">
-                            <select class="form-control" id="designation_department" name="designation_department" disabled>
+                            <select class="form-control" id="department_id" name="department_id" disabled>
                                 <option><?=lang('designation.select_department');?></option>
                                 <?php foreach($departments as $department){?>
                                     <option value="<?=$department['id'];?>"><?=$department['name'];?></option>
@@ -136,10 +136,10 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
         $("#is_department_leader_designation").on("change", function(){
             if($(this).val() == "yes"){
                 $("#grp_designation_department").removeClass("hidden");
-                $("#designation_department").prop("disabled", false);
+                $("#department_id").prop("disabled", false);
             } else {
                 $("#grp_designation_department").addClass("hidden");
-                $("#designation_department").prop("disabled", true);
+                $("#department_id").prop("disabled", true);
             }
         })
     })

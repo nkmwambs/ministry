@@ -12,7 +12,7 @@ class DesignationsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','name','denomination_id','is_hierarchy_leader_designation','is_department_leader_designation','is_minister_title_designation'];
+    protected $allowedFields    = ['id','name','denomination_id','is_hierarchy_leader_designation','is_department_leader_designation','is_minister_title_designation','department_id'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

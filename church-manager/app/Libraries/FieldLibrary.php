@@ -212,6 +212,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "gender", "value": "female", "operator": "equals"}]}]
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "saved_date", "operator": "in_month"}]}]
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "c__sanctified_date", "operator": "in_month"}]}]
+        // [{"table": "members","join": [{"table": "designations","relation_id": "id","relation_order": 1,"relation_table":{"table": "members","relation_id": "designation_id"}},{"table": "departments","relation_id": "id","relation_order": 2,"relation_table": {"table": "designations","relation_id": "department_id"}}],"select": "count","conditions": [{"key": "assembly_id","operator": "equals"},{"key": "department_code","value": "youth_ministry","operator": "equals"}]}]
 
         $query_obj = json_decode($query_builder);
 
@@ -233,10 +234,29 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
             $model = new ("\\App\Models\\$modelName")();
             $queryResult = $model;
 
+            // Aggregation query part
             if($select == 'count'){
                 $queryResult->select('count(*');
             }
 
+            // Join query part 
+            if(isset($join) && count($join)){
+                $cnt = 1;
+                foreach($join as $joinItem){
+                    extract((array)$joinItem);
+                    
+                    if($cnt == $relation_order){
+                        $relation_table_name = $relation_table->table;
+                        $relation_table_id = $relation_table->relation_id;
+    
+                        $queryResult->join($table, "$table.$relation_id=$relation_table_name.$relation_table_id");
+                    }
+                    
+                    $cnt++;
+                }
+            }
+            
+            // Condition query part
             if(count($conditions)){
                 foreach($conditions as $condition){
                     if($condition->operator == 'equals'){
