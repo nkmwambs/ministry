@@ -44,6 +44,8 @@ class MembersModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = ['updateRecycleBin'];
 
+    protected $bulk_editable_fields = ['first_name','last_name','membership_date','designation_id','saved_date','is_active','inactivation_reason'];
+
     public function getAll(){
         $library = new \App\Libraries\MemberLibrary();
         $listQueryFields = $library->setListQueryFields();

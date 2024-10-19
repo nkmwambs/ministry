@@ -30,6 +30,7 @@ foreach ($features as $featureObj) {
             $routes->post('save', "$ucfirst::post");
             $routes->get('modal/(:segment)/(:segment)', "$ucfirst::modal/$1/$2");
             $routes->get('modal/(:segment)/(:segment)/(:segment)', "$ucfirst::modal/$1/$2/$3");
+            $routes->post('getFields/(:segment)/(:segment)', "$ucfirst::getBulkActionFields/$1/$2");
     });
 }
 

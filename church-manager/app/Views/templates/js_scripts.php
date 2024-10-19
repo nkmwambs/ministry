@@ -120,6 +120,35 @@
         });
     }
 
+    function showAjaxBulkAction(plural_feature, actionOnItem, selectedItems) {
+
+        const url = `<?= site_url() ?>${plural_feature}/getFields/${plural_feature}/${actionOnItem}`
+
+        $('#modal_ajax').on('shown.bs.modal', function() {
+            $('.datepicker').css('z-index', '10200');
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                container: '#modal_ajax modal-body'
+            })
+            $('select.select_fields').select2();
+        });
+
+        $.ajax({
+            url,
+            method: 'POST',
+            data: {selectedItems},
+            success: function(response) {
+                $('#modal_ajax .modal-title').html('Bulk ' + capitalizeFirstLetter(actionOnItem) + ' ' + capitalizeFirstLetter(plural_feature));
+                $('#modal_ajax .modal-body').html(response);
+                $("#modal_ajax").modal("show");
+
+                $('.modal_datatable').DataTable({
+                    stateSave: true
+                })
+
+            }
+        });
+    }
 
     function capitalizeFirstLetter(word) {
         const capitalized =

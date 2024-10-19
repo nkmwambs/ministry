@@ -3,6 +3,31 @@
         <div class='btn btn-primary' onclick="showAjaxModal('members','add', '<?= $parent_id; ?>')">
             <?= lang('member.add_member'); ?>
         </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('members','delete')">
+            <i class="fa fa-trash-o"></i>
+            <?= lang('member.delete_members'); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('members','edit')">
+            <i class="fa fa-pencil-square-o"></i>
+            <?= lang('member.edit_members'); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('members','view')">
+            <i class="fa fa-eye"></i>
+            <?= lang('member.view_members'); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('members','print')">
+            <i class="fa fa-print"></i>
+            <?= lang('member.print_members'); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('members','export')">
+            <i class="fa fa-download"></i>
+            <?= lang('member.export_members'); ?>
+        </div>
     </div>
 </div>
 
@@ -17,6 +42,7 @@
         <table class="table table-striped datatable">
             <thead>
                 <tr>
+                    <th><input type="checkbox" id="select_all" onclick="select_all_items(this)"></th>
                     <th><?= lang('member.member_action') ?></th>
                     <th><?= lang('member.member_first_name') ?></th>
                     <th><?= lang('member.member_last_name') ?></th>
@@ -32,9 +58,11 @@
                 <?php foreach ($result as $member) { ?>
                     <tr>
                         <td>
-                            <!-- <span class='action-icons' title="View <?= $member['first_name']; ?> member">
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?= plural($feature); ?>','view', '<?= hash_id($member['id']); ?>')"></i>
-                            </span> -->
+                            <span class='action-icons'>
+                                <input type="checkbox" class = "select_item" name="item_id[]" value="<?php echo $member['id'];?>">
+                            </span>
+                        </td>
+                        <td>
                             <span class='action-icons' title="View <?=singular($member['first_name']);?> member">
                                 <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($member['id']);?>')"></i>
                             </span>
@@ -59,3 +87,34 @@
         </table>
     </div>
 </div>
+
+<script>
+    $('#select_all').click(function(){
+        $('.select_item').prop('checked', $(this).prop('checked'));
+    });
+
+    $(".select_item, #select_all").on('change', function(){
+        // Show mass_action buttons if checked 
+        if($('.select_item:checked').length > 0){
+            $('.mass_action').removeClass('hidden');
+        } else {
+            $('.mass_action').addClass('hidden');
+        }
+
+        // If .select_item are all unchecked also uncheck #select_all
+        if($('.select_item:checked').length === 0){
+            $('#select_all').prop('checked', false);
+        }
+    })
+
+    function bulkAction(tableName, actionOnItem){
+        var selectedItems = [];
+        $('.select_item:checked').each(function(i, el){
+            selectedItems.push($(el).val());
+        });
+        
+        showAjaxBulkAction(tableName, actionOnItem, selectedItems)
+    }
+
+
+</script>

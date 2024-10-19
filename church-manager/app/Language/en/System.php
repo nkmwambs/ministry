@@ -22,4 +22,6 @@ return [
 
     'system_enter_name' => 'Enter Name',
     'system_back_button' => 'Back',
+    'select_field_to_update' => "Selected Field to Update",
+    'enter_value' => 'Enter Value',
 ];

@@ -32,4 +32,13 @@ return [
     'back_button' => 'Back',
     'edit_again_button' => 'Edit Again',
     'edit_button' => 'Edit',
+
+    'delete_members' => 'Delete',
+    'edit_members' => 'Update',
+    'view_members' => 'View',
+    'print_members' => 'Print',
+    'export_members' => 'Export',
+
+    'bulk_edit_members' => 'Bulk Edit Members',
+    'selected_members' => 'Selected Members',
 ];

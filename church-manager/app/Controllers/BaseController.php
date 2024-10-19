@@ -287,4 +287,86 @@ abstract class BaseController extends Controller
     }
 
 
+    function getBulkActionFields($tableName, $actionOnItem){
+        $view = "Are you sure you want perform this action";
+        $selectedItemIds = $this->request->getPost('selectedItems');
+
+        // log_message('error', json_encode($selectedItems));
+
+        if($actionOnItem == 'edit'){
+            // Get all database table fields metadata  
+            $modelName = ucfirst($tableName).'Model';
+            $model = new ("\App\\Models\\$modelName")(); 
+            $fields = $model->getFieldData($tableName);
+            
+            // Filter out fields that are not meant for bulk actions
+            $bulkActionFields = array_filter($fields, function ($elem){
+                if(!in_array($elem->name, ['created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'])){
+                    return $elem;
+                }
+            }); 
+
+            $updatableFields = isset($model->bulk_editable_fields) ? $model->bulk_editable_fields : [];
+
+            if(!empty($updatableFields)){
+                $bulkActionFields = array_filter($fields, function ($elem) use($updatableFields){
+                    if(in_array($elem->name, $updatableFields)){
+                        return $elem;
+                    }
+                });
+            }
+
+            $bulkActionFields = array_map(function($elem) use($tableName){
+                if($elem->type == 'enum'){
+                    $elem->options = $this->getEnumOptions($tableName,$elem->name);
+                }
+                return $elem;
+            }, $bulkActionFields);
+            
+            $customFields = $this->customFields($tableName);
+
+            if(count($customFields) > 0){
+                // Merge $bulkActionFields with $customFields array
+                $bulkActionFields = array_merge($bulkActionFields, $customFields);
+            }
+
+            $bulkActionFields = array_values($bulkActionFields); 
+            
+            $selectedItems = $model->whereIn('id', $selectedItemIds)->findAll();
+            $result = compact('tableName','bulkActionFields','selectedItemIds', 'selectedItems');
+            log_message('error', json_encode($result));
+            $view  = view("templates/bulk_edit", $result);
+        }
+        
+        return $view;
+        
+    }
+
+    function customFields($tableName){
+        $obj1 = (object)[
+            "name" => "marital_status",
+            "type" => "enum",
+            "options" => [
+                "male",
+                "female",
+            ]
+        ];
+
+        $obj2 = (object)[
+            "name" => "occupation",
+            "type" => "text",
+        ];
+
+        return [$obj1,$obj2];
+    }
+
+    function getEnumOptions($tableName, $columnName) {
+        $dbName = env('database.default.database');
+        $qstring="SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$tableName' AND COLUMN_NAME = '$columnName'";
+
+        $result = \Config\Database::connect()->query($qstring)->getResult();
+        $options = explode(',', str_replace(['enum(', ')', "'"], '', $result[0]->COLUMN_TYPE));
+        return $options;
+    }
+
 }
