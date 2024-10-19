@@ -354,7 +354,7 @@ abstract class BaseController extends Controller
             $fields[] = (object)[
                 "name" => "c__$field_code",
                 "type" => $field['type'],
-                "options" => $field['options'] != "" ? explode("\n",$field['options']) : [],
+                "options" => $field['options'] != "" ? explode("\r\n",$field['options']) : [],
             ];
         }
 

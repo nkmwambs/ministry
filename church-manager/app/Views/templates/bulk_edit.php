@@ -67,7 +67,7 @@
         // Get the data attribute for selected option 
         const select = $(this)
         const selected_value = select.val();
-        const fields = '<?=str_replace('\r','',json_encode($bulkActionFields));?>'
+        const fields = '<?=json_encode($bulkActionFields);?>'
         const jsonObj = JSON.parse(fields)
         $.each(jsonObj, function(key, value){
             if(value.name === selected_value){
