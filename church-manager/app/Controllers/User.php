@@ -387,26 +387,38 @@ class User extends BaseController
         return view('user/widget');
     }
 
-    public function yourData()
+    public function yourData($id)
     {
-        return view('user/your_data');
-    }
+        $numeric_id = hash_id($id, 'decode');
 
-    public function downloadUserData($userId)
-    {
-        $userData = $this->model->find($userId);
-
-        if (!$userData) {
-            return redirect()->back()->with('error', 'User not found');
+        if (method_exists($this->model, 'getEditData')) {
+            $user_data = $this->model->getEditData($numeric_id);
+        } else {
+            $user_data = $this->model->getOne($numeric_id);
         }
 
-        // Format data as JSON (or CSV as needed)
-        $jsonData = json_encode($userData);
+        $this->parent_id = $id;
 
-        // Set file headers
-        return $this->response->setHeader('Content-Type', 'application/json')
-            ->setHeader('Content-Disposition', 'attachment; filename="user_data.json"')
-            ->setBody($jsonData);
+        $page_data = $this->page_data($user_data);
+        // log_message('error', json_encode($page_data));
+        if (method_exists($this->library, 'editExtraData')) {
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->editExtraData($page_data);
+        }
+        return view('user/your_data', $page_data);
+    }
+
+    public function downloadUserDataPdf($user_id)
+    {
+        $user_data = $this->model->getOne($user_id);
+        $user_data = formatUserDataForExport($user_data);
+
+        $this->parent_id = $user_id;
+
+        $userLibrary = new \App\Libraries\UserLibrary();
+        $userLibrary->exportUserDataToPdf($user_data);
+
+        return view('user/your_data');
     }
 
 
