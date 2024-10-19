@@ -343,21 +343,21 @@ abstract class BaseController extends Controller
     }
 
     function customFields($tableName){
-        $obj1 = (object)[
-            "name" => "marital_status",
-            "type" => "enum",
-            "options" => [
-                "male",
-                "female",
-            ]
-        ];
 
-        $obj2 = (object)[
-            "name" => "occupation",
-            "type" => "text",
-        ];
+        $library = new \App\Libraries\FieldLibrary();
+        $customFields = $library->getCustomFieldsForTable($tableName);
 
-        return [$obj1,$obj2];
+        $fields = [];
+
+        foreach($customFields as $field){
+            $fields[] = (object)[
+                "name" => $field['field_code'],
+                "type" => $field['type'],
+                "options" => $field['options'] != "" ? explode("\n",$field['options']) : [],
+            ];
+        }
+
+        return $fields;
     }
 
     function getEnumOptions($tableName, $columnName) {
