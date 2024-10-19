@@ -30,7 +30,7 @@
         // Bind the Download button click
         $('#data_button').click(function() {
             // Redirect to the download route
-            window.location.href = "<?= site_url('users/downloadUserData/' . $parent_id); ?>";
+            window.location.href = "<?= site_url('users/profile/downloadUserData/' . $parent_id); ?>";
         });
     // })
 </script>

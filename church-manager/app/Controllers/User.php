@@ -412,6 +412,7 @@ class User extends BaseController
     {
         $user_data = $this->model->getOne($user_id);
         $user_data = formatUserDataForExport($user_data);
+        log_message('error', json_encode($user_data));
 
         $this->parent_id = $user_id;
 
