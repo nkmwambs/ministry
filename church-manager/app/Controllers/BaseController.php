@@ -334,7 +334,7 @@ abstract class BaseController extends Controller
             
             $selectedItems = $model->whereIn('id', $selectedItemIds)->findAll();
             $result = compact('tableName','bulkActionFields','selectedItemIds', 'selectedItems');
-            log_message('error', json_encode($result));
+            // log_message('error', json_encode($result));
             $view  = view("templates/bulk_edit", $result);
         }
         
@@ -350,8 +350,9 @@ abstract class BaseController extends Controller
         $fields = [];
 
         foreach($customFields as $field){
+            $field_code = $field['field_code'];
             $fields[] = (object)[
-                "name" => $field['field_code'],
+                "name" => "c__$field_code",
                 "type" => $field['type'],
                 "options" => $field['options'] != "" ? explode("\n",$field['options']) : [],
             ];
@@ -367,6 +368,12 @@ abstract class BaseController extends Controller
         $result = \Config\Database::connect()->query($qstring)->getResult();
         $options = explode(',', str_replace(['enum(', ')', "'"], '', $result[0]->COLUMN_TYPE));
         return $options;
+    }
+
+    function bulkEdit(){
+        $tableName = $this->request->getPost('tableName');
+        log_message('error', json_encode($this->request->getPost()));
+        redirect()->to('assemblies/view/W9');
     }
 
 }
