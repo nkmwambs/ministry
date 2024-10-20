@@ -117,8 +117,8 @@
                             <?= lang('field.customfield_options') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="options" value="<?= $result['options']; ?>" id="options"
-                                placeholder="Edit Options">
+                            <textarea type="text" class="form-control" name="options" value="<?= $result['options']; ?>" id="options"
+                                placeholder="Edit Options"><?= $result['options']; ?></textarea>
                         </div>
                     </div>
 

@@ -129,7 +129,7 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
                 $reportLayout[$i]['section_parts'][$j]['part_fields'] = explode(',',$reportLayout[$i]['section_parts'][$j]['part_fields'][0]);
                 // $reportLayout[$i]['section_parts'][$j]['part_fields'] is an array of custom fields Ids
                 $reportLayout[$i]['section_parts'][$j]['part_fields'] = array_map(function($fieldTypeId) use($fieldLibrary, $fieldModel, $report){
-                    return $fieldLibrary->getFieldUIElementProperties($fieldTypeId, $fieldModel, $report);
+                    return $fieldLibrary->getFieldUIElementProperties(hash_id($fieldTypeId, 'encode'), $fieldModel, $report);
                 }, $reportLayout[$i]['section_parts'][$j]['part_fields']);
             }   
         }
