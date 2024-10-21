@@ -60,8 +60,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             <?= lang("type.type_name") ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Enter Name">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="<?= lang("system.system_enter_name") ?>">
                         </div>
                     </div>
 
@@ -70,7 +69,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             <?= lang("type.type_code") ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="type_code" id="type_code" placeholder="Enter Type Code">
+                            <input type="text" class="form-control" name="type_code" id="type_code" placeholder="<?= lang("type.enter_type_code") ?>">
                         </div>
                     </div>
 
@@ -79,11 +78,10 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             <?= lang("type.section_count") ?>
                         </label>
                         <div class="col-xs-4">
-                            <input type="number" class="form-control" name="section_count" id="section_count"
-                                placeholder="Enter Section Count">
+                            <input type="number" class="form-control" name="section_count" id="section_count" placeholder="<?= lang("type.enter_section_count") ?>">
                         </div>
                         <div class="col-xs-4">
-                            <div class="btn btn-success" id = "create_layout">Create Layout</div>
+                            <div class="btn btn-success" id = "create_layout"><?= lang('type.create_layout_button') ?></div>
                         </div>
                     </div>
 
@@ -172,32 +170,32 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
 <!-- Section Template -->
 <section class = "hidden section_template">
     <div class = "form-group section_header">
-        <div class = "layout_title col-xs-4" for="">Section Title</div>
-        <div class = "layout_title col-xs-4" for="">Section Parts Count</div>
-        <div class = "layout_title col-xs-4" for="">Action</div>
+        <div class = "layout_title col-xs-4" for=""><?= lang('type.section_title') ?></div>
+        <div class = "layout_title col-xs-4" for=""><?= lang('type.section_parts_count') ?></div>
+        <div class = "layout_title col-xs-4" for=""><?= lang('type.section_action') ?></div>
     </div>
     <div class = "form-group section_content">
         <div class="col-xs-4 div_section_title">
-            <input type="text" class="form-control section_title" name="" placeholder="Enter Section Title">
+            <input type="text" class="form-control section_title" name="" placeholder="<?= lang('type.enter_section_title') ?>">
         </div>
         <div class="col-xs-4 div_section_parts_count">
             <!-- <input type="number" class="form-control section_parts_count" placeholder="Enter Section Parts Count">   -->
              <select class="form-control section_parts_count">
-                <option value = "1">1</option>
-                <option value = "2">2</option>
-                <option value = "3">3</option>
-                <option value = "4">4</option>
+                <option value = "1"><?= lang('type.one') ?></option>
+                <option value = "2"><?= lang('type.two') ?></option>
+                <option value = "3"><?= lang('type.three') ?></option>
+                <option value = "4"><?= lang('type.four') ?></option>
              </select>
         </div>
         <div class="col-xs-4">
-            <div class="btn btn-success btn_create_parts">Create Parts</div>
+            <div class="btn btn-success btn_create_parts"><?= lang('type.create_parts_button') ?></div>
         </div>
-        <input type="hidden" class="section_number" placeholder="Section Number" />
+        <input type="hidden" class="section_number" placeholder="<?= lang('type.enter_section_number') ?>" />
     </div>
 
     <div class = "form-group parts_header hidden">
-        <div class = "layout_title col-xs-6" for="">Part Title</div>
-        <div class = "layout_title col-xs-6" for="">Fields</div>
+        <div class = "layout_title col-xs-6" for=""><?= lang('type.part_title') ?></div>
+        <div class = "layout_title col-xs-6" for=""><?= lang('type.part_fields') ?></div>
     </div>
 
     <section class = "parts"></section>
@@ -208,7 +206,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
 <span id = "span_part_template">
     <div class = "form-group part_template hidden">
         <div class="col-xs-6 div_part_title">
-            <input type="text" class="form-control part_title" name=""  placeholder="Enter Part Title">
+            <input type="text" class="form-control part_title" name=""  placeholder="<?= lang('type.enter_part_title') ?>">
         </div>
 
         <div class="col-xs-6 div_part_fields">
@@ -217,7 +215,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
             </select> -->
             <input class="form-control part_fields multi_fields" name=""  />
         </div>
-        <input type="hidden" class="part_number" placeholder="Part Number" />
+        <input type="hidden" class="part_number" placeholder="<?= lang('type.enter_part_number') ?>" />
     </div>
 </span>
 

@@ -30,15 +30,15 @@
                 <!-- <label for="psw"><b>Password</b></label> -->
                 <input type="password" placeholder="Enter Password" value="<?= set_value('password') ?>" name="password" required>
 
-                <button type="submit">Login</button>
+                <button type="submit"><?= lang('user.login') ?></button>
                 <label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                    <input type="checkbox" checked="checked" name="remember"> <?= lang('user.remember_me') ?>
                 </label>
             </div>
 
             <div class="container" style="background-color:#f1f1f1">
-                <button type="button" class="cancelbtn">Cancel</button>
-                <span class="psw">Forgot <a href="#">password?</a></span>
+                <button type="button" class="cancelbtn"><?= lang('user.cancel') ?></button>
+                <span class="psw"><?= lang('user.forgot') ?> <a href="#"><?= lang('user.login') ?></a></span>
             </div>
         <?= form_close() ?>
     </div>

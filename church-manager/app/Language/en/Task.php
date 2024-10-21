@@ -2,7 +2,7 @@
 
 return [
     'list_tasks' => 'List Tasks',
-    'add_task' => 'Add Task',
+    'add_task' => 'Add a Task',
     'view_task' => 'View Task',
     'edit_task' => 'Edit Task',
     'delete_task' => 'Delete Task',

@@ -17,7 +17,7 @@
 
         <div class="card-body">
             <div class="panel-body">
-                <button class="btn btn-success" id="data_button" data-item_id="" style="width:100%"><i class="fa fa-download"></i> Download</button>
+                <button class="btn btn-success" id="data_button" data-item_id="" style="width:100%"><i class="fa fa-download"></i> <?= lang('user.download_btn') ?></button>
             </div>
         </div>
 

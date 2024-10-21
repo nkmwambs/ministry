@@ -74,8 +74,7 @@ $numeric_meeting_id = hash_id($meeting_id, 'decode');
               <?= lang('event.event_name') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="name" id="name"
-                placeholder="Enter Name">
+              <input type="text" class="form-control" name="name" id="name">
             </div>
           </div>
 

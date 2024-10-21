@@ -47,8 +47,7 @@
                             <?= lang('role.role_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" id="name" value="<?=$result['name'];?>"
-                                placeholder="Enter Name">
+                            <input type="text" class="form-control" name="name" id="name" value="<?=$result['name'];?>">
                         </div>
                     </div>
 
@@ -59,8 +58,8 @@
                         <div class="col-xs-6">
                             
                             <select <?=$result['default_role'] == 'no' ? 'readonly' : '';?> class="form-control" name="default_role" id="default_role">
-                                <option value="no" <?=$result['default_role'] == 'no' ? 'selected': '';?>>No</option>
-                                <option value="yes" <?=$result['default_role'] == 'yes' ? 'selected' : '';?> >Yes</option>
+                                <option value="no" <?=$result['default_role'] == 'no' ? 'selected': '';?>><?= lang('system.system_no') ?></option>
+                                <option value="yes" <?=$result['default_role'] == 'yes' ? 'selected' : '';?> ><?= lang('system.system_yes') ?></option>
                             </select>
                         </div>
                     </div>

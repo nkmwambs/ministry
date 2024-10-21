@@ -29,8 +29,8 @@
                             <?= lang('collection.collection_return_date') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control datepicker" name="return_date" value="<?=$result['return_date'];?>" id="return_date"
-                                placeholder="Edit Return Date">
+                            <input type="text" class="form-control datepicker" name="return_date" 
+                                value="<?=$result['return_date'];?>" id="return_date">
                         </div>
                     </div>
 
@@ -40,7 +40,7 @@
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control datepicker" name="period_start_date" id="period_start_date" 
-                                placeholder="Edit Period Start Date" value="<?=$result['period_start_date'];?>">
+                                value="<?=$result['period_start_date'];?>">
                         </div>
                     </div>
 
@@ -49,8 +49,7 @@
                             <?= lang('collection.collection_period_end_date') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control datepicker" name="period_end_date" value="<?=$result['period_end_date'];?>" id="period_end_date" 
-                                placeholder="Edit Period End Date">
+                            <input type="text" class="form-control datepicker" name="period_end_date" value="<?=$result['period_end_date'];?>" id="period_end_date">
                         </div>
                     </div>
 
@@ -59,8 +58,7 @@
                             <?= lang('collection.collection_revenue_id') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="email" class="form-control" name="revenue_id" value="<?=$result['revenue_id'];?>" id="revenue_id" 
-                                placeholder="Edit Revenue Name">
+                            <input type="email" class="form-control" name="revenue_id" value="<?=$result['revenue_id'];?>" id="revenue_id">
                         </div>
                     </div>
 
@@ -69,8 +67,7 @@
                             <?= lang('collection.collection_amount') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="amount" value="<?=$result['amount'];?>" id="amount" 
-                                placeholder="Edit Amount">
+                            <input type="text" class="form-control" name="amount" value="<?=$result['amount'];?>" id="amount">
                         </div>
                     </div>
 
@@ -79,8 +76,7 @@
                             <?= lang('collection.collection_status') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control datepicker" name="status" value="<?=$result['status'];?>" id="status" 
-                                placeholder="Edit Status">
+                            <input type="text" class="form-control datepicker" name="status" value="<?=$result['status'];?>" id="status" >
                         </div>
                     </div>
 
@@ -89,8 +85,8 @@
                             <?= lang('collection.collection_collection_reference') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="collection_reference" value="<?=$result['collection_reference'];?>" id="collection_reference" 
-                                placeholder="Edit Collection Reference">
+                            <input type="text" class="form-control" name="collection_reference" 
+                                value="<?=$result['collection_reference'];?>" id="collection_reference">
                         </div>
                     </div>
 
@@ -99,8 +95,7 @@
                             <?= lang('collection.collection_description') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="description" value="<?=$result['description'];?>" id="description" 
-                                placeholder="Edit Description">
+                            <input type="text" class="form-control" name="description" value="<?=$result['description'];?>" id="description">
                         </div>
                     </div>
 
@@ -109,8 +104,7 @@
                             <?= lang('collection.collection_collection_method') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="collection_method" value="<?=$result['collection_method'];?>" id="collection_method" 
-                                placeholder="Edit Collection Method">
+                            <input type="text" class="form-control" name="collection_method" value="<?=$result['collection_method'];?>" id="collection_method">
                         </div>
                     </div>
 
