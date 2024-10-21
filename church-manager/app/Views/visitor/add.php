@@ -31,24 +31,24 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
           <div class="form-group">
             <label class="control-label col-xs-2" for="first_name"><?= lang('visitor.visitor_first_name') ?></label>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name">
+              <input type="text" class="form-control" name="first_name" id="first_name" placeholder="<?= lang('system.system_enter_first_name') ?>">
             </div>
 
             <label class="control-label col-xs-2" for="last_name"><?= lang('visitor.visitor_last_name') ?></label>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name">
+              <input type="text" class="form-control" name="last_name" id="last_name" placeholder="<?= lang('system.system_enter_last_name') ?>">
             </div>
           </div>
 
           <div class="form-group">
             <label class="control-label col-xs-2" for="phone"><?= lang('visitor.visitor_phone') ?></label>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Phone">
+              <input type="text" class="form-control" name="phone" id="phone" placeholder="<?= lang('system.system_enter_phone') ?>">
             </div>
 
             <label class="control-label col-xs-2" for="email"><?= lang('visitor.visitor_email') ?></label>
             <div class="col-xs-3">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
+              <input type="email" class="form-control" name="email" id="email" placeholder="<?= lang('system.system_enter_email') ?>">
             </div>
           </div>
 
@@ -67,14 +67,14 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
               <?= lang('visitor.visitor_date_of_birth') ?>
             </label>
             <div class="col-xs-3">
-              <input type="text" class="form-control datepicker" name="date_of_birth" id="date_of_birth" placeholder="Date of birth">
+              <input type="text" class="form-control datepicker" name="date_of_birth" id="date_of_birth" placeholder="<?= lang('user.enter_dob') ?>">
             </div>
           </div>
 
           <div class='form-group'>
             <label class="control-label col-xs-2" for="payment_code"><?= lang('visitor.visitor_payment_code') ?></label>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="payment_code" id="payment_code" placeholder="Enter Payment Code">
+              <input type="text" class="form-control" name="payment_code" id="payment_code" placeholder="<?= lang('user.enter_payment_code') ?>">
             </div>
 
             <?php if (!$numeric_payment_id) { ?>
@@ -95,16 +95,16 @@ $numeric_payment_id = hash_id($payment_id, 'decode');
         <div class="form-group">
           <label class="control-label col-xs-2" for="registration_amount"><?= lang('visitor.visitor_registration_amount') ?></label>
           <div class="col-xs-3">
-            <input type="text" class="form-control" name="registration_amount" id="registration_amount" placeholder="Enter Registration Amount">
+            <input type="text" class="form-control" name="registration_amount" id="registration_amount" placeholder="<?= lang('user.enter_registration_amount') ?>">
           </div>
 
           <label class="control-label col-xs-2" for="status"><?= lang('visitor.visitor_status') ?></label>
           <div class="col-xs-3">
             <select type="text" class="form-control" name="status" id="status">
               <option value=""><?= lang('visitor.visitor_status') ?></option>
-              <option value="registered">Registered</option>
-              <option value="attended">Attended</option>
-              <option value="cancelled">Cancelled</option>
+              <option value="registered"><?= lang('system.system_registered') ?></option>
+              <option value="attended"><?= lang('system.system_attended') ?></option>
+              <option value="cancelled"><?= lang('system.system_cancelled') ?></option>
             </select>
           </div>
         </div>

@@ -52,7 +52,7 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Enter Name">
+                                placeholder="<?= lang('system.system_enter_name') ?>">
                         </div>
                     </div>
 

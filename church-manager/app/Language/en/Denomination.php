@@ -15,6 +15,10 @@ return [
     'denomination_email' => 'Email',
     'denomination_phone' => 'Phone',
 
+    'enter_code' => 'Enter Code',
+    'enter_registration_date' => 'Enter Registration Date',
+    'enter_head_office' => 'Enter Head Office',
+
     'save_denomination' => 'Save',
     'save_and_new_denomination' => 'Save and New',
     'reset_denomination_form' => 'Reset',

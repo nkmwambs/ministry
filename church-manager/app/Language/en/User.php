@@ -9,6 +9,7 @@ return [
     'delete_user' => "Delete User",
 
     // Labels
+    'user_action' => 'Action',
     'user_name' => 'Username',
     'user_biography' => 'Biography',
     'user_first_name' => 'First Name',
@@ -18,6 +19,7 @@ return [
     'user_email' => 'Email',
     'user_phone' => 'Phone',
     'user_roles' => 'Roles',
+    'user_is_active' => 'Is Active?',
     'user_is_system_admin' => 'Is System Administrator',
     'user_hierarchical_level' => 'Hierarchical Level',
     'user_permitted_assemblies' => 'Permitted Assemblies',
@@ -31,6 +33,12 @@ return [
     'enter_dob' => 'Enter Date of Birth',
     'enter_email' => 'Enter Email',
     'enter_phone' => 'Enter Phone',
+    'enter_payment_code' => 'Enter Payment Code',
+    'enter_registration_amount' => 'Enter Registration Date',
+
+    'current_password' => 'Current Password',
+    'new_password' => 'New Password',
+    'verify_password' => 'Verify Password',
 
     'select_assemblies' => 'Select Assemblies',
     'select_hierarchical_level' => 'Select a Hierarchy Level',
@@ -39,6 +47,7 @@ return [
     'select_option' => 'Select Option',
 
     'back_button' => 'Back',
+    'save_changes_btn' => 'Save Changes',
     'edit_again_buttton' => 'Edit',
     'profile_settings' => 'Profile Settings',
     'public_info' => 'Public Info',
@@ -48,6 +57,12 @@ return [
     'application' => 'Application',
     'privacy' => 'Privacy and Safety',
     'widgets' => 'Widgets',
-    'your_data' => 'Your Data',
-    'delete_account' => 'Delete Account'
+    'your_data' => ' Your Data',
+    'delete_account' => ' Delete Account',
+    'download_btn' => 'Download',
+    'remember_me' => 'Remember me',
+    'cancel' => 'Cancel',
+    'forgot' => 'Forgot',
+    'password' => 'password?',
+    'login' => 'Login',
 ];

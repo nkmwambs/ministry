@@ -39,7 +39,7 @@
                             <?= lang('assembly.assembly_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="<?= lang('system.system_enter_name') ?>">
                         </div>
                     </div>
 
@@ -50,7 +50,7 @@
                         <div class="col-xs-6">
                             <!-- onkeydown="return false;" -->
                             <input type="text" class="form-control datepicker" name="planted_at" id="planted_at"
-                                placeholder="Enter Planted Date">
+                                placeholder="<?= lang('assembly.enter_planted_date') ?>">
                         </div>
                     </div>
 
@@ -60,33 +60,9 @@
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="location" id="location"
-                                placeholder="Enter Location">
+                                placeholder="<?= lang('assembly.enter_location') ?>">
                         </div>
                     </div>
-
-                    <?php
-                    if (!session()->get('user_denomination_id')) {
-                    ?>
-                        <div class="form-group">
-                            <label class="control-label col-xs-4" for="denomination_id">
-                                <?= lang('assembly.assembly_denomination_id') ?>
-                            </label>
-                            <div class="col-xs-6">
-                                <select class="form-control" name="parent_id" id="denomination_id">
-                                    <option value="0">Select Denomination</option>
-                                    <?php foreach ($denominations as $denomination) : ?>
-                                        <option value="<?php echo $denomination['id']; ?>"><?php echo $denomination['name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                    <?php
-                    } else {
-                    ?>
-                        <input type="hidden" value="<?= session()->get('user_denomination_id'); ?>" name="parent_id" id="denomination_id" />
-                    <?php
-                    }
-                    ?>
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="entity_id">
@@ -94,7 +70,7 @@
                         </label>
                         <div class="col-xs-6">
                             <select class="form-control" name="entity_id" id="entity_id">
-                                <option value="">Select Entity</option>
+                                <option value=""><?= lang('assembly.select_entity') ?></option>
                                 <?php
                                 if (!empty($lowest_entities)) {
                                     foreach ($lowest_entities as $entity) :
@@ -116,13 +92,13 @@
                         </label>
                         <div class="col-xs-6">
                             <select class="form-control" name="assembly_leader" id="assembly_leader">
-                                <option value="">Select Leader</option>
+                                <option value=""><?= lang('assembly.select_leader') ?></option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Dynamically Generated Custom Fields -->
-                    <!-- <?php if ($customFields): ?>
+                    <?php if ($customFields): ?>
                         <?php foreach ($customFields as $field): ?>
                             <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
                                 <label class="control-label col-xs-4" for="<?= $field['field_name']; ?>"><?= ucfirst($field['field_name']); ?></label>
@@ -131,7 +107,7 @@
                                 </div>
                             </div>
                         <?php endforeach; ?>
-                    <?php endif; ?> -->
+                    <?php endif; ?>
 
                 </form>
 

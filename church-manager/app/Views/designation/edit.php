@@ -51,8 +51,7 @@
                             <?= lang('designation.designation_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" value="<?=$result['name'];?>" id="name"
-                                placeholder="<?=lang('system.system_enter_name');?>">
+                            <input type="text" class="form-control" name="name" value="<?=$result['name'];?>" id="name">
                         </div>
                     </div>
 

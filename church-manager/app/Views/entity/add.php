@@ -7,7 +7,7 @@
 
       <div class="panel-heading">
         <div class="panel-title">
-          <div class="page-title"><i class='fa fa-plus-circle'></i> Add Entity</div>
+          <div class="page-title"><i class='fa fa-plus-circle'></i><?= lang('entity.add_entity') ?></div>
         </div>
 
       </div>
@@ -25,10 +25,10 @@
           <input type="hidden" name="hierarchy_id" value="<?= $parent_id; ?>" />
 
           <div class="form-group">
-            <label class="control-label col-xs-4" for="parent_id">Parent Entity</label>
+            <label class="control-label col-xs-4" for="parent_id"><?= lang('entity.parent_entity') ?></label>
             <div class="col-xs-6">
               <select class="form-control" name="parent_id" id="parent_id">
-                <option value="">Select Hierarchy Level</option>
+                <option value=""><?= lang('entity.select_hierarchy') ?></option>
                 <?php
                 if (isset($parent_entities)) {
                   foreach ($parent_entities as $entity) { ?>
@@ -42,18 +42,18 @@
           </div>
 
           <div class="form-group content hidden">
-            <label class="control-label col-xs-4" for="name">Name</label>
+            <label class="control-label col-xs-4" for="name"><?= lang('entity.entity_name') ?></label>
             <div class="col-xs-6">
               <input type="text" class="form-control" name="name" id="name"
-                placeholder="Enter Name" required>
+                placeholder="<?= lang('system.system_enter_name') ?>" required>
             </div>
           </div>
 
           <div class="form-group content hidden">
-            <label class="control-label col-xs-4" for="entity_leader">Entity Leader</label>
+            <label class="control-label col-xs-4" for="entity_leader"><?= lang('entity.entity_leader') ?></label>
             <div class="col-xs-6">
               <select class="form-control" name="entity_leader" id="entity_leader">
-                <option value="">Select Hierarchy Leader</option>
+                <option value=""><?= lang('entity.select_hierarchy_leader') ?></option>
               </select>
             </div>
           </div>

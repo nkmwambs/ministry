@@ -14,19 +14,19 @@
             <div class="panel-body">
                 <form class="form-horizontal form-groups-bordered">
                     <div class="form-group">
-                        <label for="name" class="control-label col-xs-4">Add a Task</label>
+                        <label for="name" class="control-label col-xs-4"><?= lang('task.add_task') ?></label>
                         <div class="col-xs-4">
                             <input class="form-control" id=myInput type="text" placeholder="Title...">
                         </div>
                         <div class="col-xs-2">
-                            <div onclick="newElement()" id="btn_add_feature" class="btn btn-success">Add</div>
+                            <div onclick="newElement()" id="btn_add_feature" class="btn btn-success"><?= lang('task.add_button') ?></div>
                         </div>
                     </div>
                 </form>
 
                 <div class="row">
                     <div class="col-xs-12 center heading">
-                        Pending Tasks
+                        <?= lang('task.pending_tasks_heading') ?>
                     </div>
                 </div>
 
@@ -34,8 +34,8 @@
                     <table id="permission_table" class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Task Name</th>
-                                <th>Status</th>
+                                <th><?= lang('task.task_name') ?></th>
+                                <th><?= lang('task.task_status') ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,10 +46,10 @@
                                         <form action="<?= site_url('/tasks/updateStatus') ?>" method="post">
                                             <input type="hidden" name="task_id" value="<?= esc($task['id']) ?>">
                                             <select name="status_label" onchange="this.form.submit()">
-                                                <option value="Not Started" <?= $task['status_label'] == 'Not Started' ? 'selected' : '' ?>>Not Started</option>
-                                                <option value="In Progress" <?= $task['status_label'] == 'In Progress' ? 'selected' : '' ?>>In Progress</option>
-                                                <option value="Completed" <?= $task['status_label'] == 'Completed' ? 'selected' : '' ?>>Completed</option>
-                                                <option value="Rejected" <?= $task['status_label'] == 'Rejected' ? 'selected' : '' ?>>Rejected</option>                                                
+                                                <option value="Not Started" <?= $task['status_label'] == 'Not Started' ? 'selected' : '' ?>><?= lang('task.not_started') ?></option>
+                                                <option value="In Progress" <?= $task['status_label'] == 'In Progress' ? 'selected' : '' ?>><?= lang('task.in_progress') ?></option>
+                                                <option value="Completed" <?= $task['status_label'] == 'Completed' ? 'selected' : '' ?>><?= lang('task.completed') ?></option>
+                                                <option value="Rejected" <?= $task['status_label'] == 'Rejected' ? 'selected' : '' ?>><?= lang('task.rejected') ?></option>                                                
                                             </select>
                                         </form>
                                     </td>

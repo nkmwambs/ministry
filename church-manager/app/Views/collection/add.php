@@ -53,7 +53,7 @@ $numeric_revenue_id = hash_id($revenue_id, 'decode');
             ?>
 
             <div class="form-group">
-              <label class="control-label col-xs-4" for="return_date">Choose a Sunday</label>
+              <label class="control-label col-xs-4" for="return_date"><?= lang('collection.choose_sunday_button') ?></label>
               <div class="col-xs-6">
                 <input type="text" class="form-control datepicker" name="return_date" id="return_date" placeholder="Enter a Sunday">
               </div>
@@ -61,9 +61,9 @@ $numeric_revenue_id = hash_id($revenue_id, 'decode');
 
             <section class="collection_section">
               <div class="form-group section-header">
-                <div class="collection_title col-xs-2">Add Collection</div>
-                <div class="collection_title col-xs-5">Collection Name</div>
-                <div class="collection_title col-xs-5">Amount</div>
+                <div class="collection_title col-xs-2"><?= lang('collection.add_collection_button') ?></div>
+                <div class="collection_title col-xs-5"><?= lang('collection.collection_name') ?></div>
+                <div class="collection_title col-xs-5"><?= lang('collection.collection_amount') ?></div>
               </div>
 
               <div class="form-group section-content">
@@ -83,7 +83,7 @@ $numeric_revenue_id = hash_id($revenue_id, 'decode');
                   </div>
                 <?php } ?>
                 <div class="col-xs-5">
-                  <input type="number" class="form-control" name="amount[]" id="amount" placeholder="Enter Amount">
+                  <input type="number" class="form-control" name="amount[]" id="amount" placeholder="<?= lang('collection.enter_amount') ?>">
                 </div>
               </div>
             </section>
