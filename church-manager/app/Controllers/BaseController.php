@@ -409,14 +409,25 @@ abstract class BaseController extends Controller
     }
 
     function bulkEdit(){
-        $tableName = $this->request->getPost('tableName');
+        $tableName = $this->request->getPost('table_name');
         $edit_selected_ids = $this->request->getPost('edit_selected_ids');
         $edit_selected_ids = $this->request->getPost('edit_selected_ids');
         $fields = $this->request->getPost('field');
         $values = $this->request->getPost('value');
         $field_values = array_combine($fields, $values);
 
-        log_message('error', json_encode($this->request->getPost()));
+        $baseFields = [];
+        $customizeFields = [];
+
+        foreach($field_values as $field_value){
+            if(strpos($field_value,'c__') != false){
+                $customizeFields[] =  $field_value;
+            }else{
+                $baseFields[] =  $field_value;
+            }
+        }
+
+        // log_message('error', json_encode(compact('baseFields','customizeFields','field_values')));
 
         $library = new \App\Libraries\FieldLibrary();
         $customFields = $library->getCustomFieldsForTable($tableName);
