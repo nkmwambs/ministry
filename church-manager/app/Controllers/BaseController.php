@@ -322,6 +322,20 @@ abstract class BaseController extends Controller
                 }
                 return $elem;
             }, $bulkActionFields);
+
+            $lookUpFields = $model->lookUpFields;
+
+            $bulkActionFields = array_map(function($elem) use($tableName, $model, $lookUpFields){
+                if(is_array($lookUpFields) && !empty($lookUpFields) && in_array($elem->name, array_keys($lookUpFields))){
+                    if(method_exists($model, 'getLookUpValues')){
+                        $elem->type = 'lookup';
+                        $elem->options = $model->getLookUpValues($elem->name,$lookUpFields);
+                        $elem->name = $lookUpFields[$elem->name]['nameField'];
+                    }
+                    
+                }
+                return $elem;
+            }, $bulkActionFields);
             
             $customFields = $this->customFields($tableName);
 

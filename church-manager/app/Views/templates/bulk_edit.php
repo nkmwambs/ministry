@@ -86,6 +86,12 @@
                     $.each(value.options, function(key, value){
                         select.closest('.form-group').find('.value').append(`<option value="${value}" ${value == default_value ? "selected" : ""} >${value}</option>`)
                     })
+                }else if(field_type === 'lookup'){
+                    select.closest('.form-group').find('.value').remove()
+                    select.closest('.form-group').find('.div_value').append('<select class="form-control value" name="value[]"></select>')
+                    $.each(value.options, function(key, value){
+                        select.closest('.form-group').find('.value').append(`<option value="${value.id}" >${value.name}</option>`)
+                    })
                 }else if(field_type === 'numeric' || field_type === 'int' || field_type === 'float'){
                     select.closest('.form-group').find('.div_value').find('.value').remove()
                     select.closest('.form-group').find('.div_value').append('<input type="numeric" class="form-control value" name="value[]" placeholder="<?php echo lang("system.enter_value"); ?>" />');

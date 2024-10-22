@@ -46,6 +46,8 @@ class MembersModel extends Model
 
     protected $bulk_editable_fields = ['first_name','last_name','membership_date','designation_id','saved_date','is_active','inactivation_reason'];
 
+    protected $lookUpFields = ['designation_id' => ['tableName' => 'designations', 'nameField' => 'designation_name']];
+
     public function getAll(){
         $library = new \App\Libraries\MemberLibrary();
         $listQueryFields = $library->setListQueryFields();
@@ -121,5 +123,26 @@ class MembersModel extends Model
         ];
         $trashModel->insert((object)$trashData);
         return true;
+    }
+
+    function getLookUpValues($fieldName, $lookUpFields){
+        $lookupTable = $lookUpFields[$fieldName]['tableName'];
+        $modelName = ucfirst($lookupTable).'Model';
+        $model = new ("\App\\Models\\$modelName")(); 
+
+        $table_has_denomination_id = in_array('denomination_id',$model->getFieldData($lookupTable));
+        
+        $denomination_id = 0;
+
+        if (session()->get('user_denomination_id')) {
+            $denomination_id = session()->get('user_denomination_id');
+        }
+
+        if($table_has_denomination_id && $denomination_id > 0){
+            return $model->where('denomination_id', $denomination_id)->select('id,name')->findAll();
+        }else{
+            return $model->select('id,name')->findAll();
+        }
+
     }
 }
