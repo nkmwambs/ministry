@@ -372,7 +372,18 @@ abstract class BaseController extends Controller
 
     function bulkEdit(){
         $tableName = $this->request->getPost('tableName');
+        $edit_selected_ids = $this->request->getPost('edit_selected_ids');
+        $edit_selected_ids = $this->request->getPost('edit_selected_ids');
+        $fields = $this->request->getPost('field');
+        $values = $this->request->getPost('value');
+        $field_values = array_combine($fields, $values);
+
         log_message('error', json_encode($this->request->getPost()));
+
+        $library = new \App\Libraries\FieldLibrary();
+        $customFields = $library->getCustomFieldsForTable($tableName);
+        $field_codes = array_column($customFields, 'field_code');
+
         redirect()->to('assemblies/view/W9');
     }
 
