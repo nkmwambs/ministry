@@ -287,11 +287,16 @@ abstract class BaseController extends Controller
     }
 
 
+    /**
+     * Get getBulkActionFields and their properties
+     * Currently works with edit forms
+     * @param mixed $tableName
+     * @param mixed $actionOnItem
+     * @return string
+     */
     function getBulkActionFields($tableName, $actionOnItem){
         $view = "Are you sure you want perform this action";
         $selectedItemIds = $this->request->getPost('selectedItems');
-
-        // log_message('error', json_encode($selectedItems));
 
         if($actionOnItem == 'edit'){
             // Get all database table fields metadata  
@@ -306,6 +311,7 @@ abstract class BaseController extends Controller
                 }
             }); 
 
+            //Use only editable fields as specified in the model
             $updatableFields = isset($model->bulk_editable_fields) ? $model->bulk_editable_fields : [];
 
             if(!empty($updatableFields)){
@@ -316,6 +322,7 @@ abstract class BaseController extends Controller
                 });
             }
 
+            //  Build Enum Options
             $bulkActionFields = array_map(function($elem) use($tableName){
                 if($elem->type == 'enum'){
                     $elem->options = $this->getEnumOptions($tableName,$elem->name);
@@ -323,6 +330,7 @@ abstract class BaseController extends Controller
                 return $elem;
             }, $bulkActionFields);
 
+            // Build lookup values options
             $lookUpFields = $model->lookUpFields;
 
             $bulkActionFields = array_map(function($elem) use($tableName, $model, $lookUpFields){
@@ -337,6 +345,7 @@ abstract class BaseController extends Controller
                 return $elem;
             }, $bulkActionFields);
             
+            // Add custom fields and their associated options
             $customFields = $this->customFields($tableName);
 
             if(count($customFields) > 0){
@@ -344,11 +353,15 @@ abstract class BaseController extends Controller
                 $bulkActionFields = array_merge($bulkActionFields, $customFields);
             }
 
+            // Remove numeric stringified keys
             $bulkActionFields = array_values($bulkActionFields); 
             
+            // Get all records that are targeted to be edited
             $selectedItems = $model->whereIn('id', $selectedItemIds)->findAll();
+
+            // Prepare data for view with compact
             $result = compact('tableName','bulkActionFields','selectedItemIds', 'selectedItems');
-            // log_message('error', json_encode($result));
+            
             $view  = view("templates/bulk_edit", $result);
         }
         
@@ -356,6 +369,11 @@ abstract class BaseController extends Controller
         
     }
 
+    /**
+     * Build customFields and their options
+     * @param mixed $tableName
+     * @return object[]
+     */
     function customFields($tableName){
 
         $library = new \App\Libraries\FieldLibrary();
@@ -375,6 +393,12 @@ abstract class BaseController extends Controller
         return $fields;
     }
 
+    /**
+     * Build of Enum Options
+     * @param mixed $tableName
+     * @param mixed $columnName
+     * @return bool|string[]
+     */
     function getEnumOptions($tableName, $columnName) {
         $dbName = env('database.default.database');
         $qstring="SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$tableName' AND COLUMN_NAME = '$columnName'";
