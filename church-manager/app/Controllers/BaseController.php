@@ -331,19 +331,22 @@ abstract class BaseController extends Controller
             }, $bulkActionFields);
 
             // Build lookup values options
-            $lookUpFields = $model->lookUpFields;
+            $lookUpFields = isset($model->lookUpFields) ? $model->lookUpFields : [];
 
-            $bulkActionFields = array_map(function($elem) use($tableName, $model, $lookUpFields){
-                if(is_array($lookUpFields) && !empty($lookUpFields) && in_array($elem->name, array_keys($lookUpFields))){
-                    if(method_exists($model, 'getLookUpValues')){
-                        $elem->type = 'lookup';
-                        $elem->options = $model->getLookUpValues($elem->name,$lookUpFields);
-                        $elem->name = $lookUpFields[$elem->name]['nameField'];
+            if(is_array($lookUpFields) && !empty($lookUpFields)){
+                $bulkActionFields = array_map(function($elem) use($model, $lookUpFields){
+                    if(in_array($elem->name, array_keys($lookUpFields))){
+                        if(method_exists($model, 'getLookUpValues')){
+                            $elem->type = 'lookup';
+                            $elem->options = $model->getLookUpValues($elem->name,$lookUpFields);
+                            $elem->name = $lookUpFields[$elem->name]['nameField'];
+                        }
+                        
                     }
-                    
-                }
-                return $elem;
-            }, $bulkActionFields);
+                    return $elem;
+                }, $bulkActionFields);
+            }
+            
             
             // Add custom fields and their associated options
             $customFields = $this->customFields($tableName);
@@ -409,27 +412,69 @@ abstract class BaseController extends Controller
     }
 
     function bulkEdit(){
+        // log_message('error', json_encode($this->request->getPost()));
         $tableName = $this->request->getPost('table_name');
         $edit_selected_ids = $this->request->getPost('edit_selected_ids');
-        $edit_selected_ids = $this->request->getPost('edit_selected_ids');
+        
+        // Building a field / value pairs
         $fields = $this->request->getPost('field');
         $values = $this->request->getPost('value');
         $field_values = array_combine($fields, $values);
 
+
+        // Seprating normal fields and values from custom ones
         $baseFields = [];
         $customizeFields = [];
 
-        foreach($field_values as $field_value){
-            if(strpos($field_value,'c__') != false){
-                $customizeFields[] =  $field_value;
-            }else{
-                $baseFields[] =  $field_value;
+        foreach($field_values as $field_key => $field_value){
+            // log_message('error', substr($field_key, 0, 3));
+            foreach($edit_selected_ids as $edit_selected_id){
+                if(substr($field_key, 0, 3) == 'c__'){
+                    $customizeFields[$edit_selected_id]['id'] = $edit_selected_id;
+                    $customizeFields[$edit_selected_id][substr($field_key,3)] =  $field_value;
+                }else{
+                    $baseFields[$edit_selected_id]['id'] = $edit_selected_id;
+                    $baseFields[$edit_selected_id][$field_key] =  $field_value;
+                }
+            }
+            
+        }
+
+
+        $modelName = ucfirst($tableName)."Model";
+        $model = new ("\App\\Models\\$modelName")();
+
+        if(!empty($baseField)){
+            foreach($baseFields as $baseField){
+                $model->save($baseField);
             }
         }
 
-        // log_message('error', json_encode(compact('baseFields','customizeFields','field_values')));
-
+        
+    
         $library = new \App\Libraries\FieldLibrary();
+        if (!empty($customizeFields)) {
+            $copyCustomizeFields = $customizeFields;
+            $lastElemOfCustomizeFields = array_pop($copyCustomizeFields);
+            $keysOfCustomizeFields = array_keys($lastElemOfCustomizeFields);
+            unset($keysOfCustomizeFields['id']);
+            $fieldModel = new \App\Models\FieldsModel();
+            $fieldsWithIds = $fieldModel->select('field_code,id')->whereIn('field_code',$keysOfCustomizeFields)->findAll();
+
+            $idsWithKeys = array_combine(array_column($fieldsWithIds, 'field_code'),array_column($fieldsWithIds, 'id'));
+
+            foreach($customizeFields as $customizeField){
+                
+                $id = $customizeField['id'];
+                unset($customizeField['id']);
+                foreach($customizeField as $key => $value){
+                    $rec[$idsWithKeys[$key]] = $value;
+                    $library->saveCustomFieldValues($id, $tableName, $rec);
+                }
+            }
+        }
+
+        
         $customFields = $library->getCustomFieldsForTable($tableName);
         $field_codes = array_column($customFields, 'field_code');
 

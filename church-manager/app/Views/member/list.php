@@ -42,7 +42,7 @@
         <table class="table table-striped datatable">
             <thead>
                 <tr>
-                    <th><input type="checkbox" id="select_all" onclick="select_all_items(this)"></th>
+                    <th><input type="checkbox" id="select_all" ></th>
                     <th><?= lang('member.member_action') ?></th>
                     <th><?= lang('member.member_first_name') ?></th>
                     <th><?= lang('member.member_last_name') ?></th>

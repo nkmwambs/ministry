@@ -53,7 +53,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
      */
     public function saveCustomFieldValues(int $recordId, string $tableName, ?array $customFieldValues): bool
     {
-
+        // log_message('error', json_encode(compact('recordId','tableName','customFieldValues')));
         $featureModel = new \App\Models\FeaturesModel();
         $feature = $featureModel->where('name', singular($tableName))->first();
         $featureId = $feature['id'];
@@ -69,9 +69,9 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
     
                 if ($existing) {
                     $update_data = [
-                        'value' => $value,
-                    ];
+                        'value' => $value,                    ];
                     // Update existing custom field value
+                    // log_message('error', json_encode(compact('existing','update_data')));
                     $this->customValueModel->update($existing['id'], (object)$update_data);
                 } else {
                     $data = [

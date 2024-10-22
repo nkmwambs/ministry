@@ -44,9 +44,12 @@ class MembersModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = ['updateRecycleBin'];
 
-    protected $bulk_editable_fields = ['first_name','last_name','membership_date','designation_id','saved_date','is_active','inactivation_reason'];
+    protected $bulk_editable_fields = ['membership_date','designation_id','saved_date','is_active','inactivation_reason','assembly_id'];
 
-    protected $lookUpFields = ['designation_id' => ['tableName' => 'designations', 'nameField' => 'designation_name']];
+    protected $lookUpFields = [
+        'designation_id' => ['tableName' => 'designations', 'nameField' => 'designation_name'],
+        'assembly_id' => ['tableName' => 'assemblies', 'nameField' => 'assembly_name']
+    ];
 
     public function getAll(){
         $library = new \App\Libraries\MemberLibrary();
@@ -130,7 +133,7 @@ class MembersModel extends Model
         $modelName = ucfirst($lookupTable).'Model';
         $model = new ("\App\\Models\\$modelName")(); 
 
-        $table_has_denomination_id = in_array('denomination_id',$model->getFieldData($lookupTable));
+        $table_has_denomination_id = in_array('denomination_id',array_column($model->getFieldData($lookupTable),'name'));
         
         $denomination_id = 0;
 
