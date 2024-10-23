@@ -44,7 +44,7 @@ class MembersModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = ['updateRecycleBin'];
 
-    protected $bulk_editable_fields = ['membership_date','designation_id','saved_date','is_active','inactivation_reason','assembly_id'];
+    protected $bulk_editable_fields = ['gender','membership_date','designation_id','saved_date','is_active','inactivation_reason','assembly_id'];
 
     protected $lookUpFields = [
         'designation_id' => ['tableName' => 'designations', 'nameField' => 'designation_name'],

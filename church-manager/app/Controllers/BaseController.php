@@ -411,11 +411,32 @@ abstract class BaseController extends Controller
         return $options;
     }
 
+    function findLookUpFields($model, $tableName, $field_key){
+        // Get field data 
+        $tableFieldNames = array_column($model->getFieldData($tableName),'name');
+
+        if(!in_array($field_key, $tableFieldNames)){
+            if(property_exists($model,'lookUpFields')){
+                $lookUpFields = $model->lookUpFields;
+                foreach($lookUpFields as $key => $lookUpField){
+                    if($lookUpField['nameField'] == $field_key){
+                        $field_key = $key;
+                    }
+                }
+            }
+        }
+        return $field_key;
+    }
+
     function bulkEdit(){
+        
         // log_message('error', json_encode($this->request->getPost()));
         $tableName = $this->request->getPost('table_name');
         $edit_selected_ids = $this->request->getPost('edit_selected_ids');
-        
+
+        $modelName = ucfirst($tableName)."Model";
+        $model = new ("\App\\Models\\$modelName")();
+
         // Building a field / value pairs
         $fields = $this->request->getPost('field');
         $values = $this->request->getPost('value');
@@ -425,7 +446,7 @@ abstract class BaseController extends Controller
         // Seprating normal fields and values from custom ones
         $baseFields = [];
         $customizeFields = [];
-
+        
         foreach($field_values as $field_key => $field_value){
             // log_message('error', substr($field_key, 0, 3));
             foreach($edit_selected_ids as $edit_selected_id){
@@ -433,6 +454,7 @@ abstract class BaseController extends Controller
                     $customizeFields[$edit_selected_id]['id'] = $edit_selected_id;
                     $customizeFields[$edit_selected_id][substr($field_key,3)] =  $field_value;
                 }else{
+                    $field_key = $this->findLookUpFields($model,$tableName, $field_key);
                     $baseFields[$edit_selected_id]['id'] = $edit_selected_id;
                     $baseFields[$edit_selected_id][$field_key] =  $field_value;
                 }
@@ -440,17 +462,9 @@ abstract class BaseController extends Controller
             
         }
 
-
-        $modelName = ucfirst($tableName)."Model";
-        $model = new ("\App\\Models\\$modelName")();
-
-        if(!empty($baseField)){
-            foreach($baseFields as $baseField){
-                $model->save($baseField);
-            }
+        if(!empty($baseFields)){
+            $model->updateBatch($baseFields, 'id');
         }
-
-        
     
         $library = new \App\Libraries\FieldLibrary();
         if (!empty($customizeFields)) {
