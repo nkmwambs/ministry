@@ -252,6 +252,7 @@ abstract class BaseController extends Controller
         if(method_exists($this->library,'addExtraData')){
             // Note the addExtraData updates the $page_data by reference
             $this->library->addExtraData($page_data);
+            // log_message('error', $this->parent_id);
         }
 
         foreach ((object)$this->tableName as $table_name) {

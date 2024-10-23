@@ -15,7 +15,7 @@ class CollectionLibrary implements \App\Interfaces\LibraryInterface {
 
     function setListQueryFields(){
         $fields = [
-            'collections.id','return_date','period_start_date',
+            'collections.id','return_date','period_start_date','sunday_date',
             'period_end_date','assembly_id','revenue_id','collections.amount',
             'status','collection_reference','description','collection_method',
             'revenues.name as revenue_name'
@@ -25,7 +25,7 @@ class CollectionLibrary implements \App\Interfaces\LibraryInterface {
 
     function setViewQueryFields(){
         $fields = [
-            'collections.id','return_date','period_start_date',
+            'collections.id','return_date','period_start_date','sunday_date',
             'period_end_date','assembly_id','revenue_id','collections.amount',
             'status', 'collection_reference','description','collection_method',
             'revenues.name as revenue_name'
@@ -34,7 +34,6 @@ class CollectionLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function listExtraData(&$page_data) {
-        
         $parent_id = 0;
         $revenue_id = 0;
 

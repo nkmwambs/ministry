@@ -8,6 +8,7 @@
 
 <?php
 $numeric_revenue_id = hash_id($revenue_id, 'decode');
+echo $parent_id;
 ?>
 
 <div class="row">
@@ -33,62 +34,62 @@ $numeric_revenue_id = hash_id($revenue_id, 'decode');
           </div>
 
           <?php
-          if (isset($id)) {
+          if (isset($parent_id)) {
           ?>
-            <input type="hidden" name="assembly_id" value="<?= $id; ?>" />
+            <input type="hidden" name="assembly_id" value="<?= $parent_id; ?>" />
           <?php
           } else {
           ?>
-            <!-- <div class="tab"> -->
             <div class="form-group">
-              <label class="control-label col-xs-2" for="assembly_id"><?= lang('collection.collection_assembly_id') ?></label>
+              <label class="control-label col-xs-4" for="assembly_id"><?= lang('collection.collection_assembly_id') ?></label>
               <div class="col-xs-6">
                 <select class="form-control" name="assembly_id" id="assembly_id">
-                  <option value=""><?= lang('collection.select_collection') ?></option>
+                  <option value=""><?= lang('collection.select_assembly') ?></option>
 
                 </select>
               </div>
-            <?php
+            </div>
+          <?php
           }
-            ?>
+          ?>
 
-            <div class="form-group">
-              <label class="control-label col-xs-4" for="return_date"><?= lang('collection.choose_sunday_button') ?></label>
-              <div class="col-xs-6">
-                <input type="text" class="form-control datepicker" name="return_date" id="return_date" placeholder="Enter a Sunday">
-              </div>
+          <div class="form-group">
+            <label class="control-label col-xs-4" for="sunday_date"><?= lang('collection.choose_sunday_button') ?></label>
+            <div class="col-xs-6">
+              <input type="text" class="form-control collection_datepicker" name="sunday_date" id="sunday_date" placeholder="Enter a Sunday">
+            </div>
+          </div>
+
+          <section class="collection_section">
+            <div class="form-group section-header">
+              <div class="collection_title col-xs-2"><?= lang('collection.add_collection_button') ?></div>
+              <div class="collection_title col-xs-5"><?= lang('collection.collection_name') ?></div>
+              <div class="collection_title col-xs-5"><?= lang('collection.collection_amount') ?></div>
             </div>
 
-            <section class="collection_section">
-              <div class="form-group section-header">
-                <div class="collection_title col-xs-2"><?= lang('collection.add_collection_button') ?></div>
-                <div class="collection_title col-xs-5"><?= lang('collection.collection_name') ?></div>
-                <div class="collection_title col-xs-5"><?= lang('collection.collection_amount') ?></div>
-              </div>
-
-              <div class="form-group section-content">
-                <div class="col-xs-2">
-                  <div class="btn btn-success add_collection_button">
-                    <i class="fa fa-plus-circle"></i>
-                  </div>
+            <div class="form-group section-content">
+              <div class="col-xs-2">
+                <div class="btn btn-success add_collection_button">
+                  <i class="fa fa-plus-circle"></i>
                 </div>
-                <?php if (!$numeric_revenue_id) { ?>
-                  <div class="col-xs-5">
-                    <select class="form-control" name="revenue_id" id="revenue_id">
-                      <option value=""><?= lang('collection.select_revenue') ?></option>
-                      <?php foreach ($revenues as $revenue) : ?>
-                        <option value="<?php echo $revenue['id']; ?>"><?php echo $revenue['name']; ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
-                <?php } ?>
+              </div>
+              <?php if (!$numeric_revenue_id) { ?>
                 <div class="col-xs-5">
-                  <input type="number" class="form-control" name="amount[]" id="amount" placeholder="<?= lang('collection.enter_amount') ?>">
+                  <select class="form-control" name="revenue_id" id="revenue_id">
+                    <option value=""><?= lang('collection.select_revenue') ?></option>
+                    <?php foreach ($revenues as $revenue) : ?>
+                      <option value="<?php echo $revenue['id']; ?>"><?php echo $revenue['name']; ?></option>
+                    <?php endforeach; ?>
+                  </select>
                 </div>
+              <?php } ?>
+              <div class="col-xs-5">
+                <input type="number" class="form-control" name="amount" id="amount" placeholder="<?= lang('collection.enter_amount') ?>">
               </div>
-            </section>
+            </div>
+          </section>
 
-            <!-- Dynamically Generated Custom Fields -->
+          <!-- Dynamically Generated Custom Fields -->
 
         </form>
       </div>

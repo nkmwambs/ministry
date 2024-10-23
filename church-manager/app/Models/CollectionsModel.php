@@ -12,7 +12,7 @@ class CollectionsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','return_date','period_start_date','period_end_date','assembly_id','revenue_id','amount','status','collection_reference','description','collection_method'];
+    protected $allowedFields    = ['id','return_date','period_start_date','period_end_date','sunday_date','assembly_id','revenue_id','amount','status','collection_reference','description','collection_method'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -43,6 +43,7 @@ class CollectionsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = ['updateRecycleBin'];
+    protected $parent_schema = ['parent_table','foreign_field_name'];
 
     public function getAll(){
         $library = new \App\Libraries\CollectionLibrary();
@@ -50,6 +51,7 @@ class CollectionsModel extends Model
 
         if(!empty($listQueryFields)){
             return $this->select($library->setListQueryFields())
+            ->join('assemblies', 'assemblies.id = collections.assembly_id')
             ->join('revenues','revenues.id = collections.revenue_id','left')
             ->orderBy('created_at desc')->findAll();
         }else{
@@ -63,6 +65,7 @@ class CollectionsModel extends Model
 
         if(!empty($viewQueryFields)){
             return $this->select($library->setViewQueryFields())
+            ->join('assemblies', 'assemblies.id = collections.assembly_id')
             ->join('revenues','revenues.id = collections.revenue_id','left')
             ->where('id', $id)->first();
         }else{
@@ -76,6 +79,7 @@ class CollectionsModel extends Model
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
+                ->join('assemblies', 'assemblies.id = collections.assembly_id')
                 ->join('revenues','revenues.id = collections.revenue_id','left')
                 ->where('collections.id', $collection_id)
                 ->first();
@@ -89,7 +93,8 @@ class CollectionsModel extends Model
         $viewQueryFields = $library->setViewQueryFields();
 
         if (!empty($viewQueryFields)) {
-            return $this->select($library->setViewQueryFields()) 
+            return $this->select($library->setViewQueryFields())
+                ->join('assemblies', 'assemblies.id = collections.assembly_id')
                 ->join('revenues','revenues.id = collections.revenue_id','left')
                 ->where('collections.id', $collection_id)
                 ->first();

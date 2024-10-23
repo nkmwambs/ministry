@@ -1,6 +1,7 @@
 <?php
-$numeric_assembly_id = hash_id($designation_id, 'decode');
-$numeric_designation_id = hash_id($designation_id, 'decode');
+$numeric_assembly_id = hash_id($assembly_id, 'decode');
+// $numeric_designation_id = hash_id($designation_id, 'decode');
+$numeric_member_id = hash_id($member_id, 'decode');
 ?>
 
 <div class="row">
@@ -39,18 +40,9 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-xs-4" for="name">
-              <?= lang("minister.minister_name") ?>
-            </label>
-            <div class="col-xs-6">
-              <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name">
-            </div>
-          </div>
-
           <?php if (!$numeric_assembly_id) { ?>
             <div class='form-group'>
-              <label for="assembly_id" class="control-label col-xs-4"><?= lang('minister.minister_assembly_id') ?></label>
+              <label for="assembly_id" class="control-label col-xs-4"><?= lang('minister.minister_member_id') ?></label>
               <div class="col-xs-6">
                 <select class="form-control" name="assembly_id" id="assembly_id">
                   <option value=""><?= lang('minister.select_assembly') ?></option>
@@ -64,32 +56,23 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
             <input type="hidden" name="assembly_id" id="assembly_id" value="<?= $assembly_id; ?>" />
           <?php } ?>
 
-          <?php if (!$numeric_designation_id) { ?>
+          <?php if (!$numeric_member_id) { ?>
             <div class='form-group'>
-              <label for="designation_id" class="control-label col-xs-4"><?= lang('minister.minister_designation_id') ?></label>
+              <label for="member_id" class="control-label col-xs-4"><?= lang('minister.minister_member_id') ?></label>
               <div class="col-xs-6">
-                <select class="form-control" name="designation_id" id="designation_id">
-                  <option value=""><?= lang('minister.select_designation') ?></option>
-                  <?php foreach ($designations as $designation) : ?>
-                    <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
+                <select class="form-control" name="member_id" id="member_id">
+                  <option value=""><?= lang('minister.select_member') ?></option>
+                  <?php foreach ($members as $member) : ?>
+                    <option value="<?php echo $member['id']; ?>"><?php echo $member['first_name'].' '.$member['last_name']; ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
             </div>
           <?php } else { ?>
-            <input type="hidden" name="designation_id" id="designation_id" value="<?= $designation_id; ?>" />
+            <input type="hidden" name="member_id" id="member_id" value="<?= $member_id; ?>" />
           <?php } ?>
 
-          <div class="form-group">
-            <label class="control-label col-xs-4" for="phone">
-              <?= lang('minister.minister_phone') ?>
-            </label>
-            <div class="col-xs-6">
-              <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Phone">
-            </div>
-          </div>
-
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label class="control-label col-xs-4" for="is_active">
               <?= lang('minister.minister_is_active') ?>
             </label>
@@ -100,7 +83,7 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
                 <option value="yes">No</option>
               </select>
             </div>
-          </div>
+          </div> -->
 
           <!-- Dynamically Generated Custom Fields -->
           <?php if ($customFields): ?>

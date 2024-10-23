@@ -16,26 +16,26 @@ class Collection extends BaseController
         $this->model = new \App\Models\CollectionsModel();
     }
 
-    public function index($parent_id = 0): string
+    public function index($parent_id = ''): string
     {
         $collections = [];
 
         if($parent_id > 0){
             $collections = $this->model->select('collections.*,revenues.name as revenue_name')
             ->where('assembly_id',hash_id($parent_id,'decode'))
-            // ->join('assemblies','assemblies.id=collections.assembly_id')
+            ->join('assemblies','assemblies.id=collections.assembly_id')
             ->join('revenues','revenues.id = collections.revenue_id','left')
             ->orderBy('collections.created_at desc')
             ->findAll();
         }else{
             $collections = $this->model->select('collections.*,revenues.name as revenue_name')
-            // ->join('assemblies','assemblies.id=collections.assembly_id')
+            ->join('assemblies','assemblies.id=collections.assembly_id')
             ->join('revenues','revenues.id = collections.revenue_id','left')
             ->orderBy('collections.created_at desc')
             ->findAll();
         }
 
-        log_message('error', json_encode($collections));
+        // log_message('error', json_encode($collections));
        
         if(!$collections){
             $page_data['result'] = [];
@@ -62,15 +62,9 @@ class Collection extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'return_date' => 'required',
-            // 'period_start_date' => 'required',
-            // 'period_end_date' => 'required',
+            'sunday_date' => 'required',
             'revenue_id' => 'required',
             'amount' => 'required',
-            'status' => 'required',
-            // 'collection_reference' => 'required',
-            // 'description' => 'required|min_length[10]',
-            'collection_method' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -80,48 +74,28 @@ class Collection extends BaseController
 
         $hashed_assembly_id = $this->request->getPost('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
+        // log_message('error', $assembly_id);
 
         $data = [
-            'return_date' => $this->request->getPost('return_date'),
-            // 'period_start_date' => $this->request->getPost('period_start_date'),
-            // 'period_end_date' => $this->request->getPost('period_end_date'),
-            // 'assembly_id' => $assembly_id,
+            'sunday_date' => $this->request->getPost('sunday_date'),
             'revenue_id' => $this->request->getPost('revenue_id'),
+            'assembly_id' => $assembly_id,
             'amount' => $this->request->getPost('amount'),
-            'status' => $this->request->getPost('status'),
-            // 'collection_reference' => $this->request->getPost('collection_reference'),
-            // 'description' => $this->request->getPost('description'),
-            'collection_method' => $this->request->getPost('collection_method'),
         ];
 
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
-
-        $customFieldLibrary = new \App\Libraries\FieldLibrary();
-        $customFieldValues = $this->request->getPost('custom_fields');
-        // $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
-
-        if (!empty($customFieldValues)) {
-            // Filter out null or empty custom fields
-            $nonNullCustomFields = array_filter($customFieldValues, function ($value) {
-                return !is_null($value) && $value !== '';
-            });
-
-            // Save non-null custom field values
-            if (!empty($nonNullCustomFields)) {
-                $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
-            }
-        }
 
         $this->parent_id = $hashed_assembly_id;
 
         if($this->request->isAJAX()){
             $this->feature = 'collection';
             $this->action = 'list';
+
             $records = $this->model->select('collections.*,revenues.name as revenue_name')
-            ->join('assemblies', 'assemblies.id = designations.assembly_id')
-            ->join('revenues', 'revenues.id = designations.revenue_id')
-            ->orderBy("designations.created_at desc")
+            ->join('assemblies', 'assemblies.id = collections.assembly_id')
+            ->join('revenues', 'revenues.id = collections.revenue_id')
+            ->orderBy("collections.created_at desc")
             ->where('assembly_id', $assembly_id)
             ->findAll();
             
@@ -137,15 +111,9 @@ class Collection extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'return_date' => 'required',
-            'period_start_date' => 'required',
-            'period_end_date' => 'required',
+            'sunday_date' => 'required',
             'revenue_id' => 'required',
             'amount' => 'required',
-            'status' => 'required',
-            'collection_reference' => 'required',
-            'description' => 'required|min_length[10]',
-            'collection_method' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -159,47 +127,23 @@ class Collection extends BaseController
 
         $update_data = [
             'return_date' => $this->request->getPost('return_date'),
-            'period_start_date' => $this->request->getPost('period_start_date'),
-            'period_end_date' => $this->request->getPost('period_end_date'),
             'revenue_id' => $this->request->getPost('revenue_id'),
             'amount' => $this->request->getPost('amount'),
-            'status' => $this->request->getPost('status'),
-            'collection_reference' => $this->request->getPost('collection_reference'),
-            'description' => $this->request->getPost('description'),
-            'collection_method' => $this->request->getPost('collection_method'),
         ];
         
         $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
-
-        $customFieldLibrary = new \App\Libraries\FieldLibrary();
-        $customFieldValues = $this->request->getPost('custom_fields');
-        // $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,dir: 'decode'), $this->tableName, $customFieldValues);
-
-        // Only save custom fields if they are not null
-        if (!empty($customFieldValues)) {
-            // Filter out null or empty custom fields
-            $nonNullCustomFields = array_filter($customFieldValues, function ($value) {
-                return !is_null($value) && $value !== '';
-            });
-
-            // Save non-null custom field values
-            if (!empty($nonNullCustomFields)) {
-                $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,dir: 'decode'), $this->tableName, $customFieldValues);
-            }
-        }
-
-        $customFieldValuesInDB = $customFieldLibrary->getCustomFieldValuesForRecord(hash_id($hashed_id,dir: 'decode'), 'users');
 
         if($this->request->isAJAX()){
             $this->feature = 'collection';
             $this->action = 'list';
 
             $records = $this->model->select('return_date,period_start_date,period_end_Date,assembly_id,assemblies.name as assembly_name,revenue_id,revenues.name as revenue_name,designations.amount,designations.status,collection_reference,designations.description,collection_method')
-            ->join('assemblies', 'assemblies.id = designations.assembly_id')
-            ->join('revenues', 'revenues.id = designations.revenue_id')
-            ->orderBy("designations.created_at desc")
+            ->join('assemblies', 'assemblies.id = collections.assembly_id')
+            ->join('revenues', 'revenues.id = collections.revenue_id')
+            ->orderBy("collections.created_at desc")
             ->where('assembly_id', hash_id($hashed_assembly_id, 'decode'))
             ->findAll();
+
             return view("collection/list", parent::page_data($records));
         }
         

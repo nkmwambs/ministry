@@ -26,11 +26,11 @@
             <thead>
                 <tr>
                     <th><?= lang('minister.minister_action_col') ?></th>
-                    <th><?= lang('minister.minister_name') ?></th>
                     <th><?= lang('minister.minister_number') ?></th>
-                    <th><?= lang('minister.minister_assembly_id') ?></th>
-                    <th><?= lang('minister.minister_designation_id') ?></th>
-                    <th><?= lang('minister.minister_phone') ?></th>
+                    <!-- <th><?= lang('minister.member_number') ?></th> -->
+                    <th><?= lang('minister.member_first_name') ?></th>
+                    <th><?= lang('minister.member_last_name') ?></th>
+                    <th><?= lang('minister.member_phone') ?></th>
                     <th><?= lang('minister.minister_is_active') ?></th>
                 </tr>
             </thead>
@@ -63,12 +63,12 @@ $(document).ready(function (){
                         '<span class="action-icons" onclick="deleteItem(\'<?= plural($feature); ?>\', \'delete\', \'' + row.hash_id + '\')" title="Delete ' + row.hash_id + ' minister"><i class="fa fa-trash"></i></span>';
                 }
             },
-            { data: "name" },
             { data: "minister_number" },
-            { data: "assembly_id" },
-            { data: "designation_id" },
-            { data: "phone" },
-            { data: "is_active" }
+            // { data: "member_number" },
+            { data: "member_first_name" },
+            { data: "member_last_name" },
+            { data: "member_phone" },
+            { data: "is_active" },
         ]
     });
 });

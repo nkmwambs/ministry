@@ -75,17 +75,35 @@
                         container: '#modal_ajax modal-body',
                         autoclose: true
                     });
+
+                    $('.collection_datepicker').datepicker({
+                        beforeShowDay: function(date) {
+                            var today = new Date()
+                            var day = date.getDay();
+
+                            if (day === 0 && date <= today) {
+                                return [true, '', "Available"];
+                            } else {
+                                return [false, '', 'Unavailable'];
+                            }
+                        },
+                        dateFormat: "yy-mm-dd", // Format for the selected date
+                        autoclose: true
+                        // minDate: 0, // Disable past dates
+                        // maxDate: "+1Y" // Limit selection to 1 year ahead
+                    });
+
                     $('select.select_fields').select2();
                 });
 
                 $('#modal_ajax .modal-body').html(response);
-                
+
                 $("#modal_ajax").modal("show");
             }
         });
     }
 
-    $("#modal_ajax").on('hidden.bs.modal', function () {
+    $("#modal_ajax").on('hidden.bs.modal', function() {
         // $(this).data('bs.modal', null);
         // window.location.reload();
     });
@@ -189,7 +207,7 @@
                     }
 
                     $("#overlay").css("display", "none");
-                    
+
                     return false;
                 }
 
@@ -269,14 +287,14 @@
     }
 
 
-    $(document).on('keydown','.datepicker', function (){
+    $(document).on('keydown', '.datepicker', function() {
         return false;
     })
-    
+
 
     $(document).ready(function($) {
 
-        $(".btn_back").on('click',function(){
+        $(".btn_back").on('click', function() {
             window.history.back();
         })
 
@@ -303,7 +321,7 @@
 
         // $('.list-group-item').on('click', function (e) {
         //     e.preventDefault();
-            
+
         //     let url = $(this).attr('href'); 
         //     $.get(url, function (data) {
         //         $('.tab-content').html(data); 
