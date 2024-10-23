@@ -93,7 +93,7 @@ CREATE TABLE `customfields` (
   `id` int NOT NULL AUTO_INCREMENT,
   `denomination_id` int DEFAULT NULL,
   `field_name` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `field_code` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `field_code` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `helptip` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci,
   `table_name` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `type` enum('string','text','float','date','datetime','timestamp','password','numeric','email','dropdown','boolean') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'string',
@@ -111,48 +111,20 @@ CREATE TABLE `customfields` (
   `deleted_by` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`field_name`),
+  UNIQUE KEY `field_code` (`field_code`),
   KEY `feature_id` (`feature_id`),
   KEY `denomination_id` (`denomination_id`),
   CONSTRAINT `customfields_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`),
   CONSTRAINT `customfields_ibfk_2` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `customfields` (`id`, `denomination_id`, `field_name`, `field_code`, `helptip`, `table_name`, `type`, `options`, `feature_id`, `field_order`, `visible`, `query_builder`, `code_builder`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(8,	3,	'Total Membership',	'total_membership',	'Enter the total number of members',	'reports',	'numeric',	'',	18,	1,	'yes',	'[{\"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}]}]',	NULL,	'2024-10-17 12:19:49',	0,	'2024-10-17 12:19:49',	0,	NULL,	NULL),
-(9,	3,	'Number Saved',	'number_saved',	'Enter the total number of members saved',	'reports',	'numeric',	'',	18,	2,	'yes',	'[{\"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"saved_date\", \"operator\": \"in_month\"}]}]',	'',	'2024-10-17 12:19:49',	0,	'2024-10-17 12:19:49',	0,	NULL,	NULL),
-(10,	3,	'Number Sanctified',	'number_sanctified',	'Enter the total number of members sanctified',	'reports',	'numeric',	'',	18,	3,	'yes',	'[{\"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"c__sanctified_date\", \"operator\": \"in_month\"}]}]',	NULL,	'2024-10-17 12:19:49',	0,	'2024-10-17 12:19:49',	0,	NULL,	NULL),
-(11,	3,	'Enclosed any news to share?',	'enclosed_news',	'Indicate \"Yes\" if news report has been sent to the head quarter',	'reports',	'boolean',	'yes\r\nno',	18,	4,	'yes',	'[]',	NULL,	'2024-10-17 12:19:49',	0,	'2024-10-17 12:19:49',	0,	NULL,	NULL),
-(12,	3,	'Total Female Members',	'female_members',	'Count of Female Members',	'',	'numeric',	'',	18,	5,	'yes',	'[{\"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"gender\", \"value\": \"female\", \"operator\": \"equals\"}]}]',	NULL,	NULL,	NULL,	'2024-10-17 13:55:31',	NULL,	NULL,	NULL),
-(13,	3,	'Sanctified Date',	'sanctified_date',	'The date the member was sanctified',	'members',	'date',	'',	11,	1,	'yes',	'[]',	NULL,	NULL,	NULL,	'2024-10-17 17:25:08',	NULL,	NULL,	NULL),
-(14,	3,	'Number filled with Holy Ghost',	'holy_ghost_filled',	'The number filled with the Holy Ghost in the month',	'reports',	'numeric',	'',	18,	6,	'yes',	'[{\"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"c__date_filled_of_holy_ghost\", \"operator\": \"in_month\"}]}]',	NULL,	NULL,	NULL,	'2024-10-18 14:44:10',	NULL,	NULL,	NULL),
-(15,	3,	'Number of people baptised in water',	'water_baptised',	'Number of people baptised of water in the month',	'reports',	'numeric',	'',	18,	7,	'yes',	'[{\"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"c__date_water_baptism\", \"operator\": \"in_month\"}]}]',	NULL,	NULL,	NULL,	'2024-10-18 14:45:34',	NULL,	NULL,	NULL),
-(16,	3,	'Members Transferred Away',	'transfered_away',	'Number of members transferred away in the month',	'reports',	'numeric',	'',	18,	8,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 14:46:48',	NULL,	NULL,	NULL),
-(17,	3,	'Members transferred in',	'members_transferred_in',	'Number of members transferred in the month',	'reports',	'numeric',	'',	18,	9,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 14:48:02',	NULL,	NULL,	NULL),
-(18,	3,	'Number Deceased',	'number_deceased',	'Number of members deceased in the month',	'reports',	'numeric',	'',	18,	10,	'yes',	'[{\"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"inactivation_reason\", \"value\": \"deceased\", \"operator\": \"equals\"}, {\"key\": \"inactivation_date\", \"operator\": \"in_month\"}]}]',	NULL,	NULL,	NULL,	'2024-10-18 14:48:58',	NULL,	NULL,	NULL),
-(19,	3,	'Number Added',	'number_added',	'Number of new members from other Churches outside COGOP',	'reports',	'numeric',	'',	18,	11,	'yes',	'[{\"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"membership_date\", \"operator\": \"in_month\"}]}]',	NULL,	NULL,	NULL,	'2024-10-18 14:50:25',	NULL,	NULL,	NULL),
-(20,	3,	'Number Excluded',	'number_excluded',	'Number of members who moved outside COGOP churches',	'reports',	'numeric',	'',	18,	12,	'yes',	'[{\"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"inactivation_reason\", \"value\": \"excluded\", \"operator\": \"equals\"}, {\"key\": \"inactivation_date\", \"operator\": \"in_month\"}]}]',	NULL,	NULL,	NULL,	'2024-10-18 14:53:18',	NULL,	NULL,	NULL),
-(21,	3,	'Average Sunday School Attendance',	'avg_sunday_school_attendance',	'Average count of Sunday School children attending classes in the month',	'reports',	'numeric',	'',	18,	13,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 14:56:13',	NULL,	NULL,	NULL),
-(23,	3,	'Number of weekly attendance',	'weekly_attendance',	'Number of weekly attendance being ministered including children, youth, people attending outreach ministries in the month',	'reports',	'numeric',	'',	18,	14,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 14:58:33',	NULL,	NULL,	NULL),
-(24,	3,	'Proportion of attendance who are children and youth ',	'',	'Proportion of attendance who are children and youth e.g. one third, one half',	'reports',	'text',	'',	18,	15,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 15:00:55',	NULL,	NULL,	NULL),
-(25,	3,	'Department of Pastoral Care',	'check_department_pastoral_care',	'Check if there is leadership for department of pastoral care in the local church in the month',	'reports',	'boolean',	'Yes\r\nNo',	18,	16,	'yes',	'[{\"join\": [{\"table\": \"designations\", \"relation_id\": \"id\", \"relation_order\": 1, \"relation_table\": {\"table\": \"members\", \"relation_id\": \"designation_id\"}}, {\"table\": \"departments\", \"relation_id\": \"id\", \"relation_order\": 2, \"relation_table\": {\"table\": \"designations\", \"relation_id\": \"department_id\"}}], \"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"department_code\", \"value\": \"pastoral_care\", \"operator\": \"equals\"}]}]',	NULL,	NULL,	NULL,	'2024-10-18 15:03:07',	NULL,	NULL,	NULL),
-(26,	3,	'Youth Ministries',	'check_youth_ministries',	'Check if there is leadership for Youth Ministry in the local church',	'reports',	'boolean',	'Yes\r\nNo',	18,	17,	'yes',	'[{\"join\": [{\"table\": \"designations\", \"relation_id\": \"id\", \"relation_order\": 1, \"relation_table\": {\"table\": \"members\", \"relation_id\": \"designation_id\"}}, {\"table\": \"departments\", \"relation_id\": \"id\", \"relation_order\": 2, \"relation_table\": {\"table\": \"designations\", \"relation_id\": \"department_id\"}}], \"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"department_code\", \"value\": \"youth_ministry\", \"operator\": \"equals\"}]}]',	NULL,	NULL,	NULL,	'2024-10-18 15:04:02',	NULL,	NULL,	NULL),
-(27,	3,	'Children Ministries',	'check_children_ministries',	'Check if the local church has children ministry leadership in place in the month',	'reports',	'boolean',	'Yes\r\nNo',	18,	18,	'yes',	'[{\"join\": [{\"table\": \"designations\", \"relation_id\": \"id\", \"relation_order\": 1, \"relation_table\": {\"table\": \"members\", \"relation_id\": \"designation_id\"}}, {\"table\": \"departments\", \"relation_id\": \"id\", \"relation_order\": 2, \"relation_table\": {\"table\": \"designations\", \"relation_id\": \"department_id\"}}], \"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"department_code\", \"value\": \"children_ministry\", \"operator\": \"equals\"}]}]',	NULL,	NULL,	NULL,	'2024-10-18 15:06:33',	NULL,	NULL,	NULL),
-(28,	3,	'Christian Education (Sunday School)',	'check_christian_education',	'Check if local church has Sunday School leadership in place in the month',	'reports',	'boolean',	'Yes\r\nNo',	18,	19,	'yes',	'[{\"join\": [{\"table\": \"designations\", \"relation_id\": \"id\", \"relation_order\": 1, \"relation_table\": {\"table\": \"members\", \"relation_id\": \"designation_id\"}}, {\"table\": \"departments\", \"relation_id\": \"id\", \"relation_order\": 2, \"relation_table\": {\"table\": \"designations\", \"relation_id\": \"department_id\"}}], \"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"department_code\", \"value\": \"sunday_school_ministry\", \"operator\": \"equals\"}]}]',	NULL,	NULL,	NULL,	'2024-10-18 15:08:01',	NULL,	NULL,	NULL),
-(29,	3,	'Women\'s Ministries',	'check_women_ministries',	'Check if local church women ministries leadership in place in the month',	'reports',	'boolean',	'Yes\r\nNo',	18,	20,	'yes',	'[{\"join\": [{\"table\": \"designations\", \"relation_id\": \"id\", \"relation_order\": 1, \"relation_table\": {\"table\": \"members\", \"relation_id\": \"designation_id\"}}, {\"table\": \"departments\", \"relation_id\": \"id\", \"relation_order\": 2, \"relation_table\": {\"table\": \"designations\", \"relation_id\": \"department_id\"}}], \"table\": \"members\", \"select\": \"count\", \"conditions\": [{\"key\": \"assembly_id\", \"operator\": \"equals\"}, {\"key\": \"department_code\", \"value\": \"women_ministry\", \"operator\": \"equals\"}]}]',	NULL,	NULL,	NULL,	'2024-10-18 15:10:59',	NULL,	NULL,	NULL),
-(30,	3,	'First Sunday Offerings',	'first_sunday_offerings',	'Check if there was a collection for first sunday offering ',	'reports',	'boolean',	'Yes\r\nNo',	18,	21,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 15:13:27',	NULL,	NULL,	NULL),
-(31,	3,	'Second Sunday Missions',	'second_sunday_missions',	'Check if a local church had second Sunday missions collection in the month',	'reports',	'boolean',	'Yes\r\nNo',	18,	22,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 15:16:50',	NULL,	NULL,	NULL),
-(32,	3,	'Fourth Sunday ',	'fourth_sunday',	'Check if local church had fourth Sunday collection',	'reports',	'boolean',	'Yes\r\nNo',	18,	23,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 15:18:11',	NULL,	NULL,	NULL),
-(33,	3,	'Did you have revival this month?',	'had_revival_in_month',	'Check if the local church had a revival in the month',	'reports',	'boolean',	'Yes\r\nNo',	18,	24,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 15:19:49',	NULL,	NULL,	NULL),
-(34,	3,	'Number of Bible Study and/or Training programs this month?',	'bible_study_and_training',	'Number of Bible Study and/or Training programs this month?',	'reports',	'numeric',	'',	18,	25,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 15:21:12',	NULL,	NULL,	NULL),
-(35,	3,	'Date Filled Of the Holy Ghost',	'date_filled_of_holy_ghost',	'The date the member was filled with the Holy Ghost',	'members',	'date',	'',	11,	2,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 15:38:03',	NULL,	NULL,	NULL),
-(36,	3,	'Date of Water Baptism',	'date_water_baptism',	'The date the member was baptised of water',	'members',	'date',	'',	11,	3,	'yes',	NULL,	NULL,	NULL,	NULL,	'2024-10-18 16:17:54',	NULL,	NULL,	NULL);
 
 CREATE TABLE `customvalues` (
   `id` int NOT NULL AUTO_INCREMENT,
   `feature_id` int NOT NULL,
   `record_id` int NOT NULL,
   `customfield_id` int DEFAULT NULL,
-  `value` json DEFAULT NULL,
+  `value` varchar(200) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `created_by` int DEFAULT NULL,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -217,13 +189,6 @@ CREATE TABLE `departments` (
   CONSTRAINT `departments_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `departments` (`id`, `denomination_id`, `name`, `department_code`, `description`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1,	3,	'Pastoral Care',	'pastoral_care',	'Pastoral Care',	'0000-00-00 00:00:00',	0,	'0000-00-00 00:00:00',	0,	NULL,	0),
-(2,	3,	'Youth Ministry',	'youth_ministry',	'Youth Ministry',	'0000-00-00 00:00:00',	0,	'0000-00-00 00:00:00',	0,	NULL,	0),
-(3,	3,	'Children Ministry',	'children_ministry',	'Children Ministry',	'0000-00-00 00:00:00',	0,	'0000-00-00 00:00:00',	0,	NULL,	0),
-(4,	3,	'Sunday School Ministry',	'sunday_school_ministry',	'Sunday School Ministry',	'0000-00-00 00:00:00',	0,	'0000-00-00 00:00:00',	0,	NULL,	0),
-(5,	3,	'Women Ministry',	'women_ministry',	'Women Ministry',	'0000-00-00 00:00:00',	0,	'0000-00-00 00:00:00',	0,	NULL,	0),
-(6,	3,	'Development',	'development',	'Development',	'0000-00-00 00:00:00',	0,	'0000-00-00 00:00:00',	0,	NULL,	0);
 
 CREATE TABLE `designations` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -437,7 +402,7 @@ CREATE TABLE `members` (
   `email` varchar(100) DEFAULT NULL,
   `phone` varchar(100) NOT NULL,
   `saved_date` date DEFAULT NULL,
-  `inactivation_reason` enum('deceased','excluded','other') DEFAULT NULL,
+  `inactivation_reason` enum('deceased','excluded','other') CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT 'other',
   `inactivation_date` date DEFAULT NULL,
   `is_active` enum('yes','no') NOT NULL DEFAULT 'yes',
   `assembly_id` int NOT NULL,
@@ -454,6 +419,9 @@ CREATE TABLE `members` (
   CONSTRAINT `members_ibfk_1` FOREIGN KEY (`assembly_id`) REFERENCES `assemblies` (`id`),
   CONSTRAINT `members_ibfk_2` FOREIGN KEY (`designation_id`) REFERENCES `designations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `members_custom` (`id` int, `first_name` varchar(100), `last_name` varchar(100), `gender` enum('male','female'), `membership_date` date, `member_number` varchar(100), `designation_id` int, `parent_id` int, `date_of_birth` date, `email` varchar(100), `phone` varchar(100), `saved_date` date, `inactivation_reason` enum('deceased','excluded','other'), `inactivation_date` date, `is_active` enum('yes','no'), `assembly_id` int, `created_at` datetime, `created_by` int, `updated_at` datetime, `updated_by` int, `deleted_at` datetime, `deleted_by` int, `designation_name` varchar(100), `assembly_name` varchar(100), `custom_field_name` varchar(200), `custom_value` varchar(200));
 
 
 CREATE TABLE `menus` (
@@ -626,7 +594,7 @@ CREATE TABLE `reports` (
   `assembly_id` int DEFAULT NULL,
   `reports_type_id` int NOT NULL,
   `report_period` date NOT NULL,
-  `report_date` date NOT NULL,
+  `report_date` date DEFAULT NULL,
   `status` enum('draft','submitted','approved') NOT NULL DEFAULT 'draft',
   `created_at` datetime DEFAULT NULL,
   `created_by` int DEFAULT NULL,
@@ -647,6 +615,7 @@ CREATE TABLE `reporttypes` (
   `name` varchar(100) NOT NULL,
   `type_code` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `denomination_id` int NOT NULL,
+  `scheduler` enum('daily','weekly','monthly','quarterly','annually') NOT NULL DEFAULT 'monthly',
   `report_layout` json DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `created_by` int DEFAULT NULL,
@@ -659,27 +628,18 @@ CREATE TABLE `reporttypes` (
   CONSTRAINT `reporttypes_ibfk_1` FOREIGN KEY (`denomination_id`) REFERENCES `denominations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `reporttypes` (`id`, `name`, `type_code`, `denomination_id`, `report_layout`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1,	'Assembly Monthly Report',	'monthly_report',	3,	'[{\"section_parts\": [{\"part_title\": \"Part A\", \"part_fields\": [\"8,10,12\"]}, {\"part_title\": \"Part B\", \"part_fields\": [\"11,9\"]}], \"section_title\": \"Section A\"}, {\"section_parts\": [{\"part_title\": \"Part C\", \"part_fields\": [\"9,11\"]}, {\"part_title\": \"Part D\", \"part_fields\": [\"8,10\"]}], \"section_title\": \"Section B\"}]',	'2024-10-16 16:00:04',	0,	'2024-10-16 16:00:04',	0,	NULL,	NULL),
-(7,	'Quarterly',	'quarterly_report',	3,	'[{\"section_parts\": [{\"part_title\": \"Part 1\", \"part_fields\": [\"8,9\"]}, {\"part_title\": \"Part 2\", \"part_fields\": [\"10,11\"]}], \"section_title\": \"Pastor Report\"}, {\"section_parts\": [{\"part_title\": \"Part 3\", \"part_fields\": [\"8,10,11,9\"]}], \"section_title\": \"Deacon Report\"}, {\"section_parts\": [{\"part_title\": \"\", \"part_fields\": [\"8,10\"]}, {\"part_title\": \"\", \"part_fields\": [\"8,11\"]}, {\"part_title\": \"\", \"part_fields\": [\"10,11\"]}], \"section_title\": \"Treasurer Report\"}]',	'2024-10-16 16:00:04',	0,	'2024-10-16 16:00:04',	0,	NULL,	NULL),
-(8,	'Local Church Monthly Report',	'local_church_monthly_report',	3,	'[{\"section_parts\": [{\"part_title\": \"Membership\", \"part_fields\": [\"8,9,10,14,15,16,17,18,19,20,21,23,24,11\"]}, {\"part_title\": \"Are these auxillaries operating in the local Church?\", \"part_fields\": [\"25,26,27,28,29\"]}, {\"part_title\": \"Did the church take the following offerings?\", \"part_fields\": [\"30,31,32\"]}, {\"part_title\": \"Others\", \"part_fields\": [\"33,34\"]}], \"section_title\": \"Pastor\'s Local Church Report\"}]',	NULL,	NULL,	'2024-10-18 15:27:01',	NULL,	NULL,	NULL);
 
 CREATE TABLE `reportvalues` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `report_id` int DEFAULT NULL,
-  `customfield_id` int DEFAULT NULL,
-  `report_value` longtext NOT NULL,
-  `created_at` datetime NOT NULL,
-  `created_by` int NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `updated_by` int NOT NULL,
-  `deleted_at` datetime NOT NULL,
-  `deleted_by` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `report_field_id` (`customfield_id`),
-  KEY `report_id` (`report_id`),
-  CONSTRAINT `reportvalues_ibfk_2` FOREIGN KEY (`report_id`) REFERENCES `reports` (`id`),
-  CONSTRAINT `reportvalues_ibfk_3` FOREIGN KEY (`customfield_id`) REFERENCES `customfields` (`id`)
+  `report_id` int NOT NULL,
+  `values` json NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `deleted_by` int DEFAULT NULL,
+  PRIMARY KEY (`report_id`),
+  CONSTRAINT `reportvalues_ibfk_2` FOREIGN KEY (`report_id`) REFERENCES `reports` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -897,4 +857,7 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2024-10-18 17:48:16
+DROP TABLE IF EXISTS `members_custom`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `members_custom` AS select `m`.`id` AS `id`,`m`.`first_name` AS `first_name`,`m`.`last_name` AS `last_name`,`m`.`gender` AS `gender`,`m`.`membership_date` AS `membership_date`,`m`.`member_number` AS `member_number`,`m`.`designation_id` AS `designation_id`,`m`.`parent_id` AS `parent_id`,`m`.`date_of_birth` AS `date_of_birth`,`m`.`email` AS `email`,`m`.`phone` AS `phone`,`m`.`saved_date` AS `saved_date`,`m`.`inactivation_reason` AS `inactivation_reason`,`m`.`inactivation_date` AS `inactivation_date`,`m`.`is_active` AS `is_active`,`m`.`assembly_id` AS `assembly_id`,`m`.`created_at` AS `created_at`,`m`.`created_by` AS `created_by`,`m`.`updated_at` AS `updated_at`,`m`.`updated_by` AS `updated_by`,`m`.`deleted_at` AS `deleted_at`,`m`.`deleted_by` AS `deleted_by`,`dsg`.`name` AS `designation_name`,`asm`.`name` AS `assembly_name`,`cf`.`field_code` AS `custom_field_name`,`cv`.`value` AS `custom_value` from (((((`members` `m` join `customvalues` `cv` on((`cv`.`record_id` = `m`.`id`))) join `features` `f` on((`f`.`id` = `cv`.`feature_id`))) join `customfields` `cf` on((`cf`.`id` = `cv`.`customfield_id`))) join `designations` `dsg` on((`dsg`.`id` = `m`.`designation_id`))) join `assemblies` `asm` on((`asm`.`id` = `m`.`assembly_id`))) where ((`f`.`name` = 'member') and (`m`.`deleted_at` is null));
+
+-- 2024-10-23 16:31:45
