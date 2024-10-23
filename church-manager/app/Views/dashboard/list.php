@@ -69,7 +69,7 @@
 <script src="<?php echo base_url(); ?>assets/js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jvectormap/jquery-jvectormap-europe-merc-en.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.sparkline.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/rickshaw/vendor/d3.v3.js"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/js/rickshaw/vendor/d3.v3.js"></script> -->
 <script src="<?php echo base_url(); ?>assets/js/rickshaw/rickshaw.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/raphael-min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/morris.min.js"></script>
