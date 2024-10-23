@@ -13,6 +13,8 @@ return [
     'department_action' => 'Actions',
     'department_code' => 'Department Code',
 
+    'enter_department_code' => 'Enter Department Code',
+
     'back_button' => 'Back',
     'edit_button' => 'Edit',
     'edit_again_button' => 'Edit Again',

@@ -13,7 +13,7 @@
 
         <div class="card-body">
             <div class="panel-body">
-                <button class="btn btn-danger" id="data_button" style="width:100%"><i class="fa fa-trash"></i> Delete Account</button>
+                <button class="btn btn-danger" id="data_button" style="width:100%"><i class="fa fa-trash"> </i><?= lang('user.delete_account') ?></button>
             </div>
         </div>
 

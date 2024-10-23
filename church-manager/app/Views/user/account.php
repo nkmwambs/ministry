@@ -38,13 +38,13 @@
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="username"><?= lang('user.user_name') ?></label>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" name="username" id="username" value="<?= $result['username']; ?>" placeholder="Edit Username">
+                                    <input type="text" class="form-control" name="username" id="username" value="<?= $result['username']; ?>">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-xs-4" for="biography"><?= lang('user.user_biography') ?></label>
                                 <div class="col-xs-6">
-                                    <textarea rows="2" class="form-control" name="biography" id="biography" value="<?= $result['biography']; ?>" placeholder="Tell something about yourself"><?= $result['biography']; ?></textarea>
+                                    <textarea rows="2" class="form-control" name="biography" id="biography" value="<?= $result['biography']; ?>"><?= $result['biography']; ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -54,13 +54,13 @@
                                 <div class="mt-2">
                                     <span class="btn btn-primary"><i class="fa fa-upload"></i></span>
                                 </div>
-                                <small>For best results, use an image at least 128px by 128px in .jpg format</small>
+                                <small><?= lang('user.image_format') ?></small>
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" id="public_account_save" class="btn btn-success">Save Changes</button>
+                        <button type="button" id="public_account_save" class="btn btn-success"><?= lang('user.save_changes_btn') ?></button>
                     </div>
                 </form>
             </div>
@@ -100,19 +100,19 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="first_name"><?= lang('user.user_first_name') ?></label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $result['first_name']; ?>" placeholder="Edit First name">
+                                <input type="text" class="form-control" name="first_name" id="first_name" value="<?= $result['first_name']; ?>">
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="last_name"><?= lang('user.user_last_name') ?></label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" name="last_name" id="last_name" value="<?= $result['last_name']; ?>" placeholder="Edit Last name">
+                                <input type="text" class="form-control" name="last_name" id="last_name" value="<?= $result['last_name']; ?>">
                             </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="email"><?= lang('user.user_email') ?></label>
                             <div class="col-xs-6">
-                                <input type="email" class="form-control" name="email" id="email" value="<?= $result['email']; ?>" placeholder="Edit Email">
+                                <input type="email" class="form-control" name="email" id="email" value="<?= $result['email']; ?>">
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -134,13 +134,13 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-xs-4" for="phone"><?= lang('user.user_phone') ?></label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" name="phone" id="phone" value="<?= $result['phone']; ?>" placeholder="Edit Phone">
+                                <input type="text" class="form-control" name="phone" id="phone" value="<?= $result['phone']; ?>">
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" id="private_account_save" class="btn btn-success">Save Changes</button>
+                        <button type="button" id="private_account_save" class="btn btn-success"><?= lang('user.save_changes_btn') ?></button>
                     </div>
                 </form>
             </div>

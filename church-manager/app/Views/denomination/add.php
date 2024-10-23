@@ -29,8 +29,7 @@
               <?= lang('denomination.denomination_name') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="name" id="name"
-                placeholder="Enter Name">
+              <input type="text" class="form-control" name="name" id="name" placeholder="<?= lang('system.system_enter_name') ?>">
             </div>
           </div>
 
@@ -39,7 +38,7 @@
               <?= lang('denomination.denomination_code') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="code" id="code" placeholder="Enter Code">
+              <input type="text" class="form-control" name="code" id="code" placeholder="<?= lang('denomination.enter_code') ?>">
             </div>
           </div>
 
@@ -50,7 +49,7 @@
             <div class="col-xs-6">
               <!-- onkeydown="return false;" -->
               <input type="text" class="form-control datepicker" name="registration_date"
-                id="registration_date" placeholder="Enter Registration Date">
+                id="registration_date" placeholder="<?= lang('denomination.enter_registration_date') ?>">
             </div>
           </div>
 
@@ -60,7 +59,7 @@
             </label>
             <div class="col-xs-6">
               <input type="text" class="form-control" name="head_office" id="head_office"
-                placeholder="Enter Head Office">
+                placeholder="<?= lang('denomination.enter_head_office') ?>">
             </div>
           </div>
 
@@ -69,7 +68,7 @@
               <?= lang('denomination.denomination_email') ?>
             </label>
             <div class="col-xs-6">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
+              <input type="email" class="form-control" name="email" id="email" placeholder="<?= lang('system.system_enter_email') ?>">
             </div>
           </div>
 
@@ -78,7 +77,7 @@
               <?= lang('denomination.denomination_phone') ?>
             </label>
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Phone">
+              <input type="text" class="form-control" name="phone" id="phone" placeholder="<?= lang('system.system_enter_phone') ?>">
             </div>
           </div>
 

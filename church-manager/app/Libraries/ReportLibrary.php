@@ -102,9 +102,6 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function viewExtraData(&$page_data){
-
-        // log_message('error', json_encode($page_data));
-
         $numericReportId = $page_data['result']['id'];
         // Get report Type 
         $reportModel = new \App\Models\ReportsModel();
@@ -115,17 +112,19 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         
         $reportTypeId = $report['reports_type_id'];
 
+        // log_message('error', json_encode(compact('reportTypeId','report','numericReportId')));
+
         // Get report layout from report type
         $reportTypeModel = new \App\Models\TypesModel();
         $reportType = $reportTypeModel->find($reportTypeId);
         $reportLayout = json_decode($reportType['report_layout'], true);
-        
+
         // Build the report object with fields info
         $fieldLibrary = new \App\Libraries\FieldLibrary();
         $fieldModel = new \App\Models\FieldsModel();
         for($i = 0; $i < count($reportLayout); $i++){
             for($j = 0; $j < count($reportLayout[$i]['section_parts']); $j++){
-                // Taking the string of custom fields Ids to an individual array elemement
+                // Taking the string of custom fields Ids to an individual array element
                 $reportLayout[$i]['section_parts'][$j]['part_fields'] = explode(',',$reportLayout[$i]['section_parts'][$j]['part_fields'][0]);
                 // $reportLayout[$i]['section_parts'][$j]['part_fields'] is an array of custom fields Ids
                 $reportLayout[$i]['section_parts'][$j]['part_fields'] = array_map(function($fieldTypeId) use($fieldLibrary, $fieldModel, $report){
@@ -133,7 +132,9 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
                 }, $reportLayout[$i]['section_parts'][$j]['part_fields']);
             }   
         }
-        
+
+        // log_message('error', json_encode(compact('reportTypeId','report','numericReportId','reportLayout')));
+
         $page_data['report_fields'] = $reportLayout;
         $page_data['type_code'] = $report['type_code'];
         $page_data['report_type_name'] = $report['report_type_name'];
@@ -142,5 +143,41 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         return $page_data;
     }
 
+
+    static function autoGenerateMonthlyReport(){
+        $monthEndDate = date('Y-m-t');
+
+        // List all assemblies 
+        $reportModel = new \App\Models\ReportsModel();
+        $assembliesModel = new \App\Models\AssembliesModel();
+        $assemblies = $assembliesModel->findAll();
+
+        // Get all report types
+        $typesModel = new \App\Models\TypesModel();
+        $types = $typesModel->where('scheduler','monthly')->findAll();
+
+        foreach($assemblies as $assembly){
+            foreach($types as $type){
+                $reportsCount = $reportModel
+                ->where('assembly_id', $assembly['id'])
+                ->where('reports_type_id', $type['id'])
+                ->where('report_period', $monthEndDate)->countAllResults();
+    
+                if($reportsCount == 0){
+                    // Create the report if it doesn't exist
+                    $data = (object)[
+                        'assembly_id' => $assembly['id'],
+                       'reports_type_id' => $type['id'],
+                       'report_date' => NULL,
+                       'report_period' => $monthEndDate,
+                       'status' => 'draft'
+                    ];
+                    $reportModel->insert($data);
+                }
+            }
+            
+        }
+       
+    }
    
 }

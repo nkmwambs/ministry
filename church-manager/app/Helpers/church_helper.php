@@ -19,3 +19,16 @@ if(!function_exists('report_template')){
         return view('templates/report_template', compact('report_metadata', 'report_fields'));
     }
 }
+
+function formatUserDataForExport($user_data) {
+    
+    if (isset($user_data['first_name'])) {
+        $user_data['first_name'] = ucfirst(strtolower($user_data['first_name']));
+    }
+
+    if (isset($user_data['last_name'])) {
+        $user_data['last_name'] = ucfirst(strtolower($user_data['last_name']));
+    }
+
+    return $user_data;
+}

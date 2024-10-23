@@ -16,6 +16,16 @@ return [
     'assembly_is_active' => 'Active',
     'assembly_denomination_id' => 'Denomination Name',
     'assembly_code' => 'Assembly Code',
+    'denomination_name' => 'Denomination Name',
+
+    'enter_planted_date' => 'Enter Planted Date',
+    'enter_location' => 'Enter Location',
+
+    // 'edit_planted_date' => 'Edit Planted Date',
+    // 'edit_location' => 'Edit Location',
+
+    'select_leader' => 'Select Leader',
+    'select_entity' => 'Select Entity',
 
     'save_assembly' => 'Save',
     'save_and_new_assembly' => 'Save and New',

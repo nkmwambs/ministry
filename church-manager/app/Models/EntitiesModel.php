@@ -89,7 +89,7 @@ class EntitiesModel extends Model  implements \App\Interfaces\ModelInterface
         ->select('entities.id, CONCAT(entities.entity_number," - ", entities.name) name')
         ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
         ->findAll();
-        
+                
         return $entities;
     }
 

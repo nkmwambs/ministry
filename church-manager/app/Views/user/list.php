@@ -26,12 +26,12 @@
       <table class="table table-striped" id="dataTable">
         <thead>
           <tr>
-            <th>Action</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Active Status</th>
+            <th><?= lang('user.user_action') ?></th>
+            <th><?= lang('user.user_first_name') ?></th>
+            <th><?= lang('user.user_last_name') ?></th>
+            <th><?= lang('user.user_phone') ?></th>
+            <th><?= lang('user.user_email') ?></th>
+            <th><?= lang('user.user_is_active') ?></th>
           </tr>
         </thead>
         <tbody>

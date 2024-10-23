@@ -50,7 +50,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Enter Name">
+                                placeholder="<?= lang('system.system_enter_name') ?>">
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             <?= lang('meeting.meeting_description') ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="description" id="description" placeholder="Enter Description"></textarea>
+                            <textarea type="text" class="form-control" name="description" id="description" placeholder="<?= lang('system.system_enter_description') ?>"></textarea>
                         </div>
                     </div>
 

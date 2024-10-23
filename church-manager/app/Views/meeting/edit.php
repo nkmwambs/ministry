@@ -46,8 +46,7 @@
                             <?= lang('meeting.meeting_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" id="name" value="<?=$result['name'];?>"
-                                placeholder="Enter Name">
+                            <input type="text" class="form-control" name="name" id="name" value="<?=$result['name'];?>">
                         </div>
                     </div>
 

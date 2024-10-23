@@ -58,8 +58,7 @@
                             <?= lang('field.customfield_table_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="table_name" value="<?= $result['table_name']; ?>" id="table_name"
-                                placeholder="Edit Table Name">
+                            <input type="text" class="form-control" name="table_name" value="<?= $result['table_name']; ?>" id="table_name">
                         </div>
                     </div>
 
@@ -68,8 +67,7 @@
                             <?= lang('field.customfield_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="field_name" value="<?= $result['field_name']; ?>" id="field_name"
-                                placeholder="Edit Name">
+                            <input type="text" class="form-control" name="field_name" value="<?= $result['field_name']; ?>" id="field_name">
                         </div>
                     </div>
 
@@ -78,8 +76,7 @@
                             <?= lang('field.customfield_code') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="field_code" value="<?= $result['field_code']; ?>" id="field_code"
-                                placeholder="Edit Code">
+                            <input type="text" class="form-control" name="field_code" value="<?= $result['field_code']; ?>" id="field_code">
                         </div>
                     </div>
 
@@ -88,8 +85,7 @@
                             <?= lang('field.customfield_helptip') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="helptip" value="<?= $result['helptip']; ?>" id="helptip"
-                                placeholder="Edit Code">
+                            <input type="text" class="form-control" name="helptip" value="<?= $result['helptip']; ?>" id="helptip">
                         </div>
                     </div>
 
@@ -100,14 +96,16 @@
                         <div class="col-xs-6">
                             <select name="type" id="type" class="form-control" required>
                                 <option value="<?= $result['type']; ?>"><?= ucfirst($result['type']); ?></option>
-                                <option value="number">Number</option>
-                                <option value="date">Date</option>
-                                <option value="datetime">DateTime</option>
-                                <option value="timestamp">TimeStamp</option>
-                                <option value="password">Password</option>
-                                <option value="numeric">Numeric</option>
-                                <option value="email">Email</option>
-                                <option value="dropdown">Dropdown</option>
+                                <option value="text"><?= lang('field.text') ?></option>
+                                <option value="float"><?= lang('field.float') ?></option>
+                                <option value="date"><?= lang('field.date') ?></option>
+                                <option value="datetime"><?= lang('field.datetime') ?></option>
+                                <option value="timestamp"><?= lang('field.timestamp') ?></option>
+                                <option value="password"><?= lang('field.password') ?></option>
+                                <option value="numeric"><?= lang('field.numeric') ?></option>
+                                <option value="email"><?= lang('field.email') ?></option>
+                                <option value="dropdown"><?= lang('field.dropdown') ?></option>
+                                <option value="boolean"><?= lang('field.boolean') ?></option>
                             </select>
                         </div>
                     </div>
@@ -117,8 +115,7 @@
                             <?= lang('field.customfield_options') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="options" value="<?= $result['options']; ?>" id="options"
-                                placeholder="Edit Options">
+                            <textarea type="text" class="form-control" name="options" value="<?= $result['options']; ?>" id="options"><?= $result['options']; ?></textarea>
                         </div>
                     </div>
 
@@ -139,8 +136,8 @@
                         <div class="col-xs-6">
                             <select name="visible" id="visible" class="form-control" required>
                                 <option value="<?= $result['visible']; ?>"><?= ucfirst($result['visible']); ?></option>
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
+                                <option value="no"><?= lang('system.system_no') ?></option>
+                                <option value="yes"><?= lang('system.system_yes') ?></option>
                             </select>
                         </div>
                     </div>

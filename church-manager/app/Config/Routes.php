@@ -64,6 +64,8 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
     $routes->post('save_task', 'Task::saveTask');
     $routes->get('privacy/(:segment)', "User::privacy/$1");
     $routes->get('your_data/(:segment)', "User::yourData/$1");
+    $routes->get('downloadUserData/(:segment)', 'User::downloadUserData/$1');
+    $routes->get('deleteAccount/(:segment)', 'User::deleteAccount/$1');
     $routes->get('delete_account/(:segment)', "User::deleteAccount/$1");
 });
 
@@ -72,10 +74,8 @@ $routes->post('users/update/private/', 'User::updatePrivateInfo');
 
 $routes->post('/tasks/updateStatus', 'Task::updateStatus');
 
-$routes->get('users/downloadUserData/(:num)', 'UserController::downloadUserData/$1', ['as' => 'downloadUserData']);
-$routes->get('users/deleteAccount/(:num)', 'UserController::deleteAccount/$1', ['as' => 'deleteAccount']);
-
-
+// $routes->get('users/downloadUserData/(:segment)', 'User::downloadUserData/$1');
+// $routes->get('users/deleteAccount/(:segment)', 'User::deleteAccount/$1');
 
 $routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominations');
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
@@ -93,9 +93,7 @@ $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) 
     $routes->get('list/(:segment)', 'Report::list/$1');
 });
 
-
 $routes->get('reports/details/(:any)', 'Report::viewDetails/$1');
-
 
 $routes->group('ajax', static function($routes){
     $routes->post('/','WebController::ajax');
