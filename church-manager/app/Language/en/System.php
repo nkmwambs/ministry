@@ -37,4 +37,6 @@ return [
     'system_back_button' => 'Back',
     'select_field_to_update' => "Selected Field to Update",
     'enter_value' => 'Enter Value',
+    'submit_button_label' => 'Submit',
+    'save_button_label' => 'Save and Continue',
 ];

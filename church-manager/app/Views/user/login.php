@@ -24,6 +24,11 @@
                     </div>
                 <?php endif ?>
                 
+                <!--System Title-->
+                <div style="text-align: center;">
+                    <h1><?=service('settings')->get('Church.siteName');?></h1>
+                </div>
+                
                 <!-- <label for="uname"><b>User Email</b></label> -->
                 <input type="email" placeholder="Enter Email" value="<?= set_value('email') ?>" name="email" required>
 

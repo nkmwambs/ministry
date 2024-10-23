@@ -39,7 +39,7 @@ extract($report_metadata);
             </div>
 
             <div class="panel-body">
-                <form class="form-horizontal form-groups-bordered" role="form">
+                <form id = "frm_report" class="form-horizontal form-groups-bordered" role="form">
                     <div class="tab-content">
                         <!-- Static report view section -->
                         <?php
@@ -64,7 +64,7 @@ extract($report_metadata);
                                             ?>
 
                                                 <div class="form-group">
-                                                    <label for="" class="control-label col-xs-4"><?=$metadata['label'];?></label>
+                                                    <label for="<?=$metadata['field_code'];?>" class="control-label col-xs-4"><?=$metadata['label'];?></label>
                                                     <div class="col-xs-6">
                                                         <div class="input-group form_view_field">
                                                             <div class="input-group-addon">
@@ -87,6 +87,14 @@ extract($report_metadata);
                                     
                                     ?>
                                 </div>
+                                <div class = "row">
+                                    <div class = "col-xs-12" style = "text-align:right;padding-top:20px;">
+                                        <?php if($i == count($report_fields) - 1){?>
+                                            <div class = "btn btn-info" id="save_report"><?=lang('system.save_button_label');?></div>
+                                            <div class = "btn btn-success" id="submit_report"><?=lang('system.submit_button_label');?></div>
+                                        <?php }?>
+                                    </div>
+                                </div>
                             </div>
                             <?php
                         }
@@ -105,4 +113,17 @@ extract($report_metadata);
         // Initial tab selection
         $('#<?=$type_code;?>_section_0').addClass('active');
     });
+
+    $('#submit_report').on('click', function(){
+        saveReport()
+    })
+
+    $('#save_report').on('click', function(){
+        saveReport()
+    })
+
+    function saveReport(){
+        const data = $("#frm_report").serializeArray()
+        console.log(data)
+    }
 </script>

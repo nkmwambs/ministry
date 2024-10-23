@@ -146,6 +146,8 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
 
     static function autoGenerateMonthlyReport(){
         $monthEndDate = date('Y-m-t');
+        // Last month end date
+        // $lastMonthDate = date('Y-m-t', strtotime($monthEndDate.'-1 month'));
 
         // List all assemblies 
         $reportModel = new \App\Models\ReportsModel();
@@ -161,8 +163,9 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
                 $reportsCount = $reportModel
                 ->where('assembly_id', $assembly['id'])
                 ->where('reports_type_id', $type['id'])
-                ->where('report_period', $monthEndDate)->countAllResults();
-    
+                ->where('report_period', $monthEndDate)
+                ->countAllResults();
+
                 if($reportsCount == 0){
                     // Create the report if it doesn't exist
                     $data = (object)[
