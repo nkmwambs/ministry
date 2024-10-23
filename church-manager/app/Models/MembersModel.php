@@ -12,7 +12,7 @@ class MembersModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','first_name','last_name','gender','assembly_id','parent_id','member_number','designation_id','date_of_birth','email','phone','is_active'];
+    protected $allowedFields    = ['id','first_name','last_name','saved_date','gender','membership_date','assembly_id','parent_id','inactivation_reason','inactivation_date','member_number','designation_id','date_of_birth','email','phone','is_active'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -43,6 +43,13 @@ class MembersModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = ['updateRecycleBin'];
+
+    protected $bulk_editable_fields = ['gender','membership_date','designation_id','saved_date','is_active','inactivation_reason','assembly_id'];
+
+    protected $lookUpFields = [
+        'designation_id' => ['tableName' => 'designations', 'nameField' => 'designation_name'],
+        'assembly_id' => ['tableName' => 'assemblies', 'nameField' => 'assembly_name']
+    ];
 
     public function getAll(){
         $library = new \App\Libraries\MemberLibrary();
@@ -119,5 +126,26 @@ class MembersModel extends Model
         ];
         $trashModel->insert((object)$trashData);
         return true;
+    }
+
+    function getLookUpValues($fieldName, $lookUpFields){
+        $lookupTable = $lookUpFields[$fieldName]['tableName'];
+        $modelName = ucfirst($lookupTable).'Model';
+        $model = new ("\App\\Models\\$modelName")(); 
+
+        $table_has_denomination_id = in_array('denomination_id',array_column($model->getFieldData($lookupTable),'name'));
+        
+        $denomination_id = 0;
+
+        if (session()->get('user_denomination_id')) {
+            $denomination_id = session()->get('user_denomination_id');
+        }
+
+        if($table_has_denomination_id && $denomination_id > 0){
+            return $model->where('denomination_id', $denomination_id)->select('id,name')->findAll();
+        }else{
+            return $model->select('id,name')->findAll();
+        }
+
     }
 }

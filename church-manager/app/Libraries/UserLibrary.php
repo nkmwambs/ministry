@@ -2,6 +2,9 @@
 
 namespace App\Libraries;
 use App\Interfaces\LibraryInterface;
+use TCPDF;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class UserLibrary implements LibraryInterface {
 
@@ -155,5 +158,29 @@ class UserLibrary implements LibraryInterface {
         $page_data['denominations'] = $denominations;
         $page_data['entities'] = $grouped_entities;
         $page_data['hierarchies'] = $hierarchies;
+    }
+
+    public function exportUserDataToPdf($user_data) {
+        $pdf = new TCPDF();
+        $pdf->AddPage();
+        $pdf->setFont('helvetica', '', 12);
+        $pdf->setCellPaddings(0, 10, 0, 10);
+
+        $html = '<h1>User Data<h1>';
+        $html .= '<table border="1">';
+        foreach ($user_data as $user_field_name => $user_value) {
+            $html .= '<tr>';
+            $html .= '<td>' . ucfirst($user_field_name) . '</td>';
+            $html .= '<td>' . $user_value . '</td>';
+            $html .= '</tr>';
+        }
+        $html .= '</table>';
+
+        $pdf->writeHTML($html, true, false, true, false, '');
+        return $pdf->Output('user_data.pdf', 'D'); // Download the PDF file directly to the user's browser
+    }
+
+    public function exportUserDataXlsx() {
+        // $spreadsheet = new Spreadsheet();
     }
 }

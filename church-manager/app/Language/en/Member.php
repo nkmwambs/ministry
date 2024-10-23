@@ -18,6 +18,8 @@ return [
     'member_assembly_name' => 'Assembly Name',
     'member_gender' => 'Gender',
     'member_select_gender' => 'Select a gender',
+    'membership_date' => 'Membership Date',
+    'saved_date' => 'Saved Date',
 
     'select_designation' => 'Select Designation',
 
@@ -32,4 +34,13 @@ return [
     'back_button' => 'Back',
     'edit_again_button' => 'Edit Again',
     'edit_button' => 'Edit',
+
+    'delete_members' => 'Delete',
+    'edit_members' => 'Update',
+    'view_members' => 'View',
+    'print_members' => 'Print',
+    'export_members' => 'Export',
+
+    'bulk_edit_members' => 'Bulk Edit Members',
+    'selected_members' => 'Selected Members',
 ];

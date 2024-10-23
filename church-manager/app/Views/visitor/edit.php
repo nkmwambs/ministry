@@ -39,16 +39,14 @@
                             <?= lang('visitor.visitor_first_name') ?>
                         </label>
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" name="first_name" value="<?= $result['first_name']; ?>" id="first_name"
-                                placeholder="Edit First Name">
+                            <input type="text" class="form-control" name="first_name" value="<?= $result['first_name']; ?>" id="first_name">
                         </div>
 
                         <label class="control-label col-xs-2" for="last_name">
                             <?= lang('visitor.visitor_last_name') ?>
                         </label>
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" name="last_name" id="last_name"
-                                placeholder="Edit Last Name" value="<?= $result['last_name']; ?>">
+                            <input type="text" class="form-control" name="last_name" id="last_name" value="<?= $result['last_name']; ?>">
                         </div>
                     </div>
 
@@ -57,16 +55,14 @@
                             <?= lang('visitor.visitor_phone') ?>
                         </label>
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" name="phone" value="<?= $result['phone']; ?>" id="phone"
-                                placeholder="Edit Phone">
+                            <input type="text" class="form-control" name="phone" value="<?= $result['phone']; ?>" id="phone">
                         </div>
 
                         <label class="control-label col-xs-2" for="email">
                             <?= lang('visitor.visitor_email') ?>
                         </label>
                         <div class="col-xs-3">
-                            <input type="email" class="form-control" name="email" value="<?= $result['email']; ?>" id="email"
-                                placeholder="Edit Email">
+                            <input type="email" class="form-control" name="email" value="<?= $result['email']; ?>" id="email">
                         </div>
                     </div>
 
@@ -75,16 +71,14 @@
                             <?= lang('visitor.visitor_email') ?>
                         </label>
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" name="gender" value="<?= $result['gender']; ?>" id="gender"
-                                placeholder="Edit Gender">
+                            <input type="text" class="form-control" name="gender" value="<?= $result['gender']; ?>" id="gender">
                         </div>
 
                         <label class="control-label col-xs-2" for="date_of_birth">
                             <?= lang('visitor.visitor_date_of_birth') ?>
                         </label>
                         <div class="col-xs-3">
-                            <input type="text" class="form-control datepicker" name="date_of_birth" value="<?= $result['date_of_birth']; ?>" id="date_of_birth"
-                                placeholder="Edit Date of Birth">
+                            <input type="text" class="form-control datepicker" name="date_of_birth" value="<?= $result['date_of_birth']; ?>" id="date_of_birth">
                         </div>
                     </div>
 
@@ -93,13 +87,12 @@
                             <?= lang('visitor.visitor_payment_code') ?>
                         </label>
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" name="payment_code" value="<?= $result['payment_code']; ?>" id="payment_code"
-                                placeholder="Edit Payment Code">
+                            <input type="text" class="form-control" name="payment_code" value="<?= $result['payment_code']; ?>" id="payment_code">
                         </div>
 
                         <label for="payment_id" class="control-label col-xs-2"><?= lang('visitor.visitor_payment_id') ?></label>
                         <div class="col-xs-3">
-                            <input class="form-control" name="payment_id" id="payment_id" value="<?= $result['payment_id']; ?>" placeholder="Enter Payment">
+                            <input class="form-control" name="payment_id" id="payment_id" value="<?= $result['payment_id']; ?>">
                         </div>
                     </div>
 
@@ -108,17 +101,16 @@
                             <?= lang('visitor.visitor_registration_amount') ?>
                         </label>
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" name="registration_amount" value="<?= $result['registration_amount']; ?>" id="registration_amount"
-                                placeholder="Edit Registration Amount">
+                            <input type="text" class="form-control" name="registration_amount" value="<?= $result['registration_amount']; ?>" id="registration_amount">
                         </div>
 
                         <label class="control-label col-xs-2" for="status"><?= lang('visitor.visitor_status') ?></label>
                         <div class="col-xs-3">
                             <select type="text" class="form-control" name="status" id="status">
                                 <option value="<?= $result['status'] ?>"><?= $result['status'] ?></option>
-                                <option value="registered">Registered</option>
-                                <option value="attended">Attended</option>
-                                <option value="cancelled">Cancelled</option>
+                                <option value="registered"><?= lang('system.system_registered') ?></option>
+                                <option value="attended"><?= lang('system.system_attended') ?></option>
+                                <option value="cancelled"><?= lang('system.system_cancelled') ?></option>
                             </select>
                         </div>
                     </div>

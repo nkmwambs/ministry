@@ -100,17 +100,19 @@ class Designation extends BaseController
                 ]
             ],
             'is_department_leader_designation' => [
-                'rules' => 'required',
+                'rules' => 'required_with[department_id]',
                 'label' => 'Check Department Leader Designation',
                 'errors' => [
                 'required' => 'Check Department Leader Designation is required.',
                 ]
-            ],
+            ]
         ]);
 
         if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
+
+        // log_message('error', json_encode($this->request->getPost()));
 
         $data = [
             'name' => $this->request->getPost('name'),
@@ -118,6 +120,7 @@ class Designation extends BaseController
             'is_hierarchy_leader_designation' => $this->request->getPost('is_hierarchy_leader_designation'),
             'is_department_leader_designation' => $this->request->getPost('is_department_leader_designation'),
             'is_minister_title_designation' => $this->request->getPost('is_minister_title_designation'),
+            'department_id' => $this->request->getPost('is_department_leader_designation') == 'yes' ? $this->request->getPost('department_id'): NULL,
         ];
 
         $this->model->insert((object)$data);

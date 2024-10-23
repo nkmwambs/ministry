@@ -1,20 +1,18 @@
-
-
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("users"); ?>" class="btn btn-info">
-            <?= lang('user.back_button') ?>
-        </a>
+        <div class="btn btn-info btn_back">
+            <?= lang('report.back_button') ?>
+        </div>
     </div>
 </div>
 
-<div class = "row">
-    <?php if(session()->getFlashdata('message') ){?>
-        <div class = "col-xs-12 info">
-            <p><?= session()->getFlashdata('message');?></p>
+<div class="row">
+    <?php if (session()->getFlashdata('message')) { ?>
+        <div class="col-xs-12 info">
+            <p><?= session()->getFlashdata('message'); ?></p>
             <a href="<?= site_url(plural($feature)) ?>"><?= lang('user.edit_again_buttton') ?></a>
         </div>
-    <?php }?>
+    <?php } ?>
 </div>
 
 <div class="row">
@@ -30,8 +28,8 @@
                 </div>
             </div>
             <div class="panel-body">
-                <div class = 'row'>  
-                    <div class = "col-xs-12" id="view_profile">
+                <div class='row'>
+                    <div class="col-xs-12" id="view_profile">
                         <?= view('user/profile') ?>
                     </div>
                 </div>
@@ -42,30 +40,29 @@
 </div>
 
 <script>
-
     $(document).ready(function() {
         $('.list-group-item:first').trigger('click');
     })
 
-    $('.list-group-item-action').on('click', function (ev){
-       const url = "<?=site_url("users/profile")?>"
+    $('.list-group-item-action').on('click', function(ev) {
+        const url = "<?= site_url("users/profile") ?>"
 
-       $.ajax({
-        url: url + '/' + $(this).data('profile') + '/<?=$id;?>',
-        type: 'GET',
-        beforeSend: function(){
-            $("#overlay").css("display", "block");
-        },
-        success: function (data) {
-            $('#profile_data').html(data);
-            $("#overlay").css("display", "none");
-        },
-        error: function(xhr, status, error) {
-            $('#profile_data').html('<div class="error">Error Occurred</div>');
-            $("#overlay").css("display", "none");
-        }
-       })
+        $.ajax({
+            url: url + '/' + $(this).data('profile') + '/<?= $id; ?>',
+            type: 'GET',
+            beforeSend: function() {
+                $("#overlay").css("display", "block");
+            },
+            success: function(data) {
+                $('#profile_data').html(data);
+                $("#overlay").css("display", "none");
+            },
+            error: function(xhr, status, error) {
+                $('#profile_data').html('<div class="error">Error Occurred</div>');
+                $("#overlay").css("display", "none");
+            }
+        })
 
-       ev.preventDefault()
+        ev.preventDefault()
     })
 </script>

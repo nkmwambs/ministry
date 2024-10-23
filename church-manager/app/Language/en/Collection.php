@@ -8,19 +8,22 @@ return [
     'delete_collection' => 'Delete Collection',
 
     'collection_action' => 'Action',
+    'collection_name' => 'Collection Name',
     'collection_return_date' => 'Return Date',
     'collection_period_start_date' => 'Period Start Date',
     'collection_period_end_date' => 'Period End Date',
     'collection_assembly_id' => 'Assembly Name',
     'collection_revenue_id' => 'Revenue Name',
-    'collection_amount' => 'Amount',
+    'collection_amount' => 'Collection Amount',
     'collection_status' => 'Status',
     'collection_collection_reference' => 'Collection Reference',
     'collection_description' => 'Description',
     'collection_collection_method' => 'Collection Method',
     
     'select_collection' => 'Select Collection',
-    'select_assembly' => 'Select Assembly',
+    'select_revenue' => 'Select Revenue',
+
+    'enter_amount' => 'Enter Amount',
 
     'collection_information' => 'Collection Information',
 
@@ -35,6 +38,8 @@ return [
     'back_button' => 'Back',
     'edit_again_button' => 'Edit Again',
     'edit_button' => 'Edit',
+    'choose_sunday_button' => 'Choose a Sunday',
+    'add_collection_button' => 'Action',
 
     'no_collections_message' => 'No collections available.'
 ];

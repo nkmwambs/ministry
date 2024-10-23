@@ -30,6 +30,8 @@ foreach ($features as $featureObj) {
             $routes->post('save', "$ucfirst::post");
             $routes->get('modal/(:segment)/(:segment)', "$ucfirst::modal/$1/$2");
             $routes->get('modal/(:segment)/(:segment)/(:segment)', "$ucfirst::modal/$1/$2/$3");
+            $routes->post('getFields/(:segment)/(:segment)', "$ucfirst::getBulkActionFields/$1/$2");
+            $routes->post('bulk_edit', "$ucfirst::bulkEdit");
     });
 }
 
@@ -62,18 +64,18 @@ $routes->group('users/profile', ['namespace' => 'App\Controllers'], function($ro
     $routes->post('save_task', 'Task::saveTask');
     $routes->get('privacy/(:segment)', "User::privacy/$1");
     $routes->get('your_data/(:segment)', "User::yourData/$1");
+    $routes->get('downloadUserData/(:segment)', 'User::downloadUserData/$1');
+    $routes->get('deleteAccount/(:segment)', 'User::deleteAccount/$1');
     $routes->get('delete_account/(:segment)', "User::deleteAccount/$1");
 });
 
-$routes->post('users/update/public/', 'User::updatePrivateInfo'); 
+$routes->post('users/update/public/', 'User::updatePublicInfo'); 
 $routes->post('users/update/private/', 'User::updatePrivateInfo');
 
 $routes->post('/tasks/updateStatus', 'Task::updateStatus');
 
-$routes->get('users/downloadUserData/(:num)', 'UserController::downloadUserData/$1', ['as' => 'downloadUserData']);
-$routes->get('users/deleteAccount/(:num)', 'UserController::deleteAccount/$1', ['as' => 'deleteAccount']);
-
-
+// $routes->get('users/downloadUserData/(:segment)', 'User::downloadUserData/$1');
+// $routes->get('users/deleteAccount/(:segment)', 'User::deleteAccount/$1');
 
 $routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominations');
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
@@ -88,18 +90,11 @@ $routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
 $routes->post('members/fetchMembers/(:num)','Member::fetchMembers/$1');
 
 $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) {
-    // $routes->get('section_a/(:segment)', 'Report::sectionA/$1');
-    // $routes->get('section_b/(:segment)', 'Report::sectionB/$1');
-    // $routes->get('section_c/(:segment)', 'Report::sectionC/$1');
-    // $routes->get('section_d/(:segment)', 'Report::sectionD/$1');
-    // $routes->get('edit/(:segment)', "Report::edit/$1");
-    // $routes->get('section_a/(:seg)', 'Report::load_section/$1');
     $routes->get('list/(:segment)', 'Report::list/$1');
 });
 
-
 $routes->get('reports/details/(:any)', 'Report::viewDetails/$1');
-
+$routes->post('reports/save_report', 'Report::saveReport');
 
 $routes->group('ajax', static function($routes){
     $routes->post('/','WebController::ajax');

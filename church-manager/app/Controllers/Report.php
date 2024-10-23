@@ -49,6 +49,7 @@ class Report extends BaseController
         ->join('reporttypes', 'reporttypes.id = reports.reports_type_id','LEFT')
         ->join('assemblies', 'assemblies.id = reports.assembly_id','LEFT')
         ->join('denominations', 'denominations.id = reporttypes.denomination_id', 'LEFT')
+        ->where('reports.reports_type_id', $numericReportTypeId)
         ->find();
 
         // Loop through the data to apply hash_id()
@@ -85,7 +86,7 @@ class Report extends BaseController
         }
 
         $update_data = [
-            'denomination_id' => $this->request->getPost('denomination_id'),
+            // 'denomination_id' => $this->request->getPost('denomination_id'),
             'assembly_id' => $this->request->getPost('assembly_id'),
             'reports_type_id' => $this->request->getPost('reports_type_id'),
             'report_period' => $this->request->getPost('report_period'),
@@ -132,9 +133,9 @@ class Report extends BaseController
         }
 
         $data = [
-            'denomination_id' => $this->request->getPost('denomination_id'),
+            // 'denomination_id' => $this->request->getPost('denomination_id'),
             'assembly_id' => $this->request->getPost('assembly_id'),
-            'reports_type_id' => $this->request->getPost('reports_type_id'),
+            'reports_type_id' => hash_id($this->request->getPost('reports_type_id'),'decode'),
             'report_period' => $this->request->getPost('report_period'),
             'report_date' => $this->request->getPost('report_date'),
             // 'status' => $this->request->getPost('status'),
@@ -171,6 +172,7 @@ class Report extends BaseController
         // Get Reports by ReportTypeId 
         $reportsByTypeId = $this->model->where('reports_type_id', hash_id($hashedReportTypeId, 'decode'))->findAll();
 
+        $this->parent_id = $hashedReportTypeId;
         $page_data = parent::page_data($reportsByTypeId);
 
         // log_message('error', json_encode($page_data));
@@ -178,15 +180,20 @@ class Report extends BaseController
         return view("index", compact('page_data'));
     }
 
-    //  public function section_a()
-    //  {
-    //     //  $data['result'] = $this->reportModel->getSectionAData();
-    //     return view('report/section/view_a');
-    //  }
- 
-    //  public function section_b()
-    //  {
-    //     //  $data['result'] = $this->reportModel->getSectionBData();
-    //      return view('report/section/view_b');
-    //  }
+    function saveReport(){
+        $values = $this->request->getPost();
+        // log_message('error', json_encode($post));
+        $reportLibrary = new \App\Libraries\ReportLibrary();
+        $report_id = hash_id($values['report_id'],'decode');
+        unset($values['report_id']);
+        $reportLibrary->convertCustomNamedFieldsToIds($values);
+
+        $values = json_encode($values);
+
+        // log_message('error', json_encode($post));
+        // Connect to database 
+        $model = new \App\Models\DetailsModel();
+        $model->upsert((object)compact('report_id', 'values'));
+
+    }
 }

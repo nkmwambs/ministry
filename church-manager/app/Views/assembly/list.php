@@ -72,7 +72,7 @@ $(document).ready(function (){
             { data: "assembly_code" },
             { data: "planted_at" },
             { data: "location" },
-            { data: "entity_id" },
+            { data: "entity_name" },
             { data: "assembly_leader" },
             { data: "is_active" }
         ]

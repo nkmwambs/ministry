@@ -62,8 +62,9 @@ class Minister extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'name' => 'required|min_length[10]|max_length[255]',
+            // 'name' => 'required|min_length[10]|max_length[255]',
             // 'minister_number' => 'required|min_length[3]',
+            'member_id' => 'required',
             'is_active' => 'required|min_length[2]|max_length[3]',
         ]);
 
@@ -74,12 +75,9 @@ class Minister extends BaseController
         }
 
         $update_data = [
-            'name' => $this->request->getPost('name'),
-            // 'minister_number' => $this->request->getPost('minister_number'),
-            'assembly_id' => $this->request->getPost('assembly_id'),
-            'designation_id' => $this->request->getPost('designation_id'),
-            'phone' => $this->request->getPost('phone'),
+            'member_id' => $this->request->getPost('member_id'),
             'is_active' => $this->request->getPost('is_active'),
+            // 'updated_at' => date('Y-m-d H:i:s')  // Uncomment this line if you want to update 'updated_at' field as well.
         ];
         
         $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
@@ -124,9 +122,8 @@ class Minister extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'name' => 'required|min_length[10]|max_length[255]',
+            'member_id' => 'required',
             // 'minister_number' => 'required|min_length[3]',
-            'is_active' => 'required|min_length[2]|max_length[3]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -155,12 +152,8 @@ class Minister extends BaseController
         }
 
         $data = [
-            'name' => $this->request->getPost('name'),
             'minister_number' => $this->computeMinisterNumber(),
-            'assembly_id' => $this->request->getPost('assembly_id'),
-            'designation_id' => $this->request->getPost('designation_id'),
-            'phone' => $this->request->getPost('phone'),
-            'is_active' => $this->request->getPost('is_active'),
+            'member_id' => $this->request->getPost('member_id'),
         ];
 
         $this->model->insert((object)$data);

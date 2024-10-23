@@ -50,9 +50,9 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
 
         if(!empty($listQueryFields)){
             return $this->select($library->setListQueryFields())->orderBy('assemblies.created_at desc')
-            ->join('entities','entities.id=assemblies.entity_id')
+            ->join('entities','entities.id=assemblies.entity_id', 'left')
             ->join('ministers','ministers.id=assemblies.assembly_leader', 'left')
-            ->join('hierarchies','hierarchies.id=entities.hierarchy_id')
+            ->join('hierarchies','hierarchies.id=entities.hierarchy_id', 'left')
             ->findAll();
         }else{
             return $this->orderBy('assemblies.created_at desc')->findAll();
@@ -77,8 +77,8 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
             $columns =  $library->setViewQueryFields();
             // unset($columns[array_search('entity_id', $columns)]);
             $result = $this->select($columns)->where('assemblies.id', $numeric_id)
-            ->join('entities','entities.id = assemblies.entity_id')
-            ->join('hierarchies','hierarchies.id = entities.hierarchy_id')
+            ->join('entities','entities.id = assemblies.entity_id','left')
+            ->join('hierarchies','hierarchies.id = entities.hierarchy_id','left')
             ->join('ministers','ministers.id = assemblies.assembly_leader','left')
             ->first();
 
@@ -95,8 +95,8 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
         $viewQueryFields = $library->setViewQueryFields();
         if(!empty($viewQueryFields)){
             return $this->select($library->setViewQueryFields())->where('assemblies.id', $numeric_id)
-            ->join('entities','entities.id = assemblies.entity_id')
-            ->join('hierarchies','hierarchies.id = entities.hierarchy_id')
+            ->join('entities','entities.id = assemblies.entity_id','left')
+            ->join('hierarchies','hierarchies.id = entities.hierarchy_id','left')
             ->join('ministers','ministers.id = assemblies.assembly_leader', 'left')
             ->first();
         }else{
@@ -114,14 +114,14 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
         if(session()->get('user_denomination_id')){
             $assemblies = $this->where(['hierarchies.denomination_id' => session()->get('user_denomination_id')])
             ->select(!empty($listQueryFields) ? $listQueryFields : '*')
-            ->join('entities', 'entities.id = assemblies.entity_id')
-            ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id')
+            ->join('entities', 'entities.id = assemblies.entity_id','left')
+            ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id','left')
             ->findAll();
         }else{
             // $assemblies = $this->getAll();
             $assemblies = $this->select(!empty($listQueryFields) ? $listQueryFields : '*')
-            ->join('entities', 'entities.id = assemblies.entity_id')
-            ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id')
+            ->join('entities', 'entities.id = assemblies.entity_id','left')
+            ->join('hierarchies', 'hierarchies.id = entities.hierarchy_id','left')
             ->findAll();
         }
 

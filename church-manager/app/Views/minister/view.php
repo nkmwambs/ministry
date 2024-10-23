@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("ministers"); ?>" class="btn btn-info">
-            <?= lang('minister.back_button') ?>
-        </a>
+        <div class="btn btn-info btn_back">
+            <?= lang('report.back_button') ?>
+        </div>
     </div>
 </div>
 

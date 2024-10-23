@@ -48,8 +48,16 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             <?= lang('department.department_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Enter Name">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="<?= lang('system.system_enter_name') ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="department_code">
+                            <?= lang('department.department_code') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="department_code" id="department_code" placeholder="<?= lang('department.enter_department_code') ?>" />
                         </div>
                     </div>
 
@@ -58,7 +66,7 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
                             <?= lang('department.department_description') ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="description" id="description" placeholder="Enter Description"></textarea>
+                            <textarea type="text" class="form-control" name="description" id="description" placeholder="<?= lang('system.system_enter_description') ?>"></textarea>
                         </div>
                     </div>
 

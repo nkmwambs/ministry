@@ -28,6 +28,33 @@
                     <input type="hidden" name="assembly_id" value="<?= hash_id($result['assembly_id']); ?>" />
 
                     <div class="form-group">
+                        <label class="control-label col-xs-4" for="is_active">
+                        <?= lang('member.member_is_active') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <select type="text" class="form-control" name="is_active" id="is_active">
+                                <option value="" selected><?= lang('member.member_select_is_active')?></option>
+                                <option value="yes" <?=$result['is_active'] == 'yes'? "selected": "";?> ><?php echo lang('system.yes');?></option>
+                                <option value="no" <?=$result['is_active'] == 'no'? "selected": "";?> ><?php echo lang('system.no');?></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden">
+                        <label class="control-label col-xs-4" for="inactivation_reason">
+                            <?= lang('member.member_inactivation_reason') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <select class="form-control" name="inactivation_reason" id="inactivation_reason" value="<?= $result['inactivation_reason']; ?>" >
+                                <option value=""><?= lang('member.member_inactivation_reason_select')?></option>
+                                <option value="deceased" <?=$result['inactivation_reason'] == 'deceased'? "selected": "";?> ><?php echo lang('member.member_inactivation_reason_deceased');?></option>
+                                <option value="excluded" <?=$result['inactivation_reason'] == 'excluded'? "selected": "";?> ><?php echo lang('member.member_inactivation_reason_excluded');?></option>
+                                <option value="other" <?=$result['inactivation_reason'] =='other'? "selected": "";?> ><?php echo lang('member.member_inactivation_reason_other');?></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-xs-4" for="first_name">
                             <?= lang('member.member_first_name') ?>
                         </label>
@@ -53,6 +80,13 @@
                                 <option value="male" <?=$result['gender'] == 'male' ? "selected": "";?> ><?php echo lang('system.gender_male'); ?></option>
                                 <option value="female" <?=$result['gender'] == 'female' ? "selected": "";?> ><?php echo lang('system.gender_female'); ?></option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class='form-group'>
+                        <label for="membership_date" class="control-label col-xs-4"><?= lang('member.membership_date') ?></label>
+                        <div class="col-xs-6">
+                        <input type="text" class="form-control datepicker" id="membership_date" name="membership_date" value="<?=$result['membership_date'];?>"  />
                         </div>
                     </div>
 
@@ -106,6 +140,15 @@
                         </label>
                         <div class="col-xs-6">
                             <input type="email" class="form-control" name="phone" id="phone" value="<?= $result['phone']; ?>" placeholder="Enter Phone"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="saved_date">
+                        <?= lang('member.saved_date') ?>
+                        </label>
+                        <div class="col-xs-6">
+                        <input type="text" class="form-control datepicker" name="saved_date" id="saved_date" value="<?= $result['saved_date']; ?>" placeholder="Enter Saved Date"></i>
                         </div>
                     </div>
 

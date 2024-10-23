@@ -40,14 +40,12 @@
                         <input type="hidden" name="denomination_id" id = "denomination_id" value="<?=$parent_id;?>" />
                     <?php }?>
 
-
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="name">
                             <?= lang('type.type_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" id="name" value="<?=$result['name'];?>"
-                                placeholder="Enter Name">
+                            <input type="text" class="form-control" name="name" id="name" value="<?=$result['name'];?>">
                         </div>
                     </div>
 
@@ -56,7 +54,7 @@
                             <?= lang('type.type_code') ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="type_code" id="type_code" value = "<?=$result['type_code'];?>" placeholder="Enter Type Code"><?=$result['description'];?></textarea>
+                            <input type="text" class="form-control" name="type_code" id="type_code" value = "<?=$result['type_code'];?>">
                         </div>
                     </div>
 

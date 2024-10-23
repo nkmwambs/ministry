@@ -76,7 +76,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                             <?= lang("field.customfield_table_name") ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="table_name" id="table_name" placeholder="Enter Table Name">
+                            <input type="text" class="form-control" name="table_name" id="table_name" placeholder="<?= lang('field.enter_table_name') ?>">
                         </div>
                     </div>
 
@@ -85,7 +85,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                             <?= lang("field.customfield_name") ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="field_name" id="field_name" placeholder="Enter Name">
+                            <input type="text" class="form-control" name="field_name" id="field_name" placeholder="<?= lang('system.system_enter_name') ?>">
                         </div>
                     </div>
 
@@ -94,7 +94,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                             <?= lang("field.customfield_code") ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="field_code" id="field_code" placeholder="Enter Code">
+                            <input type="text" class="form-control" name="field_code" id="field_code" placeholder="<?= lang('system.system_enter_code') ?>">
                         </div>
                     </div>
 
@@ -103,7 +103,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                             <?= lang("field.customfield_helptip") ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="helptip" id="helptip" placeholder="Enter Help Tip">
+                            <input type="text" class="form-control" name="helptip" id="helptip" placeholder="<?= lang('field.enter_helptip') ?>">
                         </div>
                     </div>
 
@@ -113,16 +113,16 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                         </label>
                         <div class="col-xs-6">
                             <select name="type" id="type" class="form-control" required>
-                                <option value="text">Text</option>
-                                <option value="float">Float</option>
-                                <option value="date">Date</option>
-                                <option value="datetime">DateTime</option>
-                                <option value="timestamp">TimeStamp</option>
-                                <option value="password">Password</option>
-                                <option value="numeric">Numeric</option>
-                                <option value="email">Email</option>
-                                <option value="dropdown">Dropdown</option>
-                                <option value="enum">ENUM</option>
+                                <option value="text"><?= lang('field.text') ?></option>
+                                <option value="float"><?= lang('field.float') ?></option>
+                                <option value="date"><?= lang('field.date') ?></option>
+                                <option value="datetime"><?= lang('field.datetime') ?></option>
+                                <option value="timestamp"><?= lang('field.timestamp') ?></option>
+                                <option value="password"><?= lang('field.password') ?></option>
+                                <option value="numeric"><?= lang('field.numeric') ?></option>
+                                <option value="email"><?= lang('field.email') ?></option>
+                                <option value="dropdown"><?= lang('field.dropdown') ?></option>
+                                <option value="boolean"><?= lang('field.boolean') ?></option>
                             </select>
                         </div>
                     </div>

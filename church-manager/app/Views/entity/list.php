@@ -21,10 +21,10 @@
       <table class="table table-striped datatable<?=$parent_id;?>">
         <thead>
           <tr>
-            <th>Action</th>
-            <th>Entity Number</th>
-            <th>Name</th>
-            <th>Belongs To</th>
+            <th><?= lang('entity.entity_action') ?></th>
+            <th><?= lang('entity.entity_number') ?></th>
+            <th><?= lang('entity.entity_name') ?></th>
+            <th><?= lang('entity.entity_belongs_to') ?></th>
           </tr>
         </thead>
         <tbody>

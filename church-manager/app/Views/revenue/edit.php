@@ -46,8 +46,7 @@
                             <?= lang('revenue.revenue_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" id="name" value="<?= $result['name']; ?>"
-                                placeholder="Enter Name">
+                            <input type="text" class="form-control" name="name" id="name" value="<?= $result['name']; ?>">
                         </div>
                     </div>
 
@@ -56,7 +55,7 @@
                             <?= lang('revenue.revenue_description') ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="description" id="description" value="<?= $result['description']; ?>" placeholder="Enter Description"><?= $result['description']; ?></textarea>
+                            <textarea type="text" class="form-control" name="description" id="description" value="<?= $result['description']; ?>"><?= $result['description']; ?></textarea>
                         </div>
                     </div>
 

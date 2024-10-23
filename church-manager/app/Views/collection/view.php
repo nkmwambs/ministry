@@ -1,19 +1,19 @@
-<?php 
+<?php
 $collection_sections = array_pop($result);
 ?>
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("assemblies"); ?>" class="btn btn-info">
-            <?= lang('collection.back_button') ?>
-        </a>
+        <div class="btn btn-info btn_back">
+            <?= lang('report.back_button') ?>
+        </div>
     </div>
 </div>
 
-<div class = "row">
-    <?php if(session()->getFlashdata('message') ) { ?>
-        <div class = "col-xs-12 info">
-            <p><?= session()->getFlashdata('message');?></p>
-            <a href="<?= site_url(plural($designation).'/edit/' . $id) ?>">
+<div class="row">
+    <?php if (session()->getFlashdata('message')) { ?>
+        <div class="col-xs-12 info">
+            <p><?= session()->getFlashdata('message'); ?></p>
+            <a href="<?= site_url(plural($designation) . '/edit/' . $id) ?>">
                 <?= lang('collection.edit_again_button') ?>
             </a>
         </div>

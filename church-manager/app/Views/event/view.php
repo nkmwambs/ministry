@@ -3,9 +3,9 @@
 ?>
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <a href="<?= site_url("events"); ?>" class="btn btn-info">
-            <?= lang('event.back_button') ?>
-        </a>
+        <div class="btn btn-info btn_back">
+            <?= lang('report.back_button') ?>
+        </div>
     </div>
 </div>
 
@@ -44,11 +44,11 @@
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="view_event">
-                        
-                        <div class = "row">
-                            <div class = "col-xs-12">
+
+                        <div class="row">
+                            <div class="col-xs-12">
                                 <form class="form-horizontal form-groups-bordered" role="form">
-                                    <?php 
+                                    <?php
                                     // echo json_encode($result);
                                     // echo count($result);
                                     foreach ($result->toArray() as $key => $value) { ?>
@@ -90,8 +90,8 @@
 
 <script>
     $(document).ready(function() {
-      $('.datatable<?=$id;?>').DataTable({
-        stateSave: true
-      });
+        $('.datatable<?= $id; ?>').DataTable({
+            stateSave: true
+        });
     });
 </script>

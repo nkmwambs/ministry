@@ -12,7 +12,7 @@
                 <form  class="form-horizontal form-groups-bordered">
                     <div class = "form-group">
                         <div class="col-xs-4">
-                            <label>Entity Name</label>
+                            <label><?= lang('entity.entity_name') ?></label>
                         </div>
                         <div class = "col-xs-8">
                             <?=$result['name'];?>
@@ -21,7 +21,7 @@
 
                     <div class = "form-group">
                         <div class="col-xs-4">
-                            <label>Entity Number</label>
+                            <label><?= lang('entity.entity_number') ?></label>
                         </div>
                         <div class = "col-xs-8">
                             <?=$result['entity_number'];?>
@@ -30,7 +30,7 @@
 
                     <div class = "form-group">
                         <div class="col-xs-4">
-                            <label>Hierarchy Name</label>
+                            <label><?= lang('entity.hierarchy_name') ?></label>
                         </div>
                         <div class = "col-xs-8">
                             <?=$result['hierarchy_id'];?>
@@ -39,7 +39,7 @@
 
                     <div class = "form-group">
                         <div class="col-xs-4">
-                            <label>Parent Entity</label>
+                            <label><?= lang('entity.parent_entity') ?></label>
                         </div>
                         <div class = "col-xs-8">
                             <?=$result['parent_name'];?>
@@ -48,7 +48,7 @@
 
                     <div class = "form-group">
                         <div class="col-xs-4">
-                            <label>Entity Leader</label>
+                            <label><?= lang('entity.entity_leader') ?></label>
                         </div>
                         <div class = "col-xs-8">
                             <?=$result['entity_leader'];?>

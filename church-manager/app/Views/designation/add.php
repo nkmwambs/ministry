@@ -32,10 +32,10 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
 
                     <?php if (!$numeric_denomination_id) { ?>
                         <div class = 'form-group'>
-                            <label for="denomination_id" class = "control-label col-xs-4">Denomination Name</label>
+                            <label for="denomination_id" class = "control-label col-xs-4"><?= lang('designation.denomination_id') ?></label>
                             <div class = "col-xs-6">
                                 <select class = "form-control" name = "denomination_id" id = "denomination_id">
-                                    <option value ="">Select a denomination</option>
+                                    <option value =""><?= lang('designation.select_denomination') ?></option>
                                     <?php foreach ($denominations as $denomination) : ?>
                                         <option value="<?php echo $denomination['id']; ?>"><?php echo $denomination['name']; ?></option>
                                     <?php endforeach; ?>
@@ -52,7 +52,7 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Enter Name">
+                                placeholder="<?= lang('system.system_enter_name') ?>">
                         </div>
                     </div>
 
@@ -96,6 +96,20 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
                         </div>
                     </div>
 
+                    <div class="form-group hidden" id = "grp_designation_department">
+                        <label class="control-label col-xs-4" for="department_id">
+                            <?= lang('designation.designation_department') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <select class="form-control" id="department_id" name="department_id" disabled>
+                                <option><?=lang('designation.select_department');?></option>
+                                <?php foreach($departments as $department){?>
+                                    <option value="<?=$department['id'];?>"><?=$department['name'];?></option>
+                                <?php }?>
+                            </select>
+                        </div>
+                    </div>
+
                     <!-- Dynamically Generated Custom Fields -->
                     <?php if ($customFields): ?>
                         <?php foreach ($customFields as $field): ?>
@@ -116,3 +130,17 @@ $numeric_denomination_id= hash_id($parent_id, 'decode');
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $("#is_department_leader_designation").on("change", function(){
+            if($(this).val() == "yes"){
+                $("#grp_designation_department").removeClass("hidden");
+                $("#department_id").prop("disabled", false);
+            } else {
+                $("#grp_designation_department").addClass("hidden");
+                $("#department_id").prop("disabled", true);
+            }
+        })
+    })
+</script>

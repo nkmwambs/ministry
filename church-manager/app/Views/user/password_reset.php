@@ -16,27 +16,27 @@
                 <form class="form-horizontal form-groups-bordered" action="<?=site_url('users/profile/account/update/');?>">
                     <div class="form-group">
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="current_password">Current password</label>
+                            <label class="control-label col-xs-4" for="current_password"><?= lang('user.current_password') ?></label>
                             <div class="col-xs-6">
                                 <input type="password" class="form-control" id="current_password" name="current_password">
                                 <small id="wrong_password_message" style = "color:red;"></small>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="password">New password</label>
+                            <label class="control-label col-xs-4" for="password"><?= lang('user.new_password') ?></label>
                             <div class="col-xs-6">
                                 <input type="password" class="form-control" name="password" id="password">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="confirm_password">Verify password</label>
+                            <label class="control-label col-xs-4" for="confirm_password"><?= lang('user.verify_password') ?></label>
                             <div class="col-xs-6">
                                 <input type="password" class="form-control" name="confirm_password" id="confirm_password">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save changes</button>
+                        <button type="submit" class="btn btn-success"><?= lang('user.save_changes_btn') ?></button>
                     </div>
 
                 </form>

@@ -75,19 +75,37 @@
                         container: '#modal_ajax modal-body',
                         autoclose: true
                     });
+
+                    $('.collection_datepicker').datepicker({
+                        beforeShowDay: function(date) {
+                            var today = new Date()
+                            var day = date.getDay();
+
+                            if (day === 0 && date <= today) {
+                                return [true, '', "Available"];
+                            } else {
+                                return [false, '', 'Unavailable'];
+                            }
+                        },
+                        dateFormat: "yy-mm-dd", // Format for the selected date
+                        autoclose: true
+                        // minDate: 0, // Disable past dates
+                        // maxDate: "+1Y" // Limit selection to 1 year ahead
+                    });
+
                     $('select.select_fields').select2();
                 });
 
                 $('#modal_ajax .modal-body').html(response);
-                
+
                 $("#modal_ajax").modal("show");
             }
         });
     }
 
-    $("#modal_ajax").on('hidden.bs.modal', function () {
+    $("#modal_ajax").on('hidden.bs.modal', function() {
         // $(this).data('bs.modal', null);
-        window.location.reload();
+        // window.location.reload();
     });
 
 
@@ -120,6 +138,35 @@
         });
     }
 
+    function showAjaxBulkAction(plural_feature, actionOnItem, selectedItems) {
+
+        const url = `<?= site_url() ?>${plural_feature}/getFields/${plural_feature}/${actionOnItem}`
+
+        $('#modal_ajax').on('shown.bs.modal', function() {
+            $('.datepicker').css('z-index', '10200');
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                container: '#modal_ajax modal-body'
+            })
+            $('select.select_fields').select2();
+        });
+
+        $.ajax({
+            url,
+            method: 'POST',
+            data: {selectedItems},
+            success: function(response) {
+                $('#modal_ajax .modal-title').html('Bulk ' + capitalizeFirstLetter(actionOnItem) + ' ' + capitalizeFirstLetter(plural_feature));
+                $('#modal_ajax .modal-body').html(response);
+                $("#modal_ajax").modal("show");
+
+                $('.modal_datatable').DataTable({
+                    stateSave: true
+                })
+
+            }
+        });
+    }
 
     function capitalizeFirstLetter(word) {
         const capitalized =
@@ -148,13 +195,6 @@
         // processing: true,
         // serverSide: true,
     });
-
-
-    // $('.scrollable-x-datatable').DataTable({
-    //     stateSave: true,
-    //     scrollX: true
-    // });
-
 
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd'
@@ -196,7 +236,7 @@
                     }
 
                     $("#overlay").css("display", "none");
-                    
+
                     return false;
                 }
 
@@ -225,79 +265,6 @@
         })
 
     })
-
-    $(document).on('click', '#public_account_save', function() {
-        const account_content = $(this).closest('.account-content');
-        const frm_id =account_content.find('form').attr('id');
-        const frm = $('#' + frm_id);
-        const data = frm.serializeArray();
-        const url = frm.attr('action');
-
-        $.ajax({
-            url,
-            type: 'POST',
-            data,
-            success: function(response) {
-                console.log(response);
-                if (typeof response == 'object') {
-                    if (response.hasOwnProperty('errors')) {
-                        const error_container = $('.error_container');
-
-                        if (!isEmpty(response.errors)) {
-                            error_container.removeClass('hidden');
-                            let ul = "<ul>";
-                            $.each(response.errors, function(index, value) {
-                                ul += "<li>" + value + "</li>";
-                            })
-                            ul += "</ul>";
-                            error_container.find('.error').html(ul);
-                        } else {
-                            error_container.addClass('hidden');
-                        }
-                    }
-
-                    return false;
-                }
-            }
-        })
-    })
-
-    $(document).on('click', '#private_account_save', function() {
-        const account_content = $(this).closest('.account-content');
-        const frm_id =account_content.find('form').attr('id');
-        const frm = $('#' + frm_id);
-        const data = frm.serializeArray();
-        const url = frm.attr('action');
-
-        $.ajax({
-            url,
-            type: 'POST',
-            data,
-            success: function(response) {
-                console.log(response);
-                if (typeof response == 'object') {
-                    if (response.hasOwnProperty('errors')) {
-                        const error_container = $('.error_container');
-
-                        if (!isEmpty(response.errors)) {
-                            error_container.removeClass('hidden');
-                            let ul = "<ul>";
-                            $.each(response.errors, function(index, value) {
-                                ul += "<li>" + value + "</li>";
-                            })
-                            ul += "</ul>";
-                            error_container.find('.error').html(ul);
-                        } else {
-                            error_container.addClass('hidden');
-                        }
-                    }
-
-                    return false;
-                }
-            }
-        })
-    })
-
 
     function isEmpty(obj) {
         for (const prop in obj) {
@@ -349,12 +316,17 @@
     }
 
 
-    $(document).on('keydown','.datepicker', function (){
+    $(document).on('keydown', '.datepicker', function() {
         return false;
     })
-    
+
 
     $(document).ready(function($) {
+
+        $(".btn_back").on('click', function() {
+            window.history.back();
+        })
+
         // Sample Toastr Notification
         // setTimeout(function() {
         //     var opts = {
@@ -378,7 +350,7 @@
 
         // $('.list-group-item').on('click', function (e) {
         //     e.preventDefault();
-            
+
         //     let url = $(this).attr('href'); 
         //     $.get(url, function (data) {
         //         $('.tab-content').html(data); 

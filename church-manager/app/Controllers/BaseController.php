@@ -198,7 +198,7 @@ abstract class BaseController extends Controller
         if($this->request->isAJAX()){
             return view("$this->feature/view", $page_data);
         }
-        log_message('error', json_encode($page_data));
+        // log_message('error', json_encode($page_data));
 
         return view('index', compact('page_data'));
     }
@@ -247,11 +247,12 @@ abstract class BaseController extends Controller
 
     public function add(): string {
         $page_data = $this->page_data();
-        $page_data['parent_id'] = $this->parent_id;
+        // $page_data['parent_id'] = $this->parent_id;
 
         if(method_exists($this->library,'addExtraData')){
             // Note the addExtraData updates the $page_data by reference
             $this->library->addExtraData($page_data);
+            // log_message('error', $this->parent_id);
         }
 
         foreach ((object)$this->tableName as $table_name) {
@@ -261,6 +262,8 @@ abstract class BaseController extends Controller
             // log_message('error', json_encode($customFields));
         }
 
+        
+        // log_message('error', json_encode($page_data));
         return view("$this->feature/add", $page_data);
     }
 
@@ -284,5 +287,213 @@ abstract class BaseController extends Controller
         return $this->$action();
     }
 
+
+    /**
+     * Get getBulkActionFields and their properties
+     * Currently works with edit forms
+     * @param mixed $tableName
+     * @param mixed $actionOnItem
+     * @return string
+     */
+    function getBulkActionFields($tableName, $actionOnItem){
+        $view = "Are you sure you want perform this action";
+        $selectedItemIds = $this->request->getPost('selectedItems');
+
+        if($actionOnItem == 'edit'){
+            // Get all database table fields metadata  
+            $modelName = ucfirst($tableName).'Model';
+            $model = new ("\App\\Models\\$modelName")(); 
+            $fields = $model->getFieldData($tableName);
+            
+            // Filter out fields that are not meant for bulk actions
+            $bulkActionFields = array_filter($fields, function ($elem){
+                if(!in_array($elem->name, ['created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'])){
+                    return $elem;
+                }
+            }); 
+
+            //Use only editable fields as specified in the model
+            $updatableFields = isset($model->bulk_editable_fields) ? $model->bulk_editable_fields : [];
+
+            if(!empty($updatableFields)){
+                $bulkActionFields = array_filter($fields, function ($elem) use($updatableFields){
+                    if(in_array($elem->name, $updatableFields)){
+                        return $elem;
+                    }
+                });
+            }
+
+            //  Build Enum Options
+            $bulkActionFields = array_map(function($elem) use($tableName){
+                if($elem->type == 'enum'){
+                    $elem->options = $this->getEnumOptions($tableName,$elem->name);
+                }
+                return $elem;
+            }, $bulkActionFields);
+
+            // Build lookup values options
+            $lookUpFields = isset($model->lookUpFields) ? $model->lookUpFields : [];
+
+            if(is_array($lookUpFields) && !empty($lookUpFields)){
+                $bulkActionFields = array_map(function($elem) use($model, $lookUpFields){
+                    if(in_array($elem->name, array_keys($lookUpFields))){
+                        if(method_exists($model, 'getLookUpValues')){
+                            $elem->type = 'lookup';
+                            $elem->options = $model->getLookUpValues($elem->name,$lookUpFields);
+                            $elem->name = $lookUpFields[$elem->name]['nameField'];
+                        }
+                        
+                    }
+                    return $elem;
+                }, $bulkActionFields);
+            }
+            
+            
+            // Add custom fields and their associated options
+            $customFields = $this->customFields($tableName);
+
+            if(count($customFields) > 0){
+                // Merge $bulkActionFields with $customFields array
+                $bulkActionFields = array_merge($bulkActionFields, $customFields);
+            }
+
+            // Remove numeric stringified keys
+            $bulkActionFields = array_values($bulkActionFields); 
+            
+            // Get all records that are targeted to be edited
+            $selectedItems = $model->whereIn('id', $selectedItemIds)->findAll();
+
+            // Prepare data for view with compact
+            $result = compact('tableName','bulkActionFields','selectedItemIds', 'selectedItems');
+            
+            $view  = view("templates/bulk_edit", $result);
+        }
+        
+        return $view;
+        
+    }
+
+    /**
+     * Build customFields and their options
+     * @param mixed $tableName
+     * @return object[]
+     */
+    function customFields($tableName){
+
+        $library = new \App\Libraries\FieldLibrary();
+        $customFields = $library->getCustomFieldsForTable($tableName);
+
+        $fields = [];
+
+        foreach($customFields as $field){
+            $field_code = $field['field_code'];
+            $fields[] = (object)[
+                "name" => "c__$field_code",
+                "type" => $field['type'],
+                "options" => $field['options'] != "" ? explode("\r\n",$field['options']) : [],
+            ];
+        }
+
+        return $fields;
+    }
+
+    /**
+     * Build of Enum Options
+     * @param mixed $tableName
+     * @param mixed $columnName
+     * @return bool|string[]
+     */
+    function getEnumOptions($tableName, $columnName) {
+        $dbName = env('database.default.database');
+        $qstring="SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$tableName' AND COLUMN_NAME = '$columnName'";
+
+        $result = \Config\Database::connect()->query($qstring)->getResult();
+        $options = explode(',', str_replace(['enum(', ')', "'"], '', $result[0]->COLUMN_TYPE));
+        return $options;
+    }
+
+    function findLookUpFields($model, $tableName, $field_key){
+        // Get field data 
+        $tableFieldNames = array_column($model->getFieldData($tableName),'name');
+
+        if(!in_array($field_key, $tableFieldNames)){
+            if(property_exists($model,'lookUpFields')){
+                $lookUpFields = $model->lookUpFields;
+                foreach($lookUpFields as $key => $lookUpField){
+                    if($lookUpField['nameField'] == $field_key){
+                        $field_key = $key;
+                    }
+                }
+            }
+        }
+        return $field_key;
+    }
+
+    function bulkEdit(){
+        
+        // log_message('error', json_encode($this->request->getPost()));
+        $tableName = $this->request->getPost('table_name');
+        $edit_selected_ids = $this->request->getPost('edit_selected_ids');
+
+        $modelName = ucfirst($tableName)."Model";
+        $model = new ("\App\\Models\\$modelName")();
+
+        // Building a field / value pairs
+        $fields = $this->request->getPost('field');
+        $values = $this->request->getPost('value');
+        $field_values = array_combine($fields, $values);
+
+
+        // Seprating normal fields and values from custom ones
+        $baseFields = [];
+        $customizeFields = [];
+        
+        foreach($field_values as $field_key => $field_value){
+            // log_message('error', substr($field_key, 0, 3));
+            foreach($edit_selected_ids as $edit_selected_id){
+                if(substr($field_key, 0, 3) == 'c__'){
+                    $customizeFields[$edit_selected_id]['id'] = $edit_selected_id;
+                    $customizeFields[$edit_selected_id][substr($field_key,3)] =  $field_value;
+                }else{
+                    $field_key = $this->findLookUpFields($model,$tableName, $field_key);
+                    $baseFields[$edit_selected_id]['id'] = $edit_selected_id;
+                    $baseFields[$edit_selected_id][$field_key] =  $field_value;
+                }
+            }
+            
+        }
+
+        if(!empty($baseFields)){
+            $model->updateBatch($baseFields, 'id');
+        }
+    
+        $library = new \App\Libraries\FieldLibrary();
+        if (!empty($customizeFields)) {
+            $copyCustomizeFields = $customizeFields;
+            $lastElemOfCustomizeFields = array_pop($copyCustomizeFields);
+            $keysOfCustomizeFields = array_keys($lastElemOfCustomizeFields);
+            unset($keysOfCustomizeFields['id']);
+            $fieldModel = new \App\Models\FieldsModel();
+            $fieldsWithIds = $fieldModel->select('field_code,id')->whereIn('field_code',$keysOfCustomizeFields)->findAll();
+
+            $idsWithKeys = array_combine(array_column($fieldsWithIds, 'field_code'),array_column($fieldsWithIds, 'id'));
+
+            foreach($customizeFields as $customizeField){
+                
+                $id = $customizeField['id'];
+                unset($customizeField['id']);
+                foreach($customizeField as $key => $value){
+                    $rec[$idsWithKeys[$key]] = $value;
+                    $library->saveCustomFieldValues($id, $tableName, $rec);
+                }
+            }
+        }
+
+        
+        $customFields = $library->getCustomFieldsForTable($tableName);
+        $field_codes = array_column($customFields, 'field_code');
+
+        redirect()->to('assemblies/view/W9');
+    }
 
 }

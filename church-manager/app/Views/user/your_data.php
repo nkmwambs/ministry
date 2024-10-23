@@ -1,3 +1,7 @@
+<?php
+// print_r($parent_id); 
+?>
+
 <div class="tab-pane show" id="password" role="tabpanel">
     <div class="card">
         <div class="card-header">
@@ -13,7 +17,7 @@
 
         <div class="card-body">
             <div class="panel-body">
-                <button class="btn btn-success" id="data_button" style="width:100%"><i class="fa fa-download"></i> Download</button>
+                <button class="btn btn-success" id="data_button" data-item_id="" style="width:100%"><i class="fa fa-download"></i> <?= lang('user.download_btn') ?></button>
             </div>
         </div>
 
@@ -21,12 +25,8 @@
 </div>
 
 <script>
-    
-    $(document).on('click',function() {
-        // Bind the Download button click
-        $('#data_button').click(function() {
-            // Redirect to the download route
-            window.location.href = "<?= site_url('users/downloadUserData'); ?>";
-        });
-    })
+    $('#data_button').click(function() {
+        // Redirect to the download route
+        window.location.href = "<?= site_url('users/profile/downloadUserData/' . $parent_id); ?>";
+    });
 </script>

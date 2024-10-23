@@ -172,18 +172,19 @@ class User extends BaseController
 
     public function updatePublicInfo()
     {
-        $numeric_id = $this->request->getPost('id');
+        $hashed_id = $this->request->getVar('id');
+        // log_message('error', json_encode($hashed_id));
 
-        // $validation = \Config\Services::validation();
-        // $validation->setRules([
-        //     'username' => 'required|min_length[3]|max_length[255]',
-        //     'biography' => 'required|min_length[3]|max_length[255]',
-        //     // 'profile_picture' => 'required',
-        // ]);
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'username' => 'required|min_length[3]|max_length[255]',
+            'biography' => 'required|min_length[3]|max_length[255]',
+            // 'profile_picture' => 'required',
+        ]);
 
-        // if (!$this->validate($validation->getRules())) {
-        //     return response()->setJSON(['errors' => $this->validator->getErrors()]);
-        // }
+        if (!$this->validate($validation->getRules())) {
+            return response()->setJSON(['errors' => $this->validator->getErrors()]);
+        }
 
         $originalDate = Time::now('America/Chicago', 'en_US');
         $newDateString = $originalDate->format('Y-m-d H:i:s');
@@ -195,44 +196,44 @@ class User extends BaseController
             // 'profile_picture' => $this->request->getPost('profile_picture')?: NULL, // This line prevents NULL values from being inserted into the database. It should be handled elsewhere in your application. If you want to remove this line, make sure to handle NULL values appropriately in your application.
         ];
 
-        // $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
-        $this->model->save($this->request->getPost());
+        $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
 
-        if ($this->model->isAJAX() > 0) {
+        if ($this->request->isAJAX() > 0) {
             $this->feature = 'user';
             $this->action = 'list';
 
             $records = [];
 
-            if (method_exists($this->model, 'getAll')) {
-                $records = $this->model->getAll();
-            } else {
-                $records = $this->model->findAll();
+            if(method_exists($this->model, 'getViewData')){
+                $records = $this->model->getViewData(hash_id($hashed_id, 'decode'));
+            }else{
+                $records = $this->model->getOne(hash_id($hashed_id, 'decode'));
             }
 
             return view('user/account', parent::page_data($records));
         }
 
-        return redirect()->to(site_url('users/view' . hash_id($numeric_id, 'encode')))->with('message', 'User Public Info updated successfuly!');
+        return redirect()->to(site_url('users/view/' . $hashed_id))->with('message', 'User Public Info updated successfuly!');
     }
 
     public function updatePrivateInfo()
     {
-        $hashed_id = $this->request->getPost('id');
+        $hashed_id = $this->request->getPost('id'); // hash_id($id, 'decode');
+        log_message('error', json_encode($hashed_id));
 
-        // $validation = \Config\Services::validation();
-        // $validation->setRules([
-        //     'first_name' => 'required|min_length[3]|max_length[255]',
-        //     'last_name' => 'required|min_length[3]|max_length[255]',
-        //     'phone' => 'required',
-        //     'email' => 'required|valid_email',
-        //     'gender' => 'required|min_length[4]|max_length[6]',
-        //     'date_of_birth' => 'required',
-        // ]);
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'first_name' => 'required|min_length[3]|max_length[255]',
+            'last_name' => 'required|min_length[3]|max_length[255]',
+            'phone' => 'required',
+            'email' => 'required|valid_email',
+            'gender' => 'required|min_length[4]|max_length[6]',
+            'date_of_birth' => 'required',
+        ]);
 
-        // if (!$this->validate($validation->getRules())) {
-        //     return response()->setJSON(['errors' => $this->validator->getErrors()]);
-        // }
+        if (!$this->validate($validation->getRules())) {
+            return response()->setJSON(['errors' => $this->validator->getErrors()]);
+        }
 
         $originalDate = Time::now('America/Chicago', 'en_US');
         $newDateString = $originalDate->format('Y-m-d H:i:s');
@@ -248,9 +249,9 @@ class User extends BaseController
             'updated_at' => $newDateString,
         ];
 
-        $this->model->save($this->request->getPost());
+        $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
 
-        if ($this->model->isAJAX() > 0) {
+        if ($this->request->isAJAX() > 0) {
             $this->feature = 'user';
             $this->action = 'list';
 
@@ -265,7 +266,7 @@ class User extends BaseController
             return view('user/account', parent::page_data($records));
         }
 
-        return redirect()->to(site_url('users/view' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
+        return redirect()->to(site_url('users/view/' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
     }
 
 
@@ -281,6 +282,8 @@ class User extends BaseController
         } else {
             $data = $this->model->getOne($numeric_id);
         }
+
+        $this->parent_id = $id;
 
         $page_data = $this->page_data($data);
 
@@ -384,26 +387,39 @@ class User extends BaseController
         return view('user/widget');
     }
 
-    public function yourData()
+    public function yourData($id)
     {
-        return view('user/your_data');
-    }
+        $numeric_id = hash_id($id, 'decode');
 
-    public function downloadUserData($userId)
-    {
-        $userData = $this->model->find($userId);
-
-        if (!$userData) {
-            return redirect()->back()->with('error', 'User not found');
+        if (method_exists($this->model, 'getEditData')) {
+            $user_data = $this->model->getEditData($numeric_id);
+        } else {
+            $user_data = $this->model->getOne($numeric_id);
         }
 
-        // Format data as JSON (or CSV as needed)
-        $jsonData = json_encode($userData);
+        $this->parent_id = $id;
 
-        // Set file headers
-        return $this->response->setHeader('Content-Type', 'application/json')
-            ->setHeader('Content-Disposition', 'attachment; filename="user_data.json"')
-            ->setBody($jsonData);
+        $page_data = $this->page_data($user_data);
+        // log_message('error', json_encode($page_data));
+        if (method_exists($this->library, 'editExtraData')) {
+            // Note the editExtraData updates the $page_data by reference
+            $this->library->editExtraData($page_data);
+        }
+        return view('user/your_data', $page_data);
+    }
+
+    public function downloadUserDataPdf($user_id)
+    {
+        $user_data = $this->model->getOne($user_id);
+        $user_data = formatUserDataForExport($user_data);
+        log_message('error', json_encode($user_data));
+
+        $this->parent_id = $user_id;
+
+        $userLibrary = new \App\Libraries\UserLibrary();
+        $userLibrary->exportUserDataToPdf($user_data);
+
+        return view('user/your_data');
     }
 
 

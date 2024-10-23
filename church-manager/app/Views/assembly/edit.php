@@ -40,8 +40,7 @@
                             <?= lang('assembly.assembly_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" value="<?=$result['name'];?>" id="name"
-                                placeholder="Edit Name">
+                            <input type="text" class="form-control" name="name" value="<?=$result['name'];?>" id="name">
                         </div>
                     </div>
 
@@ -51,7 +50,7 @@
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" readonly name="assembly_code" id="assembly_code"
-                                value="<?=$result['assembly_code'];?>" placeholder="Enter Assembly Code">
+                                value="<?=$result['assembly_code'];?>">
                         </div>
                     </div>
 
@@ -61,8 +60,7 @@
                         </label>
                         <div class="col-xs-6">
                             <input type="text" onkeydown="return false;" class="form-control datepicker"
-                                name="planted_at" id="planted_at" value="<?=$result['planted_at'];?>"
-                                placeholder="Enter planted At">
+                                name="planted_at" id="planted_at" value="<?=$result['planted_at'];?>">
                         </div>
                     </div>
 
@@ -71,36 +69,9 @@
                             <?= lang('assembly.assembly_location') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="location" id="location"
-                                value="<?=$result['location'];?>" placeholder="Enter Location">
+                            <input type="text" class="form-control" name="location" id="location" value="<?=$result['location'];?>">
                         </div>
                     </div>
-
-                    <?php 
-                        if(!session()->get('user_denomination_id')){
-                    ?>
-                        <div class="form-group">
-                            <label class="control-label col-xs-4" for="denomination_id">
-                                <?= lang('assembly.assembly_denomination_id') ?>
-                            </label>
-                            <div class="col-xs-6">
-                                <select class="form-control" name="parent_id" id="denomination_id">
-                                    <option value="0">Select Denomination</option>
-                                    <?php foreach ($denominations as $denomination) :?>
-                                    <option value="<?php echo $denomination['id'];?>" <?=$result['denomination_id'] == $denomination['id'] ? 'selected': ''; ?>><?php echo $denomination['name'];?></option>
-                                    <?php endforeach;?>
-                                </select>
-                            </div>
-                        </div>
-                    <?php 
-                        }else{
-                    ?>
-                        <input type="hidden" value="<?=$result['denomination_id'];?>" name="parent_id"  id="denomination_id"/>
-                    <?php
-                        }
-                    ?>
-
-
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="entity_id">
@@ -130,7 +101,7 @@
                         </label>
                         <div class="col-xs-6">
                             <select class="form-control" name="assembly_leader" value="<?=$result['assembly_leader'];?>" id="assembly_leader">
-                                <option value="">Select Leader</option>
+                                <option value=""><?= lang('assembly.select_leader') ?></option>
                             </select>
                         </div>
                     </div>
@@ -141,8 +112,8 @@
                         </label>
                         <div class="col-xs-6">
                             <select class="form-control" name="is_active" id="is_active">
-                                <option value="yes" <?=$result['is_active'] == 'yes' ? 'selected' : '';?>>Yes</option>
-                                <option value="no" <?=$result['is_active'] == 'no' ? 'selected' : '';?>>No</option>
+                                <option value="yes" <?=$result['is_active'] == 'yes' ? 'selected' : '';?>><?= lang('system.system_yes') ?></option>
+                                <option value="no" <?=$result['is_active'] == 'no' ? 'selected' : '';?>><?= lang('system.system_no') ?></option>
                             </select>
                         </div>
                     </div>

@@ -53,25 +53,30 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
      */
     public function saveCustomFieldValues(int $recordId, string $tableName, ?array $customFieldValues): bool
     {
+        // log_message('error', json_encode(compact('recordId','tableName','customFieldValues')));
+        $featureModel = new \App\Models\FeaturesModel();
+        $feature = $featureModel->where('name', singular($tableName))->first();
+        $featureId = $feature['id'];
+
         if($customFieldValues && sizeOf($customFieldValues) > 0){
             foreach ($customFieldValues as $fieldId => $value) {
                 // Check if the custom field value already exists for this record
                 $existing = $this->customValueModel
                     ->where('record_id', $recordId)
-                    ->where('table_name', $tableName)
+                    ->where('feature_id', $featureId)
                     ->where('customfield_id', $fieldId)
                     ->first();
     
                 if ($existing) {
                     $update_data = [
-                        'value' => $value,
-                    ];
+                        'value' => $value,                    ];
                     // Update existing custom field value
+                    // log_message('error', json_encode(compact('existing','update_data')));
                     $this->customValueModel->update($existing['id'], (object)$update_data);
                 } else {
                     $data = [
                         'record_id'   => $recordId,
-                        'table_name'  => $tableName,
+                        'feature_id'  => $featureId,
                         'customfield_id'    => $fieldId,
                         'value' => json_encode($value),
                     ];
@@ -178,23 +183,126 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['numeric_feature_id'] = $numeric_feature_id;
     }
 
-    function getFieldUIElementProperties($fieldTypeId, $fieldModel): array|bool{
+    function getFieldUIElementProperties(int $fieldTypeId, object $fieldModel, array $report): array|bool{
         $field = $fieldModel->where('visible', 'yes')->find($fieldTypeId);
         if (!$field) {
             return false;
         }
+        
         extract($field);
         $fieldObj = [
                 'type' => $type,
                 'field_code' => $field_code,
                 'label' => $field_name,
                 'helptip' => $helptip,
-                'value' => '',
+                'value' => $query_builder != NULL ? $this->computeFieldValue($query_builder, $report): '',
                 'visible' => $visible,
                 'class' => $field_code,
                 'attributes' => []
         ];
 
         return $fieldObj;
+    }
+
+    function computeFieldValue(string $query_builder, array $report) {
+        
+        // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}]}]
+        // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "gender", "value": "female", "operator": "equals"}]}]
+        // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "saved_date", "operator": "in_month"}]}]
+        // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "c__sanctified_date", "operator": "in_month"}]}]
+        // [{"table": "members","join": [{"table": "designations","relation_id": "id","relation_order": 1,"relation_table":{"table": "members","relation_id": "designation_id"}},{"table": "departments","relation_id": "id","relation_order": 2,"relation_table": {"table": "designations","relation_id": "department_id"}}],"select": "count","conditions": [{"key": "assembly_id","operator": "equals"},{"key": "department_code","value": "youth_ministry","operator": "equals"}]}]
+
+        $query_obj = json_decode($query_builder);
+
+        $value = '';
+        
+        // Use the commented JSON above to create a CodeIgniter 4 Query 
+        if(count($query_obj)){
+            
+            extract($report); // assembly_id, reports_type_id, report_period
+
+            $query_obj_items = (array)$query_obj[0];
+            extract($query_obj_items);
+
+            $featureModel = new \App\Models\FeaturesModel();
+            $feature = $featureModel->where('name', singular($table))->first();
+            $feature_id = $feature['id'];
+
+            $modelName = ucfirst($table).'Model';
+            $model = new ("\\App\Models\\$modelName")();
+            $queryResult = $model;
+
+            // Aggregation query part
+            if($select == 'count'){
+                $queryResult->select('count(*');
+            }
+
+            // Join query part 
+            if(isset($join) && count($join)){
+                $cnt = 1;
+                foreach($join as $joinItem){
+                    extract((array)$joinItem);
+                    
+                    if($cnt == $relation_order){
+                        $relation_table_name = $relation_table->table;
+                        $relation_table_id = $relation_table->relation_id;
+    
+                        $queryResult->join($table, "$table.$relation_id=$relation_table_name.$relation_table_id");
+                    }
+                    
+                    $cnt++;
+                }
+            }
+            
+            // Condition query part
+            if(count($conditions)){
+                foreach($conditions as $condition){
+                    if($condition->operator == 'equals'){
+                        if($condition->key == 'assembly_id'){
+                            $queryResult->where($condition->key, $assembly_id);
+                        }elseif(strpos($condition->key, 'c__') !== false){
+
+                            $queryResult->join('customvalues', 'customvalues.record_id = members.id', 'left');
+                            $queryResult->join('customfields','customfields.id=customvalues.customfield_id');
+                            $queryResult->where('customvalues.feature_id', $feature_id); 
+                            
+                            $field_key = substr($condition->key, 3);
+                            $queryResult->where('field_code', $field_key);
+                            $queryResult->where('value', $condition->value);
+                            // log_message('error', $condition->key);
+                        }else{
+                            $queryResult->where($condition->key, $condition->value);
+                        }
+
+                    }
+
+                    if($condition->operator == 'in_month'){
+                        if(strpos($condition->key, 'c__') !== false){
+
+                            $queryResult->join('customvalues', 'customvalues.record_id = members.id', 'left');
+                            $queryResult->join('customfields','customfields.id=customvalues.customfield_id');
+                            $queryResult->where('customvalues.feature_id', $feature_id); 
+                            
+                            $field_key = substr($condition->key, 3);
+                            $queryResult->where('customfields.field_code', $field_key);
+                            $queryResult->where("customvalues.value >=", date('Y-m-01',strtotime($report_period)))
+                            ->where("customvalues.value <=", date('Y-m-t',strtotime($report_period)));
+                            // log_message('error', $condition->key);
+                        }else{
+                            $queryResult->where("$condition->key >=", date('Y-m-01',strtotime($report_period)))
+                            ->where("$condition->key <=", date('Y-m-t',strtotime($report_period)));
+                        }
+                        
+                    }
+                }
+            }
+
+            $result = $queryResult->countAllResults();
+
+            $value = $result;
+        }
+        
+
+        return $value; // Placeholder for actual field value computation
     }
 }

@@ -15,9 +15,25 @@ return [
     'customfield_feature_id' => 'Feature Name',
     'customfield_field_order' => 'Field Order',
     'customfield_visible' => 'Visible',
+    'customfield_code' => 'Field Code',
+    'customfield_helptip' => 'Field Helptip',
+
+    'text' => 'Text',
+    'float' => 'Float',
+    'date' => 'Date',
+    'datetime' => 'DateTime',
+    'timestamp' => 'Timestamp',
+    'password' => 'Password',
+    'numeric' => 'Numeric',
+    'email' => 'Email',
+    'dropdown' => 'Dropdown',
+    'boolean' => 'Multiple Choice',
 
     'select_feature' => 'Select Feature',
     'select_denomination' => 'Select Denomination',
+
+    'enter_table_name' => 'Enter Table Name',
+    'enter_helptip' => 'Enter Helptip',
 
     'save_customfield' => 'Save',
     'save_and_new_customfield' => 'Save and New',
