@@ -46,7 +46,6 @@ class Tasks extends BaseTasks
     public function init(Scheduler $schedule)
     {
         // $schedule->command('foo:bar')->daily()->named('foo');
-
         // $schedule->shell('cp foo bar')->daily('11:00 pm')->named('bar');
 
         $schedule->call(static function () {

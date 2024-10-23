@@ -182,5 +182,53 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         }
        
     }
+
+    function convertCustomNamedFieldsToIds(&$postArray){
+        $fieldsModel = new \App\Models\FieldsModel();
+
+        $arrayKeys = array_keys($postArray);
+        $fieldCodeWithIds = $fieldsModel->select('id,field_code,type,options')->whereIn('field_code', $arrayKeys)->findAll();
+
+        $fieldCodesWithIdValues = array_combine(array_column($fieldCodeWithIds,'field_code'),array_column($fieldCodeWithIds,'id'));
+
+
+        // log_message('error', json_encode($fieldCodesWithIdValues));
+       $result = [];
+        foreach($postArray as $key => $value){
+            $result[$fieldCodesWithIdValues[$key]] = $this->getFieldValues($key,$value, $fieldCodeWithIds); //$value;
+        }
+
+        // log_message('error', json_encode($result));
+
+        $postArray = $result;
+
+        return $postArray;
+    }
+
+    function getFieldValues($field_code, $value, $fieldCodeWithIds){
+        $fieldCodesWithTypeValues = array_combine(array_column($fieldCodeWithIds,'field_code'),array_column($fieldCodeWithIds,'type'));
+        // $fieldCodesWithOptionsValues = array_combine(array_column($fieldCodeWithIds,'field_code'),array_column($fieldCodeWithIds,'options'));
+    
+        $returnValue = $value;
+
+        if($fieldCodesWithTypeValues[$field_code] == 'boolean'){
+            // Assumes all boolean choices are yes/no
+            if($value == 1){
+                $returnValue = 'yes';
+            }else{
+                $returnValue = 'no';
+            }
+        }
+
+        if($fieldCodesWithTypeValues[$field_code] == 'numeric' && $value == ""){
+            $returnValue = 0;
+        }
+
+        if($fieldCodesWithTypeValues[$field_code] == 'text' && $value == ""){
+            $returnValue = NULL;
+        }
+
+        return $returnValue;
+    }
    
 }

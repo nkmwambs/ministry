@@ -94,6 +94,8 @@ $routes->group('reports', ['namespace' => 'App\Controllers'], function($routes) 
 });
 
 $routes->get('reports/details/(:any)', 'Report::viewDetails/$1');
+$routes->post('reports/save_report', 'Report::saveReport');
+
 
 $routes->group('ajax', static function($routes){
     $routes->post('/','WebController::ajax');

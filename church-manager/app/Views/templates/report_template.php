@@ -40,6 +40,7 @@ extract($report_metadata);
 
             <div class="panel-body">
                 <form id = "frm_report" class="form-horizontal form-groups-bordered" role="form">
+                    <input type="hidden" name="report_id" value="<?=$id;?>" />
                     <div class="tab-content">
                         <!-- Static report view section -->
                         <?php
@@ -74,7 +75,12 @@ extract($report_metadata);
                                                             <?php if($metadata['type'] == 'numeric' || $metadata['type'] == 'text'){?>				
                                                                     <input class = "form-control <?=$metadata['class'];?>" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" value="<?=$metadata['value'];?>" <?=$metadata['value'] != '' ? 'readonly' : '';?> />
                                                             <?php }else{?>
-                                                                <input type="checkbox" data-onstyle='success' data-offstyle='danger'  name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" data-toggle="toggle" <?=$metadata['value'] ? 'checked' : '' ;?> <?=$metadata['value'] != '' ? 'disabled' : '';?> value="<?=$metadata['value'];?>"  data-on="Yes" data-off="No">
+
+                                                                <span>
+                                                                    <input type="checkbox" class = "toggle_btn" data-onstyle='success' data-offstyle='danger'   data-toggle="toggle" <?=$metadata['value'] ? 'checked' : '' ;?> <?=$metadata['value'] != '' ? 'disabled' : '';?> value="<?=$metadata['value'];?>"  data-on="Yes" data-off="No">
+                                                                    <input type="hidden" class = "toggle_btn_value" id = "<?=$metadata['field_code'];?>" name="<?=$metadata['field_code'];?>" value="<?=$metadata['value'];?>"  />
+                                                                </span>
+                                                                
                                                             <?php }?>
                                                         </div>
                                                     </div>
@@ -124,6 +130,24 @@ extract($report_metadata);
 
     function saveReport(){
         const data = $("#frm_report").serializeArray()
-        console.log(data)
+        
+        $.ajax({
+            url: "<?= site_url('reports/save_report')?>",
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                alert('Report saved successfully')
+            },
+            error: function(xhr, status, error) {
+                alert('Failed to save report')
+            }
+        })
     }
+
+    $(".toggle_btn").on('change', function(){
+        // alert('Hello')
+        const val = $(this).is(":checked") ? 1 : 0
+        $(this).closest('span').find('.toggle_btn_value').val(val);
+    })
+    
 </script>

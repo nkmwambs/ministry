@@ -180,15 +180,20 @@ class Report extends BaseController
         return view("index", compact('page_data'));
     }
 
-    //  public function section_a()
-    //  {
-    //     //  $data['result'] = $this->reportModel->getSectionAData();
-    //     return view('report/section/view_a');
-    //  }
- 
-    //  public function section_b()
-    //  {
-    //     //  $data['result'] = $this->reportModel->getSectionBData();
-    //      return view('report/section/view_b');
-    //  }
+    function saveReport(){
+        $values = $this->request->getPost();
+        // log_message('error', json_encode($post));
+        $reportLibrary = new \App\Libraries\ReportLibrary();
+        $report_id = hash_id($values['report_id'],'decode');
+        unset($values['report_id']);
+        $reportLibrary->convertCustomNamedFieldsToIds($values);
+
+        $values = json_encode($values);
+
+        // log_message('error', json_encode($post));
+        // Connect to database 
+        $model = new \App\Models\DetailsModel();
+        $model->upsert((object)compact('report_id', 'values'));
+
+    }
 }
