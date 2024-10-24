@@ -10,10 +10,44 @@ use Psr\Log\LoggerInterface;
 class WebController extends BaseController
 {
 
+    
+    protected $feature = '';
+    protected $action = '';
+    protected $id = 0;
+    protected $parent_id = 0;
+    protected $uri;
+    protected $segments;
+    protected $session;
+    protected $model = null;
+    protected $library = null;
+    protected $tableName = null;
+    protected $customFields = null;
+    protected $listQueryFields = [];
+    protected $feature_page_data = [];
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
+
+               // Preload any models, libraries, etc, here.
+
+               $this->session = \Config\Services::session();
+               $this->uri = service('uri');
+               $this->segments = $this->uri->getSegments();
+               $this->feature = isset($this->segments[0]) ? singular($this->segments[0]) : 'dashboard';
+               $this->action = isset($this->segments[1]) ? $this->segments[1] : 'list';
+               $this->id = isset($this->segments[2]) ? $this->segments[2] : 0;
+       
+               if(class_exists("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")){
+                   $this->model = new ("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")();
+               }
+       
+               if(class_exists("App\\Libraries\\" . ucfirst($this->feature) . "Library")){
+                   $this->library = new ("App\\Libraries\\" . ucfirst($this->feature) . "Library")();
+                   $this->listQueryFields = $this->library->setListQueryFields();
+               }
+               
+               $this->tableName = plural($this->feature);
     }
 
     private function history_fields(){

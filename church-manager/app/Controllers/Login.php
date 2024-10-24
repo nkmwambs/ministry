@@ -18,8 +18,9 @@ class Login extends WebController {
         $this->session = \Config\Services::session();
     }
 
-    public function index(): string {
-        return view('user/login');
+    public function index() {
+        // return view('user/login');
+        redirect()->to(site_url('dashboards'));
     }
 
     public function userValidate(): ResponseInterface {

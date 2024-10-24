@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+
 class Assembly extends WebController
 {
     protected $model = null;
