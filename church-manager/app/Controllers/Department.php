@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use Psr\Log\LoggerInterface;
 
-class Department extends BaseController
+class Department extends WebController
 {
     protected $model = null;
 

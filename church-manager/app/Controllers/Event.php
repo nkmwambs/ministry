@@ -7,7 +7,7 @@ use \CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use \Psr\Log\LoggerInterface;
 
-class Event extends BaseController
+class Event extends WebController
 {
     protected $model = null;
 

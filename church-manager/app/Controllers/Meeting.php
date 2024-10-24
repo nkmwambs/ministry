@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use Psr\Log\LoggerInterface;
 
-class Meeting extends BaseController
+class Meeting extends WebController
 {
     protected $model = null;
 

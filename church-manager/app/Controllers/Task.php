@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class Task extends BaseController
+class Task extends WebController
 {
     protected $model = null;
 

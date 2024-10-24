@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class Entity extends BaseController
+class Entity extends WebController
 {
     protected $model = null;
 

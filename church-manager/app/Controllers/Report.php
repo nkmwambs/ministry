@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \CodeIgniter\HTTP\ResponseInterface;
 
-class Report extends BaseController
+class Report extends WebController
 {
     protected $model = null;
 

@@ -7,7 +7,7 @@ use \CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use \Psr\Log\LoggerInterface;
 
-class Collection extends BaseController
+class Collection extends WebController
 {
     protected $model = null;
     function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger){

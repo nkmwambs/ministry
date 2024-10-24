@@ -6,7 +6,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-class Login extends BaseController {
+class Login extends WebController {
 
     protected $session = null;
 

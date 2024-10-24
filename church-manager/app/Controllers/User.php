@@ -8,7 +8,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use Psr\Log\LoggerInterface;
 use CodeIgniter\I18n\Time;
 
-class User extends BaseController
+class User extends WebController
 {
     protected $model = null;
     function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
