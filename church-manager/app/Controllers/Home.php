@@ -4,11 +4,9 @@ namespace App\Controllers;
 
 class Home extends WebController
 {
-    public function index(): string
+    public function index()
     {
-        $page_data['feature'] = 'dashboard';
-        $page_data['action'] = 'list';
-        return view('index', $page_data);
+        return redirect()->to(site_url('dashboards'));
     }
 
 }

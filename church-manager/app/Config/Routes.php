@@ -7,8 +7,8 @@ helper('inflector');
 // /**
 //  * @var RouteCollection $routes
 //  */
-$routes->get('/', 'Login::index');
-service('auth')->routes($routes);
+// $routes->get('/', 'Login::index');
+
 
 // $routes->get('/logout', 'Login::logout');
 // $routes->post('/validate', 'Login::userValidate');
@@ -102,3 +102,7 @@ $routes->group('ajax', static function($routes){
     $routes->post('/','WebController::ajax');
     $routes->get('(:segment)/(:segment)/(:any)','WebController::ajax/$1/$2/$3');
 });
+
+
+$routes->get('home','Home::index');
+service('auth')->routes($routes);
