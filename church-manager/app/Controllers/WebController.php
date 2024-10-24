@@ -7,10 +7,13 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use Psr\Log\LoggerInterface;
 
+// use CodeIgniter\Shield\Controllers\LoginController as ShieldLogin;
+// use CodeIgniter\HTTP\RedirectResponse;
+
 class WebController extends BaseController
 {
 
-    
+    protected $helpers = ['form','church','inflector'];
     protected $feature = '';
     protected $action = '';
     protected $id = 0;
@@ -100,6 +103,12 @@ class WebController extends BaseController
 
     public function index()
     {
+        
+        // if (auth()->loggedIn()) {
+        //     // Do something.
+        //     log_message('error', json_encode(auth()->user()));
+        // }
+
         $data = [];
         
         if(method_exists($this->model, 'getListData')){

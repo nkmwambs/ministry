@@ -38,25 +38,9 @@ class Login extends WebController {
     //     }
     // }
 
-    private function create_user_session($user) {
-        
-        $this->session->set('logged_in', true);
-        $this->session->set('user_id', $user['id']);
-        $this->session->set('user_fullname', $user['first_name']." ". $user['last_name']);
-        $this->session->set('user_roles', explode(',',$user['roles']));
-        $this->session->set('user_denomination_id', $user['denomination_id']);
-        $this->session->set('user_is_system_admin', $user['is_system_admin']);
-        $this->session->set('user_permitted_entities', explode(',',$user['permitted_entities']));
-        $this->session->set('user_permitted_assemblies', explode(',',$user['permitted_assemblies']));
-        // Update log count
-        $userModel = new \App\Models\UsersModel();
-        $userModel->update($user['id'], (object)['access_count' => $user['access_count'] + 1]);
-
-        return redirect()->to(site_url('dashboards'));
-    }
-
     public function logout() {
-        $this->session->destroy();
-        return redirect()->to(site_url('/'));
+        // $this->session->destroy();
+        // return redirect()->to(site_url('/'));
+        auth()->logout();
     }
 }

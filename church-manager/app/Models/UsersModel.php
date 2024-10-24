@@ -69,13 +69,9 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
             "username","biography",
             "date_of_birth","email",
             "gender","phone","roles",
-            "access_count",
-            "is_active",
+            "access_count", 
             "permitted_entities",
-            "permitted_assemblies",
-            "created_at",
-            "updated_at",
-            "password"
+            "permitted_assemblies"
         ];
     }
 

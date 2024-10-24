@@ -7,7 +7,7 @@ helper('inflector');
 // /**
 //  * @var RouteCollection $routes
 //  */
-// $routes->get('/', 'Login::index');
+$routes->get('/', '\CodeIgniter\Shield\Controllers\LoginController::loginView');
 
 
 // $routes->get('/logout', 'Login::logout');
