@@ -1,4 +1,35 @@
-<?=button_row($feature);?>
+<div class="row">
+    <div class="col-xs-12 btn-container">
+        <div class='btn btn-primary' onclick="showAjaxModal('members','add', '<?= $parent_id; ?>')">
+            <?= lang('member.add_member'); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('members','delete')">
+            <i class="fa fa-trash-o"></i>
+            <?= lang('member.delete_members'); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('members','edit')">
+            <i class="fa fa-pencil-square-o"></i>
+            <?= lang('member.edit_members'); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('members','view')">
+            <i class="fa fa-eye"></i>
+            <?= lang('member.view_members'); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('members','print')">
+            <i class="fa fa-print"></i>
+            <?= lang('member.print_members'); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('members','export')">
+            <i class="fa fa-download"></i>
+            <?= lang('member.export_members'); ?>
+        </div>
+    </div>
+</div>
 
 <div class='row list-alert-container hidden'>
     <div class='col-xs-12 info'>

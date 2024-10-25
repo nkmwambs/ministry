@@ -57,6 +57,8 @@ class Report extends WebController
             $report['hash_id'] = hash_id($report['id']);  // Add hashed ID to each record
         }
 
+        // log_message('error', json_encode($numericReportTypeId));
+
         // Prepare response data for DataTables
         $response = [
             "draw" => $draw,

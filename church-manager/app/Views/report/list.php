@@ -1,5 +1,5 @@
 <?php 
-// echo $parent_id;
+// echo json_encode($parent_id);
 ?>
 
 <div class="row">

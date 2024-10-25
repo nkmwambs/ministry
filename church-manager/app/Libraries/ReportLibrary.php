@@ -18,15 +18,16 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
     }
     
     function listExtraData(&$page_data) {
-        $parent_id = 0;
+        // $parent_id = 0;
         $reports_type_id = 0;
         $assembly_id = 0;
 
-        if (session()->get('user_denomination_id')) {
-            $parent_id = session()->get('user_denomination_id');
-        }
+        // if (session()->get('user_denomination_id')) {
+        //     $parent_id = session()->get('user_denomination_id');
+        // }
 
-        $page_data['parent_id'] = hash_id($parent_id,'encode');
+
+        // $page_data['parent_id'] = hash_id($parent_id,'encode');
         $page_data['report_type_id'] = hash_id($reports_type_id,'encode');
         $page_data['assembly_id'] = hash_id($assembly_id, 'encode');
     }
@@ -128,7 +129,7 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
                 $reportLayout[$i]['section_parts'][$j]['part_fields'] = explode(',',$reportLayout[$i]['section_parts'][$j]['part_fields'][0]);
                 // $reportLayout[$i]['section_parts'][$j]['part_fields'] is an array of custom fields Ids
                 $reportLayout[$i]['section_parts'][$j]['part_fields'] = array_map(function($fieldTypeId) use($fieldLibrary, $fieldModel, $report){
-                    return $fieldLibrary->getFieldUIElementProperties(hash_id($fieldTypeId, 'encode'), $fieldModel, $report);
+                    return $fieldLibrary->getFieldUIElementProperties($fieldTypeId, $fieldModel, $report);
                 }, $reportLayout[$i]['section_parts'][$j]['part_fields']);
             }   
         }

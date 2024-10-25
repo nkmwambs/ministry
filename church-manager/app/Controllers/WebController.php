@@ -104,7 +104,7 @@ class WebController extends BaseController
         return $page_data;
     }
 
-    public function index()
+    public function index($id = null)
     {
 
         if($this->feature != "dashboard" && !auth()->user()->canDo("$this->feature.read")){
@@ -129,9 +129,15 @@ class WebController extends BaseController
             // log_message('error', json_encode($data));
             $data = $this->model->findAll();
         }
+
+        // log_message('error', json_encode($data));
+
+        if($id != null){
+            $this->parent_id = $id;
+        }
         
         $page_data = $this->page_data($data);
-
+       
         if(method_exists($this->library,'listExtraData')){  
             // Note the editExtraData updates the $page_data by reference
             $this->library->listExtraData($page_data);
