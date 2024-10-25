@@ -16,6 +16,7 @@
         "codeigniter4/shield": "^1.1",
         "codeigniter4/tasks": "dev-develop",
         "hashids/hashids": "^5.0",
+        "tatter/permits": "^2.1",
         "tecnickcom/tcpdf": "^6.7"
     },
     "require-dev": {

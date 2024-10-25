@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Denomination extends BaseController
+class Denomination extends WebController
 {
     protected $model = null;
 

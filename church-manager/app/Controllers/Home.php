@@ -21,7 +21,6 @@ class Home extends WebController
     public function index()
     {
         if (auth()->loggedIn()) {
-        //    log_message('error', 'You are not logged in');
             $user = auth()->user();
             return $this->create_user_session($user->toArray());
         }

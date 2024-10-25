@@ -75,6 +75,11 @@ class WebController extends BaseController
 
         $view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature.DIRECTORY_SEPARATOR.$this->action.'.php';
         $view = file_exists($view_path) ?  "$this->feature/$this->action" : "templates/$this->action";
+
+        if($data && array_key_exists('errors',$data)){
+            $view = 'errors'.DIRECTORY_SEPARATOR.'html'.DIRECTORY_SEPARATOR.'error_403';
+        }
+        
         $page_data['view'] = $view;
 
         if(!empty($this->listQueryFields)){
@@ -91,12 +96,6 @@ class WebController extends BaseController
        
         $featureLibrary = new \App\Libraries\FeatureLibrary();
         $page_data['navigation_items'] = $featureLibrary->navigationItems();
-        // $page_data['extra_data'] = [];
-        // if(!$this->request->isAJAX()){
-            // $page_data['content'] = view($view, $page_data); // Use in the index page to load content 
-        // }
-
-        // log_message('error', json_encode($page_data));
 
         return $page_data;
     }
@@ -104,10 +103,15 @@ class WebController extends BaseController
     public function index()
     {
         
-        // if (auth()->loggedIn()) {
-        //     // Do something.
-        //     log_message('error', json_encode(auth()->user()));
-        // }
+        if(!auth()->user()->can("$this->feature.read")){
+            $page_data = $this->page_data(['errors' =>  []]);
+
+            if ($this->request->isAJAX()) {
+                return view("errors/html/error_403", $page_data);
+            }
+
+            return view('index', compact('page_data'));
+        }
 
         $data = [];
         

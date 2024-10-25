@@ -99,4 +99,19 @@ class RoleLibrary implements \App\Interfaces\LibraryInterface {
     function viewEditExtraData(&$page_data) {
         // $page_data['feature_id'] = hash_id($feature_id,'encode');
     }
+
+    static function buildPermissions(): array{
+        // Add your logic to build permissions here
+        $featuresModel= new \App\Models\FeaturesModel();
+        $features = $featuresModel->findAll();
+        $permissions = [];
+        foreach($features as $feature){
+            $allowable_permission_labels = json_decode($feature['allowable_permission_labels']);
+            foreach($allowable_permission_labels as $permission_label){
+                $permissions[$feature['name'].'.'.$permission_label] = $feature['description'];
+            }
+        }
+        log_message('error', json_encode($permissions));
+        return $permissions;
+    }
 }
