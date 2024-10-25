@@ -18,7 +18,7 @@ class Home extends WebController
 
         $this->session = \Config\Services::session();
     }
-    public function index()
+    public function index($id = null)
     {
         if (auth()->loggedIn()) {
             $user = auth()->user();
