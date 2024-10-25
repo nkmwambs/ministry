@@ -22,7 +22,7 @@ foreach ($features as $featureObj) {
     $group = plural($feature);
     $routes->group($group, function ($routes) use ($ucfirst, $group) {
             $routes->get('/', "$ucfirst::index");
-            $routes->get('(:segment)', "$ucfirst::index/$1");
+            $routes->get('list/(:segment)', "$ucfirst::index/$1");
             $routes->get('add', "$ucfirst::add");
             $routes->get('view/(:segment)', "$ucfirst::view/$1");
             $routes->get('view/(:segment)/(:segment)', "$ucfirst::view/$1");

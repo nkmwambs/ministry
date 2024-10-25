@@ -1,14 +1,5 @@
-<?php 
-// echo $parent_id;
-?>
 
-  <div class="row">
-    <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('entities','add', '<?=$parent_id;?>')">
-              <?= lang('entity.add_entity'); ?>
-        </div>
-    </div>
-  </div>
+<?=button_row($feature, $parent_id)?>
 
   <div class = 'row list-alert-container hidden'>
     <div class = 'col-xs-12 info'>

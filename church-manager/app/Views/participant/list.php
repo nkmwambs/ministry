@@ -1,10 +1,4 @@
-<div class="row">
-    <div class="col-xs-12 btn-container">
-        <div class='btn btn-success' onclick="showAjaxModal('participants','add', '<?= $parent_id; ?>')"> <!-- The $id is event id and not denomination id -->
-            <?= lang('event.event_register_member'); ?>
-        </div>
-    </div>
-</div>
+<?=button_row($feature, $parent_id)?>
 
 <div class='row list-alert-container hidden'>
     <div class='col-xs-12 info'>

@@ -15,6 +15,17 @@ class Entity extends WebController
     }
     public function index($hashed_id = ''): string
     {
+
+        if(!auth()->user()->canDo("$this->feature.read")){
+            $page_data = $this->page_data(['errors' =>  []]);
+
+            if ($this->request->isAJAX()) {
+                return view("errors/html/error_403", $page_data);
+            }
+
+            return view('index', compact('page_data'));
+        }
+
         $entities = [];
         $hierarchy_id = hash_id($hashed_id,'decode');
 

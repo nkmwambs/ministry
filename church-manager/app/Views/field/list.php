@@ -1,14 +1,4 @@
-<?php
-// log_message('error', json_encode($result));
-?>
-
-<div class="row">
-    <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('fields','add','<?= plural($parent_id); ?>')">
-            <?= lang('field.add_customfield'); ?>
-        </div>
-    </div>
-</div>
+<?=button_row($feature, $parent_id)?>
 
 <div class = 'row list-alert-container hidden'>
     <div class = 'col-xs-12 info'>

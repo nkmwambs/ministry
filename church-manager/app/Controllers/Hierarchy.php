@@ -16,6 +16,16 @@ class Hierarchy extends WebController
     {
         // Parent Id the denomination primary key of hierarchies
 
+        if(!auth()->user()->canDo("$this->feature.read")){
+            $page_data = $this->page_data(['errors' =>  []]);
+
+            if ($this->request->isAJAX()) {
+                return view("errors/html/error_403", $page_data);
+            }
+
+            return view('index', compact('page_data'));
+        }
+        
         $hierarchies = [];
 
         if($parent_id > 0){

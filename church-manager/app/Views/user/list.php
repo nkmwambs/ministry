@@ -7,13 +7,7 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-xs-12 btn-container">
-      <div class='btn btn-primary' onclick="showAjaxModal('users','add', '<?= $id; ?>')">
-        <?= lang('user.add_user'); ?>
-      </div>
-    </div>
-  </div>
+  <?=button_row($feature, $id)?>
 
   <div class='row list-alert-container hidden'>
     <div class='col-xs-12 info'>

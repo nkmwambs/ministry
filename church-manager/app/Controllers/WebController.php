@@ -51,7 +51,11 @@ class WebController extends BaseController
                }
                
                $this->tableName = plural($this->feature);
+
+            //    log_message('error', json_encode($this->feature));
+
     }
+
 
     private function history_fields(){
         return [
@@ -102,8 +106,8 @@ class WebController extends BaseController
 
     public function index()
     {
-        
-        if(!auth()->user()->can("$this->feature.read")){
+
+        if($this->feature != "dashboard" && !auth()->user()->canDo("$this->feature.read")){
             $page_data = $this->page_data(['errors' =>  []]);
 
             if ($this->request->isAJAX()) {
@@ -112,6 +116,8 @@ class WebController extends BaseController
 
             return view('index', compact('page_data'));
         }
+
+        // log_message('error', json_encode(auth()->id()));
 
         $data = [];
         
@@ -188,14 +194,16 @@ class WebController extends BaseController
             $this->library->editExtraData($page_data);
         }
 
-        foreach ((object)$this->tableName as $table_name) {
+        // log_message('error', json_encode($this->tableName));
+
+        // foreach ((object)$this->tableName as $table_name) {
             $customFieldLibrary = new \App\Libraries\FieldLibrary();
-            $customFields = $customFieldLibrary->getCustomFieldsForTable($table_name);
-            $customValues = $customFieldLibrary->getCustomFieldValuesForRecord($numeric_id, $table_name);
+            $customFields = $customFieldLibrary->getCustomFieldsForTable($this->tableName);
+            $customValues = $customFieldLibrary->getCustomFieldValuesForRecord($numeric_id, $this->tableName);
             $page_data['customFields'] = $customFields;
             $page_data['customValues'] = $customValues;
             // log_message('error', json_encode($customValues));
-        }
+        // }
 
         return view("$this->feature/edit", $page_data);
     }
@@ -527,6 +535,5 @@ class WebController extends BaseController
             return $this->response->setJSON($response);
         }
     }
-
 
 }
