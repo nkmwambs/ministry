@@ -53,15 +53,15 @@ class Validation extends BaseConfig
                 'is_unique[users.username]',
             ],
         ],
-        'phone' => [
-            'label' => 'Mobile Number',
-            'rules' => [
-                'max_length[20]',
-                'min_length[10]',
-                'regex_match[/\A[0-9]+\z/]',
-                'is_unique[users.mobile_number]',
-            ],
-        ],
+        // 'phone' => [
+        //     'label' => 'Mobile Number',
+        //     'rules' => [
+        //         'max_length[20]',
+        //         'min_length[10]',
+        //         'regex_match[/\A[0-9]+\z/]',
+        //         'is_unique[users.mobile_number]',
+        //     ],
+        // ],
         'email' => [
             'label' => 'Auth.email',
             'rules' => [

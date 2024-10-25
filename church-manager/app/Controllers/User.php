@@ -218,7 +218,7 @@ class User extends WebController
     public function updatePrivateInfo()
     {
         $hashed_id = $this->request->getPost('id'); // hash_id($id, 'decode');
-        log_message('error', json_encode($hashed_id));
+        // log_message('error', json_encode($hashed_id));
 
         $validation = \Config\Services::validation();
         $validation->setRules([

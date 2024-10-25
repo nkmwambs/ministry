@@ -38,7 +38,7 @@ if(!function_exists('formatUserDataForExport')){
 
 if(!function_exists('button_row')){
     function button_row($feature, $parent_id = null){
-        log_message('error', json_encode($feature));
+        // log_message('error', json_encode($feature));
         if(auth()->user()->canDo("$feature.create")){
             return view("templates/button_row", compact('feature', 'parent_id'));
         }
