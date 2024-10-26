@@ -91,8 +91,12 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
         $library = new \App\Libraries\UserLibrary();
         $viewQueryFields = $library->setViewQueryFields();
 
+        array_push($viewQueryFields, 'auth_identities.secret as email');
+
         if (!empty($viewQueryFields)) {
-            return $this->select($library->setViewQueryFields())->where('id', $id)->first();
+            return $this
+            ->join("auth_identities","auth_identities.user_id=users.id")
+            ->select($library->setViewQueryFields())->where('id', $id)->first();
         } else {
             $this->where('id', $id)->first();
         }

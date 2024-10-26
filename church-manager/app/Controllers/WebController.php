@@ -68,7 +68,8 @@ class WebController extends BaseController
         ];
     }
 
-    final protected function page_data($data = [], $id = ''){
+    final protected function page_data(object|array $data = null, $id = ''){
+        $data = is_object($data) ? $data->toArray() : $data;
         $page_data['result'] = $data;
         $page_data['feature'] = $this->feature;
         $page_data['action'] = $this->action;

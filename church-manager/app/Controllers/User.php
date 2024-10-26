@@ -284,8 +284,8 @@ class User extends WebController
         // log_message('error', 'here');
         $numeric_id = hash_id($id, 'decode');
 
-        if (method_exists($this->model, 'getEditData')) {
-            $data = $this->model->getEditData($numeric_id);
+        if (method_exists($this->model, 'getViewData')) {
+            $data = $this->model->getViewData($numeric_id);
         } else {
             $data = $this->model->getOne($numeric_id);
         }
