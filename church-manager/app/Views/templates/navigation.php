@@ -30,7 +30,7 @@
 						$parentUri = array_key_exists('uri',$navigation_item) && $navigation_item['uri'] != "" ? $navigation_item['uri'] : '';
 				?>
 					<li class = "<?=$hasSub ? 'has-sub' : ''?>">
-						<a href="<?=site_url($navigation_name.'/'.$parentUri );?>">
+						<a href="<?=site_url($navigation_name.'/'.$parentUri.'/list' );?>">
 							<i class="<?=$navigation_item['iconClass']?>"></i>
 							<span class="title"><?=lang("system.$navigation_name");?></span>
 						</a>

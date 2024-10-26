@@ -56,7 +56,7 @@ class Denomination extends WebController
         return $this->response->setJSON($response);
     }
 
-    public function index()
+    public function index($id = null)
     {
 
         if(!auth()->user()->canDo("$this->feature.read")){
