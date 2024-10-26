@@ -24,8 +24,8 @@ class Home extends WebController
             $user = auth()->user();
             return $this->create_user_session($user->toArray());
         }
-
-        return redirect()->to(site_url('/'));
+        
+        return redirect()->to(site_url('dashboards/list'));
     }
 
     private function create_user_session($user) {

@@ -18,7 +18,7 @@ class Login extends WebController {
         $this->session = \Config\Services::session();
     }
 
-    // public function index() {
+    // public function index($id = null) {
     //     // return view('dashboards');
     //     redirect()->to(site_url('dashboards'));
     // }

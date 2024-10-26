@@ -117,7 +117,6 @@ class WebController extends BaseController
             return view('index', compact('page_data'));
         }
 
-        // log_message('error', json_encode(auth()->id()));
 
         $data = [];
         
