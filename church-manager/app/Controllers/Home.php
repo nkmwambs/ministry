@@ -25,7 +25,7 @@ class Home extends WebController
             return $this->create_user_session($user->toArray());
         }
         
-        return redirect()->to(site_url('dashboards/list'));
+        return redirect()->to(site_url('login'));
     }
 
     private function create_user_session($user) {
@@ -41,8 +41,8 @@ class Home extends WebController
         // Update log count
         $userModel = new \App\Models\UsersModel();
         $userModel->update($user['id'], (object)['access_count' => $user['access_count'] + 1]);
-
-        return redirect()->to(site_url('dashboards'));
+        
+        return redirect()->to(site_url('dashboards/list'));
     }
 
 }

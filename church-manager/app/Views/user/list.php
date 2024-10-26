@@ -61,7 +61,7 @@ $(document).ready(function (){
             { data: "last_name" },
             { data: "phone" },
             { data: "email"},
-            { data: "is_active"}
+            { data: "active"}
         ]
     });
 });

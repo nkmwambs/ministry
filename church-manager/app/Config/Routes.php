@@ -7,7 +7,6 @@ helper('inflector');
 // /**
 //  * @var RouteCollection $routes
 //  */
-$routes->get('/', '\CodeIgniter\Shield\Controllers\LoginController::loginView');
 
 
 // $routes->get('/logout', 'Login::logout');
@@ -103,6 +102,7 @@ $routes->group('ajax', static function($routes){
     $routes->get('(:segment)/(:segment)/(:any)','WebController::ajax/$1/$2/$3');
 });
 
-
+$routes->get('logout', 'Login::logout');
+$routes->get('login', '\CodeIgniter\Shield\Controllers\LoginController::loginView');
 $routes->get('home','Home::index');
 service('auth')->routes($routes);
