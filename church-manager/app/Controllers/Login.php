@@ -18,10 +18,10 @@ class Login extends WebController {
         $this->session = \Config\Services::session();
     }
 
-    // public function index($id = null) {
-    //     // return view('dashboards');
-    //     redirect()->to(site_url('dashboards'));
-    // }
+    public function index($id = null) {
+        // return view('dashboards');
+        redirect()->to(site_url('dashboards/list'));
+    }
 
     // public function userValidate(): ResponseInterface {
     //     $email = $this->request->getPost('email');
@@ -40,7 +40,7 @@ class Login extends WebController {
 
     public function logout() {
         $this->session->destroy();
-        return redirect()->to(site_url('login'));
+        return redirect()->to(site_url('/'));
         // auth()->logout();
     }
 }

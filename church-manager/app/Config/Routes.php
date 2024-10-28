@@ -103,6 +103,7 @@ $routes->group('ajax', static function($routes){
 });
 
 $routes->get('logout', 'Login::logout');
-$routes->get('login', '\CodeIgniter\Shield\Controllers\LoginController::loginView');
+$routes->get('/', '\CodeIgniter\Shield\Controllers\LoginController::loginView');
+// $routes->get('login', '\CodeIgniter\Shield\Controllers\LoginController::loginView');
 $routes->get('home','Home::index');
 service('auth')->routes($routes);
