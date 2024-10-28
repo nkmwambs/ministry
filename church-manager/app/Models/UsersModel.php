@@ -10,6 +10,9 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
 {
     
     protected $table            = 'users';
+
+    protected $returnType     = \App\Entities\User::class;
+
     // protected $primaryKey       = 'id';
     // protected $useAutoIncrement = true;
     // protected $returnType       = 'array';// \App\Entities\UserEntity::class;
