@@ -2,10 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class Entity extends BaseController
+class Entity extends WebController
 {
     protected $model = null;
 
@@ -16,6 +15,17 @@ class Entity extends BaseController
     }
     public function index($hashed_id = ''): string
     {
+
+        if(!auth()->user()->canDo("$this->feature.read")){
+            $page_data = $this->page_data(['errors' =>  []]);
+
+            if ($this->request->isAJAX()) {
+                return view("errors/html/error_403", $page_data);
+            }
+
+            return view('index', compact('page_data'));
+        }
+
         $entities = [];
         $hierarchy_id = hash_id($hashed_id,'decode');
 

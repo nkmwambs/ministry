@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Minister extends BaseController
+class Minister extends WebController
 {
     protected $model = null;
 

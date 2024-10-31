@@ -2,10 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class Permission extends BaseController
+class Permission extends WebController
 {
     protected $model = null;
 

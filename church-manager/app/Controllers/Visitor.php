@@ -2,12 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use \CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use \Psr\Log\LoggerInterface;
 
-class Visitor extends BaseController
+class Visitor extends WebController
 {
     protected $model = null;
     function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger){
@@ -18,6 +17,17 @@ class Visitor extends BaseController
     
     public function index($parent_id = 0): string
     {
+
+        if(!auth()->user()->canDo("$this->feature.read")){
+            $page_data = $this->page_data(['errors' =>  []]);
+
+            if ($this->request->isAJAX()) {
+                return view("errors/html/error_403", $page_data);
+            }
+
+            return view('index', compact('page_data'));
+        }
+        
         $visitors = [];
 
         if($parent_id > 0){

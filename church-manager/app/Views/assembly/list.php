@@ -1,5 +1,6 @@
 <?php 
 // log_message('error',json_encode($result));
+$parent_id = session()->get('user_denomination_id') ? hash_id(session()->get('user_denomination_id'), 'encode') : '';
 ?>
 
 <div class="row">
@@ -10,13 +11,7 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add', '<?=session()->get('user_denomination_id') ? hash_id(session()->get('user_denomination_id'), 'encode') : '';?>')">
-            <?= lang('assembly.add_assembly'); ?>
-        </div>
-    </div>
-</div>
+<?=button_row($feature, $parent_id)?>
 
 <div class = 'row list-alert-container hidden'>
     <div class = 'col-xs-12 info'>
@@ -62,10 +57,10 @@ $(document).ready(function (){
                     return '<span class="action-icons">' +
                         '<a href="<?= site_url("assemblies/view/") ?>' + row.hash_id + '"><i class="fa fa-search"></i></a>' +
                         '</span>' +
-                        '<span class="action-icons">' +
+                        '<?php if(auth()->user()->canDo($feature.'.update')){?><span class="action-icons">' +
                         '<i style="cursor:pointer" onclick="showAjaxModal(\'<?= plural($feature); ?>\', \'edit\', \'' + row.hash_id + '\')" class="fa fa-pencil"></i>' +
-                        '</span>' +
-                        '<span class="action-icons" onclick="deleteItem(\'<?= plural($feature); ?>\', \'delete\', \'' + row.hash_id + '\')" title="Delete ' + row.hash_id + ' assembly"><i class="fa fa-trash"></i></span>';
+                        '</span><?php }?>' +
+                        '<?php if(auth()->user()->canDo($feature.'.delete')){?><span class="action-icons" onclick="deleteItem(\'<?= plural($feature); ?>\', \'delete\', \'' + row.hash_id + '\')" title="Delete ' + row.hash_id + ' assembly"><i class="fa fa-trash"></i></span><?php } ?>';
                 }
             },
             { data: "name" },

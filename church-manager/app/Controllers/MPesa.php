@@ -2,10 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-
-class MPesa extends BaseController
+class MPesa extends WebController
 {
     private $client;
     private $base_url;

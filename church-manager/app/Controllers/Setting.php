@@ -2,12 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use \CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use \Psr\Log\LoggerInterface;
 
-class Setting extends BaseController
+class Setting extends WebController
 {
     protected $model = null;
 

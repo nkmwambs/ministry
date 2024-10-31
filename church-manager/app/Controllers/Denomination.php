@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Denomination extends BaseController
+class Denomination extends WebController
 {
     protected $model = null;
 
@@ -56,8 +56,19 @@ class Denomination extends BaseController
         return $this->response->setJSON($response);
     }
 
-    public function index()
+    public function index($id = null)
     {
+
+        if(!auth()->user()->canDo("$this->feature.read")){
+            $page_data = $this->page_data(['errors' =>  []]);
+
+            if ($this->request->isAJAX()) {
+                return view("errors/html/error_403", $page_data);
+            }
+
+            return view('index', compact('page_data'));
+        }
+
         $data = [];
 
         if(!session()->get('user_denomination_id')){

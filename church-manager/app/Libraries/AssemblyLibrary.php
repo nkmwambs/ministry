@@ -49,12 +49,19 @@ class AssemblyLibrary implements \App\Interfaces\LibraryInterface {
 
     public function editExtraData(&$page_data){
         $entities = [];
-
-        $denomination_id = $page_data['result']['denomination_id'];
         
         // Get lowest entities
         $entitiesModel = new \App\Models\EntitiesModel();
-        $entities = $entitiesModel->getLowestEntities($denomination_id);
+
+        $denomination_id = $entitiesModel->select('denominations.id')
+        ->join('hierarchies','hierarchies.id=entities.hierarchy_id')
+        ->join('denominations','denominations.id=hierarchies.denomination_id')
+        ->join('assemblies','assemblies.entity_id=entities.id')
+        ->find($page_data['result']['entity_id'])['id'];
+
+        $page_data['parent_id'] = $denomination_id;
+
+        $entities = $entitiesModel->getLowestEntities($page_data['parent_id']);
         $page_data['lowest_entities'] = $entities;
 
         // List of denominations

@@ -23,11 +23,14 @@
 			<ul id="main-menu" class="main-menu">
 				<?php 
 					foreach($navigation_items as $navigation_name => $navigation_item){
+						if($navigation_name != 'dashboards' && !auth()->user()->canDo(singular($navigation_name).".read")){
+							continue;
+						}
 						$hasSub = array_key_exists('children', $navigation_item);
 						$parentUri = array_key_exists('uri',$navigation_item) && $navigation_item['uri'] != "" ? $navigation_item['uri'] : '';
 				?>
 					<li class = "<?=$hasSub ? 'has-sub' : ''?>">
-						<a href="<?=site_url($navigation_name.'/'.$parentUri );?>">
+						<a href="<?=site_url($navigation_name.'/'.$parentUri.'/list' );?>">
 							<i class="<?=$navigation_item['iconClass']?>"></i>
 							<span class="title"><?=lang("system.$navigation_name");?></span>
 						</a>

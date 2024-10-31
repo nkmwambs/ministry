@@ -2,13 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use Psr\Log\LoggerInterface;
 use CodeIgniter\I18n\Time;
 
-class User extends BaseController
+class User extends WebController
 {
     protected $model = null;
     function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
@@ -29,15 +28,18 @@ class User extends BaseController
         $searchValue = $request->getPost('search')['value'];
 
         // Get the total number of records
-        $totalRecords = $this->model->countAll();
+        $totalRecords = $this->model
+        ->join('auth_identities','auth_identities.user_id=users.id')
+        ->where('auth_identities.type','email_password')
+        ->countAll();
 
         // Apply search filter if provided
         if (!empty($searchValue)) {
             $this->model->like('first_name', $searchValue)
                 ->orLike('last_name', $searchValue)
                 ->orLike('phone', $searchValue)
-                ->orLike('email', $searchValue)
-                ->orLike('is_active', $searchValue);
+                ->orLike('secret', $searchValue)
+                ->orLike('active', $searchValue);
         }
 
         // Get the filtered total
@@ -45,11 +47,16 @@ class User extends BaseController
 
         // Limit the results and fetch the data
         $this->model->limit($length, $start);
-        $data = $this->model->find();
+        $data = $this->model
+        ->select('users.id,users.first_name,users.last_name,users.phone,auth_identities.secret as email,users.active')
+        ->join('auth_identities','auth_identities.user_id=users.id')
+        ->where('auth_identities.type','email_password')
+        ->find();
 
         // Loop through the data to apply hash_id()
         foreach ($data as &$user) {
-            $user['hash_id'] = hash_id($user['id']);  // Add hashed ID to each record
+            $user->hash_id = hash_id($user->id);  // Add hashed ID to each record
+            // $user->active = $user->active == "1" ? 'Yes' : 'No';
         }
 
         // Prepare response data for DataTables
@@ -219,7 +226,7 @@ class User extends BaseController
     public function updatePrivateInfo()
     {
         $hashed_id = $this->request->getPost('id'); // hash_id($id, 'decode');
-        log_message('error', json_encode($hashed_id));
+        // log_message('error', json_encode($hashed_id));
 
         $validation = \Config\Services::validation();
         $validation->setRules([
@@ -277,8 +284,8 @@ class User extends BaseController
         // log_message('error', 'here');
         $numeric_id = hash_id($id, 'decode');
 
-        if (method_exists($this->model, 'getEditData')) {
-            $data = $this->model->getEditData($numeric_id);
+        if (method_exists($this->model, 'getViewData')) {
+            $data = $this->model->getViewData($numeric_id);
         } else {
             $data = $this->model->getOne($numeric_id);
         }

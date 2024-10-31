@@ -1,17 +1,7 @@
-  <?php 
-  
-  if(!$number_of_denomination_assemblies){
-  ?>
-  <div class="row">
-    <div class="col-xs-12 btn-container">
-      <div class='btn btn-primary' onclick="showAjaxModal('hierarchies','add', '<?=$parent_id;?>')">
-            <?= lang('hierarchy.add_hierarchy'); ?>
-      </div>
-    </div>
-  </div>
-<?php 
-  }
-?>
+  <?php if(!$number_of_denomination_assemblies){
+    echo button_row($feature, $parent_id);
+  } ?>
+
   <div class = 'row list-alert-container hidden'>
     <div class = 'col-xs-12 info'>
 

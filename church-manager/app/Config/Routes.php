@@ -4,12 +4,13 @@ use CodeIgniter\Router\RouteCollection;
 
 helper('inflector');
 
-/**
- * @var RouteCollection $routes
- */
-$routes->get('/', 'Login::index');
-$routes->get('/logout', 'Login::logout');
-$routes->post('/validate', 'Login::userValidate');
+// /**
+//  * @var RouteCollection $routes
+//  */
+
+
+// $routes->get('/logout', 'Login::logout');
+// $routes->post('/validate', 'Login::userValidate');
 
 $featureModel = new \App\Models\FeaturesModel();
 $features = $featureModel->findAll();
@@ -19,8 +20,8 @@ foreach ($features as $featureObj) {
     $ucfirst = ucfirst($feature);
     $group = plural($feature);
     $routes->group($group, function ($routes) use ($ucfirst, $group) {
-            $routes->get('/', "$ucfirst::index");
-            $routes->get('(:segment)', "$ucfirst::index/$1");
+            $routes->get('list', "$ucfirst::index");
+            $routes->get('list/(:segment)', "$ucfirst::index/$1");
             $routes->get('add', "$ucfirst::add");
             $routes->get('view/(:segment)', "$ucfirst::view/$1");
             $routes->get('view/(:segment)/(:segment)', "$ucfirst::view/$1");
@@ -100,3 +101,9 @@ $routes->group('ajax', static function($routes){
     $routes->post('/','WebController::ajax');
     $routes->get('(:segment)/(:segment)/(:any)','WebController::ajax/$1/$2/$3');
 });
+                     
+$routes->get('logout', 'Login::logout');
+$routes->get('/', '\CodeIgniter\Shield\Controllers\LoginController::loginView');
+// $routes->get('login', '\CodeIgniter\Shield\Controllers\LoginController::loginView');
+$routes->get('home','Home::index');
+service('auth')->routes($routes);

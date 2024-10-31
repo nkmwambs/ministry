@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \CodeIgniter\HTTP\ResponseInterface;
 
-class Report extends BaseController
+class Report extends WebController
 {
     protected $model = null;
 
@@ -56,6 +56,8 @@ class Report extends BaseController
         foreach ($data as &$report) {
             $report['hash_id'] = hash_id($report['id']);  // Add hashed ID to each record
         }
+
+        // log_message('error', json_encode($numericReportTypeId));
 
         // Prepare response data for DataTables
         $response = [

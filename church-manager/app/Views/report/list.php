@@ -1,5 +1,5 @@
 <?php 
-// echo $parent_id;
+// echo json_encode($parent_id);
 ?>
 
 <div class="row">
@@ -9,14 +9,6 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="row">
-    <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('<?= plural($feature); ?>','add','<?=$parent_id;?>')">
-            <?= lang('report.add_report'); ?>
-        </div>
-    </div>
-</div> -->
 
 <div class = 'row list-alert-container hidden'>
     <div class = 'col-xs-12 info'>

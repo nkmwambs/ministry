@@ -2,10 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class Hierarchy extends BaseController
+class Hierarchy extends WebController
 {
     protected $model = null;
     function initController(\CodeIgniter\HTTP\RequestInterface $request, ResponseInterface $response, \Psr\Log\LoggerInterface $logger){
@@ -17,6 +16,16 @@ class Hierarchy extends BaseController
     {
         // Parent Id the denomination primary key of hierarchies
 
+        if(!auth()->user()->canDo("$this->feature.read")){
+            $page_data = $this->page_data(['errors' =>  []]);
+
+            if ($this->request->isAJAX()) {
+                return view("errors/html/error_403", $page_data);
+            }
+
+            return view('index', compact('page_data'));
+        }
+        
         $hierarchies = [];
 
         if($parent_id > 0){

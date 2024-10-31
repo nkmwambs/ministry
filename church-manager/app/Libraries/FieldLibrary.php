@@ -100,7 +100,9 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
     {
         $customFieldValues = $this->customValueModel
             ->where('record_id', $recordId)
-            ->where('table_name', $tableName)
+            ->where('features.name', singular($tableName))
+            ->join('customfields','customfields.id=customvalues.customfield_id')
+            ->join('features','features.id=customfields.feature_id')
             ->findAll();
 
         // Format the result into an associative array [field_id => field_value]

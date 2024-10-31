@@ -6,19 +6,7 @@
     </div>
 </div>
 
-<?php 
-if(!session()->get('user_denomination_id')){
-?>
-<div class="row">
-    <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('<?=plural($feature);?>','add')">   
-            <?= lang('denomination.add_denomination'); ?>
-        </div>
-    </div>
-</div>
-<?php 
-}
-?>
+<?=button_row($feature)?>
 
 <div class='row list-alert-container hidden'>
     <div class='col-xs-12 info'></div>
