@@ -19,29 +19,29 @@ class Tithe extends WebController
    
     public function index($parent_id = ''): string
     {
-        // if(!auth()->user()->canDo("$this->feature.read")){
-        //     $page_data = $this->page_data(['errors' =>  []]);
+        if(!auth()->user()->canDo("$this->feature.read")){
+            $page_data = $this->page_data(['errors' =>  []]);
 
-        //     if ($this->request->isAJAX()) {
-        //         return view("errors/html/error_403", $page_data);
-        //     }
+            if ($this->request->isAJAX()) {
+                return view("errors/html/error_403", $page_data);
+            }
 
-        //     return view('index', compact('page_data'));
-        // }
+            return view('index', compact('page_data'));
+        }
 
         $tithes = [];
 
         if($parent_id > 0){
-            $tithes = $this->model->select('tithes.*,members.first_name as member_first_name,members.last_name as member_last_name')
-            ->where('assembly_id',hash_id($parent_id,'decode') )
-            ->join('assemblies','assemblies.id=tithes.assembly_id','left')
-            ->join('members','members.id = tithes.member_id')
+            $tithes = $this->model->select('tithes.*,members.assembly_id,members.first_name as member_first_name,members.last_name as member_last_name')
+            ->join('assemblies','assemblies.id=members.assembly_id','left')
+            ->join('members','members.id = tithes.member_id','left')
+            ->where('assembly_id',hash_id($parent_id,'decode'))
             ->orderBy('tithes.created_at desc')
             ->findAll();
         }else{
-            $tithes = $this->model->select('tithes.*,members.first_name as member_first_name,members.last_name as member_last_name')
-            ->join('assemblies','assemblies.id=tithes.assembly_id','left')
-            ->join('members','members.id = tithes.member_id')
+            $tithes = $this->model->select('tithes.*,members.assembly_id,members.first_name as member_first_name,members.last_name as member_last_name')
+            ->join('assemblies','assemblies.id=members.assembly_id','left')
+            ->join('members','members.id = tithes.member_id','left')
             ->orderBy('tithes.created_at desc')
             ->findAll();
         }
@@ -124,9 +124,9 @@ class Tithe extends WebController
             $this->feature = 'tithe';
             $this->action = 'list';
             $records = $this->model
-            ->select('tithes.*,members.first_name as member_first_name,members.last_name as member_last_name')
-            ->join('members','members.id=tithes.member_id')
-            ->join('assemblies','assemblies.id=tithes.assembly_id')
+            ->select('tithes.id,tithes.member_id,tithes.assembly_id as my_assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
+            ->join('assemblies','assemblies.id=tithes.my_assembly_id')
+            ->join('members','members.id = tithes.member_id')
             ->orderBy("tithes.created_at desc")->where('assembly_id', $assembly_id)->findAll();
 
             $page_data = parent::page_data($records, $hashed_assembly_id);
@@ -194,10 +194,10 @@ class Tithe extends WebController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('tithes.*,members.first_name as member_first_name,members.last_name as member_last_name')
-            ->join('members','members.id=tithes.member_id')
-            ->join('assemblies','assemblies.id=tithes.assembly_id')
-            ->orderBy("tithes.created_at desc")
+            ->select('tithes.id,tithes.member_id,tithes.assembly_id as my_assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
+            ->join('assemblies','assemblies.id=tithes.my_assembly_id')
+            ->join('members','members.id = tithes.member_id')
+            ->orderBy('tithes.created_at desc')
             ->where('assembly_id', hash_id($hashed_assembly_id,'decode'))
             ->findAll();
             return view("tithe/list", parent::page_data($records));

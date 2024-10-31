@@ -35,6 +35,7 @@ $member_sections = array_pop($result);
                             <li class="active"><a href="#view_assembly" id="view_assembly_tab" data-toggle="tab"><?= lang('assembly.view_assembly'); ?></a></li>
                             <li><a href="#list_members" data-item_id="<?= $id; ?>" data-link_id="list_members" data-feature_plural="members" onclick="childrenAjaxLists(this)" id="list_members_tab" data-toggle="tab"><?= lang('member.list_members'); ?></a></li>
                             <li><a href="#list_collections" data-item_id="<?= $id; ?>" data-link_id="list_collections" data-feature_plural="collections" onclick="childrenAjaxLists(this)" id="list_collections_tab" data-toggle="tab"><?= lang('collection.list_collections'); ?></a></li>
+                            <li><a href="#list_tithes" data-item_id="<?= $id; ?>" data-link_id="list_tithes" data-feature_plural="tithes" onclick="childrenAjaxLists(this)" id="list_tithes_tab" data-toggle="tab"><?= lang('tithe.list_tithes'); ?></a></li>
                         </ul>
                     </div>
                 </div>
@@ -66,7 +67,11 @@ $member_sections = array_pop($result);
                     </div>
 
                     <div class="tab-pane" id="list_collections">
-                        <div class='info'><?= lang('assembly.no_assemblies_message') ?></div>
+                        <div class='info'><?= lang('assembly.no_collections_message') ?></div>
+                    </div>
+
+                    <div class="tab-pane" id="list_tithes">
+                        <div class='info'><?= lang('assembly.no_tithes_message') ?></div>
                     </div>
                 </div>
             </div>

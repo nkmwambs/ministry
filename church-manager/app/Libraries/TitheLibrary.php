@@ -15,14 +15,14 @@ class TitheLibrary implements \App\Interfaces\LibraryInterface {
 
     function setListQueryFields(){
         $fields = [
-            'tithes.id','member_id','assembly_id','members.first_name as member_first_name','members.last_name as member_last_name'
+            'tithes.id','member_id','amount','members.assembly_id','members.first_name as member_first_name','members.last_name as member_last_name'
         ];
         return $fields;
     }
 
     function setViewQueryFields(){
         $fields = [
-            'tithes.id','member_id','assembly_id','members.first_name as member_first_name','members.last_name as member_last_name'
+            'tithes.id','member_id','amount','members.assembly_id','members.first_name as member_first_name','members.last_name as member_last_name'
         ];
         return $fields;
     }

@@ -61,7 +61,7 @@ $numeric_member_id = hash_id($member_id, 'decode');
                         <div class="col-xs-6">
                             <!-- onkeydown="return false;" -->
                             <input type="text" class="form-control datepicker" name="amount" id="amount"
-                                placeholder="<?= lang('tithe.enter_amount') ?>">
+                                placeholder="enter_tithe_amount">
                         </div>
                     </div>
 

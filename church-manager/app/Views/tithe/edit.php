@@ -50,7 +50,7 @@
                             <?= lang('tithe.tithe_amount') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="amount" id="amount" value="<?= $result['amount']; ?>" placeholder="Enter Amount">
+                            <input type="text" class="form-control" name="amount" id="amount" value="<?= $result['amount']; ?>" placeholder="<?= lang('tithe.edit_tithe_amount') ?>">
                         </div>
                     </div>
 

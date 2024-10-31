@@ -12,7 +12,7 @@ class TithesModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','member_id','assembly_id','amount'];
+    protected $allowedFields    = ['id','member_id','amount'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -50,11 +50,11 @@ class TithesModel extends Model
 
         if(!empty($listQueryFields)){
             return $this->select($library->setListQueryFields())
-            ->join('assemblies', 'assemblies.id = tithes.assembly_id')
-            ->join('members','members.id = tithes.member_id')
+            ->join('assemblies', 'assemblies.id = members.assembly_id', 'left')
+            ->join('members','members.id = tithes.member_id','left')
             ->orderBy('tithes.created_at desc')->findAll();
         }else{
-            return $this->orderBy('created_at desc')->findAll();
+            return $this->orderBy('tithes.created_at desc')->findAll();
         }
     }
 
@@ -64,8 +64,8 @@ class TithesModel extends Model
 
         if(!empty($viewQueryFields)){
             return $this->select($library->setViewQueryFields())
-            ->join('assemblies', 'assemblies.id = tithes.assembly_id')
-            ->join('members','members.id = tithes.member_id')
+            ->join('assemblies', 'assemblies.id = tithes.assembly_id','left')
+            ->join('members','members.id = tithes.member_id','left')
             ->where('tithes.id', $id)->first();
         }else{
             return $this->where('id', $id)->first();
@@ -78,8 +78,8 @@ class TithesModel extends Model
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
-                ->join('assemblies', 'assemblies.id = tithes.assembly_id')
-                ->join('members','members.id = tithes.member_id')
+                ->join('assemblies', 'assemblies.id = tithes.assembly_id','left')
+                ->join('members','members.id = tithes.member_id','left')
                 ->where('tithes.id', $tithe_id)
                 ->first();
         } else {
@@ -94,8 +94,8 @@ class TithesModel extends Model
 
         if (!empty($viewQueryFields)) {
             $result = $this->select($library->setViewQueryFields()) 
-                ->join('assemblies', 'assemblies.id = tithes.assembly_id')
-                ->join('members','members.id = tithes.member_id')
+                ->join('assemblies', 'assemblies.id = tithes.assembly_id','left')
+                ->join('members','members.id = tithes.member_id','left')
                 ->where('tithes.id', $tithe_id)
                 ->first();
                 
