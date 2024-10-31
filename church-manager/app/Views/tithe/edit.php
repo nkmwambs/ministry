@@ -29,7 +29,7 @@
 
 
                     <div class='form-group'>
-                        <label for="member_id" class="control-label col-xs-4"><?= lang('tithe.member_name') ?></label>
+                        <label for="member_id" class="control-label col-xs-4"><?= lang('tithe.tithe_member_name') ?></label>
                         <div class="col-xs-6">
                             <select class="form-control" name="member_id" id="member_id">
 

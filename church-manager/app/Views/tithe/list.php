@@ -37,9 +37,9 @@
 
                         </td>
 
-                        <td><?= $member['member_first_name']; ?></td>
-                        <td><?= $member['member_last_name']; ?></td>
-                        <td><?= $member['amount']; ?></td>
+                        <td><?= $tithe['member_first_name']; ?></td>
+                        <td><?= $tithe['member_last_name']; ?></td>
+                        <td><?= $tithe['amount']; ?></td>
 
                     <?php } ?>
             </tbody>

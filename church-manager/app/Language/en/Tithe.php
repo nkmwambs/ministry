@@ -10,6 +10,9 @@ return [
     'tithe_action' => 'Actions',
     'tithe_member_id' => 'Member Name',
     'tithe_amount' => 'Amount',
+    'tithe_member_first_name' => 'Member First Name',
+    'tithe_member_last_name' => 'Member Last Name',
+    'tithe_member_name' => 'Member Name',
     // 'tithe_default' => 'Default Role',
     // 'tithe_denomination_name' => 'Denomination Name',
 

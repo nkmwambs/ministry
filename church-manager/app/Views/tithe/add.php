@@ -38,14 +38,34 @@ $numeric_member_id = hash_id($member_id, 'decode');
                         </div>
                     <?php endif ?>
 
+                    <?php
+                    if (isset($parent_id)) {
+                    ?>
+                        <input type="hidden" name="assembly_id" value="<?= $parent_id; ?>" />
+                    <?php
+                    } else {
+                    ?>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4" for="assembly_id"><?= lang('member.member_assembly_id') ?></label>
+                            <div class="col-xs-6">
+                                <select class="form-control" name="assembly_id" id="assembly_id">
+                                    <option value=""><?= lang('assembly.select_assembly') ?></option>
+
+                                </select>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
                     <?php if (!$numeric_member_id) { ?>
                         <div class='form-group'>
                             <label for="member_id" class="control-label col-xs-4"><?= lang('tithe.tithe_member_id') ?></label>
                             <div class="col-xs-6">
                                 <select class="form-control" name="member_id" id="member_id">
-                                    <option value=""><?= lang('member.select_member') ?></option>
-                                    <?php foreach ($tithes as $tithe) : ?>
-                                        <option value="<?php echo $tithe['id']; ?>"><?php echo $tithe['first_name'].' '.$tithe['last_name']; ?></option>
+                                    <option value=""><?= lang('tithe.select_member') ?></option>
+                                    <?php foreach ($members as $member) : ?>
+                                        <option value="<?php echo $member['id']; ?>"><?php echo $member['first_name'] . ' ' . $member['last_name']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -60,8 +80,8 @@ $numeric_member_id = hash_id($member_id, 'decode');
                         </label>
                         <div class="col-xs-6">
                             <!-- onkeydown="return false;" -->
-                            <input type="text" class="form-control datepicker" name="amount" id="amount"
-                                placeholder="enter_tithe_amount">
+                            <input type="text" class="form-control" name="amount" id="amount"
+                                placeholder="<?= lang('tithe.enter_tithe_amount') ?>">
                         </div>
                     </div>
 

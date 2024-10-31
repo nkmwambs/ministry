@@ -32,14 +32,14 @@ class Tithe extends WebController
         $tithes = [];
 
         if($parent_id > 0){
-            $tithes = $this->model->select('tithes.*,members.assembly_id,members.first_name as member_first_name,members.last_name as member_last_name')
-            ->join('assemblies','assemblies.id=members.assembly_id','left')
+            $tithes = $this->model->select('tithes.*,members.assembly_id as assembly_id,members.first_name as member_first_name,members.last_name as member_last_name')
             ->join('members','members.id = tithes.member_id','left')
+            ->join('assemblies','assemblies.id=members.assembly_id','left')
             ->where('assembly_id',hash_id($parent_id,'decode'))
             ->orderBy('tithes.created_at desc')
             ->findAll();
         }else{
-            $tithes = $this->model->select('tithes.*,members.assembly_id,members.first_name as member_first_name,members.last_name as member_last_name')
+            $tithes = $this->model->select('tithes.*,members.assembly_id as assembly_id,members.first_name as member_first_name,members.last_name as member_last_name')
             ->join('assemblies','assemblies.id=members.assembly_id','left')
             ->join('members','members.id = tithes.member_id','left')
             ->orderBy('tithes.created_at desc')
@@ -124,9 +124,9 @@ class Tithe extends WebController
             $this->feature = 'tithe';
             $this->action = 'list';
             $records = $this->model
-            ->select('tithes.id,tithes.member_id,tithes.assembly_id as my_assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
-            ->join('assemblies','assemblies.id=tithes.my_assembly_id')
+            ->select('tithes.id,tithes.member_id,members.assembly_id as assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
             ->join('members','members.id = tithes.member_id')
+            ->join('assemblies','assemblies.id=members.assembly_id')
             ->orderBy("tithes.created_at desc")->where('assembly_id', $assembly_id)->findAll();
 
             $page_data = parent::page_data($records, $hashed_assembly_id);
@@ -194,10 +194,10 @@ class Tithe extends WebController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('tithes.id,tithes.member_id,tithes.assembly_id as my_assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
-            ->join('assemblies','assemblies.id=tithes.my_assembly_id')
+            ->select('tithes.id,tithes.member_id,members.assembly_id as assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
             ->join('members','members.id = tithes.member_id')
-            ->orderBy('tithes.created_at desc')
+            ->join('assemblies','assemblies.id=members.assembly_id')
+            ->orderBy("tithes.created_at desc")
             ->where('assembly_id', hash_id($hashed_assembly_id,'decode'))
             ->findAll();
             return view("tithe/list", parent::page_data($records));
