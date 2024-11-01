@@ -38,9 +38,9 @@ class FeatureLibrary implements \App\Interfaces\LibraryInterface {
                 'settings' => ['label' => 'settings', 'iconClass' => 'entypo-cog', 'uri' => ''],
             ],
             "church" => [
-                'dashboards' => ['label' => 'my_dashboard', 'iconClass' => 'entypo-gauge', 'uri' => ''],
-                'assemblies' => ['label' => 'my_assembly', 'iconClass' => 'entypo-home', 'uri' => ''],
-                'users' => ['label' => 'my_profile', 'iconClass' => 'entypo-users', 'uri' => ''],
+                'dashboards' => ['label' => 'my_dashboard', 'iconClass' => 'entypo-gauge', 'uri' => 'church/dashboards/list'],
+                'assemblies' => ['label' => 'my_assembly', 'iconClass' => 'entypo-home', 'uri' => 'church/assemblies/list'],
+                'users' => ['label' => 'my_profile', 'iconClass' => 'entypo-users', 'uri' => 'church/users/list'],
             ]
 
         ];

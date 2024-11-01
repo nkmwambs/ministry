@@ -97,6 +97,34 @@ $routes->group('ajax', static function($routes){
     $routes->post('/','WebController::ajax');
     $routes->get('(:segment)/(:segment)/(:any)','WebController::ajax/$1/$2/$3');
 });
+
+
+$routes->group("church", ['namespace' => 'App\Controllers\Church'],function($routes){
+    $featureModel = new \App\Models\FeaturesModel();
+    $features = $featureModel->findAll();
+    
+    foreach ($features as $featureObj) {
+        $feature = $featureObj['name'];
+        $ucfirst = ucfirst($feature);
+        $group = plural($feature);
+        $routes->group($group, function ($routes) use ($ucfirst, $group) {
+                $routes->get('list', "$ucfirst::index");
+                $routes->get('list/(:segment)', "$ucfirst::index/$1");
+                $routes->get('add', "$ucfirst::add");
+                $routes->get('view/(:segment)', "$ucfirst::view/$1");
+                $routes->get('view/(:segment)/(:segment)', "$ucfirst::view/$1");
+                $routes->get('edit/(:segment)', "$ucfirst::edit/$1");
+                $routes->get('delete/(:segment)', "$ucfirst::delete/$1");
+                $routes->post('update', "$ucfirst::update");
+                $routes->post('save', "$ucfirst::post");
+                $routes->get('modal/(:segment)/(:segment)', "$ucfirst::modal/$1/$2");
+                $routes->get('modal/(:segment)/(:segment)/(:segment)', "$ucfirst::modal/$1/$2/$3");
+                $routes->post('getFields/(:segment)/(:segment)', "$ucfirst::getBulkActionFields/$1/$2");
+                $routes->post('bulk_edit', "$ucfirst::bulkEdit");
+        });
+    }
+});
+
                      
 $routes->get('logout', 'Login::logout');
 $routes->get('/', '\CodeIgniter\Shield\Controllers\LoginController::loginView');
