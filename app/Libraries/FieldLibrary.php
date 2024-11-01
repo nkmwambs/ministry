@@ -213,7 +213,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "saved_date", "operator": "in_month"}]}]
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}, {"key": "c__sanctified_date", "operator": "in_month"}]}]
         // [{"table": "members","join": [{"table": "designations","relation_id": "id","relation_order": 1,"relation_table":{"table": "members","relation_id": "designation_id"}},{"table": "departments","relation_id": "id","relation_order": 2,"relation_table": {"table": "designations","relation_id": "department_id"}}],"select": "count","conditions": [{"key": "assembly_id","operator": "equals"},{"key": "department_code","value": "youth_ministry","operator": "equals"}]}]
-
+        
         $query_obj = json_decode($query_builder);
 
         $value = '';
@@ -295,6 +295,20 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                             ->where("$condition->key <=", date('Y-m-t',strtotime($report_period)));
                         }
                         
+                    }
+
+                    if($condition->operator == 'IS NULL' || $condition->operator == 'IS NOT NULL'){
+                        if(strpos($condition->key, 'c__') !== false){
+                            $queryResult->join('customvalues', 'customvalues.record_id = members.id', 'left');
+                            $queryResult->join('customfields','customfields.id=customvalues.customfield_id');
+                            $queryResult->where('customvalues.feature_id', $feature_id); 
+                            
+                            $field_key = substr($condition->key, 3);
+                            $queryResult->where('field_code', $field_key);
+                            $queryResult->where("value $condition->operator", NULL);
+                        }else{
+                            $queryResult->where("$condition->key $condition->operator", NULL);
+                        }
                     }
                 }
             }
