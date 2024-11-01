@@ -78,8 +78,17 @@ class WebController extends BaseController
         $page_data['tableName'] = $this->tableName;
         
 
-        $view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature.DIRECTORY_SEPARATOR.$this->action.'.php';
-        $view = file_exists($view_path) ?  "$this->feature/$this->action" : "templates/$this->action";
+        $type_view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature.DIRECTORY_SEPARATOR. $this->session->user_type .DIRECTORY_SEPARATOR.$this->action.'.php';
+        $view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature .DIRECTORY_SEPARATOR.$this->action.'.php';
+        $view = ""; 
+
+        if(file_exists($type_view_path)){
+            $view = $this->session->user_type."/$this->feature/$this->action";
+        }elseif(file_exists($view_path)){
+            $view = "$this->feature/$this->action";
+        }else{
+            $view =  "templates/$this->action";
+        }
 
         if($data && array_key_exists('errors',$data)){
             $view = 'errors'.DIRECTORY_SEPARATOR.'html'.DIRECTORY_SEPARATOR.'error_403';
