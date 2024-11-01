@@ -78,7 +78,7 @@ class WebController extends BaseController
         $page_data['tableName'] = $this->tableName;
         
 
-        $type_view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature.DIRECTORY_SEPARATOR. $this->session->user_type .DIRECTORY_SEPARATOR.$this->action.'.php';
+        $type_view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR. $this->session->user_type . DIRECTORY_SEPARATOR. $this->feature .DIRECTORY_SEPARATOR.$this->action.'.php';
         $view_path = APPPATH.'Views'.DIRECTORY_SEPARATOR.$this->feature .DIRECTORY_SEPARATOR.$this->action.'.php';
         $view = ""; 
 
