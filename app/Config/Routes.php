@@ -75,9 +75,6 @@ $routes->post('users/update/private/', 'User::updatePrivateInfo');
 
 $routes->post('/tasks/updateStatus', 'Task::updateStatus');
 
-// $routes->get('users/downloadUserData/(:segment)', 'User::downloadUserData/$1');
-// $routes->get('users/deleteAccount/(:segment)', 'User::deleteAccount/$1');
-
 $routes->post('denominations/fetchDenominations', 'Denomination::fetchDenominations');
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
 $routes->post('ministers/fetchMinisters', 'Minister::fetchMinisters');
@@ -85,7 +82,6 @@ $routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
 $routes->post('events/fetchEvents', 'Event::fetchEvents');
 $routes->post('users/fetchUsers', 'User::fetchUsers');
 $routes->post('departments/fetchDepartments', 'Department::fetchDepartments');
-// $routes->post('designations/fetchDesignations', 'Designation::fetchDesignations');
 $routes->post('reports/fetchReports', 'Report::fetchReports');
 $routes->post('assemblies/fetchAssemblies', 'Assembly::fetchAssemblies');
 $routes->post('members/fetchMembers/(:num)','Member::fetchMembers/$1');

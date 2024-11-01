@@ -32,6 +32,7 @@ class Home extends WebController
         
         $this->session->set('logged_in', true);
         $this->session->set('user_id', $user['id']);
+        $this->session->set('user_type', $user['user_type']);
         $this->session->set('user_fullname', $user['first_name']." ". $user['last_name']);
         $this->session->set('user_roles', explode(',',$user['roles']));
         $this->session->set('user_denomination_id', $user['denomination_id']);

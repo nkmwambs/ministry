@@ -23,23 +23,26 @@ class FeatureLibrary implements \App\Interfaces\LibraryInterface {
 
     function navigationItems(){
 
-        // [
-        //     'monthly_report' => ['label' => 'Monthly Reports', 'iconClass' => ''],
-        //     'quarterly_report' => ['label' => 'Quarterly Reports', 'iconClass' => '']
-        // ]
-
         $items = [
-            'dashboards' => ['label' => 'Dashboard', 'iconClass' => 'entypo-gauge', 'uri' => ''],
-            'denominations' => ['label' => 'Denominations', 'iconClass' => 'entypo-trophy', 'uri' => ''],
-            'ministers' => ['label' => 'Ministers', 'iconClass' => 'entypo-book', 'uri' => ''],
-            'assemblies' => ['label' => 'Assemblies', 'iconClass' => 'entypo-home', 'uri' => ''],
-            'events' => ['label' => 'Events', 'iconClass' => 'entypo-layout', 'uri' => ''],
-            'reports' => [
-                            'label' => 'Reports', 'iconClass' => 'entypo-newspaper', 'uri' => '',
-                            'children' => $this->getReportTypeMenus()
-                        ],
-            'users' => ['label' => 'Users', 'iconClass' => 'entypo-users', 'uri' => ''],
-            'settings' => ['label' => 'Settings', 'iconClass' => 'entypo-cog', 'uri' => ''],
+            "admin" => [
+                'dashboards' => ['label' => 'dashboards', 'iconClass' => 'entypo-gauge', 'uri' => ''],
+                'denominations' => ['label' => 'denominations', 'iconClass' => 'entypo-trophy', 'uri' => ''],
+                'ministers' => ['label' => 'ministers', 'iconClass' => 'entypo-book', 'uri' => ''],
+                'assemblies' => ['label' => 'assemblies', 'iconClass' => 'entypo-home', 'uri' => ''],
+                'events' => ['label' => 'events', 'iconClass' => 'entypo-layout', 'uri' => ''],
+                'reports' => [
+                                'label' => 'reports', 'iconClass' => 'entypo-newspaper', 'uri' => '',
+                                'children' => $this->getReportTypeMenus()
+                            ],
+                'users' => ['label' => 'users', 'iconClass' => 'entypo-users', 'uri' => ''],
+                'settings' => ['label' => 'settings', 'iconClass' => 'entypo-cog', 'uri' => ''],
+            ],
+            "church" => [
+                'dashboards' => ['label' => 'my_dashboard', 'iconClass' => 'entypo-gauge', 'uri' => ''],
+                'assemblies' => ['label' => 'my_assembly', 'iconClass' => 'entypo-home', 'uri' => ''],
+                'users' => ['label' => 'my_profile', 'iconClass' => 'entypo-users', 'uri' => ''],
+            ]
+
         ];
 
         return $items;

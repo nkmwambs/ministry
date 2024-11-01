@@ -22,7 +22,7 @@
 									
 			<ul id="main-menu" class="main-menu">
 				<?php 
-					foreach($navigation_items as $navigation_name => $navigation_item){
+					foreach($navigation_items[service('session')->user_type] as $navigation_name => $navigation_item){
 						if($navigation_name != 'dashboards' && !auth()->user()->canDo(singular($navigation_name).".read")){
 							continue;
 						}
@@ -30,9 +30,12 @@
 						$parentUri = array_key_exists('uri',$navigation_item) && $navigation_item['uri'] != "" ? $navigation_item['uri'] : '';
 				?>
 					<li class = "<?=$hasSub ? 'has-sub' : ''?>">
-						<a href="<?=site_url($navigation_name.'/'.$parentUri.'/list' );?>">
+						<a href="<?=site_url($navigation_item['uri'] != "" ? $navigation_item['uri'] : $navigation_name.'/'.$parentUri.'/list' );?>">
 							<i class="<?=$navigation_item['iconClass']?>"></i>
-							<span class="title"><?=lang("system.$navigation_name");?></span>
+							<?php 
+								$label = $navigation_item['label'];
+							?>
+							<span class="title"><?=lang("system.$label");?></span>
 						</a>
 						<?php if($hasSub){?>
 							<ul>
