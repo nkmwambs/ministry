@@ -55,6 +55,10 @@
 </head>
 <body class="page-body  page-fade" data-url="http://neon.dev">
 
+<script>
+	const base_url = "<?=site_url(service('session')->has('user_type') ? service('session')->user_type : "church" );?>/"
+</script>
+
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 	
 	<div class="sidebar-menu">

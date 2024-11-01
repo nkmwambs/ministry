@@ -1,5 +1,5 @@
 <script>
-    const base_url = '<?= site_url(service('session')->user_type); ?>/'
+    // const base_url = '<?= site_url(service('session')->user_type); ?>/' Already defined in the index.php file
 
     // Drag the modals
     $(".modal").draggable({

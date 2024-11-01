@@ -54,7 +54,7 @@ $(document).ready(function (){
                 data: null,
                 render: function(data, type, row) {
                     return '<span class="action-icons">' +
-                        '<a href="<?= site_url("assemblies/view/") ?>' + row.hash_id + '"><i class="fa fa-search"></i></a>' +
+                        '<a href="' + base_url + 'assemblies/view/' + row.hash_id + '"><i class="fa fa-search"></i></a>' +
                         '</span>' +
                         '<?php if(auth()->user()->canDo($feature.'.update')){?><span class="action-icons">' +
                         '<i style="cursor:pointer" onclick="showAjaxModal(\'<?= plural($feature); ?>\', \'edit\', \'' + row.hash_id + '\')" class="fa fa-pencil"></i>' +
