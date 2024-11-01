@@ -1,5 +1,5 @@
 <script>
-    const base_url = '<?= site_url(); ?>'
+    const base_url = '<?= site_url(service('session')->user_type); ?>/'
 
     // Drag the modals
     $(".modal").draggable({
@@ -47,7 +47,7 @@
     function childrenAjaxLists($this) {
         const id = $($this).data('item_id');
         const plural_feature = $($this).data('feature_plural');
-        const url = "<?= site_url(); ?>" + plural_feature + "/list/" + id;
+        const url = `${base_url}${plural_feature}/list/${id}`
         const link_id = $($this).data('link_id');
 
         // alert(url)
@@ -111,7 +111,7 @@
 
     function showAjaxListModal(plural_feature, action, id = '') {
 
-        const url = `<?= site_url() ?>${plural_feature}/modal/${plural_feature}/${action}/${id}`
+        const url = `${base_url}${plural_feature}/modal/${plural_feature}/${action}/${id}`
 
         $('#modal_list_ajax').on('shown.bs.modal', function() {
             $('.datepicker').css('z-index', '10200');
@@ -140,7 +140,7 @@
 
     function showAjaxBulkAction(plural_feature, actionOnItem, selectedItems) {
 
-        const url = `<?= site_url() ?>${plural_feature}/getFields/${plural_feature}/${actionOnItem}`
+        const url = `${base_url}${plural_feature}/getFields/${plural_feature}/${actionOnItem}`
 
         $('#modal_ajax').on('shown.bs.modal', function() {
             $('.datepicker').css('z-index', '10200');
@@ -296,7 +296,7 @@
 
     function deleteItem(plural_feature, action, item_id) {
 
-        const url = `<?= site_url() ?>${plural_feature}/${action}/${item_id}`
+        const url = `${base_url}${plural_feature}/${action}/${item_id}`
 
         $("#delete_confirmation").modal("show");
 

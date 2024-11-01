@@ -8,6 +8,7 @@ helper('inflector');
 //  * @var RouteCollection $routes
 //  */
 
+
 $routes->group("admin", ['namespace' => 'App\Controllers\Admin'],function($routes){
     $featureModel = new \App\Models\FeaturesModel();
     $features = $featureModel->findAll();
