@@ -61,9 +61,9 @@ class Collection extends WebController
         
         if ($this->request->isAJAX()) {
             $page_data['parent_id'] = $parent_id;
-            return view('collection/list', $page_data);
+            return view($this->session->user_type.'/collection/list', $page_data);
         }else{
-            $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
+            $page_data['content'] = view($this->session->user_type.'/'.$this->feature.DS.$this->action, $page_data);
         }
 
         return view('index', $page_data);
@@ -113,10 +113,10 @@ class Collection extends WebController
             
             $page_data = parent::page_data($records, $hashed_assembly_id);
 
-            return view("collection/list", $page_data);
+            return view($this->session->user_type."/collection/list", $page_data);
         }
 
-        return redirect()->to(site_url("collections/view/".hash_id($insertId)));
+        return redirect()->to(site_url($this->session->user_type."/collections/view/".hash_id($insertId)));
     }
 
     public function update(){
@@ -156,10 +156,10 @@ class Collection extends WebController
             ->where('assembly_id', hash_id($hashed_assembly_id, 'decode'))
             ->findAll();
 
-            return view("collection/list", parent::page_data($records));
+            return view($this->session->user_type."/collection/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url("collection/view/".$hashed_id))->with('message', 'Collection updated successfully!');
+        return redirect()->to(site_url($this->session->user_type."/collection/view/".$hashed_id))->with('message', 'Collection updated successfully!');
     }
 
     // private function computeNextHierarchicalLevel($denomination_id){

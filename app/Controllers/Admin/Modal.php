@@ -18,6 +18,6 @@ class Modal extends WebController
             'content' => view('modals')
         ];
 
-        return view('layouts/main', $viewData);
+        return view($this->session->user_type.'/layouts/main', $viewData);
     }
 }

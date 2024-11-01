@@ -113,10 +113,10 @@ class Report extends WebController
             }else{
                 $records = $this->model->findAll();
             }
-            return view("report/list", parent::page_data($records));
+            return view($this->session->user_type."/report/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url("reports/view/".$hashed_id))->with('message', 'Report updated successfully!');
+        return redirect()->to(site_url($this->session->user_type."/reports/view/".$hashed_id))->with('message', 'Report updated successfully!');
     }
 
     function post(){
@@ -161,10 +161,10 @@ class Report extends WebController
             }else{
                 $records = $this->model->findAll();
             }
-            return view("report/list", parent::page_data($records));
+            return view($this->session->user_type."/report/list", parent::page_data($records));
         }
 
-        return redirect()->to(site_url("report/view/".hash_id($insertId)))->with('message', 'Report added seccessfuly!');;
+        return redirect()->to(site_url($this->session->user_type."/report/view/".hash_id($insertId)))->with('message', 'Report added seccessfuly!');;
     }
 
     function list($hashedReportTypeId){

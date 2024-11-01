@@ -19,7 +19,6 @@ class Login extends WebController {
     }
 
     public function index($id = null) {
-        // return view('dashboards');
         redirect()->to(site_url('dashboards/list'));
     }
 

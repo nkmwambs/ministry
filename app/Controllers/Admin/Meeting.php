@@ -88,10 +88,10 @@ class Meeting extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view('meeting/list', parent::page_data($records));
+            return view($this->session->user_type.'/meeting/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url('settings/view/' . hash_id($insertId)));
+        return redirect()->to(site_url($this->session->user_type.'/settings/view/' . hash_id($insertId)));
     }
 
     public function update() {
@@ -168,9 +168,9 @@ class Meeting extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view('meeting/list', parent::page_data($records));
+            return view($this->session->user_type.'/meeting/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url("meeting/view".$hashed_id));
+        return redirect()->to(site_url($this->session->user_type."/meeting/view".$hashed_id));
     }
 }

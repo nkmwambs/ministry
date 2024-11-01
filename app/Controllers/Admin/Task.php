@@ -64,10 +64,10 @@ class Task extends WebController
             $this->parent_id =  $this->request->getPost('user_id');
             $this->id =  hash_id($insertID, 'encode');
 
-            return view('task/list', parent::page_data($records));
+            return view($this->session->user_type.'/task/list', parent::page_data($records));
         }
     
-        return redirect()->to(site_url('users/profile' . hash_id($insertID)))->with('message', 'Task added successfully!');
+        return redirect()->to(site_url($this->session->user_type.'/users/profile' . hash_id($insertID)))->with('message', 'Task added successfully!');
     }
 
     public function updateStatus()
@@ -94,10 +94,10 @@ class Task extends WebController
 
             $this->parent_id = $this->request->getPost('user_id');
 
-            return view('task/list', parent::page_data($records));
+            return view($this->session->user_type.'/task/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url('users/profile' . hash_id($numeric_id, 'encode')))->with('message', 'Task Status updated successfully!');
+        return redirect()->to(site_url($this->session->user_type.'/users/profile' . hash_id($numeric_id, 'encode')))->with('message', 'Task Status updated successfully!');
     }
 
     // public function updateTask() {

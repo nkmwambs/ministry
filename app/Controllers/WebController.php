@@ -160,7 +160,7 @@ class WebController extends BaseController
         }
 
         if ($this->request->isAJAX()) {
-            return view("$this->feature/list", $page_data);
+            return view($this->session->user_type."/$this->feature/list", $page_data);
         }
 
         // log_message('error', json_encode($page_data));
@@ -193,7 +193,7 @@ class WebController extends BaseController
         }
 
         if($this->request->isAJAX()){
-            return view("$this->feature/view", $page_data);
+            return view($this->session->user_type."/$this->feature/view", $page_data);
         }
         // log_message('error', json_encode($page_data));
 
@@ -227,7 +227,7 @@ class WebController extends BaseController
             // log_message('error', json_encode($customValues));
         // }
 
-        return view("$this->feature/edit", $page_data);
+        return view($this->session->user_type."/$this->feature/edit", $page_data);
     }
 
     public function delete($id){
@@ -239,9 +239,6 @@ class WebController extends BaseController
         } else{
             $this->model->delete($numeric_id);
         }
-
-        // return redirect()->to($this->feature);
-        // return view("$this->feature/edit", $page_data);
     }
 
     public function add(): string {
@@ -263,7 +260,7 @@ class WebController extends BaseController
 
         
         // log_message('error', json_encode($page_data));
-        return view("$this->feature/add", $page_data);
+        return view($this->session->user_type."/$this->feature/add", $page_data);
     }
 
     function modal($features, $action, $id = ""): string {        

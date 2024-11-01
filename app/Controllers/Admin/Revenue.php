@@ -90,10 +90,10 @@ class Revenue extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view('revenue/list', parent::page_data($records));
+            return view($this->session->user_type.'/revenue/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url('settings/view/' . hash_id($insertId)));
+        return redirect()->to(site_url($this->session->user_type.'/settings/view/' . hash_id($insertId)));
     }
 
     public function update() {
@@ -171,9 +171,9 @@ class Revenue extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view('revenue/list', parent::page_data($records));
+            return view($this->session->user_type.'/revenue/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url("revenue/view".$hashed_id));
+        return redirect()->to(site_url($this->session->user_type."/revenue/view".$hashed_id));
     }
 }

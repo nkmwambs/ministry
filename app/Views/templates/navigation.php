@@ -54,65 +54,6 @@
 						<?php }?>
 					</li>
 				<?php }?>
-				
-
-				<!-- <li>
-					<a href="<?=site_url("denominations");?>">
-						<i class="entypo-trophy"></i>
-						<span class="title"><?=lang("system.denominations");?></span>
-					</a>
-				</li>
-
-				<li>
-					<a href="<?=site_url("ministers");?>">
-						<i class="entypo-book"></i>
-						<span class="title"><?=lang("system.ministers");?></span>
-					</a>
-				</li>
-
-				<li>
-					<a href="<?=site_url("assemblies");?>">
-						<i class="entypo-home"></i>
-						<span class="title"><?=lang("system.assemblies");?></span>
-					</a>
-				</li>
-
-				<li>
-					<a href="<?=site_url("events");?>">
-						<i class="entypo-layout"></i>
-						<span class="title"><?=lang("system.events");?></span>
-					</a>
-				</li>
-
-				<li class="has-sub">
-					<a href="#">
-						<i class="entypo-newspaper"></i>
-						<span class="title"><?=lang("system.reports");?></span>
-					</a>
-					<ul>
-						<li class="active">
-							<a href="<?=site_url("reports");?>">
-								<span class="title">Monthly Report</span>
-							</a>
-						</li>
-
-					</ul>
-				</li>
-
-
-				<li>
-					<a href="<?=site_url("users");?>">
-						<i class="entypo-users"></i>
-						<span class="title"><?=lang("system.users");?></span>
-					</a>
-				</li>
-
-				<li>
-					<a href="<?=site_url("settings");?>">
-						<i class="entypo-cog"></i>
-						<span class="title"><?=lang("system.settings");?></span>
-					</a>
-				</li> -->
 
 			</ul>
 			

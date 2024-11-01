@@ -17,8 +17,4 @@ class Setting extends WebController
         $this->model = new \App\Models\SettingsModel();
     }
 
-    // public function index()
-    // {
-    //     return view("setting/list");
-    // }
 }

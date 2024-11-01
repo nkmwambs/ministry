@@ -58,7 +58,7 @@ class Visitor extends WebController
         
         if ($this->request->isAJAX()) {
             $page_data['parent_id'] = $parent_id;
-            return view('visitor/list', $page_data);
+            return view($this->session->user_type.'/visitor/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
         }
@@ -116,7 +116,7 @@ class Visitor extends WebController
             $page_data = parent::page_data($records);
             $page_data['id'] = hash_id($event_id,'encode');
             // log_message('error', json_encode($page_data));
-            return view("visitor/list", $page_data);
+            return view($this->session->user_type."/visitor/list", $page_data);
         }
 
         return redirect()->to(site_url("visitors/view/".hash_id($insertId)));
@@ -174,10 +174,10 @@ class Visitor extends WebController
             ->orderBy("visitors.created_at desc")
             ->where('event_id', hash_id($hashed_event_id,'decode'))
             ->findAll();
-            return view("visitor/list", parent::page_data($records));
+            return view($this->session->user_type."/visitor/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url("visitor/view/".$hashed_id))->with('message', 'Visitor updated successfully!');
+        return redirect()->to(site_url($this->session->user_type."/visitor/view/".$hashed_id))->with('message', 'Visitor updated successfully!');
     }
 
     // private function computeNextHierarchicalLevel($denomination_id){
