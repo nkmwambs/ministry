@@ -38,14 +38,14 @@ class WebController extends BaseController
                $this->uri = service('uri');
                $this->segments = $this->uri->getSegments();
                
-               if($this->session->user_type == 'admin'){
-                $this->feature = isset($this->segments[0]) ? singular($this->segments[0]) : 'dashboard';
-                $this->action = isset($this->segments[1]) ? $this->segments[1] : 'list';
-                $this->id = isset($this->segments[2]) ? $this->segments[2] : 0;
-               }else{
-                $this->feature = isset($this->segments[1]) ? singular($this->segments[1]) : 'dashboard';
-                $this->action = isset($this->segments[2]) ? $this->segments[2] : 'list';
-                $this->id = isset($this->segments[3]) ? $this->segments[3] : 0;
+               if(isset($this->segments[0]) && (isset($this->segments[0]) == 'church' || isset($this->segments[0]) == 'admin')){
+                    $this->feature = isset($this->segments[1]) ? singular($this->segments[1]) : 'dashboard';
+                    $this->action = isset($this->segments[2]) ? $this->segments[2] : 'list';
+                    $this->id = isset($this->segments[3]) ? $this->segments[3] : 0;
+                }else{
+                   $this->feature = isset($this->segments[0]) ? singular($this->segments[0]) : 'dashboard';
+                   $this->action = isset($this->segments[1]) ? $this->segments[1] : 'list';
+                   $this->id = isset($this->segments[2]) ? $this->segments[2] : 0;
                }
        
                if(class_exists("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")){

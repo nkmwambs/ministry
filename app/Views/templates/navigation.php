@@ -30,7 +30,7 @@
 						$parentUri = array_key_exists('uri',$navigation_item) && $navigation_item['uri'] != "" ? $navigation_item['uri'] : '';
 				?>
 					<li class = "<?=$hasSub ? 'has-sub' : ''?>">
-						<a href="<?=site_url($navigation_item['uri'] != "" ? $navigation_item['uri'] : $navigation_name.'/'.$parentUri.'/list' );?>">
+						<a href="<?=site_url($navigation_item['uri'] != "" ? $navigation_item['uri'] : service('session')->user_type.'/'.$navigation_name.'/'.$parentUri.'/list' );?>">
 							<i class="<?=$navigation_item['iconClass']?>"></i>
 							<?php 
 								$label = $navigation_item['label'];
@@ -45,7 +45,7 @@
                                 ?>
 								
                                     <li>
-                                        <a href="<?=site_url($navigation_name.'/'.$childUri.'/'.$child_name);?>">
+                                        <a href="<?=site_url(service('session')->user_type.'/'.$navigation_name.'/'.$childUri.'/'.$child_name);?>">
                                             <span class="title"><?=$child_item['label'];?></span>
                                         </a>
                                     </li>

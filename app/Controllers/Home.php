@@ -43,7 +43,7 @@ class Home extends WebController
         $userModel = new \App\Models\UsersModel();
         $userModel->update($user['id'], (object)['access_count' => $user['access_count'] + 1]);
         
-        return redirect()->to(site_url('dashboards/list'));
+        return redirect()->to(site_url($this->session->user_type.'/dashboards/list'));
     }
 
 }
