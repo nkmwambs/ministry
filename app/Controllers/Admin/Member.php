@@ -59,7 +59,6 @@ class Member extends WebController
         
         if ($this->request->isAJAX()) {
             $page_data['parent_id'] = $parent_id;
-            // log_message('error',hash_id($parent_id,'decode'));
             return view($this->session->user_type.'/member/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
@@ -127,7 +126,6 @@ class Member extends WebController
         $hashed_assembly_id = $this->request->getPost('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
         // $parent_id = $this->request->getPost('parent_id');
-        // log_message('error', $assembly_id);
 
         $data = [
             'first_name' => $this->request->getPost('first_name'),
@@ -145,7 +143,6 @@ class Member extends WebController
 
         $this->model->insert((object)$data);
         $insertId = $this->model->getInsertID();
-        // log_message('error', $insertId);
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
@@ -159,7 +156,6 @@ class Member extends WebController
 
             // Save non-null custom field values
             if (!empty($nonNullCustomFields)) {
-                log_message('error', json_encode($nonNullCustomFields));
                 $customFieldLibrary->saveCustomFieldValues($insertId, $this->tableName, $customFieldValues);
             }
         }
@@ -306,8 +302,6 @@ class Member extends WebController
         $assemblyEntity = $entityModel->select('entities.entity_number,assemblies.name')
         ->join('assemblies', 'assemblies.entity_id = entities.id')
         ->where('assemblies.id', $assembly_id)->first();
-
-        // log_message('error', json_encode($assembly_id));
 
         $assemblyEntityNumber = $assemblyEntity['entity_number'];
         // $maxEntityNumber = $this->model->selectMax('member_number')->where('assembly_id', $entity_id)->first();

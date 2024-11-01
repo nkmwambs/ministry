@@ -48,8 +48,6 @@ class Type extends WebController
             ]
         ]);
 
-        // log_message('error', json_encode($this->request->getPost('layout')));
-
         if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }

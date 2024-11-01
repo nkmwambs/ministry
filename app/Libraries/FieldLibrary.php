@@ -53,7 +53,6 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
      */
     public function saveCustomFieldValues(int $recordId, string $tableName, ?array $customFieldValues): bool
     {
-        // log_message('error', json_encode(compact('recordId','tableName','customFieldValues')));
         $featureModel = new \App\Models\FeaturesModel();
         $feature = $featureModel->where('name', singular($tableName))->first();
         $featureId = $feature['id'];
@@ -71,7 +70,6 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                     $update_data = [
                         'value' => $value,                    ];
                     // Update existing custom field value
-                    // log_message('error', json_encode(compact('existing','update_data')));
                     $this->customValueModel->update($existing['id'], (object)$update_data);
                 } else {
                     $data = [
@@ -271,7 +269,6 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                             $field_key = substr($condition->key, 3);
                             $queryResult->where('field_code', $field_key);
                             $queryResult->where('value', $condition->value);
-                            // log_message('error', $condition->key);
                         }else{
                             $queryResult->where($condition->key, $condition->value);
                         }
@@ -289,7 +286,6 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                             $queryResult->where('customfields.field_code', $field_key);
                             $queryResult->where("customvalues.value >=", date('Y-m-01',strtotime($report_period)))
                             ->where("customvalues.value <=", date('Y-m-t',strtotime($report_period)));
-                            // log_message('error', $condition->key);
                         }else{
                             $queryResult->where("$condition->key >=", date('Y-m-01',strtotime($report_period)))
                             ->where("$condition->key <=", date('Y-m-t',strtotime($report_period)));

@@ -1,5 +1,4 @@
 <?php 
-// log_message('error',json_encode($result));
 $parent_id = session()->get('user_denomination_id') ? hash_id(session()->get('user_denomination_id'), 'encode') : '';
 ?>
 

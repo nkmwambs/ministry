@@ -43,8 +43,6 @@ class Visitor extends WebController
             ->orderBy('visitors.created_at desc')
             ->findAll();
         }
-
-        // log_message('error', json_encode($visitors));
        
         if(!$visitors){
             $page_data['result'] = [];
@@ -115,7 +113,6 @@ class Visitor extends WebController
             $records = $this->model->orderBy("created_at desc")->where('event_id', $event_id)->findAll();
             $page_data = parent::page_data($records);
             $page_data['id'] = hash_id($event_id,'encode');
-            // log_message('error', json_encode($page_data));
             return view($this->session->user_type."/visitor/list", $page_data);
         }
 

@@ -71,7 +71,6 @@ class RolesModel extends Model  implements \App\Interfaces\ModelInterface
     }
     
     public function getEditData($role_id){
-        // log_message('error', json_encode($role_id));
         $library = new \App\Libraries\RoleLibrary();
         $viewQueryFields = $library->setViewQueryFields();
 

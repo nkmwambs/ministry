@@ -126,7 +126,6 @@ class Participant extends WebController
         if($mpesa_response['ResponseCode'] == 0){
             $participantLibrary = new \App\Libraries\ParticipantLibrary();
             $participantLibrary->insertParticipants($data, $mpesa_response);
-            // log_message('error', json_encode($data));
 
             $this->feature = 'participant';
             $this->action = 'list';

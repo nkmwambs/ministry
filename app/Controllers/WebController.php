@@ -59,7 +59,6 @@ class WebController extends BaseController
                
                $this->tableName = plural($this->feature);
 
-            //    log_message('error', json_encode($this->feature));
 
     }
 
@@ -142,11 +141,8 @@ class WebController extends BaseController
         }else{
             method_exists($this->model, 'getAll') ?
             $data = $this->model->getAll() :
-            // log_message('error', json_encode($data));
             $data = $this->model->findAll();
         }
-
-        // log_message('error', json_encode($data));
 
         if($id != null){
             $this->parent_id = $id;
@@ -162,8 +158,6 @@ class WebController extends BaseController
         if ($this->request->isAJAX()) {
             return view($this->session->user_type."/$this->feature/list", $page_data);
         }
-
-        // log_message('error', json_encode($page_data));
  
         return view('index', compact('page_data'));
     }
@@ -195,7 +189,6 @@ class WebController extends BaseController
         if($this->request->isAJAX()){
             return view($this->session->user_type."/$this->feature/view", $page_data);
         }
-        // log_message('error', json_encode($page_data));
 
         return view('index', compact('page_data'));
     }
@@ -216,15 +209,12 @@ class WebController extends BaseController
             $this->library->editExtraData($page_data);
         }
 
-        // log_message('error', json_encode($this->tableName));
-
         // foreach ((object)$this->tableName as $table_name) {
             $customFieldLibrary = new \App\Libraries\FieldLibrary();
             $customFields = $customFieldLibrary->getCustomFieldsForTable($this->tableName);
             $customValues = $customFieldLibrary->getCustomFieldValuesForRecord($numeric_id, $this->tableName);
             $page_data['customFields'] = $customFields;
             $page_data['customValues'] = $customValues;
-            // log_message('error', json_encode($customValues));
         // }
 
         return view($this->session->user_type."/$this->feature/edit", $page_data);
@@ -248,18 +238,14 @@ class WebController extends BaseController
         if(method_exists($this->library,'addExtraData')){
             // Note the addExtraData updates the $page_data by reference
             $this->library->addExtraData($page_data);
-            // log_message('error', $this->parent_id);
         }
 
         foreach ((object)$this->tableName as $table_name) {
             $customFieldLibrary = new \App\Libraries\FieldLibrary();
             $customFields = $customFieldLibrary->getCustomFieldsForTable($table_name);
             $page_data['customFields'] = $customFields;
-            // log_message('error', json_encode($customFields));
         }
 
-        
-        // log_message('error', json_encode($page_data));
         return view($this->session->user_type."/$this->feature/add", $page_data);
     }
 
@@ -427,7 +413,6 @@ class WebController extends BaseController
 
     function bulkEdit(){
         
-        // log_message('error', json_encode($this->request->getPost()));
         $tableName = $this->request->getPost('table_name');
         $edit_selected_ids = $this->request->getPost('edit_selected_ids');
 
@@ -445,7 +430,6 @@ class WebController extends BaseController
         $customizeFields = [];
         
         foreach($field_values as $field_key => $field_value){
-            // log_message('error', substr($field_key, 0, 3));
             foreach($edit_selected_ids as $edit_selected_id){
                 if(substr($field_key, 0, 3) == 'c__'){
                     $customizeFields[$edit_selected_id]['id'] = $edit_selected_id;
@@ -529,9 +513,6 @@ class WebController extends BaseController
         }
         
         $table_library_name = ucfirst(singular($controller) .'Library');
-
-        // log_message('error', $table_library_name);
-
     
         if (class_exists("App\\Libraries\\$table_library_name")) {
             // Instantiate the library class

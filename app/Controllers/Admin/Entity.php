@@ -67,7 +67,6 @@ class Entity extends WebController
             $customFieldLibrary = new \App\Libraries\FieldLibrary();
             $customFields = $customFieldLibrary->getCustomFieldsForTable($table_name);
             $page_data['customFields'] = $customFields;
-            // log_message('error', json_encode($customFields));
         }
         
         return view($this->session->user_type.'/entity/add', $page_data);
@@ -90,7 +89,6 @@ class Entity extends WebController
             $customValues = $customFieldLibrary->getCustomFieldValuesForRecord($numeric_id, $table_name);
             $page_data['customFields'] = $customFields;
             $page_data['customValues'] = $customValues;
-            // log_message('error', json_encode($customValues));
         }
 
         return view($this->session->user_type.'/entity/edit', $page_data);

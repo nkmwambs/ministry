@@ -58,8 +58,6 @@ class Report extends WebController
             $report['hash_id'] = hash_id($report['id']);  // Add hashed ID to each record
         }
 
-        // log_message('error', json_encode($numericReportTypeId));
-
         // Prepare response data for DataTables
         $response = [
             "draw" => $draw,
@@ -178,14 +176,11 @@ class Report extends WebController
         $this->parent_id = $hashedReportTypeId;
         $page_data = parent::page_data($reportsByTypeId);
 
-        // log_message('error', json_encode($page_data));
-
         return view("index", compact('page_data'));
     }
 
     function saveReport(){
         $values = $this->request->getPost();
-        // log_message('error', json_encode($post));
         $reportLibrary = new \App\Libraries\ReportLibrary();
         $report_id = hash_id($values['report_id'],'decode');
         unset($values['report_id']);
@@ -193,7 +188,6 @@ class Report extends WebController
 
         $values = json_encode($values);
 
-        // log_message('error', json_encode($post));
         // Connect to database 
         $model = new \App\Models\DetailsModel();
         $model->upsert((object)compact('report_id', 'values'));

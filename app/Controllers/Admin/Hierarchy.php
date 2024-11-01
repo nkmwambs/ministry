@@ -80,7 +80,6 @@ class Hierarchy extends WebController
 
         $hashed_denomination_id = $this->request->getPost('denomination_id');
         $denomination_id = hash_id($hashed_denomination_id,'decode');
-        // log_message('error',$denomination_id);
 
         // Get Denomination Code
         $denominationModel = new \App\Models\DenominationsModel();

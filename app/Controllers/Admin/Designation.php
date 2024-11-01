@@ -113,8 +113,6 @@ class Designation extends WebController
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
 
-        // log_message('error', json_encode($this->request->getPost()));
-
         $data = [
             'name' => $this->request->getPost('name'),
             'denomination_id' => $this->request->getPost('denomination_id'),

@@ -90,7 +90,6 @@ class User extends WebController
     public function post()
     {
         $insertId = 0;
-        // log_message('error', json_encode($this->request->getPost()));
         $validation = \Config\Services::validation();
         $validation->setRules([
             'denomination_id' => 'required',
@@ -181,7 +180,6 @@ class User extends WebController
     public function updatePublicInfo()
     {
         $hashed_id = $this->request->getVar('id');
-        // log_message('error', json_encode($hashed_id));
 
         $validation = \Config\Services::validation();
         $validation->setRules([
@@ -227,7 +225,6 @@ class User extends WebController
     public function updatePrivateInfo()
     {
         $hashed_id = $this->request->getPost('id'); // hash_id($id, 'decode');
-        // log_message('error', json_encode($hashed_id));
 
         $validation = \Config\Services::validation();
         $validation->setRules([
@@ -282,7 +279,6 @@ class User extends WebController
 
     public function getAccount($id)
     {
-        // log_message('error', 'here');
         $numeric_id = hash_id($id, 'decode');
 
         if (method_exists($this->model, 'getViewData')) {
@@ -294,8 +290,6 @@ class User extends WebController
         $this->parent_id = $id;
 
         $page_data = $this->page_data($data);
-
-        // log_message('error', json_encode($page_data));
 
         if (method_exists($this->library, 'editExtraData')) {
             // Note the editExtraData updates the $page_data by reference
@@ -316,7 +310,6 @@ class User extends WebController
         $validPassword = false;
         if ($user) {
             $current_password = addslashes($user['password']);
-            // log_message('error', json_encode(compact('user_password','current_password')));
             $validPassword = password_verify(trim($user_password), $current_password);
         }
 
@@ -325,7 +318,6 @@ class User extends WebController
 
     public function passwordReset($id)
     {
-        // log_message('error', 'here');
         $numeric_id = hash_id($id, 'decode');
 
         if (method_exists($this->model, 'getEditData')) {
@@ -337,8 +329,6 @@ class User extends WebController
         $this->parent_id = $id;
 
         $page_data = $this->page_data($data);
-
-        // log_message('error', json_encode($page_data));
 
         if (method_exists($this->library, 'editExtraData')) {
             // Note the editExtraData updates the $page_data by reference
@@ -408,7 +398,6 @@ class User extends WebController
         $this->parent_id = $id;
 
         $page_data = $this->page_data($user_data);
-        // log_message('error', json_encode($page_data));
         if (method_exists($this->library, 'editExtraData')) {
             // Note the editExtraData updates the $page_data by reference
             $this->library->editExtraData($page_data);
@@ -420,7 +409,6 @@ class User extends WebController
     {
         $user_data = $this->model->getOne($user_id);
         $user_data = formatUserDataForExport($user_data);
-        log_message('error', json_encode($user_data));
 
         $this->parent_id = $user_id;
 

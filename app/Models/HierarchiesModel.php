@@ -76,7 +76,6 @@ class HierarchiesModel extends Model  implements \App\Interfaces\ModelInterface
     }
 
     function getViewData($hierarchy_id){
-        // log_message('error', $hierarchy_id);
         $library = new \App\Libraries\HierarchyLibrary();
         $viewQueryFields = $library->setViewQueryFields();
 
@@ -90,7 +89,6 @@ class HierarchiesModel extends Model  implements \App\Interfaces\ModelInterface
     }
 
     function getEditData($hierarchy_id){
-        // log_message('error', $hierarchy_id);
         $library = new \App\Libraries\HierarchyLibrary();
         $viewQueryFields = $library->setViewQueryFields();
 

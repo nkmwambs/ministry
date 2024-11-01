@@ -62,7 +62,6 @@ class Callback extends WebController
         $participantModel = new \App\Models\ParticipantsModel();
 
         $payment = (object)$paymentModel->where('MerchantRequestID', $responseValues['MerchantRequestID'])->first();
-        log_message('error', json_encode($payment));
         $payment->payment_status = $payment_status;
         $payment->payment_code = $payment_code;
         $paymentModel->save($payment);
@@ -76,12 +75,10 @@ class Callback extends WebController
 
     function getConfirmation(){
         $data = $this->request->getJSON();
-        log_message('error', json_encode($data));
         return "Hello";
     }
 
     function getPay_validation(){
         $data = $this->request->getJSON();
-        log_message('error', json_encode($data));
     }
 }

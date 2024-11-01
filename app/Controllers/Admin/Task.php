@@ -77,7 +77,6 @@ class Task extends WebController
         $task_status = [
             'status' => $this->request->getPost('status')
         ];
-        // log_message('error', json_encode($this->request->getPost()));
 
         $this->model->save($this->request->getPost());
 
@@ -142,12 +141,10 @@ class Task extends WebController
     //     $task_status = $this->request->getPost('status');
 
     //     $countTaskStatuses = $statusesModel->where('user_id', $user_id)->countAllResults();
-    //     // log_message('error', json_encode($countTaskStatuses));
     //     if ($countTaskStatuses == 0) {
     //         $this->model->insert((object)['status' => $this->request->getPost('status')]);
     //     } else {
     //         $task_id = $statusesModel->where('user_id', $user_id)->first()['id'];
-    //         // log_message('error', json_encode($task_id));
     //         $statusesModel->update($task_id, (object)['status' => $task_status]);
     //     }
     // }  

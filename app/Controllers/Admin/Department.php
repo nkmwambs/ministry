@@ -64,8 +64,6 @@ class Department extends WebController
 
     public function post() {
         $insertId = 0;
-
-        // log_message('error', json_encode($this->request->getPost()));
         
         $validation = \Config\Services::validation();
         $validation->setRules([

@@ -111,7 +111,6 @@ class RoleLibrary implements \App\Interfaces\LibraryInterface {
                 $permissions[$feature['name'].'.'.$permission_label] = $feature['description'];
             }
         }
-        log_message('error', json_encode($permissions));
         return $permissions;
     }
 }

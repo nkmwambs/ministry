@@ -104,8 +104,6 @@ class ReportsModel extends Model  implements \App\Interfaces\ModelInterface
             $result = $this->where('id', $minister_id)->first();
         }
 
-        // log_message('error', json_encode($result));
-
         return $result;
     }
 

@@ -22,7 +22,6 @@ class Permission extends WebController
         $permission_label = $this->request->getPost('permission_label');
 
         $countAssignedFeatureRoles = $permissionModel->where(['role_id' => $role_id, 'feature_id' => $feature_id])->countAllResults();
-        // log_message('error', json_encode($countAssignedFeatureRoles));
         if($countAssignedFeatureRoles == 0){
             $this->model->insert($this->request->getPost());
         }else{

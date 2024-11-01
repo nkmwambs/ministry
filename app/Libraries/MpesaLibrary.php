@@ -12,7 +12,6 @@ class MpesaLibrary  implements \App\Interfaces\LibraryInterface {
     }
 
     function express(string $denominationCode, string $payment_purpose, string $paying_number, int $amount){
-        // log_message('error', json_encode(compact('paying_number','amount')));
 
         $endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         $BusinessShortCode = '174379';
@@ -54,8 +53,6 @@ class MpesaLibrary  implements \App\Interfaces\LibraryInterface {
         $response     = curl_exec($ch);
         curl_close($ch);
         // echo $response;
-
-        // log_message('error', $response);
 
         return $response;
 

@@ -46,8 +46,6 @@ class Collection extends WebController
             ->orderBy('collections.created_at desc')
             ->findAll();
         }
-
-        // log_message('error', json_encode($collections));
        
         if(!$collections){
             $page_data['result'] = [];
@@ -86,7 +84,6 @@ class Collection extends WebController
 
         $hashed_assembly_id = $this->request->getPost('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
-        // log_message('error', $assembly_id);
 
         $data = [
             'sunday_date' => $this->request->getPost('sunday_date'),

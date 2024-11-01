@@ -74,7 +74,6 @@ class Event extends WebController
         // Fetch participants for the event
         // $participantModel = new \App\Models\ParticipantsModel();
         // $data->other_details = $participantModel->getParticipantsByEventId(hash_id($id, 'decode'));
-        // log_message('error', json_encode($data));
         // Pass the data to the view
         $page_data = parent::page_data($data, $id);
         

@@ -60,8 +60,6 @@ class MPesa extends WebController
         curl_close($ch);
         // echo $response;
         
-        log_message('error', json_encode($response));
-
         return $this->response->setJSON($response);
 
     }

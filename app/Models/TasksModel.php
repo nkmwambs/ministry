@@ -71,7 +71,6 @@ class TasksModel extends Model  implements \App\Interfaces\ModelInterface
     }
     
     public function getEditData($task_id){
-        // log_message('error', json_encode($role_id));
         $library = new \App\Libraries\TaskLibrary();
         $viewQueryFields = $library->setViewQueryFields();
 
