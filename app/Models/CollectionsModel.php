@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class CollectionsModel extends Model
 {
+    use \App\Traits\DatabaseTrait;
     protected $table            = 'collections';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
@@ -44,6 +45,8 @@ class CollectionsModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = ['updateRecycleBin'];
     protected $parent_schema = ['parent_table','foreign_field_name'];
+
+    protected $lookupTables = ["assemblies","revenues"];
 
     public function getAll(){
         $library = new \App\Libraries\CollectionLibrary();

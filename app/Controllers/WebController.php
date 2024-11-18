@@ -571,7 +571,7 @@ class WebController extends BaseController
         }
 
         if ($col == '') {
-            $this->model->orderBy('bank_id DESC');
+            $this->model->orderBy(plural($this->feature).'.id DESC');
         } else {
             $this->model->orderBy($columns[$col], $dir);
         }
@@ -598,8 +598,7 @@ class WebController extends BaseController
         }
 
         $this->model->select($columns);
-        $this->model->join('status', 'status.status_id=bank.fk_status_id');
-        $this->model->join('account_system', 'account_system.account_system_id=bank.fk_account_system_id');
+        $this->model->tableJoins();
 
         $results = $this->model->findAll();
 
@@ -634,11 +633,7 @@ class WebController extends BaseController
             }
             $this->model->groupEnd();
         }
-
-        $this->model->join('status', 'status.status_id=bank.fk_status_id');
-        $this->model->join('account_system', 'account_system.account_system_id=bank.fk_account_system_id');
-
-
+        $this->model->tableJoins();
         $count_all_results = $this->model->countAllResults();
 
         return $count_all_results;
