@@ -65,6 +65,8 @@ $routes->group("church", ['namespace' => 'App\Controllers\Church'],function($rou
 });
 
 $routes->post('church/member/showList', [App\Controllers\Church\Member::class, "showList"]);
+$routes->post('church/collection/showList', [App\Controllers\Church\Collection::class, "showList"]);
+$routes->post('church/tithe/showList', [App\Controllers\Church\Tithe::class, "showList"]);
 
 
 $routes->group("",['namespace' => 'App\Controllers\Admin'], function($routes){

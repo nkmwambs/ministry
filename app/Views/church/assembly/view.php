@@ -27,16 +27,16 @@
                     </div>
                     <div class="panel-options">
 
-                        <ul class="nav nav-tabs" id="myTabs">
-                            <li class="active"><a href="#list_members" data-item_id="" data-link_id="list_members"
-                                    data-feature="member" onclick="loadDatatableOnTabs(this)" id="list_members_tab"
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#list_members" data-link_id="list_members"
+                                    data-feature="member" data-table_id = "table_list_members" class = "view_tabs" id="list_members_tab"
                                     data-toggle="tab"><?= lang('member.list_members'); ?></a></li>
-                            <li><a href="#list_collections" data-item_id="" data-link_id="list_collections"
-                                    data-feature="collection" onclick="loadDatatableOnTabs(this)"
+                            <li><a href="#list_collections" data-table_id = "table_list_collections" data-link_id="list_collections"
+                                    data-feature="collection"  class = "view_tabs"
                                     id="list_collections_tab"
                                     data-toggle="tab"><?= lang('collection.list_collections'); ?></a></li>
-                            <li><a href="#list_tithes" data-item_id="" data-link_id="list_tithes" data-feature="tithe"
-                                    onclick="loadDatatableOnTabs(this)" id="list_tithes_tab"
+                            <li><a href="#list_tithes" data-link_id="list_tithes" data-feature="tithe"
+                                     id="list_tithes_tab" class = "view_tabs" data-table_id = "table_list_tithes"
                                     data-toggle="tab"><?= lang('tithe.list_tithes'); ?></a></li>
                         </ul>
                     </div>

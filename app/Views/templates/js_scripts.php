@@ -365,13 +365,16 @@
 
     // Church users
 
-    function loadDatatableOnTabs(elem){
-        const feature = $(elem).data('feature')
-        const link_id = $(elem).data('link_id')
+    $(".view_tabs").on('click', function(){
+       
+        const feature = $(this).data('feature')
+        const link_id = $(this).data('link_id')
+        const table_id = $(this).data('table_id')
         const url = "<?=base_url();?>church/" + feature + "/showList"
 
-        let tabs_datatable = $(".tabs_datatable").DataTable({
+        var tabs_datatable = $("#" + table_id).DataTable({
         dom: 'lBfrtip',
+        "bDestroy": true,
         buttons: [
             'copyHtml5',
             'excelHtml5',
@@ -389,7 +392,37 @@
 					url:url,
 					type:"POST",
 				}
-			});
+		});
+    })
+
+    function loadDatatableOnTabs(elem){
+        // const feature = $(elem).data('feature')
+        // const link_id = $(elem).data('link_id')
+        // const url = "<?=base_url();?>church/" + feature + "/showList"
+
+        // let tabs_datatable = $(".tabs_datatable").DataTable({
+        // dom: 'lBfrtip',
+        // "bDestroy": true,
+        // buttons: [
+        //     'copyHtml5',
+        //     'excelHtml5',
+        //     'csvHtml5',
+        //     'pdfHtml5',
+        // ],
+        // pagingType: "full_numbers",
+        // // stateSave:true,
+		// 		pageLength:10,
+		// 		order:[],
+		// 		serverSide:true,
+		// 		processing:true,
+		// 		language:{processing:'Loading ...'},
+		// 		ajax:{
+		// 			url:url,
+		// 			type:"POST",
+		// 		}
+		// });
+
+        // tabs_datatable.destroy();
     }
 
 </script>
