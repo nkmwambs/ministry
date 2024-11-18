@@ -23,6 +23,8 @@ class FeatureLibrary implements \App\Interfaces\LibraryInterface {
 
     function navigationItems(){
 
+        $user_permitted_assemblies = service('session')->user_permitted_assemblies;
+
         $items = [
             "admin" => [
                 'dashboards' => ['label' => 'dashboards', 'iconClass' => 'entypo-gauge', 'uri' => ''],
@@ -39,7 +41,7 @@ class FeatureLibrary implements \App\Interfaces\LibraryInterface {
             ],
             "church" => [
                 'dashboards' => ['label' => 'my_dashboard', 'iconClass' => 'entypo-gauge', 'uri' => 'church/dashboards/list'],
-                'assemblies' => ['label' => 'my_assembly', 'iconClass' => 'entypo-home', 'uri' => 'church/assemblies/list'],
+                'assemblies' => count($user_permitted_assemblies) == 1 ? ['label' => 'my_assembly', 'iconClass' => 'entypo-home', 'uri' => 'church/assemblies/view/'.hash_id($user_permitted_assemblies[0],'encode')] : ['label' => 'my_assembly', 'iconClass' => 'entypo-home', 'uri' => 'church/assemblies/list'],
                 'users' => ['label' => 'my_profile', 'iconClass' => 'entypo-users', 'uri' => 'church/users/list'],
             ]
 

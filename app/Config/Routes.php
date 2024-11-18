@@ -59,10 +59,12 @@ $routes->group("church", ['namespace' => 'App\Controllers\Church'],function($rou
                 $routes->get('modal/(:segment)/(:segment)/(:segment)', "$ucfirst::modal/$1/$2/$3");
                 $routes->post('getFields/(:segment)/(:segment)', "$ucfirst::getBulkActionFields/$1/$2");
                 $routes->post('bulk_edit', "$ucfirst::bulkEdit");
+                $routes->post('showList', "$ucfirst::showList");
         });
     }
 });
 
+$routes->post('church/member/showList', [App\Controllers\Church\Member::class, "showList"]);
 
 
 $routes->group("",['namespace' => 'App\Controllers\Admin'], function($routes){

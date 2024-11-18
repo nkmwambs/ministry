@@ -34,11 +34,11 @@ class Home extends WebController
         $this->session->set('user_id', $user['id']);
         $this->session->set('user_type', $user['user_type']);
         $this->session->set('user_fullname', $user['first_name']." ". $user['last_name']);
-        $this->session->set('user_roles', explode(',',$user['roles']));
+        $this->session->set('user_roles', $user['roles']!= NULL ? explode(',',$user['roles']) : []);
         $this->session->set('user_denomination_id', $user['denomination_id']);
         $this->session->set('user_is_system_admin', $user['is_system_admin']);
-        $this->session->set('user_permitted_entities', explode(',',$user['permitted_entities']));
-        $this->session->set('user_permitted_assemblies', explode(',',$user['permitted_assemblies']));
+        $this->session->set('user_permitted_entities', $user['permitted_entities'] != NULL ? json_decode($user['permitted_entities']): []);
+        $this->session->set('user_permitted_assemblies', $user['permitted_assemblies'] != NULL ? json_decode($user['permitted_assemblies']): []);
         // Update log count
         $userModel = new \App\Models\UsersModel();
         $userModel->update($user['id'], (object)['access_count' => $user['access_count'] + 1]);

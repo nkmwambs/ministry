@@ -44,30 +44,8 @@ if(!function_exists('button_row')){
     }
 }
 
-// if(!function_exists('delete_permission')){
-//     function delete_permission($tableName){
-//         $str = singular($tableName).".read";
-// 		$str .= singular($tableName).".create";
-// 		$str .= singular($tableName).".update";
-// 		$str .= singular($tableName).".delete";
-
-//         return $str;
-//     }
-// }
-
-// if(!function_exists('create_permission')){
-//     function create_permission($tableName){
-//         $str = singular($tableName).".read";
-// 		$str .= ",".singular($tableName).".create";
-//         return $str;
-//     }
-// }
-
-// if(!function_exists('update_permission')){
-//     function update_permission($tableName){
-//         $str = singular($tableName).".read";
-// 		$str .= singular($tableName).".create";
-//         $str .= singular($tableName).".update";
-//         return $str;
-//     }
-// }
+if(!function_exists('datatable')){
+    function datatable($table_id, $columns){
+        return view('templates/datatable',['table_id' => $table_id, 'columns' => $columns]);
+    }
+}

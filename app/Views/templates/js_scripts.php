@@ -358,5 +358,38 @@
         // });
 
         // $('.list-group-item:first').trigger('click');
+        
     })
+
+
+
+    // Church users
+
+    function loadDatatableOnTabs(elem){
+        const feature = $(elem).data('feature')
+        const link_id = $(elem).data('link_id')
+        const url = "<?=base_url();?>church/" + feature + "/showList"
+
+        let tabs_datatable = $(".tabs_datatable").DataTable({
+        dom: 'lBfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5',
+        ],
+        pagingType: "full_numbers",
+        // stateSave:true,
+				pageLength:10,
+				order:[],
+				serverSide:true,
+				processing:true,
+				language:{processing:'Loading ...'},
+				ajax:{
+					url:url,
+					type:"POST",
+				}
+			});
+    }
+
 </script>
