@@ -69,4 +69,16 @@ class FeatureLibrary implements \App\Interfaces\LibraryInterface {
         
     }
 
+    function getNameField($table){
+        $nameField = 'name';
+
+        if(class_exists("\\App\\Models\\".ucfirst($table).'Model')){
+            $model = new ("\\App\\Models\\".ucfirst($table).'Model')();
+            if(property_exists($model, 'nameField')){
+                $nameField = $model->nameField;
+            }
+        }
+
+        return $nameField;
+    }
 }

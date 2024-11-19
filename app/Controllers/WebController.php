@@ -552,7 +552,7 @@ class WebController extends BaseController
         }
     }
 
-    function getRecords()
+    function getRecords(): array
     {
         $columns = sanitizeColumns($this->tableName, $this->library->setListQueryFields())['queryColumns'];
         
@@ -655,7 +655,6 @@ class WebController extends BaseController
 
         $cnt = 0;
         foreach ($records as $record) {
-            // log_message('error', json_encode($record));
             foreach ($record as $key => $value){
                 if($key == 'id'){
                     $actionButtons = '<a class = "btn btn-info" href="'.site_url("church/".plural($this->feature)."/edit/".hash_id($record['id'],'encode')).'">Edit</a>';

@@ -9,6 +9,7 @@ class MembersModel extends Model
     use \App\Traits\DatabaseTrait;
     protected $table            = 'members';
     protected $primaryKey       = 'id';
+    protected $nameField        = "first_name";
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
