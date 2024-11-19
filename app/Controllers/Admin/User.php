@@ -18,6 +18,38 @@ class User extends WebController
         $this->model = new \App\Models\UsersModel();
     }
 
+    public function viewMyProfile($hashed_id) {
+        $data = [];
+        $numeric_id = hash_id($hashed_id, 'decode');
+
+        if (method_exists($this->model, 'getViewData')) {
+            $data = $this->model->getViewData($numeric_id);
+        } else {
+            $data = $this->model->getOne($numeric_id);
+        }
+
+        $this->parent_id = $hashed_id;
+        $page_data = $this->page_data($data);
+
+        if (method_exists($this->library, 'viewExtraData')) {
+            $this->library->viewExtraData($page_data);
+        }
+
+        if (
+            isset($data) && 
+            is_array($data) && 
+            array_key_exists('id',$data)
+        ) {
+            unset($data['id']);
+        }
+
+        if ($this->request->isAjax()) {
+            return view($this->session->user_type . "/$this->feature/view", $page_data);
+        }
+
+        return view('index', compact('page_data'));
+    }
+
     public function fetchUsers()
     {
         $request = \Config\Services::request();

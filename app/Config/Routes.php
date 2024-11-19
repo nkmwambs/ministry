@@ -9,7 +9,7 @@ helper('inflector');
 //  */
 
 
-$routes->group("admin", ['namespace' => 'App\Controllers\Admin'],function($routes){
+$routes->group("admin", ['namespace' => 'App\Controllers\Admin'], function($routes){
     $featureModel = new \App\Models\FeaturesModel();
     $features = $featureModel->findAll();
     
@@ -33,11 +33,10 @@ $routes->group("admin", ['namespace' => 'App\Controllers\Admin'],function($route
                 $routes->post('bulk_edit', "$ucfirst::bulkEdit");
         });
     }
-    
 });
 
 
-$routes->group("church", ['namespace' => 'App\Controllers\Church'],function($routes){
+$routes->group("church", ['namespace' => 'App\Controllers\Church'], function($routes){
     $featureModel = new \App\Models\FeaturesModel();
     $features = $featureModel->findAll();
     
@@ -51,6 +50,7 @@ $routes->group("church", ['namespace' => 'App\Controllers\Church'],function($rou
                 $routes->get('add', "$ucfirst::add");
                 $routes->get('view/(:segment)', "$ucfirst::view/$1");
                 $routes->get('view/(:segment)/(:segment)', "$ucfirst::view/$1");
+                $routes->get('view/(:segment)', "$ucfirst::viewMyProfile/$1");
                 $routes->get('edit/(:segment)', "$ucfirst::edit/$1");
                 $routes->get('delete/(:segment)', "$ucfirst::delete/$1");
                 $routes->post('update', "$ucfirst::update");
@@ -69,7 +69,7 @@ $routes->post('church/collection/showList', [App\Controllers\Church\Collection::
 $routes->post('church/tithe/showList', [App\Controllers\Church\Tithe::class, "showList"]);
 
 
-$routes->group("",['namespace' => 'App\Controllers\Admin'], function($routes){
+$routes->group("", ['namespace' => 'App\Controllers\Admin'], function($routes){
     $routes->get('entities/items/(:segment)/(:segment)', "Entity::getParentEntitiesByDenomination/$1/$2");
     $routes->get('entities/lowestEntities/(:segment)', "Entity::getDenominationLowestEntities/$1");
     $routes->get('entities/hierarchy/(:segment)', "Entity::getEntitiesByHierarchyId/$1");
