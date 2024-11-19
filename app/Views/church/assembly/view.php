@@ -63,3 +63,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $(".nav-tabs").find("li.active").find('a').click();
+    });
+</script>

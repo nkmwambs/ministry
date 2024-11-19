@@ -14,14 +14,14 @@
         $.ajax({
             url: url,
             method: 'GET',
-            beforeSend: function() {
+            beforeSend: function () {
                 $("#overlay").css("display", "block");
             }
-        }).done(function(response) {
+        }).done(function (response) {
             on_success(response);
-        }).fail(function(xhr, status, error) {
+        }).fail(function (xhr, status, error) {
             alert('Error has occurred');
-        }).always(function() {
+        }).always(function () {
             $("#overlay").css("display", "none");
         });
     }
@@ -31,14 +31,14 @@
         $.post({
             url: url,
             data: data,
-            beforeSend: function() {
+            beforeSend: function () {
                 $("#overlay").css("display", "block");
             }
-        }).done(function(response) {
+        }).done(function (response) {
             on_success(response);
-        }).fail(function(xhr, status, error) {
+        }).fail(function (xhr, status, error) {
             alert('Error has occurred');
-        }).always(function() {
+        }).always(function () {
             $("#overlay").css("display", "none");
         });
     }
@@ -52,7 +52,7 @@
 
         // alert(url)
 
-        getRequest(url, function(response) {
+        getRequest(url, function (response) {
             $('#' + link_id).html(response);
             $('#' + link_id + " .datatable").DataTable({
                 stateSave: true
@@ -68,8 +68,8 @@
         // alert(url)
         $.ajax({
             url,
-            success: function(response) {
-                $('#modal_ajax').on('shown.bs.modal', function() {
+            success: function (response) {
+                $('#modal_ajax').on('shown.bs.modal', function () {
                     $('.datepicker').datepicker({
                         format: 'yyyy-mm-dd',
                         container: '#modal_ajax modal-body',
@@ -77,7 +77,7 @@
                     });
 
                     $('.collection_datepicker').datepicker({
-                        beforeShowDay: function(date) {
+                        beforeShowDay: function (date) {
                             var today = new Date()
                             var day = date.getDay();
 
@@ -103,7 +103,7 @@
         });
     }
 
-    $("#modal_ajax").on('hidden.bs.modal', function() {
+    $("#modal_ajax").on('hidden.bs.modal', function () {
         // $(this).data('bs.modal', null);
         // window.location.reload();
     });
@@ -113,7 +113,7 @@
 
         const url = `${base_url}${plural_feature}/modal/${plural_feature}/${action}/${id}`
 
-        $('#modal_list_ajax').on('shown.bs.modal', function() {
+        $('#modal_list_ajax').on('shown.bs.modal', function () {
             $('.datepicker').css('z-index', '10200');
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
@@ -124,7 +124,7 @@
 
         $.ajax({
             url,
-            success: function(response) {
+            success: function (response) {
                 // $('.datatable').destroy();
                 $('#modal_list_ajax .modal-title').html(capitalizeFirstLetter(action) + ' ' + capitalizeFirstLetter(plural_feature));
                 $('#modal_list_ajax .modal-body').html(response);
@@ -142,7 +142,7 @@
 
         const url = `${base_url}${plural_feature}/getFields/${plural_feature}/${actionOnItem}`
 
-        $('#modal_ajax').on('shown.bs.modal', function() {
+        $('#modal_ajax').on('shown.bs.modal', function () {
             $('.datepicker').css('z-index', '10200');
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
@@ -154,8 +154,8 @@
         $.ajax({
             url,
             method: 'POST',
-            data: {selectedItems},
-            success: function(response) {
+            data: { selectedItems },
+            success: function (response) {
                 $('#modal_ajax .modal-title').html('Bulk ' + capitalizeFirstLetter(actionOnItem) + ' ' + capitalizeFirstLetter(plural_feature));
                 $('#modal_ajax .modal-body').html(response);
                 $("#modal_ajax").modal("show");
@@ -201,7 +201,7 @@
     });
 
 
-    $(document).on('click', "#modal_save", function() {
+    $(document).on('click', "#modal_save", function () {
         const modal_content = $(this).closest('.modal-content');
         const frm_id = modal_content.find('form').attr('id');
         const frm = $('#' + frm_id)
@@ -212,10 +212,10 @@
             url,
             type: 'POST',
             data,
-            beforeSend: function() {
+            beforeSend: function () {
                 $("#overlay").css("display", "block");
             },
-            success: function(response) {
+            success: function (response) {
                 // console.log(response);
                 if (typeof response == 'object') {
 
@@ -225,7 +225,7 @@
                         if (!isEmpty(response.errors)) {
                             error_container.removeClass('hidden');
                             let ul = "<ul>";
-                            $.each(response.errors, function(index, value) {
+                            $.each(response.errors, function (index, value) {
                                 ul += "<li>" + value + "</li>";
                             })
                             ul += "</ul>";
@@ -277,13 +277,13 @@
     }
 
 
-    $(document).on('click', "#myTabs", function(ev) {
+    $(document).on('click', "#myTabs", function (ev) {
         const tabs = $(this)
         const target_tab = $(ev.target).attr('href')
         const tab_content = $('.tab-content')
         const tab_panes = tab_content.find('.tab-pane')
 
-        $.each(tab_panes, function(index, pane) {
+        $.each(tab_panes, function (index, pane) {
             // console.log(pane)
             $(pane).removeClass('ajax_main')
             $(pane).removeClass('active')
@@ -300,11 +300,11 @@
 
         $("#delete_confirmation").modal("show");
 
-        $("#confirmDeleteBtn").click(function() {
+        $("#confirmDeleteBtn").click(function () {
             $.ajax({
                 url,
                 method: "GET",
-                success: function(response) {
+                success: function (response) {
                     // console.log(response)
                     // childrenAjaxLists($('.ajax_main'))
                     $("#delete_confirmation").modal("hide");
@@ -316,14 +316,14 @@
     }
 
 
-    $(document).on('keydown', '.datepicker', function() {
+    $(document).on('keydown', '.datepicker', function () {
         return false;
     })
 
 
-    $(document).ready(function($) {
+    $(document).ready(function ($) {
 
-        $(".btn_back").on('click', function() {
+        $(".btn_back").on('click', function () {
             window.history.back();
         })
 
@@ -358,71 +358,41 @@
         // });
 
         // $('.list-group-item:first').trigger('click');
-        
+
     })
 
 
 
     // Church users
 
-    $(".view_tabs").on('click', function(){
-       
+    $(".view_tabs").on('click', function () {
+
         const feature = $(this).data('feature')
         const link_id = $(this).data('link_id')
         const table_id = $(this).data('table_id')
-        const url = "<?=base_url();?>church/" + feature + "/showList"
+        const url = "<?= base_url(); ?>church/" + feature + "/showList"
 
         var tabs_datatable = $("#" + table_id).DataTable({
-        dom: 'lBfrtip',
-        "bDestroy": true,
-        buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5',
-        ],
-        pagingType: "full_numbers",
-        // stateSave:true,
-				pageLength:10,
-				order:[],
-				serverSide:true,
-				processing:true,
-				language:{processing:'Loading ...'},
-				ajax:{
-					url:url,
-					type:"POST",
-				}
-		});
+            dom: 'lBfrtip',
+            "bDestroy": true,
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5',
+            ],
+            pagingType: "full_numbers",
+            // stateSave:true,
+            pageLength: 10,
+            order: [],
+            serverSide: true,
+            processing: true,
+            language: { processing: 'Loading ...' },
+            ajax: {
+                url: url,
+                type: "POST",
+            }
+        });
     })
-
-    function loadDatatableOnTabs(elem){
-        // const feature = $(elem).data('feature')
-        // const link_id = $(elem).data('link_id')
-        // const url = "<?=base_url();?>church/" + feature + "/showList"
-
-        // let tabs_datatable = $(".tabs_datatable").DataTable({
-        // dom: 'lBfrtip',
-        // "bDestroy": true,
-        // buttons: [
-        //     'copyHtml5',
-        //     'excelHtml5',
-        //     'csvHtml5',
-        //     'pdfHtml5',
-        // ],
-        // pagingType: "full_numbers",
-        // // stateSave:true,
-		// 		pageLength:10,
-		// 		order:[],
-		// 		serverSide:true,
-		// 		processing:true,
-		// 		language:{processing:'Loading ...'},
-		// 		ajax:{
-		// 			url:url,
-		// 			type:"POST",
-		// 		}
-		// });
-
-        // tabs_datatable.destroy();
-    }
 
 </script>

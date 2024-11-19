@@ -1,3 +1,4 @@
+
 <table id="<?=$table_id;?>" class="table table-bordered table-striped table-hover tabs_datatable">
     <thead>
         <tr>

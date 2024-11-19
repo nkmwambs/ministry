@@ -221,7 +221,11 @@ class WebController extends BaseController
         $page_data['customValues'] = $customValues;
         // }
 
-        return view($this->session->user_type . "/$this->feature/edit", $page_data);
+        if ($this->request->isAJAX()) {
+            return view($this->session->user_type . "/$this->feature/edit", $page_data);
+        }
+
+        return view('index', compact('page_data'));
     }
 
     public function delete($id)
@@ -550,7 +554,8 @@ class WebController extends BaseController
 
     function getRecords()
     {
-        $columns = $this->library->setListQueryFields();
+        $columns = sanitizeColumns($this->tableName, $this->library->setListQueryFields())['queryColumns'];
+        
         $search_columns = $columns;
 
         // Limiting records
@@ -650,6 +655,15 @@ class WebController extends BaseController
 
         $cnt = 0;
         foreach ($records as $record) {
+            // log_message('error', json_encode($record));
+            foreach ($record as $key => $value){
+                if($key == 'id'){
+                    $actionButtons = '<a class = "btn btn-info" href="'.site_url("church/".plural($this->feature)."/edit/".hash_id($record['id'],'encode')).'">Edit</a>';
+                    $actionButtons .= '<a class = "btn btn-success" href="'.site_url("church/".plural($this->feature)."/view/".hash_id($record['id'],'encode')).'" >View</a>';
+                    $actionButtons .= '<a class = "btn btn-danger" href="'.site_url("church/".plural($this->feature)."/delete/".hash_id($record['id'],'encode')).'">Delete</a>';
+                    $record['id'] = $actionButtons;
+                }
+            }
             $row = array_values($record);
             $result[$cnt] = $row;
             $cnt++;
