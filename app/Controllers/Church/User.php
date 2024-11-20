@@ -6,7 +6,7 @@ use App\Controllers\WebController;
 
 class User extends WebController
 {
-    public function viewMyProfile($hashed_id) {
+    public function view($hashed_id): string {
         $data = [];
         $numeric_id = hash_id($hashed_id, 'decode');
 

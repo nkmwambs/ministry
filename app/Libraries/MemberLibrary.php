@@ -85,4 +85,18 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['denominations'] = $denominations;
         $page_data['designations'] = $designations;
     }
+
+    function viewExtraData(&$page_data){
+        $denominations = [];
+        $designations = [];
+
+        $denominationsModel = new \App\Models\DenominationsModel();
+        $denominations = $denominationsModel->findAll();
+
+        $designationsModel = new \App\Models\DesignationsModel();
+        $designations = $designationsModel->findAll();
+
+        $page_data['denominations'] = $denominations;
+        $page_data['designations'] = $designations;
+    }
 }

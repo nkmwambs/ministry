@@ -658,7 +658,7 @@ class WebController extends BaseController
             foreach ($record as $key => $value){
                 if($key == 'id'){
                     $actionButtons = '<a class = "btn btn-info" href="'.site_url("church/".plural($this->feature)."/edit/".hash_id($record['id'],'encode')).'">Edit</a>';
-                    $actionButtons .= '<a class = "btn btn-success" href="'.site_url("church/".plural($this->feature)."/view/".hash_id($record['id'],'encode')).'" >View</a>';
+                    $actionButtons .= '<a class = "btn btn-success" href="'.site_url("church/".plural($this->feature)."/view/".hash_id($record['id'],'encode')).'">View</a>';
                     $actionButtons .= '<a class = "btn btn-danger" href="'.site_url("church/".plural($this->feature)."/delete/".hash_id($record['id'],'encode')).'">Delete</a>';
                     $record['id'] = $actionButtons;
                 }

@@ -1,10 +1,4 @@
-<div class="row">
-    <div class="col-xs-12 btn-container">
-        <div class="btn btn-info btn_back">
-            <?= lang('report.back_button') ?>
-        </div>
-    </div>
-</div>
+
 
 <div class="row">
     <?php if (session()->getFlashdata('message')) { ?>
