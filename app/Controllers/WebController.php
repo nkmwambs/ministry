@@ -657,9 +657,9 @@ class WebController extends BaseController
         foreach ($records as $record) {
             foreach ($record as $key => $value){
                 if($key == 'id'){
-                    $actionButtons = '<a class = "btn btn-info" href="'.site_url("church/".plural($this->feature)."/edit/".hash_id($record['id'],'encode')).'">Edit</a>';
-                    $actionButtons .= '<a class = "btn btn-success" href="'.site_url("church/".plural($this->feature)."/view/".hash_id($record['id'],'encode')).'">View</a>';
-                    $actionButtons .= '<a class = "btn btn-danger" href="'.site_url("church/".plural($this->feature)."/delete/".hash_id($record['id'],'encode')).'">Delete</a>';
+                    $actionButtons = auth()->user()->canDo("$this->feature.update") ? '<a class = "btn btn-info action_btn" href="'.site_url("church/".plural($this->feature)."/edit/".hash_id($record['id'],'encode')).'">Edit</a>' : '';
+                    $actionButtons .= '<a class = "btn btn-success action_btn" href="'.site_url("church/".plural($this->feature)."/view/".hash_id($record['id'],'encode')).'">View</a>';
+                    $actionButtons .= auth()->user()->canDo("$this->feature.delete") ? '<a class = "btn btn-danger action_btn action_delete" href="#" data-id="'.hash_id($record['id'],'encode').'">Delete</a>' : '';
                     $record['id'] = $actionButtons;
                 }
             }
