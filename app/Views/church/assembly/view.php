@@ -1,4 +1,12 @@
 
+<style>
+    .scrollable-view {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent content from wrapping */
+    padding: 10px; /* Optional: Adjust for spacing */
+    border: 1px solid #ccc; /* Optional: Add border for clarity */
+}
+</style>
 
 <div class="row">
     <?php if (session()->getFlashdata('message')) { ?>
@@ -40,16 +48,16 @@
 
                 <div class="tab-content">
 
-                    <div class="active tab-pane" id="list_members">
-                        <?=datatable("table_list_members", $columns['member']);?>
+                    <div class="active tab-pane scrollable-view" id="list_members">
+                        <?=datatable("table_list_members", 'member', $columns['member']);?>
                     </div>
 
                     <div class="tab-pane" id="list_collections">
-                        <?=datatable("table_list_collections", $columns['collection']);?>
+                        <?=datatable("table_list_collections", 'collection',$columns['collection']);?>
                     </div>
 
                     <div class="tab-pane" id="list_tithes">
-                        <?=datatable("table_list_tithes", $columns['tithe']);?>
+                        <?=datatable("table_list_tithes", 'tithe',$columns['tithe']);?>
                     </div>
                 </div>
             </div>
@@ -61,5 +69,6 @@
 <script>
     $(document).ready(function(){
         $(".nav-tabs").find("li.active").find('a').click();
+        
     });
 </script>

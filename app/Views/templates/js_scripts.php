@@ -366,7 +366,7 @@
     // Church users
 
     $(".view_tabs").on('click', function () {
-
+       
         const feature = $(this).data('feature')
         const link_id = $(this).data('link_id')
         const table_id = $(this).data('table_id')

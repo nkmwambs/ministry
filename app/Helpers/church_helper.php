@@ -49,9 +49,9 @@ if (!function_exists('button_row')) {
 }
 
 if (!function_exists('datatable')) {
-    function datatable($table_id, $columns)
+    function datatable($table_id, $feature, $columns)
     {
-        return view('templates/datatable', ['table_id' => $table_id, 'columns' => $columns]);
+        return view('templates/datatable', ['table_id' => $table_id, 'feature' => $feature, 'columns' => $columns]);
     }
 }
 
