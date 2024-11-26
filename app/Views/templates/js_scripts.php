@@ -373,15 +373,15 @@
         const url = "<?= base_url(); ?>church/" + feature + "/showList"
 
         var tabs_datatable = $("#" + table_id).DataTable({
-            dom: 'lBfrtip',
-            "bDestroy": true,
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5',
-            ],
-            pagingType: "full_numbers",
+            // dom: 'lBfrtip',
+            // "bDestroy": true,
+            // buttons: [
+            //     'copyHtml5',
+            //     'excelHtml5',
+            //     'csvHtml5',
+            //     'pdfHtml5',
+            // ],
+            // pagingType: "full_numbers",
             // stateSave:true,
             pageLength: 10,
             order: [],

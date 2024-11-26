@@ -114,3 +114,12 @@ if (!function_exists('sanitizeColumns')) {
         return $sanitizedColumns;
     }
 }
+
+
+if(!function_exists('custom_field_row')){
+    function custom_field_row($customFieldId){
+        $fieldLibrary = new \App\Libraries\FieldLibrary();
+        $fieldInfo = $fieldLibrary->getFieldInfoById($customFieldId);
+        return "<tr><td>".$fieldInfo['field_name']."</td><td>".$fieldInfo['type']."</td><td>".$fieldInfo['options']."</td></tr>";
+    }
+}

@@ -317,4 +317,10 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
 
         return $value; // Placeholder for actual field value computation
     }
+
+    function getFieldInfoById($customFieldId){
+        $fieldsModel = new \App\Models\FieldsModel();
+        $field = $fieldsModel->where('id', $customFieldId)->first();
+        return $field;
+    }
 }

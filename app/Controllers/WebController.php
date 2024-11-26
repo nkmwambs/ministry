@@ -625,19 +625,19 @@ class WebController extends BaseController
 
         array_shift($search_columns);
 
-        if (!empty($value)) {
-            $this->model->groupStart();
-            $column_key = 0;
-            foreach ($search_columns as $column) {
-                if ($column_key == 0) {
-                    $this->model->like($column, $value, 'both');
-                } else {
-                    $this->model->orLike($column, $value, 'both');
-                }
-                $column_key++;
-            }
-            $this->model->groupEnd();
-        }
+        // if (!empty($value)) {
+        //     $this->model->groupStart();
+        //     $column_key = 0;
+        //     foreach ($search_columns as $column) {
+        //         if ($column_key == 0) {
+        //             $this->model->like($column, $value, 'both');
+        //         } else {
+        //             $this->model->orLike($column, $value, 'both');
+        //         }
+        //         $column_key++;
+        //     }
+        //     $this->model->groupEnd();
+        // }
         $this->model->tableJoins();
         $count_all_results = $this->model->countAllResults();
 

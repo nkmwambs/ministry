@@ -49,7 +49,6 @@ $routes->group("church", ['namespace' => 'App\Controllers\Church'], function ($r
             $routes->get('list/(:segment)', "$ucfirst::index/$1");
             $routes->get('add', "$ucfirst::add");
             $routes->get('view/(:segment)', "$ucfirst::view/$1");
-            // $routes->get('view/(:segment)', "$ucfirst::viewMyProfile/$1");
             $routes->get('view/(:segment)/(:segment)', "$ucfirst::view/$1");
             $routes->get('edit/(:segment)', "$ucfirst::edit/$1");
             $routes->get('delete/(:segment)', "$ucfirst::delete/$1");
@@ -61,8 +60,8 @@ $routes->group("church", ['namespace' => 'App\Controllers\Church'], function ($r
             $routes->post('bulk_edit', "$ucfirst::bulkEdit");
             $routes->post('showList', "$ucfirst::showList");
         });
-        $routes->get('church/members/view/(:segment)', "Member::view/$1");
 
+        $routes->get('church/members/view/(:segment)', "Member::view/$1");
         $routes->post('users/profile/account/save', "User::updatePublicInfo");
         $routes->post('users/profile/account/update_public_info', "User::updatePublicInfo");
         $routes->post('users/profile/account/update_private_info', "User::updatePrivateInfo");
