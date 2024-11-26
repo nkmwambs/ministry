@@ -96,19 +96,6 @@
                                         ?>
                                     </div> 
 
-                                    
-                                    <?php 
-                                        // if(isset($section['section_parts'])){
-                                        //     foreach($section['section_parts'] as $part){
-                                        //         echo '<div class="col-xs-12 part_title">'.$part['part_title'].'</div>';
-                                        //         if(isset($part['part_fields'])){
-                                        //             $part_fields = explode(',',$part['part_fields'][0]);
-                                        //             echo view("admin/type/type_view_table", compact('part_fields'));
-
-                                        //         }
-                                        //     }
-                                        // }
-                                    ?>
                                 </div>  
 
                             <?php

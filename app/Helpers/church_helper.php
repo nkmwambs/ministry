@@ -58,7 +58,6 @@ if (!function_exists('datatable')) {
 if (!function_exists('sanitizeColumns')) {
     function sanitizeColumns($tableName, $columns)
     {
-        // log_message('error', json_encode($columns));
         $sanitizedColumns['headerColumns'] = $columns;
         $sanitizedColumns['queryColumns'] = $columns;
 

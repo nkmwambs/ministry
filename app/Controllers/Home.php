@@ -25,6 +25,7 @@ class Home extends WebController
             return $this->create_user_session($user->toArray());
         }
         
+        // auth()->loggedout();
         return redirect()->to(site_url('login'));
     }
 

@@ -210,9 +210,6 @@ $numeric_denomination_id = hash_id($parent_id, 'decode');
         </div>
 
         <div class="col-xs-6 div_part_fields">
-            <!-- <select class="form-control multi_fields" name="part_fields[]" id="part_fields" multiple>
-                <option value="">Select Fields</option>
-            </select> -->
             <input class="form-control part_fields multi_fields" name=""  />
         </div>
         <input type="hidden" class="part_number" placeholder="<?= lang('type.enter_part_number') ?>" />

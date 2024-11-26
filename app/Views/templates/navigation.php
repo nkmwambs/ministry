@@ -22,6 +22,7 @@
 									
 			<ul id="main-menu" class="main-menu">
 				<?php 
+				if(service('session')->has('user_type')){
 					foreach($navigation_items[service('session')->user_type] as $navigation_name => $navigation_item){
 						if($navigation_name != 'dashboards' && !auth()->user()->canDo(singular($navigation_name).".read")){
 							continue;
@@ -53,7 +54,7 @@
 							</ul>
 						<?php }?>
 					</li>
-				<?php }?>
+				<?php }}?>
 
 			</ul>
 			

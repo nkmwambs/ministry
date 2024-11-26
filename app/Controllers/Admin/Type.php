@@ -134,10 +134,11 @@ class Type extends WebController
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
             'denomination_id' => $this->request->getPost('denomination_id'),
+            'report_layout' => json_encode($this->stringifyPartsArray($this->request->getPost('layout'))),
         ];
 
         $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
-
+        
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
         // $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,dir: 'decode'), $this->tableName, $customFieldValues);
@@ -173,5 +174,21 @@ class Type extends WebController
         }
 
         return redirect()->to(site_url($this->session->user_type."/type/view".$hashed_id));
+    }
+
+    function stringifyPartsArray($reportLayout){
+        $stringified = [];
+
+        foreach($reportLayout as $section_number => $section){
+            $stringified[$section_number ]['section_title'] = $section['section_title']; 
+            $stringified[$section_number ]['section_parts'] = [];
+
+            foreach($section['section_parts'] as $part_number => $part){
+                $stringified[$section_number ]['section_parts'][$part_number]['part_title'] = $part['part_title'];
+                $stringified[$section_number ]['section_parts'][$part_number]['part_fields'] = [implode(",",$part['part_fields'])];
+            }
+        }
+
+        return $stringified;
     }
 }

@@ -59,7 +59,9 @@ class WebController extends BaseController
 
         $this->tableName = plural($this->feature);
 
-
+        if(!$this->session->has('logged_in')){
+            $this->session->destroy();
+        }
     }
 
 

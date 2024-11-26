@@ -39,6 +39,7 @@ class Login extends WebController {
 
     public function logout() {
         $this->session->destroy();
+        auth()->loggedout();
         return redirect()->to(site_url('/'));
         // auth()->logout();
     }

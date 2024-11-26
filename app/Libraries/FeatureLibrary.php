@@ -23,7 +23,7 @@ class FeatureLibrary implements \App\Interfaces\LibraryInterface {
 
     function navigationItems(){
 
-        $user_permitted_assemblies = service('session')->user_permitted_assemblies;
+        $user_permitted_assemblies = service('session')->has('user_permitted_assemblies') ? service('session')->user_permitted_assemblies : [];
         $user_id = service('session')->user_id;
 
         $items = [
