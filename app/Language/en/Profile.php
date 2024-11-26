@@ -8,6 +8,7 @@ return [
     'email_notifications' => 'Email Notifications',
     'web_notifications' => 'Web Notifications',
     'pending_tasks' => 'Pending Tasks',
+    'tithes' => 'My Tithes',
     'widgets' => 'Widgets',
     'your_data' => 'Your Data',
     'delete_account' => 'Delete Account',
