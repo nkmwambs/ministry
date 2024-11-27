@@ -3,6 +3,7 @@
 namespace App\Controllers\Church;
 
 use App\Controllers\WebController;
+use CodeIgniter\I18n\Time;
 
 class User extends WebController
 {
@@ -196,5 +197,102 @@ class User extends WebController
         } else {
             return redirect()->back()->with('error', 'Failed to delete account');
         }
+    }
+
+    public function updatePublicInfo()
+    {
+        $hashed_id = $this->request->getVar('id');
+
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'username' => 'required|min_length[3]|max_length[255]',
+            'biography' => 'required|min_length[3]|max_length[255]',
+            // 'profile_picture' => 'required',
+        ]);
+
+        if (!$this->validate($validation->getRules())) {
+            return response()->setJSON(['errors' => $this->validator->getErrors()]);
+        }
+
+        $originalDate = Time::now('America/Chicago', 'en_US');
+        $newDateString = $originalDate->format('Y-m-d H:i:s');
+
+        $update_data = [
+            'username' => $this->request->getPost('username'),
+            'biography' => $this->request->getPost('biography'),
+            'updated_at' => $newDateString,
+            // 'profile_picture' => $this->request->getPost('profile_picture')?: NULL, // This line prevents NULL values from being inserted into the database. It should be handled elsewhere in your application. If you want to remove this line, make sure to handle NULL values appropriately in your application.
+        ];
+
+        $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
+
+        if ($this->request->isAJAX() > 0) {
+            $this->feature = 'user';
+            $this->action = 'list';
+
+            $records = [];
+
+            if(method_exists($this->model, 'getViewData')){
+                $records = $this->model->getViewData(hash_id($hashed_id, 'decode'));
+            }else{
+                $records = $this->model->getOne(hash_id($hashed_id, 'decode'));
+            }
+
+            return view($this->session->user_type.'/user/account', parent::page_data($records));
+        }
+
+        return redirect()->to(site_url($this->session->user_type.'/users/view/' . $hashed_id))->with('message', 'User Public Info updated successfuly!');
+    }
+
+    public function updatePrivateInfo()
+    {
+        $hashed_id = $this->request->getPost('id'); // hash_id($id, 'decode');
+
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'first_name' => 'required|min_length[3]|max_length[255]',
+            'last_name' => 'required|min_length[3]|max_length[255]',
+            'phone' => 'required',
+            'email' => 'required|valid_email',
+            'gender' => 'required|min_length[4]|max_length[6]',
+            'date_of_birth' => 'required',
+        ]);
+
+        if (!$this->validate($validation->getRules())) {
+            return response()->setJSON(['errors' => $this->validator->getErrors()]);
+        }
+
+        $originalDate = Time::now('America/Chicago', 'en_US');
+        $newDateString = $originalDate->format('Y-m-d H:i:s');
+
+        $update_data = [
+            // 'denomination_id' => $this->request->getPost('denomination_id'),
+            'first_name' => $this->request->getPost('first_name'),
+            'last_name' => $this->request->getPost('last_name'),
+            'phone' => $this->request->getPost('phone'),
+            'email' => $this->request->getPost('email'),
+            'gender' => $this->request->getPost('gender'),
+            'date_of_birth' => $this->request->getPost('date_of_birth'),
+            'updated_at' => $newDateString,
+        ];
+
+        $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);
+
+        if ($this->request->isAJAX() > 0) {
+            $this->feature = 'user';
+            $this->action = 'list';
+
+            $records = [];
+
+            if (method_exists($this->model, 'getAll')) {
+                $records = $this->model->getAll();
+            } else {
+                $records = $this->model->findAll();
+            }
+
+            return view($this->session->user_type.'/user/account', parent::page_data($records));
+        }
+
+        return redirect()->to(site_url($this->session->user_type.'/users/view/' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
     }
 }
