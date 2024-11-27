@@ -102,14 +102,22 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
 
     function makeUser($data){
         $member_id = $data['member_id'];
+        $status = "failed";
+        $message = "Failed to convert";
 
         $membersModel = new \App\Models\MembersModel();
         $member = $membersModel->find($member_id);
 
         $userModel = new \App\Models\UsersModel();
+        
+        $userExists = $userModel->where('associated_member_id', $member_id)->first();
+
+        if($userExists){
+            $message = "Failed to convert due to existing user associated to the member";
+            return compact('status','message');
+        }
 
         $password = generateRandomString(8);
-
         $denomination_id = 3;
 
         $data = [
@@ -131,15 +139,21 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
+        // Insert new user
         $user = new \CodeIgniter\Shield\Entities\User($data);
         $userModel->insert($user, true);
         $insertId = $userModel->getInsertID();
 
+        $templateLibrary =  new \App\Libraries\TemplateLibrary();
+        $email = $member['email'];
+        $first_name = $member['first_name'];
+        $mailTemplate = $templateLibrary->getEmailTemplate(short_name: 'new_user_account', template_vars: compact('password', 'first_name', 'email'), denomination_id: $denomination_id);
+        $logMailsModel = new \App\Models\LogmailsModel();
+        $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
+
+        // Add default group to new user
         $user->id = $insertId;
         $userModel->addToDefaultGroup($user);
-
-        $status = "failed";
-        $message = "Failed to convert";
 
         if($insertId){
             $status = "success";

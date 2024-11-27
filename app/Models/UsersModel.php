@@ -196,31 +196,4 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
 
         return $data;
     }
-
-    /**
-     * Adds a user to the default group.
-     * Used during registration.
-     */
-    public function addToDefaultGroup(\CodeIgniter\Shield\Entities\User $user): void
-    {
-        // $rolesModel = new RolesModel();
-        // $roles = $rolesModel->findAll();
-
-        $defaultGroup  = setting('AuthGroups.defaultGroup');
-        $allowedGroups =  array_keys(setting('AuthGroups.groups')); // array_column($roles,'name'); //
-
-        if (empty($defaultGroup) || ! in_array($defaultGroup, $allowedGroups, true)) {
-            throw new \InvalidArgumentException(lang('Auth.unknownGroup', [$defaultGroup ?? '--not found--']));
-        }
-
-        $user->addGroup($defaultGroup);
-    }
-
-    // private function getConfigGroups(): array
-    // {
-    //     $rolesModel = new RolesModel();
-    //     $roles = $rolesModel->findAll();
-
-    //     return array_column($roles,'name');//array_keys(setting('AuthGroups.groups'));
-    // }
 }
