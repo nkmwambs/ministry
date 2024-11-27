@@ -1,7 +1,7 @@
 <?php 
 namespace App\Traits;
 trait DatabaseTrait {
-    function tableJoins(){
+    function tableJoins($queryCondition = []){
         $table = $this->table;
         $lookupTables = [];
 
@@ -15,6 +15,17 @@ trait DatabaseTrait {
                 $idField = 'id';
 
                 $this->join($joinTable, "$table.$relationId=$joinTable.$idField");
+
+                if(!empty($queryCondition)){
+                    if(array_key_exists($joinTable, $queryCondition)){
+                        if(is_array($queryCondition[$joinTable])){
+                            $this->whereIn("$joinTable.id", $queryCondition[$joinTable]);
+                        }else{
+                            $this->where("$joinTable.id", $queryCondition[$joinTable]);
+                        }
+                        
+                    }
+                }
             }
         }
     }

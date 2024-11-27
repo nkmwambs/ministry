@@ -370,10 +370,12 @@
         const link_id = $(this).data('link_id')
         const table_id = $(this).data('table_id')
         const url = "<?= base_url(); ?>church/" + feature + "/showList"
+        const parent_id = $(this).data('parent_id')
+        const parent_table = $(this).data('parent_table')
 
         var tabs_datatable = $("#" + table_id).DataTable({
             // dom: 'lBfrtip',
-            // "bDestroy": true,
+            "bDestroy": true,
             // buttons: [
             //     'copyHtml5',
             //     'excelHtml5',
@@ -381,7 +383,7 @@
             //     'pdfHtml5',
             // ],
             // pagingType: "full_numbers",
-            // stateSave:true,
+            stateSave:true,
             pageLength: 10,
             order: [],
             serverSide: true,
@@ -390,6 +392,11 @@
             ajax: {
                 url: url,
                 type: "POST",
+                data: {
+                    parent_id,
+                    feature,
+                    parent_table
+                }
             }
         });
     })

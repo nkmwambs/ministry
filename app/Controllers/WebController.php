@@ -609,7 +609,20 @@ class WebController extends BaseController
         }
 
         $this->model->select($columns);
-        $this->model->tableJoins();
+
+        if($this->request->getPost('parent_table') && $this->request->getPost('parent_id')){
+            $parentTable = $this->request->getPost('parent_table');
+            $parentId = hash_id($this->request->getPost('parent_id'),'decode', 'array');
+
+            if(!is_array($parentId)){
+                $parentId = [$parentId];
+            }
+
+            $this->model->tableJoins([$parentTable => $parentId]);
+        }else{
+            $this->model->tableJoins();
+        }
+
 
         $results = $this->model->findAll();
 

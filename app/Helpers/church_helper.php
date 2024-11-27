@@ -2,15 +2,20 @@
 
 use Hashids\Hashids;
 
+// ReturnType can be int or array
 if (!function_exists('hash_id')) {
-    function hash_id($id, $dir = "encode"): string|int
+    function hash_id($id, $dir = "encode", $returnType = 'int'): string|int|array
     {
         $hashids = new Hashids("Church-Manager");
 
         if ($dir == 'encode') {
             return $hashids->encode($id);
         } else {
-            return $hashids->decode($id)[0];
+            if($returnType == 'array'){
+                return $hashids->decode($id);
+            }else{
+                return $hashids->decode($id)[0];
+            }
         }
     }
 }

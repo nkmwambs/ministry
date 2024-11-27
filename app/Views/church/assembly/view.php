@@ -8,6 +8,7 @@
 }
 </style>
 
+
 <div class="row">
     <?php if (session()->getFlashdata('message')) { ?>
         <div class="col-xs-12 info">
@@ -30,15 +31,15 @@
                     <div class="panel-options">
 
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#list_members" data-link_id="list_members"
+                            <li class="active"><a href="#list_members" data-parent_id="<?=$id?>" data-parent_table="assemblies" data-link_id="list_members"
                                     data-feature="member" data-table_id = "table_list_members" class = "view_tabs" id="list_members_tab"
                                     data-toggle="tab"><?= lang('member.list_members'); ?></a></li>
-                            <li><a href="#list_collections" data-table_id = "table_list_collections" data-link_id="list_collections"
+                            <li><a href="#list_collections" data-parent_id="<?=$id?>" data-table_id = "table_list_collections" data-parent_table="assemblies" data-link_id="list_collections"
                                     data-feature="collection"  class = "view_tabs"
                                     id="list_collections_tab"
                                     data-toggle="tab"><?= lang('collection.list_collections'); ?></a></li>
-                            <li><a href="#list_tithes" data-link_id="list_tithes" data-feature="tithe"
-                                     id="list_tithes_tab" class = "view_tabs" data-table_id = "table_list_tithes"
+                            <li><a href="#list_tithes" data-parent_id="<?=$id?>" data-link_id="list_tithes" data-feature="tithe"
+                                     id="list_tithes_tab" class = "view_tabs" data-parent_table="assemblies" data-table_id = "table_list_tithes"
                                     data-toggle="tab"><?= lang('tithe.list_tithes'); ?></a></li>
                         </ul>
                     </div>

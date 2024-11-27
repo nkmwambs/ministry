@@ -47,10 +47,6 @@ class Home extends WebController
         // Update log count
         $userModel = new \App\Models\UsersModel();
         $userModel->update($user['id'], (object)['access_count' => $user['access_count'] + 1]);
-
-        // log_message('error', json_encode($this->session->get()));
-        log_message('error', 'Hello 1');
-
         
         return redirect()->to(site_url($this->session->get('user_type').'/dashboards/list'));
     }

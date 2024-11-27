@@ -109,7 +109,7 @@ class User extends WebController
 
         // Generate random password with password hash in php 
         $password = $this->generateRandomString(8);
-        $hashed_password = password_hash($this->generateRandomString(8), PASSWORD_DEFAULT);
+        // $hashed_password = password_hash($this->generateRandomString(8), PASSWORD_DEFAULT);
 
         $templateLibrary =  new \App\Libraries\TemplateLibrary();
         $first_name = $this->request->getPost('first_name');
@@ -130,9 +130,9 @@ class User extends WebController
             'roles' => json_encode($this->request->getPost('roles')),
             'email' => $this->request->getPost('email'),
             'permitted_entities' => json_encode($this->request->getPost('permitted_entities')) ?: NULL,
-            'permitted_assemblies' => $this->request->getPost('permitted_assemblies') ?: NULL,
+            'permitted_assemblies' => $this->request->getPost('permitted_assemblies') ? json_encode($this->request->getPost('permitted_assemblies')) : NULL,
             'is_system_admin' => $this->request->getPost('is_system_admin') ?: NULL,
-            'password' => $hashed_password,
+            'password' => $password,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ];
