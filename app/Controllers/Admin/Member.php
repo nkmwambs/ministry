@@ -33,15 +33,17 @@ class Member extends WebController
         $members = [];
 
         if($parent_id > 0){
-            $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            $members = $this->model->select('members.id,members.first_name,members.gender,members.last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,members.date_of_birth,members.email,members.phone,associated_member_id as member_is_user')
             ->where('assembly_id',hash_id($parent_id,'decode') )
             ->join('assemblies','assemblies.id=members.assembly_id','left')
+            ->join('users','users.associated_member_id = members.id','left')
             ->join('designations','designations.id = members.designation_id')
             ->orderBy('members.created_at desc')
             ->findAll();
         }else{
-            $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            $members = $this->model->select('members.id,members.first_name,members.gender,members.last_name,assembly_id,member_number,designations.name as designation_name,designation_id,members.date_of_birth,members.email,members.phone,associated_member_id as member_is_user')
             ->join('assemblies','assemblies.id=members.assembly_id','left')
+            ->join('users','users.associated_member_id = members.id','left')
             ->join('designations','designations.id = members.designation_id')
             ->orderBy('members.created_at desc')
             ->findAll();

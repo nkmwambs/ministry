@@ -46,6 +46,7 @@
                     <th><?= lang('member.member_action') ?></th>
                     <th><?= lang('member.member_first_name') ?></th>
                     <th><?= lang('member.member_last_name') ?></th>
+                    <th><?= lang('member.member_is_user') ?></th>
                     <th><?= lang('member.member_gender') ?></th>
                     <th><?= lang('member.member_member_number') ?></th>
                     <th><?= lang('member.member_designation_id') ?></th>
@@ -89,6 +90,7 @@
 
                         <td><?= $member['first_name']; ?></td>
                         <td><?= $member['last_name']; ?></td>
+                        <td><?= $member['member_is_user'] ? lang('system.system_yes'): lang('system.system_no'); ?></td>
                         <td><?= $member['gender']; ?></td>
                         <td><?= $member['member_number']; ?></td>
                         <td><?= $member['designation_name']; ?></td>
