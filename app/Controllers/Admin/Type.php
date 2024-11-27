@@ -89,10 +89,10 @@ class Type extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view($this->session->user_type.'/type/list', parent::page_data($records));
+            return view($this->session->get('user_type').'/type/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type.'/settings/view/' . hash_id($insertId)));
+        return redirect()->to(site_url($this->session->get('user_type').'/settings/view/' . hash_id($insertId)));
     }
 
     public function update() {
@@ -170,10 +170,10 @@ class Type extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view($this->session->user_type.'/type/list', parent::page_data($records));
+            return view($this->session->get('user_type').'/type/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type."/type/view".$hashed_id));
+        return redirect()->to(site_url($this->session->get('user_type')."/type/view".$hashed_id));
     }
 
     function stringifyPartsArray($reportLayout){

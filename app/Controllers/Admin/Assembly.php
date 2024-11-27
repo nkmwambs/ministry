@@ -150,7 +150,7 @@ class Assembly extends WebController
             }else{
                 $records = $this->model->findAll();
             }
-            return view($this->session->user_type."/assembly/list", parent::page_data($records));
+            return view($this->session->get('user_type')."/assembly/list", parent::page_data($records));
         }
         
         return redirect()->to(site_url("assembly/view/".$hashed_id))->with('message', 'Assembly updated successfully!');
@@ -232,7 +232,7 @@ class Assembly extends WebController
             }else{
                 $records = $this->model->findAll();
             }
-            return view($this->session->user_type."/assembly/list", parent::page_data($records));
+            return view($this->session->get('user_type')."/assembly/list", parent::page_data($records));
         }
 
         return redirect()->to(site_url("assemblies/view/".hash_id($insertId)));

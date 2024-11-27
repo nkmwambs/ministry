@@ -32,9 +32,13 @@ class WebController extends BaseController
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        // Preload any models, libraries, etc, here.
+        $this->session = service('session'); //\Config\Services::session();
+        
+        if(!$this->session->has('logged_in')){
+            redirect('logout');
+        }
 
-        $this->session = \Config\Services::session();
+        // Preload any models, libraries, etc, here.
         $this->uri = service('uri');
         $this->segments = $this->uri->getSegments();
 
@@ -59,9 +63,7 @@ class WebController extends BaseController
 
         $this->tableName = plural($this->feature);
 
-        if(!$this->session->has('logged_in')){
-            $this->session->destroy();
-        }
+        
     }
 
 
@@ -88,12 +90,12 @@ class WebController extends BaseController
         $page_data['tableName'] = $this->tableName;
 
 
-        $type_view_path = APPPATH . 'Views' . DIRECTORY_SEPARATOR . $this->session->user_type . DIRECTORY_SEPARATOR . $this->feature . DIRECTORY_SEPARATOR . $this->action . '.php';
+        $type_view_path = APPPATH . 'Views' . DIRECTORY_SEPARATOR . $this->session->get('user_type') . DIRECTORY_SEPARATOR . $this->feature . DIRECTORY_SEPARATOR . $this->action . '.php';
         $view_path = APPPATH . 'Views' . DIRECTORY_SEPARATOR . $this->feature . DIRECTORY_SEPARATOR . $this->action . '.php';
         $view = "";
 
         if (file_exists($type_view_path)) {
-            $view = $this->session->user_type . "/$this->feature/$this->action";
+            $view = $this->session->get('user_type') . "/$this->feature/$this->action";
         } elseif (file_exists($view_path)) {
             $view = "$this->feature/$this->action";
         } else {
@@ -120,6 +122,8 @@ class WebController extends BaseController
 
         $featureLibrary = new \App\Libraries\FeatureLibrary();
         $page_data['navigation_items'] = $featureLibrary->navigationItems();
+
+        $page_data['designation'] = '';
 
         return $page_data;
     }
@@ -160,7 +164,7 @@ class WebController extends BaseController
         }
 
         if ($this->request->isAJAX()) {
-            return view($this->session->user_type . "/$this->feature/list", $page_data);
+            return view($this->session->get('user_type') . "/$this->feature/list", $page_data);
         }
 
         return view('index', compact('page_data'));
@@ -192,7 +196,7 @@ class WebController extends BaseController
         }
 
         if ($this->request->isAJAX()) {
-            return view($this->session->user_type . "/$this->feature/view", $page_data);
+            return view($this->session->get('user_type') . "/$this->feature/view", $page_data);
         }
 
         return view('index', compact('page_data'));
@@ -224,7 +228,7 @@ class WebController extends BaseController
         // }
 
         if ($this->request->isAJAX()) {
-            return view($this->session->user_type . "/$this->feature/edit", $page_data);
+            return view($this->session->get('user_type') . "/$this->feature/edit", $page_data);
         }
 
         return view('index', compact('page_data'));
@@ -258,7 +262,7 @@ class WebController extends BaseController
             $page_data['customFields'] = $customFields;
         }
 
-        return view($this->session->user_type . "/$this->feature/add", $page_data);
+        return view($this->session->get('user_type') . "/$this->feature/add", $page_data);
     }
 
     function modal($features, $action, $id = ""): string

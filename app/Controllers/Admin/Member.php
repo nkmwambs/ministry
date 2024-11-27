@@ -59,7 +59,7 @@ class Member extends WebController
         
         if ($this->request->isAJAX()) {
             $page_data['parent_id'] = $parent_id;
-            return view($this->session->user_type.'/member/list', $page_data);
+            return view($this->session->get('user_type').'/member/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
         }
@@ -173,7 +173,7 @@ class Member extends WebController
 
             $page_data = parent::page_data($records, $hashed_assembly_id);
             // $page_data['parent_id'] = hash_id($assembly_id,'encode');
-            return view($this->session->user_type."/member/list", $page_data);
+            return view($this->session->get('user_type')."/member/list", $page_data);
         }
 
         return redirect()->to(site_url("members/view/".hash_id($insertId)));
@@ -289,10 +289,10 @@ class Member extends WebController
             ->orderBy("members.created_at desc")
             ->where('assembly_id', hash_id($hashed_assembly_id,'decode'))
             ->findAll();
-            return view($this->session->user_type."/member/list", parent::page_data($records));
+            return view($this->session->get('user_type')."/member/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url($this->session->user_type."/member/view/".$hashed_id))->with('message', 'Member updated successfully!');
+        return redirect()->to(site_url($this->session->get('user_type')."/member/view/".$hashed_id))->with('message', 'Member updated successfully!');
     }
 
     private function computeMemberNumber($assembly_id) {

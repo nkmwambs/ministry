@@ -88,7 +88,7 @@ class Denomination extends WebController
         if ($this->request->isAJAX()) {
             // $page_data['id'] = $id;
             // $page_data = $this->page_data($data);
-            return view($this->session->user_type."/$this->feature/list", compact('page_data'));
+            return view($this->session->get('user_type')."/$this->feature/list", compact('page_data'));
         }
 
         return view('index', compact('page_data'));
@@ -167,10 +167,10 @@ class Denomination extends WebController
             }else{
                 $records = $this->model->findAll();
             }
-            return view($this->session->user_type."/denomination/list", parent::page_data($records));
+            return view($this->session->get('user_type')."/denomination/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url($this->session->user_type."/denominations/view/".$hashed_id))->with('message', 'Denomination updated successfully!');
+        return redirect()->to(site_url($this->session->get('user_type')."/denominations/view/".$hashed_id))->with('message', 'Denomination updated successfully!');
     }
 
     function post(){
@@ -228,9 +228,9 @@ class Denomination extends WebController
             }else{
                 $records = $this->model->findAll();
             }
-            return view($this->session->user_type."/denomination/list", parent::page_data($records));
+            return view($this->session->get('user_type')."/denomination/list", parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type."/denominations/view/".hash_id($insertId)));
+        return redirect()->to(site_url($this->session->get('user_type')."/denominations/view/".hash_id($insertId)));
     }
 }

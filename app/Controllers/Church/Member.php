@@ -34,7 +34,7 @@ class Member extends WebController
         }
 
         if ($this->request->isAjax()) {
-            return view($this->session->user_type . "/$this->feature/view", $page_data);
+            return view($this->session->get('user_type') . "/$this->feature/view", $page_data);
         }
 
         return view('index', compact('page_data'));

@@ -60,7 +60,7 @@ class Participant extends WebController
         
         if ($this->request->isAJAX()) {
             $page_data['parent_id'] = $parent_id;
-            return view($this->session->user_type.'/participant/list', $page_data);
+            return view($this->session->get('user_type').'/participant/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
         }
@@ -139,7 +139,7 @@ class Participant extends WebController
 
             $this->parent_id = $this->request->getPost('event_id');
             $this->id = hash_id($insertId, 'encode');
-            return view($this->session->user_type."/participant/list", parent::page_data($records));
+            return view($this->session->get('user_type')."/participant/list", parent::page_data($records));
         }
         
         // if($this->request->isAJAX()){
@@ -226,7 +226,7 @@ class Participant extends WebController
             $page_data = parent::page_data($records, $hashed_event_id);
             $page_data['parent_id'] = $hashed_event_id;
 
-            return view($this->session->user_type."/participant/list", $page_data);
+            return view($this->session->get('user_type')."/participant/list", $page_data);
         }
         
         return redirect()->to(site_url("participants/view/".$hashed_id))->with('message', 'Participant updated successfully!');

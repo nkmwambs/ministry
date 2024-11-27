@@ -113,10 +113,10 @@ class Minister extends WebController
             }else{
                 $records = $this->model->findAll();
             }
-            return view($this->session->user_type."/minister/list", parent::page_data($records));
+            return view($this->session->get('user_type')."/minister/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url($this->session->user_type."/ministers/view/".$hashed_id))->with('message', 'Minister updated successfully!');
+        return redirect()->to(site_url($this->session->get('user_type')."/ministers/view/".$hashed_id))->with('message', 'Minister updated successfully!');
     }
 
     function post(){
@@ -171,10 +171,10 @@ class Minister extends WebController
             }else{
                 $records = $this->model->findAll();
             }
-            return view($this->session->user_type."/minister/list", parent::page_data($records));
+            return view($this->session->get('user_type')."/minister/list", parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type."/ministers/view/".hash_id($insertId)))->with('message', 'Minister added seccessfuly!');;
+        return redirect()->to(site_url($this->session->get('user_type')."/ministers/view/".hash_id($insertId)))->with('message', 'Minister added seccessfuly!');;
     }
 
     private function computeMinisterNumber() {

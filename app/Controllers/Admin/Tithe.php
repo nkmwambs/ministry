@@ -58,7 +58,7 @@ class Tithe extends WebController
         
         if ($this->request->isAJAX()) {
             $page_data['parent_id'] = $parent_id;
-            return view($this->session->user_type.'/tithe/list', $page_data);
+            return view($this->session->get('user_type').'/tithe/list', $page_data);
         }else{
             $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
         }
@@ -129,10 +129,10 @@ class Tithe extends WebController
             ->orderBy("tithes.created_at desc")->where('assembly_id', $assembly_id)->findAll();
 
             $page_data = parent::page_data($records, $hashed_assembly_id);
-            return view($this->session->user_type."/tithe/list", $page_data);
+            return view($this->session->get('user_type')."/tithe/list", $page_data);
         }
 
-        return redirect()->to(site_url($this->session->user_type."/tithes/view/".hash_id($insertId)));
+        return redirect()->to(site_url($this->session->get('user_type')."/tithes/view/".hash_id($insertId)));
     }
 
     public function update(){
@@ -199,9 +199,9 @@ class Tithe extends WebController
             ->orderBy("tithes.created_at desc")
             ->where('assembly_id', hash_id($hashed_assembly_id,'decode'))
             ->findAll();
-            return view($this->session->user_type."/tithe/list", parent::page_data($records));
+            return view($this->session->get('user_type')."/tithe/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url($this->session->user_type."/tithe/view/".$hashed_id))->with('message', 'Tithe updated successfully!');
+        return redirect()->to(site_url($this->session->get('user_type')."/tithe/view/".$hashed_id))->with('message', 'Tithe updated successfully!');
     }
 }

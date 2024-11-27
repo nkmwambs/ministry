@@ -32,8 +32,6 @@
 	<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"> -->
 	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.min.css"/>
 
-	
-
 	<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.3.min.js"></script>
 	
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/">

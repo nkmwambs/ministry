@@ -169,10 +169,10 @@ class User extends WebController
 
             $page_data = parent::page_data($records);
 
-            return view($this->session->user_type.'/user/list', $page_data);
+            return view($this->session->get('user_type').'/user/list', $page_data);
         }
 
-        return redirect()->to(site_url($this->session->user_type.'/users/view' . hash_id($insertId)));
+        return redirect()->to(site_url($this->session->get('user_type').'/users/view' . hash_id($insertId)));
     }
 
     /// Update Controllers
@@ -216,10 +216,10 @@ class User extends WebController
                 $records = $this->model->getOne(hash_id($hashed_id, 'decode'));
             }
 
-            return view($this->session->user_type.'/user/account', parent::page_data($records));
+            return view($this->session->get('user_type').'/user/account', parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type.'/users/view/' . $hashed_id))->with('message', 'User Public Info updated successfuly!');
+        return redirect()->to(site_url($this->session->get('user_type').'/users/view/' . $hashed_id))->with('message', 'User Public Info updated successfuly!');
     }
 
     public function updatePrivateInfo()
@@ -268,10 +268,10 @@ class User extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view($this->session->user_type.'/user/account', parent::page_data($records));
+            return view($this->session->get('user_type').'/user/account', parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type.'/users/view/' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
+        return redirect()->to(site_url($this->session->get('user_type').'/users/view/' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
     }
 
 
@@ -296,7 +296,7 @@ class User extends WebController
             $this->library->editExtraData($page_data);
         }
 
-        return view($this->session->user_type.'/user/account', $page_data);
+        return view($this->session->get('user_type').'/user/account', $page_data);
     }
 
     function passwordVerify()
@@ -335,17 +335,17 @@ class User extends WebController
             $this->library->editExtraData($page_data);
         }
         // return redirect()->to(site_url('users/profile/account' . $hashed_id))->with('message', 'User Private Info updated successfuly!');
-        return view($this->session->user_type.'/user/password_reset', $page_data);
+        return view($this->session->get('user_type').'/user/password_reset', $page_data);
     }
 
     public function privacy()
     {
-        return view($this->session->user_type.'/user/privacy');
+        return view($this->session->get('user_type').'/user/privacy');
     }
 
     public function emailNotifications()
     {
-        return view($this->session->user_type.'/user/email_notification');
+        return view($this->session->get('user_type').'/user/email_notification');
     }
 
     public function pendingTasks($user_id)
@@ -377,12 +377,12 @@ class User extends WebController
         $page_data['parent_id'] = $user_id;
 
         // Load the view and pass the data
-        return view($this->session->user_type.'/task/list', $page_data);
+        return view($this->session->get('user_type').'/task/list', $page_data);
     }
 
     public function widgets()
     {
-        return view($this->session->user_type.'/user/widget');
+        return view($this->session->get('user_type').'/user/widget');
     }
 
     public function yourData($id)
@@ -402,7 +402,7 @@ class User extends WebController
             // Note the editExtraData updates the $page_data by reference
             $this->library->editExtraData($page_data);
         }
-        return view($this->session->user_type.'/user/your_data', $page_data);
+        return view($this->session->get('user_type').'/user/your_data', $page_data);
     }
 
     public function downloadUserDataPdf($user_id)
@@ -415,13 +415,13 @@ class User extends WebController
         $userLibrary = new \App\Libraries\UserLibrary();
         $userLibrary->exportUserDataToPdf($user_data);
 
-        return view($this->session->user_type.'/user/your_data');
+        return view($this->session->get('user_type').'/user/your_data');
     }
 
 
     public function deleteAccount()
     {
-        return view($this->session->user_type.'/user/delete_account');
+        return view($this->session->get('user_type').'/user/delete_account');
     }
 
     public function deleteMyAccount($userId)

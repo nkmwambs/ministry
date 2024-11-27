@@ -161,7 +161,7 @@ $routes->group('ajax', static function ($routes) {
     $routes->get('(:segment)/(:segment)/(:any)', 'WebController::ajax/$1/$2/$3');
 });
 
-$routes->get('logout', 'Login::logout');
+$routes->get('logout', 'Home::logout');
 $routes->get('/', '\CodeIgniter\Shield\Controllers\LoginController::loginView');
 $routes->get('home', 'Home::index');
 

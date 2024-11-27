@@ -83,10 +83,10 @@ class Role extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view($this->session->user_type.'/role/list', parent::page_data($records));
+            return view($this->session->get('user_type').'/role/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type.'/settings/view' . hash_id($insertID)))->with('message', 'Role added successfully!');;
+        return redirect()->to(site_url($this->session->get('user_type').'/settings/view' . hash_id($insertID)))->with('message', 'Role added successfully!');;
     }
 
     public function update() {
@@ -166,10 +166,10 @@ class Role extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view($this->session->user_type.'/role/list', parent::page_data($records));
+            return view($this->session->get('user_type').'/role/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type.'/settings/view' . hash_id($hashed_id, 'decode')));
+        return redirect()->to(site_url($this->session->get('user_type').'/settings/view' . hash_id($hashed_id, 'decode')));
     }
 
     function getDefaultRole($denomination_id){

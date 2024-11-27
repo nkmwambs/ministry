@@ -144,10 +144,10 @@ class Department extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view($this->session->user_type.'/department/after_save', parent::page_data($records));
+            return view($this->session->get('user_type').'/department/after_save', parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type.'/settings/view/' . hash_id($insertId)));
+        return redirect()->to(site_url($this->session->get('user_type').'/settings/view/' . hash_id($insertId)));
     }
 
     public function update() {
@@ -233,9 +233,9 @@ class Department extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view($this->session->user_type.'/setting/list', parent::page_data($records));
+            return view($this->session->get('user_type').'/setting/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type."/department/view".$hashed_id));
+        return redirect()->to(site_url($this->session->get('user_type')."/department/view".$hashed_id));
     }
 }

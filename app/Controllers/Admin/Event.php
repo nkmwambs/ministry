@@ -133,10 +133,10 @@ class Event extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view($this->session->user_type.'/event/list', parent::page_data($records));
+            return view($this->session->get('user_type').'/event/list', parent::page_data($records));
         }
 
-        return redirect()->to(site_url($this->session->user_type.'/events/view'.$hashed_id))->with('message', 'Event updated seccessfuly!');
+        return redirect()->to(site_url($this->session->get('user_type').'/events/view'.$hashed_id))->with('message', 'Event updated seccessfuly!');
     }
 
     function post() {

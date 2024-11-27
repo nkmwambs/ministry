@@ -32,7 +32,7 @@ class Field extends WebController
         $customFields = $this->customfieldLibrary->getCustomFieldsForTable('fields');
         $page_data['customFields'] = $customFields;
 
-        return view($this->session->user_type."/$this->feature/add", $page_data);
+        return view($this->session->get('user_type')."/$this->feature/add", $page_data);
     }
 
     public function edit(): string {
@@ -55,7 +55,7 @@ class Field extends WebController
         $customFields = $this->customfieldLibrary->getCustomFieldsForTable('fields');
         $page_data['customFields'] = $customFields;
 
-        return view($this->session->user_type."/$this->feature/edit", $page_data);
+        return view($this->session->get('user_type')."/$this->feature/edit", $page_data);
     }
 
     public function post()
@@ -90,7 +90,7 @@ class Field extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view($this->session->user_type.'/field/list', parent::page_data($records));
+            return view($this->session->get('user_type').'/field/list', parent::page_data($records));
         }
 
         // Dynamically add the new field to the database table
@@ -132,7 +132,7 @@ class Field extends WebController
                 $records = $this->model->findAll();
             }
 
-            return view($this->session->user_type.'/field/list', parent::page_data($records));
+            return view($this->session->get('user_type').'/field/list', parent::page_data($records));
         }
 
         return redirect()->to(site_url("field/view".$hashed_id));

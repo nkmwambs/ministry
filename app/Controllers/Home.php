@@ -17,6 +17,7 @@ class Home extends WebController
         parent::initController($request, $response, $logger);
 
         $this->session = \Config\Services::session();
+        
     }
     public function index($id = null)
     {
@@ -30,6 +31,8 @@ class Home extends WebController
     }
 
     private function create_user_session($user) {
+
+        // log_message('error', json_encode($user));
         
         $this->session->set('logged_in', true);
         $this->session->set('user_id', $user['id']);
@@ -40,11 +43,22 @@ class Home extends WebController
         $this->session->set('user_is_system_admin', $user['is_system_admin']);
         $this->session->set('user_permitted_entities', $user['permitted_entities'] != NULL ? json_decode($user['permitted_entities']): []);
         $this->session->set('user_permitted_assemblies', $user['permitted_assemblies'] != NULL ? json_decode($user['permitted_assemblies']): []);
+
         // Update log count
         $userModel = new \App\Models\UsersModel();
         $userModel->update($user['id'], (object)['access_count' => $user['access_count'] + 1]);
+
+        // log_message('error', json_encode($this->session->get()));
+        log_message('error', 'Hello 1');
+
         
-        return redirect()->to(site_url($this->session->user_type.'/dashboards/list'));
+        return redirect()->to(site_url($this->session->get('user_type').'/dashboards/list'));
+    }
+
+    public function logout() {
+        $this->session->destroy();
+        // auth()->logout();
+        return redirect()->to(site_url('/'));    
     }
 
 }

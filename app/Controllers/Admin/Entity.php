@@ -52,7 +52,7 @@ class Entity extends WebController
 
         if($this->request->isAJAX()){
             $page_data['parent_id'] = $hashed_id;
-            return view($this->session->user_type.'/entity/list', $page_data);
+            return view($this->session->get('user_type').'/entity/list', $page_data);
         }
         return view('index', $page_data);
     }
@@ -69,7 +69,7 @@ class Entity extends WebController
             $page_data['customFields'] = $customFields;
         }
         
-        return view($this->session->user_type.'/entity/add', $page_data);
+        return view($this->session->get('user_type').'/entity/add', $page_data);
     }
 
     public function edit(): string {
@@ -91,7 +91,7 @@ class Entity extends WebController
             $page_data['customValues'] = $customValues;
         }
 
-        return view($this->session->user_type.'/entity/edit', $page_data);
+        return view($this->session->get('user_type').'/entity/edit', $page_data);
     }
 
     function post(){
@@ -180,7 +180,7 @@ class Entity extends WebController
 
             $page_data = parent::page_data($data);
             
-            return view($this->session->user_type."/entity/list", $page_data);
+            return view($this->session->get('user_type')."/entity/list", $page_data);
         }
 
         return redirect()->to(site_url("denominations/view/".hash_id($insertId)));
@@ -275,10 +275,10 @@ class Entity extends WebController
             $page_data = parent::page_data($records);
             // $page_data['parent_id'] = $hashed_hierarchy_id;
             
-            return view($this->session->user_type."/entity/list", $page_data);
+            return view($this->session->get('user_type')."/entity/list", $page_data);
         }
         
-        return redirect()->to(site_url($this->session->user_type."/entities/view/".$hashed_id))->with('message', 'Hierarchy updated successfully!');
+        return redirect()->to(site_url($this->session->get('user_type')."/entities/view/".$hashed_id))->with('message', 'Hierarchy updated successfully!');
     }
 
     function getParentEntitiesByDenomination($hashed_hierarchy_id, $parent_entity_id){
