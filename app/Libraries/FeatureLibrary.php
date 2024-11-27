@@ -23,23 +23,29 @@ class FeatureLibrary implements \App\Interfaces\LibraryInterface {
 
     function navigationItems(){
 
-        // [
-        //     'monthly_report' => ['label' => 'Monthly Reports', 'iconClass' => ''],
-        //     'quarterly_report' => ['label' => 'Quarterly Reports', 'iconClass' => '']
-        // ]
+        $user_permitted_assemblies = service('session')->has('user_permitted_assemblies') ? service('session')->user_permitted_assemblies : [];
+        $user_id = service('session')->user_id;
 
         $items = [
-            'dashboards' => ['label' => 'Dashboard', 'iconClass' => 'entypo-gauge', 'uri' => ''],
-            'denominations' => ['label' => 'Denominations', 'iconClass' => 'entypo-trophy', 'uri' => ''],
-            'ministers' => ['label' => 'Ministers', 'iconClass' => 'entypo-book', 'uri' => ''],
-            'assemblies' => ['label' => 'Assemblies', 'iconClass' => 'entypo-home', 'uri' => ''],
-            'events' => ['label' => 'Events', 'iconClass' => 'entypo-layout', 'uri' => ''],
-            'reports' => [
-                            'label' => 'Reports', 'iconClass' => 'entypo-newspaper', 'uri' => '',
-                            'children' => $this->getReportTypeMenus()
-                        ],
-            'users' => ['label' => 'Users', 'iconClass' => 'entypo-users', 'uri' => ''],
-            'settings' => ['label' => 'Settings', 'iconClass' => 'entypo-cog', 'uri' => ''],
+            "admin" => [
+                'dashboards' => ['label' => 'dashboards', 'iconClass' => 'entypo-gauge', 'uri' => ''],
+                'denominations' => ['label' => 'denominations', 'iconClass' => 'entypo-trophy', 'uri' => ''],
+                'ministers' => ['label' => 'ministers', 'iconClass' => 'entypo-book', 'uri' => ''],
+                'assemblies' => ['label' => 'assemblies', 'iconClass' => 'entypo-home', 'uri' => ''],
+                'events' => ['label' => 'events', 'iconClass' => 'entypo-layout', 'uri' => ''],
+                'reports' => [
+                                'label' => 'reports', 'iconClass' => 'entypo-newspaper', 'uri' => '',
+                                'children' => $this->getReportTypeMenus()
+                            ],
+                'users' => ['label' => 'users', 'iconClass' => 'entypo-users', 'uri' => ''],
+                'settings' => ['label' => 'settings', 'iconClass' => 'entypo-cog', 'uri' => ''],
+            ],
+            "church" => [
+                'dashboards' => ['label' => 'my_dashboard', 'iconClass' => 'entypo-gauge', 'uri' => 'church/dashboards/list'],
+                'assemblies' => count($user_permitted_assemblies) > 0 ? ['label' => 'my_assembly', 'iconClass' => 'entypo-home', 'uri' => 'church/assemblies/view/'.hash_id($user_permitted_assemblies,'encode')] : ['label' => 'my_assembly', 'iconClass' => 'entypo-home', 'uri' => 'church/assemblies/list'],
+                'users' => ['label' => 'my_profile', 'iconClass' => 'entypo-users', 'uri' => 'church/users/view/'.hash_id($user_id, 'encode')],
+            ]
+
         ];
 
         return $items;
@@ -63,4 +69,16 @@ class FeatureLibrary implements \App\Interfaces\LibraryInterface {
         
     }
 
+    function getNameField($table){
+        $nameField = 'name';
+
+        if(class_exists("\\App\\Models\\".ucfirst($table).'Model')){
+            $model = new ("\\App\\Models\\".ucfirst($table).'Model')();
+            if(property_exists($model, 'nameField')){
+                $nameField = $model->nameField;
+            }
+        }
+
+        return $nameField;
+    }
 }

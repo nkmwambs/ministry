@@ -113,8 +113,6 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         
         $reportTypeId = $report['reports_type_id'];
 
-        // log_message('error', json_encode(compact('reportTypeId','report','numericReportId')));
-
         // Get report layout from report type
         $reportTypeModel = new \App\Models\TypesModel();
         $reportType = $reportTypeModel->find($reportTypeId);
@@ -133,8 +131,6 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
                 }, $reportLayout[$i]['section_parts'][$j]['part_fields']);
             }   
         }
-
-        // log_message('error', json_encode(compact('reportTypeId','report','numericReportId','reportLayout')));
 
         $page_data['report_fields'] = $reportLayout;
         $page_data['type_code'] = $report['type_code'];
@@ -193,13 +189,10 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         $fieldCodesWithIdValues = array_combine(array_column($fieldCodeWithIds,'field_code'),array_column($fieldCodeWithIds,'id'));
 
 
-        // log_message('error', json_encode($fieldCodesWithIdValues));
        $result = [];
         foreach($postArray as $key => $value){
             $result[$fieldCodesWithIdValues[$key]] = $this->getFieldValues($key,$value, $fieldCodeWithIds); //$value;
         }
-
-        // log_message('error', json_encode($result));
 
         $postArray = $result;
 

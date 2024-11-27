@@ -43,8 +43,6 @@ public function before(RequestInterface $request, $arguments = null)
 
         // You can use the route information as needed
         // For example, logging the route information
-        // log_message('error', 'Controller: ' . $controller . ', Method: ' . $method . ', Params: ' . implode(', ', $params));
-        // log_message('error', json_encode($router));
     }
 }
 

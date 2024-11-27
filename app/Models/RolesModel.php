@@ -12,7 +12,7 @@ class RolesModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','name','default_role','denomination_id'];
+    protected $allowedFields    = ['id','name','default_role','denomination_id','permissions'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -71,7 +71,6 @@ class RolesModel extends Model  implements \App\Interfaces\ModelInterface
     }
     
     public function getEditData($role_id){
-        // log_message('error', json_encode($role_id));
         $library = new \App\Libraries\RoleLibrary();
         $viewQueryFields = $library->setViewQueryFields();
 

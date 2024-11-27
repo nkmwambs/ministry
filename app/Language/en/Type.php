@@ -7,10 +7,10 @@ return [
     'view_type' => 'View Report Type',
     'delete_type' => 'Delete Report Type',
 
-    'type_name' => 'Name',
+    'type_name' => 'Report Type Name',
     'type_description' => 'Description',
     'type_action' => 'Actions',
-    'type_code' => 'Type Code',
+    'type_code' => 'Report Type Code',
 
     'section_count' => 'Section Count',
     'section_title' => 'Section Title',

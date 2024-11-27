@@ -8,8 +8,8 @@ return [
     'delete_denomination' => 'Delete Denomination',
 
     'denomination_action' => 'Action',
-    'denomination_name' => 'Name',
-    'denomination_code' => 'Code',
+    'denomination_name' => 'Denomination Name',
+    'denomination_code' => 'Denomination Code',
     'denomination_registration_date' => 'Registration Date',
     'denomination_head_office' => 'Head Office',
     'denomination_email' => 'Email',

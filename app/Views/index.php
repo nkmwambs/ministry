@@ -32,8 +32,6 @@
 	<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"> -->
 	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.min.css"/>
 
-	
-
 	<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.3.min.js"></script>
 	
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/">
@@ -54,6 +52,10 @@
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 </head>
 <body class="page-body  page-fade" data-url="http://neon.dev">
+
+<script>
+	const base_url = "<?=site_url(service('session')->has('user_type') ? service('session')->user_type : "church" );?>/"
+</script>
 
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 	

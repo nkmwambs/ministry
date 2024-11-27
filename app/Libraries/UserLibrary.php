@@ -18,12 +18,12 @@ class UserLibrary implements LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ["users.id","users.denomination_id","first_name","last_name","username","biography","date_of_birth","gender","users.phone","roles","access_count","active","permitted_entities","permitted_assemblies","users.updated_at"];
+        $fields = ["users.id","users.denomination_id","first_name","last_name","username","biography","date_of_birth","gender","users.phone","roles","access_count","active","permitted_entities","permitted_assemblies","users.updated_at","users.active"];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ["users.id","users.denomination_id","first_name","last_name","users.username","biography","date_of_birth","gender","users.phone","roles","access_count","active","permitted_entities","permitted_assemblies","users.updated_at"];
+        $fields = ["users.id","users.denomination_id","first_name","last_name","users.username","biography","date_of_birth","gender","users.phone","roles","access_count","active","permitted_entities","permitted_assemblies","users.updated_at","users.active"];
         return $fields;
     }
 
@@ -96,7 +96,6 @@ class UserLibrary implements LibraryInterface {
         $page_data['roles'] = $roles;
     }
 
-
     function editExtraData(&$page_data){
         $numeric_denomination_id = 0;
         $numeric_hierarchy_id = 0;
@@ -131,6 +130,40 @@ class UserLibrary implements LibraryInterface {
         $page_data['denominations'] = $denominations;
         $page_data['entities'] = $grouped_entities;
         $page_data['hierarchies'] = $hierarchies;
+
+        // Fetch and assign roles for the current user
+        $rolesModel = new \App\Models\RolesModel();
+        $roles = [];
+
+        if(session()->get('user_denomination_id')){
+            $roles = $rolesModel->where('denomination_id', session()->get('user_denomination_id'))->findAll();
+        }else{
+            $roles = $rolesModel->findAll();
+        }
+        $page_data['roles'] = $roles;
+        
+        $db = \Config\Database::connect();
+
+        $groups = $db->table("auth_groups_users")
+        ->select('roles.id as role_id')
+        ->where("user_id", hash_id($page_data['id'], 'decode'))
+        ->join('roles','roles.name=auth_groups_users.group')
+        ->get()->getResultArray();
+
+        $page_data['assigned_roles'] = array_column($groups, 'role_id');
+        
+        $identity = $db->table("auth_identities")
+        ->where("user_id", hash_id($page_data['id'], 'decode'))
+        ->get()->getRowArray();
+        $page_data['email'] = $identity['secret'];
+
+        $usersModel = new \App\Models\UsersModel();
+        $user = $usersModel->find(hash_id($page_data['id'], 'decode'))->toArray();
+
+        $assembliesModel = new \App\Models\AssembliesModel();
+        $page_data['assemblies'] = $assembliesModel->getAssembliesByDenominationId(hash_id($user['denomination_id'],'encode'));
+        $page_data['permitted_entities'] = $user['permitted_entities'] != null ? json_decode($user['permitted_entities']): [];
+        $page_data['permitted_assemblies'] = $user['permitted_assemblies'] != null ? json_decode($user['permitted_assemblies']): [];
     }
 
     function viewExtraData(&$page_data){

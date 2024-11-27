@@ -18,20 +18,26 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
     // protected $returnType       = 'array';// \App\Entities\UserEntity::class;
     // protected $useSoftDeletes   = true;
     // protected $protectFields    = true;
-    // protected $allowedFields    = [
-    //     "id","denomination_id",
-    //     "first_name","last_name",
-    //     "username","biography",
-    //     "date_of_birth","email",
-    //     "gender","phone","roles",
-    //     "access_count",
-    //     "is_active",
-    //     "permitted_entities",
-    //     "permitted_assemblies",
-    //     "created_at",
-    //     "updated_at",
-    //     "password"
-    // ];
+   
+    protected $allowedFields    = [
+        'username',
+        'status',
+        'status_message',
+        'active',
+        'last_active',
+        "id","denomination_id",
+        "first_name","last_name",
+        "biography",
+        "date_of_birth","email",
+        "gender","phone","roles",
+        "access_count",
+        "is_active",
+        "permitted_entities",
+        "permitted_assemblies",
+        "created_at",
+        "updated_at",
+        "password"
+    ];
 
     // protected bool $allowEmptyInserts = false;
     // protected bool $updateOnlyChanged = true;
@@ -53,9 +59,9 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
     // // Callbacks
     // protected $allowCallbacks = true;
     // protected $beforeInsert   = [];
-    // protected $afterInsert    = [];
+    protected $afterInsert   = ['saveEmailIdentity', "updateUserRoles"];
     // protected $beforeUpdate   = [];
-    // protected $afterUpdate    = [];
+    protected $afterUpdate    = ['saveEmailIdentity'];
     // protected $beforeFind     = [];
     // protected $afterFind      = [];
     // protected $beforeDelete   = [];
@@ -113,7 +119,6 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
             return $this->select($library->setViewQueryFields())
             ->join('denominations','denominations.id=users.denomination_id','left')
             ->where('users.id', $user_id)->first();
-            // log_message('error', json_encode($var_return));
             // return $var_return;
         }else{
             return $this->where('id', $user_id)->first();
@@ -142,5 +147,41 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
         ];
         $trashModel->insert((object)$trashData);
         return true;
+    }
+
+    function updateUserRoles($data): array {
+        $db = \Config\Database::connect();
+        $builder = $db->table('auth_groups_users');
+
+        $user_id = $data['id'];
+        $rolesString = $data['data']['roles'];
+        $roles = json_decode($rolesString);
+
+        $rolesModel = new RolesModel();
+        $rolesResult = $rolesModel->whereIn('id', $roles)->findAll();
+        $rolesNames = array_column($rolesResult,'name');
+
+        // Remove roles assignments
+        $assignmentCount = $builder->where('user_id', $user_id)->countAllResults();
+        if($assignmentCount > 0){
+            $builder->where('user_id', $user_id)->delete();
+        }
+        
+        $batch = [];
+
+        for($i = 0; $i < sizeof($rolesNames); $i++){
+            $batch[$i] = [
+                'user_id' => $user_id,
+                'group' => $rolesNames[$i],
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+        }
+
+        // Database Connection
+        $builder->insertBatch($batch);
+
+        $data['data']['roles'] = NULL;
+
+        return $data;
     }
 }

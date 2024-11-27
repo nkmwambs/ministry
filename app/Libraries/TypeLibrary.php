@@ -18,7 +18,7 @@ class TypeLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setViewQueryFields(){
-        $fields = ['reporttypes.id','denomination_id','reporttypes.name','reporttypes.type_code','denominations.name as denomination_name'];
+        $fields = ['reporttypes.id','denomination_id','reporttypes.name','reporttypes.type_code','denominations.name as denomination_name','scheduler','report_layout'];
         return $fields;
     }
 
@@ -63,5 +63,5 @@ class TypeLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['denominations'] = $denominations;
     }
 
-    
+
 }

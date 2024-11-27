@@ -18,7 +18,7 @@ return [
     'user_gender' => 'Gender',
     'user_email' => 'Email',
     'user_phone' => 'Phone',
-    'user_roles' => 'Roles',
+    'roles' => 'Roles',
     'user_is_active' => 'Is Active?',
     'user_is_system_admin' => 'Is System Administrator',
     'user_hierarchical_level' => 'Hierarchical Level',

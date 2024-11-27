@@ -81,7 +81,6 @@ class MinisterLibrary implements \App\Interfaces\LibraryInterface {
             ->where('members.assembly_id', $assembly_id)
             ->orderBy('members.first_name', 'ASC')->findAll();
         }
-        log_message('error', json_encode($members));
 
         $page_data['members'] = $members;
         $page_data['member_id'] = hash_id($member_id,'encode');

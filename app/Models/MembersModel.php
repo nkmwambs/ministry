@@ -6,8 +6,10 @@ use CodeIgniter\Model;
 
 class MembersModel extends Model
 {
+    use \App\Traits\DatabaseTrait;
     protected $table            = 'members';
     protected $primaryKey       = 'id';
+    protected $nameField        = "first_name";
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
@@ -43,6 +45,7 @@ class MembersModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = ['updateRecycleBin'];
+    protected $lookupTables = ["designations","assemblies"];
 
     protected $bulk_editable_fields = ['gender','membership_date','designation_id','saved_date','is_active','inactivation_reason','assembly_id'];
 

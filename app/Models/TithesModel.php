@@ -6,6 +6,7 @@ use CodeIgniter\Model;
 
 class TithesModel extends Model
 {
+    use \App\Traits\DatabaseTrait;
     protected $table            = 'tithes';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
@@ -43,6 +44,8 @@ class TithesModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = ["updateRecycleBin"];
+
+    protected $lookupTables = ["members"];
 
     public function getAll(){
         $library = new \App\Libraries\TitheLibrary();
