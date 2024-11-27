@@ -99,4 +99,53 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['denominations'] = $denominations;
         $page_data['designations'] = $designations;
     }
+
+    function makeUser($data){
+        $member_id = $data['member_id'];
+
+        $membersModel = new \App\Models\MembersModel();
+        $member = $membersModel->find($member_id);
+
+        $userModel = new \App\Models\UsersModel();
+
+        $password = generateRandomString(8);
+
+        $denomination_id = 3;
+
+        $data = [
+            'denomination_id' => $denomination_id,
+            'first_name' => $member['first_name'],
+            'last_name' => $member['last_name'],
+            'phone' => $member['phone'],
+            'active' => 1,
+            'gender' => $member['gender'],
+            'date_of_birth' => $member['date_of_birth'],
+            'roles' => json_encode([1]),
+            'email' => $member['email'],
+            'permitted_entities' => NULL,
+            'permitted_assemblies' =>  json_encode([$member['assembly_id']]),
+            'is_system_admin' => NULL,
+            'password' => $password,
+            'associated_member_id' => $member['id'],
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+
+        $user = new \CodeIgniter\Shield\Entities\User($data);
+        $userModel->insert($user, true);
+        $insertId = $userModel->getInsertID();
+
+        $user->id = $insertId;
+        $userModel->addToDefaultGroup($user);
+
+        $status = "failed";
+        $message = "Failed to convert";
+
+        if($insertId){
+            $status = "success";
+            $message = "Successfully converted";
+        }
+
+        return compact('status', 'message');
+    }
 }

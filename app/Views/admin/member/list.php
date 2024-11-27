@@ -105,7 +105,25 @@
 <script>
 
     $(".make_user").on("click", function(){
-        alert("Hellooo");
+        const member_id = $(this).data("member_id");
+        
+        $.ajax({
+            url: '<?=site_url('ajax')?>',
+            type: 'POST',
+            data: {
+                    controller: 'members',
+                    method: 'makeUser',
+                    data: {
+                        member_id: member_id
+                    }
+            },
+            success: function(response) {
+                alert(response.message)
+            },
+            error: function(xhr, status, error) {
+                alert('error', 'An error occurred while making user. Please try again.');
+            }
+        })
     });
 
     $('#select_all').click(function(){

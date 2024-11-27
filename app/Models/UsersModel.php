@@ -25,18 +25,23 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
         'status_message',
         'active',
         'last_active',
-        "id","denomination_id",
-        "first_name","last_name",
+        "id",
+        "denomination_id",
+        "first_name",
+        "last_name",
         "biography",
-        "date_of_birth","email",
-        "gender","phone","roles",
+        "date_of_birth",
+        // "email",
+        "gender","phone",
+        "roles",
         "access_count",
         "is_active",
         "permitted_entities",
         "permitted_assemblies",
         "created_at",
         "updated_at",
-        "password"
+        "password",
+        "associated_member_id"
     ];
 
     // protected bool $allowEmptyInserts = false;
@@ -191,4 +196,31 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
 
         return $data;
     }
+
+    /**
+     * Adds a user to the default group.
+     * Used during registration.
+     */
+    public function addToDefaultGroup(\CodeIgniter\Shield\Entities\User $user): void
+    {
+        // $rolesModel = new RolesModel();
+        // $roles = $rolesModel->findAll();
+
+        $defaultGroup  = setting('AuthGroups.defaultGroup');
+        $allowedGroups =  array_keys(setting('AuthGroups.groups')); // array_column($roles,'name'); //
+
+        if (empty($defaultGroup) || ! in_array($defaultGroup, $allowedGroups, true)) {
+            throw new \InvalidArgumentException(lang('Auth.unknownGroup', [$defaultGroup ?? '--not found--']));
+        }
+
+        $user->addGroup($defaultGroup);
+    }
+
+    // private function getConfigGroups(): array
+    // {
+    //     $rolesModel = new RolesModel();
+    //     $roles = $rolesModel->findAll();
+
+    //     return array_column($roles,'name');//array_keys(setting('AuthGroups.groups'));
+    // }
 }

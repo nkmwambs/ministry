@@ -83,18 +83,18 @@ class User extends WebController
         return $this->response->setJSON($response);
     }
 
-    function generateRandomString($length = 10)
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
+    // function generateRandomString($length = 10)
+    // {
+    //     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    //     $charactersLength = strlen($characters);
+    //     $randomString = '';
 
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[random_int(0, $charactersLength - 1)];
-        }
+    //     for ($i = 0; $i < $length; $i++) {
+    //         $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    //     }
 
-        return $randomString;
-    }
+    //     return $randomString;
+    // }
 
     /// Posting Controllers
 
@@ -119,7 +119,7 @@ class User extends WebController
         $numeric_denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
 
         // Generate random password with password hash in php 
-        $password = $this->generateRandomString(8);
+        $password = generateRandomString(8);
         // $hashed_password = password_hash($this->generateRandomString(8), PASSWORD_DEFAULT);
 
         $templateLibrary =  new \App\Libraries\TemplateLibrary();

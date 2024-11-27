@@ -322,4 +322,5 @@ class Member extends WebController
 
         return $memberNumber;
     }
+
 }
