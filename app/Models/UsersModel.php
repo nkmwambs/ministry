@@ -150,10 +150,16 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
     }
 
     function updateUserRoles($data): array {
+        // log_message('error', json_encode($data));
         $db = \Config\Database::connect();
         $builder = $db->table('auth_groups_users');
 
         $user_id = is_array($data['id']) ? $data['id'][0]: $data['id'];
+
+        if(!isset($data['data']['roles'])){
+            return $data;
+        }
+
         $rolesString = $data['data']['roles'];
         $roles = json_decode($rolesString);
 

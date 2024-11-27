@@ -63,14 +63,28 @@
                             </span>
                         </td>
                         <td>
-                            <span class='action-icons' title="View <?=singular($member['first_name']);?> member">
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($member['id']);?>')"></i>
-                            </span>
-                            <span class='action-icons' title="Edit <?= $member['first_name']; ?> member">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($member['id']); ?>')" class='fa fa-pencil'></i>
-                            </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($member['id']); ?>')" title="Delete <?= $member['id']; ?> participant"><i class='fa fa-trash'></i></span>
-
+                        <div class="btn-group">
+								<button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown">
+									Action <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-blue" role="menu">
+									<li>
+                                        <a href="#" onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($member['id']);?>')" >View</a>
+									</li>
+                                    <li class="divider"></li>
+									<li>
+                                        <a href="#" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($member['id']); ?>')">Edit</a>
+									</li>
+                                    <li class="divider"></li>
+									<li>
+                                        <a href="#" class="make_user" data-member_id="<?=$member['id'];?>">Make a User</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+                                        <a href="#" onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($member['id']); ?>')">Delete</a>
+									</li>
+								</ul>
+							</div>
                         </td>
 
                         <td><?= $member['first_name']; ?></td>
@@ -89,6 +103,11 @@
 </div>
 
 <script>
+
+    $(".make_user").on("click", function(){
+        alert("Hellooo");
+    });
+
     $('#select_all').click(function(){
         $('.select_item').prop('checked', $(this).prop('checked'));
     });

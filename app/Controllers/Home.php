@@ -31,8 +31,6 @@ class Home extends WebController
     }
 
     private function create_user_session($user) {
-
-        // log_message('error', json_encode($user));
         
         $this->session->set('logged_in', true);
         $this->session->set('user_id', $user['id']);

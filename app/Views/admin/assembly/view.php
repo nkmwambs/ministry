@@ -1,5 +1,16 @@
+
+<style>
+    .scrollable-view {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent content from wrapping */
+    padding: 10px; /* Optional: Adjust for spacing */
+    border: 1px solid #ccc; /* Optional: Add border for clarity */
+}
+</style>
+
 <?php
-// echo json_encode($result);
+// echo json_encode(auth()->user());
+        
 $member_sections = array_pop($result);
 ?>
 <div class="row">
@@ -62,15 +73,15 @@ $member_sections = array_pop($result);
                         </form>
                     </div>
 
-                    <div class="tab-pane" id="list_members">
+                    <div class="tab-pane scrollable-view" id="list_members">
                         <div class='info'><?= lang('assembly.no_assemblies_message') ?></div>
                     </div>
 
-                    <div class="tab-pane" id="list_collections">
+                    <div class="tab-pane scrollable-view" id="list_collections">
                         <div class='info'><?= lang('assembly.no_collections_message') ?></div>
                     </div>
 
-                    <div class="tab-pane" id="list_tithes">
+                    <div class="tab-pane scrollable-view" id="list_tithes">
                         <div class='info'><?= lang('assembly.no_tithes_message') ?></div>
                     </div>
                 </div>
