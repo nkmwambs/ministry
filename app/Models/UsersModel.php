@@ -53,7 +53,7 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
     // // Callbacks
     // protected $allowCallbacks = true;
     // protected $beforeInsert   = [];
-    // protected $afterInsert    = [];
+    protected $afterInsert   = ['saveEmailIdentity', "updateUserRoles"];
     // protected $beforeUpdate   = [];
     // protected $afterUpdate    = [];
     // protected $beforeFind     = [];
@@ -141,5 +141,35 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
         ];
         $trashModel->insert((object)$trashData);
         return true;
+    }
+
+    function updateUserRoles($data): array {
+        
+        $user_id = $data['id'];
+        $rolesString = $data['data']['roles'];
+        $roles = json_decode($rolesString);
+
+        $rolesModel = new RolesModel();
+        $rolesResult = $rolesModel->whereIn('id', $roles)->findAll();
+        $rolesNames = array_column($rolesResult,'name');
+
+        $batch = [];
+
+        for($i = 0; $i < sizeof($rolesNames); $i++){
+            $batch[$i] = [
+                'user_id' => $user_id,
+                'group' => $rolesNames[$i],
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+        }
+
+        // Database Connection 
+        $db = \Config\Database::connect();
+        $builder = $db->table('auth_groups_users');
+        $builder->insertBatch($batch);
+
+        $data['data']['roles'] = NULL;
+
+        return $data;
     }
 }

@@ -117,17 +117,18 @@ class User extends WebController
         $mailTemplate = $templateLibrary->getEmailTemplate(short_name: 'new_user_account', template_vars: compact('password', 'first_name', 'email'), denomination_id: $numeric_denomination_id);
 
         $logMailsModel = new \App\Models\LogmailsModel();
-        // $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
+        $logMailsModel->logEmails($email, $mailTemplate['subject'], $mailTemplate['body']);
 
         $data = [
             'denomination_id' => $numeric_denomination_id,
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
             'phone' => $this->request->getPost('phone'),
-            'email' => $this->request->getPost('email'),
+            'active' => 1,
             'gender' => $this->request->getPost('gender'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
             'roles' => json_encode($this->request->getPost('roles')),
+            'email' => $this->request->getPost('email'),
             'permitted_entities' => json_encode($this->request->getPost('permitted_entities')) ?: NULL,
             'permitted_assemblies' => $this->request->getPost('permitted_assemblies') ?: NULL,
             'is_system_admin' => $this->request->getPost('is_system_admin') ?: NULL,
@@ -136,7 +137,9 @@ class User extends WebController
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
-        $this->model->insert((object)$data);
+        $user = new \CodeIgniter\Shield\Entities\User($data);
+
+        $this->model->insert($user);
         $insertId = $this->model->getInsertID();
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
