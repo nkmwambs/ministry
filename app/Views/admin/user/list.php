@@ -26,6 +26,7 @@
             <th><?= lang('user.user_phone') ?></th>
             <th><?= lang('user.user_email') ?></th>
             <th><?= lang('user.user_is_active') ?></th>
+            <th><?= lang('user.roles') ?></th>
           </tr>
         </thead>
         <tbody>
@@ -61,7 +62,8 @@ $(document).ready(function (){
             { data: "last_name" },
             { data: "phone" },
             { data: "email"},
-            { data: "active"}
+            { data: "active"},
+            { data: "roles"}
         ]
     });
 });
