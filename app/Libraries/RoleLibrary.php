@@ -2,6 +2,8 @@
 
 namespace App\Libraries;
 
+use App\Models\FeaturesModel;
+
 class RoleLibrary implements \App\Interfaces\LibraryInterface {
 
     function unsetListQueryFields(){
@@ -37,19 +39,19 @@ class RoleLibrary implements \App\Interfaces\LibraryInterface {
         $features = [];
 
         // Get list of features
-        $featuresModel = new \App\Models\FeaturesModel();
+        $featuresModel = new FeaturesModel();
         $features = $featuresModel->findAll(); 
 
-        $permissionsModel = new \App\Models\PermissionsModel();
-        $roleAssignedFeatures = $permissionsModel
-        ->select('permissions.id,role_id,features.id as feature_id,features.name as feature_name,permission_label,allowable_permission_labels')
-        ->join('features', 'features.id=permissions.feature_id')
-        ->where('role_id', $page_data['result']['id'])->findAll();
+        $rolesModel = new \App\Models\RolesModel();
+        
+        $roleAssignedFeaturesJsonString = $rolesModel->select('permissions')->find($page_data['result']['id'])['permissions'];
 
-        $roleAssignedFeatureIds = array_column($roleAssignedFeatures, 'feature_id');
+        $roleAssignedFeatures = $this->keyedPermissions($roleAssignedFeaturesJsonString, $features);
+
+        $roleAssignedFeatureNames = array_column($roleAssignedFeatures, 'feature_name');
 
         foreach ($features as $key => $feature) {
-            if(in_array($feature['id'], $roleAssignedFeatureIds)){
+            if(in_array($feature['name'], $roleAssignedFeatureNames)){
                 unset($features[$key]);
             }
         }
@@ -58,6 +60,32 @@ class RoleLibrary implements \App\Interfaces\LibraryInterface {
 
         // List assigned permissions
         $page_data['role_assigned_features'] = $roleAssignedFeatures;
+    }
+
+    private function keyedPermissions(string $json_permissions, array $features): array{
+        $keyedPermissions = [];
+        $array_permissions = json_decode($json_permissions); 
+
+        $ids = array_column($features, 'id');
+        $names = array_column($features, 'name');
+        $allowable_permission_labels = array_column($features, 'allowable_permission_labels');
+
+        $feature_names_ids = array_combine($names, $ids);
+        $feature_names_labels = array_combine($names, $allowable_permission_labels);
+
+        $cnt = 0;
+        if(!empty($array_permissions)){
+            foreach($array_permissions as $permissionSet){
+                $permissionSetArray = explode('.', $permissionSet);
+                $keyedPermissions[$cnt]['feature_name'] = $permissionSetArray[0];
+                $keyedPermissions[$cnt]['feature_id'] =   $feature_names_ids[$permissionSetArray[0]];
+                $keyedPermissions[$cnt]['allowable_permission_labels'] =   $feature_names_labels[$permissionSetArray[0]];
+                $keyedPermissions[$cnt]['permission_label'] =   $permissionSetArray[1] == "*" ? "delete" : $permissionSetArray[1];
+                $cnt++;
+            }
+        }
+
+        return $keyedPermissions;
     }
 
     function addExtraData(&$page_data) {
@@ -89,7 +117,7 @@ class RoleLibrary implements \App\Interfaces\LibraryInterface {
         $denominationsModel = new \App\Models\DenominationsModel();
         $denominations = $denominationsModel->findAll();
 
-        $featuresModel = new \App\Models\FeaturesModel();
+        $featuresModel = new FeaturesModel();
         $features = $featuresModel->findAll();
 
         $page_data['denominations'] = $denominations;
@@ -102,7 +130,7 @@ class RoleLibrary implements \App\Interfaces\LibraryInterface {
 
     static function buildPermissions(): array{
         // Add your logic to build permissions here
-        $featuresModel= new \App\Models\FeaturesModel();
+        $featuresModel= new FeaturesModel();
         $features = $featuresModel->findAll();
         $permissions = [];
         foreach($features as $feature){
@@ -112,5 +140,24 @@ class RoleLibrary implements \App\Interfaces\LibraryInterface {
             }
         }
         return $permissions;
+    }
+
+    function updatePermissionString(FeaturesModel $featuresModel, \App\Models\RolesModel $rolesModel, int $feature_id, int $role_id, string $permission_label): string{
+        $feature = $featuresModel->find($feature_id);
+        $feature_name = $feature['name'];
+
+        $currentPermissionsJsonString = $rolesModel->find($role_id)['permissions'];
+        $currentPermissions = json_decode( $currentPermissionsJsonString, true );
+
+        for($i = 0; $i < sizeof($currentPermissions ); $i++){
+            $currentPermissionArray = explode(".", $currentPermissions[$i]);
+            if($currentPermissionArray[0] == $feature_name){
+                $currentPermissions[$i] = "$feature_name.$permission_label";
+            }
+        }
+
+        $updatedPermissionsJsonString = json_encode($currentPermissions);
+        // $data = ['permissions' => $updatedPermissionsJsonString];
+        return $updatedPermissionsJsonString;
     }
 }

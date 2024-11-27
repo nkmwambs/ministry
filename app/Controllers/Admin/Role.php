@@ -182,4 +182,19 @@ class Role extends WebController
         
         return response()->setJSON(compact('denominationHasDefaultRole'));
     }
+
+    function updatePermission(){
+        $rolesModel = new \App\Models\RolesModel();
+        $featuresModel = new \App\Models\FeaturesModel();
+        $roleLibrary = new \App\Libraries\RoleLibrary();
+
+        $role_id = $this->request->getPost('role_id');
+        $feature_id = $this->request->getPost('feature_id');
+        $permission_label = $this->request->getPost('permission_label');
+
+        $updatedPermissionsJsonString = $roleLibrary->updatePermissionString($featuresModel, $rolesModel, $feature_id, $role_id, $permission_label);
+        $data = ['permissions' => $updatedPermissionsJsonString];
+
+        $rolesModel->update($role_id, (object)$data);
+    }
 }

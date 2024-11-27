@@ -94,7 +94,7 @@
         const permission_label = $(this).val();
         const row_index = $(this).closest('tr').index();
         const feature_id = $(this).attr('id');
-        const base_url = "<?=site_url("permissions/update_permission/");?>"
+        const base_url = "<?=site_url("roles/update_permission/");?>"
         const role_id = $('#role_id').val()
 
         $.ajax({

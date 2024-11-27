@@ -107,7 +107,7 @@ $routes->group("", ['namespace' => 'App\Controllers\Admin'], function ($routes) 
     $routes->get('settings', 'Setting::list');
     $routes->get('roles/get_default_role/(:segment)', 'Role::getDefaultRole/$1');
     $routes->get('features/get_allowable_permission_labels/(:segment)', 'Feature::getAllowablePermissionLabels/$1');
-    $routes->post('permissions/update_permission', 'Permission::updatePermission/');
+    $routes->post('roles/update_permission', 'Role::updatePermission/');
 
     $routes->post('users/profile/account/save', "User::updatePublicInfo");
     $routes->post('users/profile/account/update_public_info', "User::updatePublicInfo");
