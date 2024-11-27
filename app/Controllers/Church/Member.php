@@ -106,7 +106,7 @@ class Member extends WebController
             'last_name' => $this->request->getPost('last_name'),
             'gender' => $this->request->getPost('gender'),
             'assembly_id' => $assembly_id,
-            'member_number' => $this->computeMemberNumber($assembly_id),
+            // 'member_number' => $this->computeMemberNumber($assembly_id),
             'designation_id' => $this->request->getPost('designation_id'),
             'date_of_birth' => $this->request->getPost('date_of_birth'),
             'email' => $this->request->getPost('email'),

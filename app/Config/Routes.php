@@ -62,6 +62,7 @@ $routes->group("church", ['namespace' => 'App\Controllers\Church'], function ($r
             $routes->post('showList', "$ucfirst::showList");
         });
         $routes->get('church/members/view/(:segment)', "Member::view/$1");
+        // $routes->post('/member/save', 'Member::post');
         // $routes->post('add/(:segment)', "Members::post");
 
         $routes->post('users/profile/account/save', "User::updatePublicInfo");

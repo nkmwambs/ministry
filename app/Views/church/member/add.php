@@ -7,7 +7,6 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
     /* Modal Container */
     .modal {
         display: none;
-        /* Hidden by default */
         position: fixed;
         z-index: 1000;
         left: 0;
@@ -15,33 +14,22 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
-        /* Dim background */
-    }
-
-    /* Modal Content */
-    .modal-content {
+    }    .modal-content {
         position: absolute;
         top: 50px;
-        /* Starting position */
         left: 50%;
         transform: translateX(-50%);
-        /* Center horizontally */
         width: 60%;
-        /* Partial screen width */
         max-height: 80%;
-        /* Ensure it doesn't overflow screen */
         background-color: white;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
         overflow: hidden;
         resize: both;
-        /* Allow resizing */
         overflow-y: auto;
-        /* Scrollable content */
     }
 
-    /* Scrollbar Customization */
     .modal-content::-webkit-scrollbar {
         width: 8px;
     }
@@ -55,13 +43,12 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
         background: #555;
     }
 
-    /* Close Button */
     .close {
         position: absolute;
         top: 10px;
         right: 20px;
         font-size: 20px;
-        color: #aaa;
+        color: black;
         cursor: pointer;
     }
 
@@ -69,8 +56,6 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
     .close:focus {
         color: #000;
     }
-
-    /* Drag Handle */
     .modal-drag-handle {
         cursor: move;
         background: #f1f1f1;
@@ -249,14 +234,53 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </form>
-
-                    <div class="modal-footer">
+                </form>
+               
+            </div>
+        </div>
+        <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="button" id="modal_reset" class="btn btn-danger">Reset</button>
                         <button type="button" id="modal_save" data-item_id="" data-feature_plural="" class="btn btn-success">Save</button>
                     </div>
-                </form>
-            </div>
-        </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+    $("#modal_reset").on("click", function () {
+        // Clear all form inputs inside the modal
+        $(this).closest(".modal").find("form")[0].reset();
+    });
+});
+
+$(document).ready(function () {
+    $("#modal_save").on("click", function () {
+        const itemID = $(this).data("item_id"); // Retrieve data-item_id
+        const featurePlural = $(this).data("feature_plural"); // Retrieve data-feature_plural
+
+        // Gather form data
+        const form = $(this).closest(".modal").find("form");
+        const formData = form.serialize(); // Serialize form data
+
+        // Submit form data via AJAX
+        $.ajax({
+            url: "/save", 
+            type: "POST",
+            data: formData + `&item_id=${itemID}&feature_plural=${featurePlural}`,
+            success: function (response) {
+                if (response.status === "success") {
+                    alert(response.message);
+                    location.reload(); // Reload the page to reflect changes
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function () {
+                alert("An error occurred. Please try again.");
+            }
+        });
+    });
+});
+
+</script>
