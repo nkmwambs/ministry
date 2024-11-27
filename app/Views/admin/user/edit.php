@@ -110,23 +110,7 @@ $numeric_hierarchy_id = hash_id("hierarchy_id");
             </div>
 
 
-          <!-- Permitted Entities -->
-          <!-- <div class="form-group">
-            <label for="hierarchy_id" class="control-label col-xs-4"><?= lang('user.user_hierarchical_level') ?></label>
-            <div class="col-xs-6">
-              <select class="form-control" name="" id="hierarchy_id">
-                <option value=""><?= lang('user.select_hierarchical_level') ?></option>
-                <?php if ($result['denomination_id']) { ?>
-                  <?php foreach ($hierarchies as $hierarchy) : ?>
-                    <option value="<?php echo $hierarchy['id']; ?>"><?php echo $hierarchy['name']; ?></option>
-                  <?php endforeach; ?>
-                <?php } ?>
-              </select>
-            </div>
-          </div> -->
-
-
-          <div class="form-group <?=is_array($permitted_entities) && count($permitted_entities) == 0 ? 'hidden': ''?>">
+          <div class="form-group">
             <label for="permitted_entities" class="control-label col-xs-4"><?= lang('user.user_permitted_entities') ?></label>
             <div class="col-xs-6">
               <select id="permitted_entities" name="permitted_entities[]" class="form-control select_fields" multiple>
@@ -143,7 +127,7 @@ $numeric_hierarchy_id = hash_id("hierarchy_id");
 
 
           <!-- Permitted Assemblies -->
-          <div class="form-group <?=is_array($permitted_assemblies) && count($permitted_assemblies) == 0 ? 'hidden': ''?>">
+          <div class="form-group">
             <label class="control-label col-xs-4" for="permitted_assemblies"><?= lang('user.user_permitted_assemblies') ?></label>
             <div class="col-xs-6">
               <select class="form-control select_fields" name="permitted_assemblies[]" id="permitted_assemblies" multiple>

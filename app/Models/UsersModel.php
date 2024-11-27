@@ -61,7 +61,7 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
     // protected $beforeInsert   = [];
     protected $afterInsert   = ['saveEmailIdentity', "updateUserRoles"];
     // protected $beforeUpdate   = [];
-    protected $afterUpdate    = ['saveEmailIdentity'];
+    protected $afterUpdate    = ['saveEmailIdentity', 'updateUserRoles'];
     // protected $beforeFind     = [];
     // protected $afterFind      = [];
     // protected $beforeDelete   = [];
@@ -153,7 +153,7 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
         $db = \Config\Database::connect();
         $builder = $db->table('auth_groups_users');
 
-        $user_id = $data['id'];
+        $user_id = is_array($data['id']) ? $data['id'][0]: $data['id'];
         $rolesString = $data['data']['roles'];
         $roles = json_decode($rolesString);
 
@@ -166,7 +166,7 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
         if($assignmentCount > 0){
             $builder->where('user_id', $user_id)->delete();
         }
-        
+
         $batch = [];
 
         for($i = 0; $i < sizeof($rolesNames); $i++){
@@ -176,6 +176,7 @@ class UsersModel extends ShieldUserModel  implements \App\Interfaces\ModelInterf
                 'created_at' => date('Y-m-d H:i:s')
             ];
         }
+        
 
         // Database Connection
         $builder->insertBatch($batch);

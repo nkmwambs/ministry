@@ -216,4 +216,24 @@ class UserLibrary implements LibraryInterface {
     public function exportUserDataXlsx() {
         // $spreadsheet = new Spreadsheet();
     }
+
+    function getUserRoleNames(\CodeIgniter\Database\BaseBuilder $auth_builder, int $user_id){
+        $auth_builder->where('user_id', $user_id);
+        $rolesArray = $auth_builder->get()->getResultArray();
+
+        $userGroups = array_column($rolesArray, 'group');
+            
+        $userGroups = array_map(function($role){
+            return humanize($role);
+        },$userGroups);
+
+        return $userGroups;
+    }
+
+    function getUserAssemblyName($assemblyIds){
+        $assembliesModel = new \App\Models\AssembliesModel();
+        $assemblies = $assembliesModel->whereIn('id', $assemblyIds)->findAll();
+        $assemblyNamesArray = array_column($assemblies, 'name');
+        return $assemblyNamesArray;
+    }
 }
