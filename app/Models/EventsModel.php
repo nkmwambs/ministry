@@ -91,7 +91,7 @@ class EventsModel extends Model  implements \App\Interfaces\ModelInterface
         $events = [];
 
         if(session()->get('user_denomination_id')){
-            $events = $this->where(['hierarchies.denomination_id' => session()->get('user_denomination_id')])
+            $events = $this->where(['events.denomination_id' => session()->get('user_denomination_id')])
             ->select(!empty($listQueryFields) ? $listQueryFields : '*')
             ->join('denominations', 'denominations.id = events.denomination_id')
             ->join('meetings', 'meetings.id = events.meeting_id')
