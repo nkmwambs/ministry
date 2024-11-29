@@ -10,7 +10,7 @@
 <?php if(auth()->user()->canDo("$feature.create")){?>
 <div class="row">
     <div class="col-md-12">
-        <a href="#" class = "btn btn-success action_add action_btn">Add <?=humanize($feature);?></a>
+        <a href="#addModal" class = "btn btn-success action_add action_btn" id='modal_ajax' data-feature ="<?=$feature; ?>" >Add <?=humanize($feature);?></a>
     </div>
 </div>
 <?php }?>
@@ -47,5 +47,47 @@
 
         console.log(url)
     })
+
+    $(document).ready(function () {
+        
+        $('#modal_ajax').on('click', function (e) {
+            e.preventDefault();
+
+            const feature = $(this).data('feature');
+            const url = `<?=site_url('church/')?>${feature}/add/`
+    
+            // Check if the modal already exists in the DOM
+            if ($('#addModal').length === 0) {
+                // Fetch the modal content via AJAX
+                $.ajax({
+                    url: '<?= site_url("church/".plural($feature)."/add/") ?>', // Route to fetch modal content
+                    type: 'GET',
+                    success: function (response) {
+                        // Append the modal to the body
+                        $('body').append(response);
+    
+                        // Show the modal
+                        $('#addModal').fadeIn();
+    
+                        // Add event to close the modal
+                        $('.close').on('click', function () {
+                            $('#addModal').fadeOut(function () {
+                                $(this).remove(); // Remove the modal from the DOM
+                            });
+                        });
+
+                    },
+                    error: function (xhr) {
+                        console.error("Failed to load modal content:", xhr.responseText);
+                    }
+                });
+            } else {
+                // Show the modal if it already exists
+                $('#addModal').fadeIn();
+            }
+        });
+    });
+
+</script>
 </script>
 
