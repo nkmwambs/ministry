@@ -10,7 +10,7 @@
 <?php if(auth()->user()->canDo("$feature.create")){?>
 <div class="row">
     <div class="col-md-12">
-        <a href="#" class = "btn btn-success action_add action_btn">Add <?=humanize($feature);?></a>
+        <a href="#" class = "btn btn-success action_add action_btn" onclick="showAjaxModal('members','add', '<?= $parent_id; ?>')">Add <?=humanize($feature);?></a>
     </div>
 </div>
 <?php }?>
