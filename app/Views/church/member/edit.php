@@ -208,17 +208,14 @@
             type: 'POST',
             data: data,
             success: function(response) {
-                // Handle success response
                 console.log(response);
                 alert('Form submitted successfully!');
             },
             error: function(xhr) {
-                // Handle error response
                 console.error(xhr.responseText);
                 alert('An error occurred. Please try again.');
             },
             complete: function() {
-                // Re-enable button and restore text
                 saveButton.prop('disabled', false).text('Save');
             }
         });
