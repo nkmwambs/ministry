@@ -14,8 +14,10 @@ return [
     'users' => 'Users',
     'settings' => 'Settings',
     'back' => 'Back',
-    'value_not_set' => 'Value Not Set'
-    ,
+    'value_not_set' => 'Value Not Set',
+
+    'system_active' => 'Select if Active',
+    
     'system_yes' => 'Yes',
     'system_no' => 'No',
 
@@ -42,4 +44,8 @@ return [
     'enter_value' => 'Enter Value',
     'submit_button_label' => 'Submit',
     'save_button_label' => 'Save and Continue',
+
+    'system_close' => 'Close',
+    'system_reset' => 'Reset',
+    'system_save' => 'Save',
 ];

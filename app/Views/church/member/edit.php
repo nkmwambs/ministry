@@ -1,9 +1,9 @@
-<?php 
+<?php
 // echo json_encode($designations);
 ?>
 
 <syle>
-    
+
 </syle>
 
 <div class="row">
@@ -29,7 +29,7 @@
 
             <div class="panel-body">
 
-                <form id="frm_edit_member" method="post" action="<?= site_url('members/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
+                <form id="frm_edit_member" method="post" action="<?= site_url('church/members/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
 
                     <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">
@@ -42,13 +42,13 @@
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="is_active">
-                        <?= lang('member.member_is_active') ?>
+                            <?= lang('member.member_is_active') ?>
                         </label>
                         <div class="col-xs-6">
                             <select type="text" class="form-control" name="is_active" id="is_active">
-                                <option value="" selected><?= lang('member.member_select_is_active')?></option>
-                                <option value="yes" <?=$result['is_active'] == 'yes'? "selected": "";?> ><?php echo lang('system.yes');?></option>
-                                <option value="no" <?=$result['is_active'] == 'no'? "selected": "";?> ><?php echo lang('system.no');?></option>
+                                <option value="" selected><?= lang('system.system_active') ?></option>
+                                <option value="yes" <?= $result['is_active'] == 'yes' ? "selected" : ""; ?>><?php echo lang('system.system_yes'); ?></option>
+                                <option value="no" <?= $result['is_active'] == 'no' ? "selected" : ""; ?>><?php echo lang('system.system_no'); ?></option>
                             </select>
                         </div>
                     </div>
@@ -58,11 +58,11 @@
                             <?= lang('member.member_inactivation_reason') ?>
                         </label>
                         <div class="col-xs-6">
-                            <select class="form-control" name="inactivation_reason" id="inactivation_reason" value="<?= $result['inactivation_reason']; ?>" >
-                                <option value=""><?= lang('member.member_inactivation_reason_select')?></option>
-                                <option value="deceased" <?=$result['inactivation_reason'] == 'deceased'? "selected": "";?> ><?php echo lang('member.member_inactivation_reason_deceased');?></option>
-                                <option value="excluded" <?=$result['inactivation_reason'] == 'excluded'? "selected": "";?> ><?php echo lang('member.member_inactivation_reason_excluded');?></option>
-                                <option value="other" <?=$result['inactivation_reason'] =='other'? "selected": "";?> ><?php echo lang('member.member_inactivation_reason_other');?></option>
+                            <select class="form-control" name="inactivation_reason" id="inactivation_reason" value="<?= $result['inactivation_reason']; ?>">
+                                <option value=""><?= lang('member.member_inactivation_reason_select') ?></option>
+                                <option value="deceased" <?= $result['inactivation_reason'] == 'deceased' ? "selected" : ""; ?>><?php echo lang('member.member_inactivation_reason_deceased'); ?></option>
+                                <option value="excluded" <?= $result['inactivation_reason'] == 'excluded' ? "selected" : ""; ?>><?php echo lang('member.member_inactivation_reason_excluded'); ?></option>
+                                <option value="other" <?= $result['inactivation_reason'] == 'other' ? "selected" : ""; ?>><?php echo lang('member.member_inactivation_reason_other'); ?></option>
                             </select>
                         </div>
                     </div>
@@ -90,8 +90,8 @@
                         <div class="col-xs-6">
                             <select class="form-control" name="gender" id="gender">
                                 <option value=""><?= lang('member.member_select_gender') ?></option>
-                                <option value="male" <?=$result['gender'] == 'male' ? "selected": "";?> ><?php echo lang('system.gender_male'); ?></option>
-                                <option value="female" <?=$result['gender'] == 'female' ? "selected": "";?> ><?php echo lang('system.gender_female'); ?></option>
+                                <option value="male" <?= $result['gender'] == 'male' ? "selected" : ""; ?>><?php echo lang('system.gender_male'); ?></option>
+                                <option value="female" <?= $result['gender'] == 'female' ? "selected" : ""; ?>><?php echo lang('system.gender_female'); ?></option>
                             </select>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                     <div class='form-group'>
                         <label for="membership_date" class="control-label col-xs-4"><?= lang('member.membership_date') ?></label>
                         <div class="col-xs-6">
-                        <input type="text" class="form-control datepicker" id="membership_date" name="membership_date" value="<?=$result['membership_date'];?>"  />
+                            <input type="text" class="form-control datepicker" id="membership_date" name="membership_date" value="<?= $result['membership_date']; ?>" />
                         </div>
                     </div>
 
@@ -117,11 +117,11 @@
                         <div class="col-xs-6">
                             <select class="form-control" name="designation_id" id="designation_id">
 
-                                <?php if(!empty($designations)){
-                                    foreach($designations as $designation){    
+                                <?php if (!empty($designations)) {
+                                    foreach ($designations as $designation) {
                                 ?>
-                                    <option value="<?=$designation['id'];?>" <?=$result['designation_id'] == $designation['id'] ? "selected" : "";?> ><?=$designation['name'];?></option>
-                                <?php 
+                                        <option value="<?= $designation['id']; ?>" <?= $result['designation_id'] == $designation['id'] ? "selected" : ""; ?>><?= $designation['name']; ?></option>
+                                <?php
                                     }
                                 }
                                 ?>
@@ -158,10 +158,10 @@
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="saved_date">
-                        <?= lang('member.saved_date') ?>
+                            <?= lang('member.saved_date') ?>
                         </label>
                         <div class="col-xs-6">
-                        <input type="text" class="form-control datepicker" name="saved_date" id="saved_date" value="<?= $result['saved_date']; ?>" placeholder="Enter Saved Date"></i>
+                            <input type="text" class="form-control datepicker" name="saved_date" id="saved_date" value="<?= $result['saved_date']; ?>" placeholder="Enter Saved Date"></i>
                         </div>
                     </div>
 
@@ -184,10 +184,43 @@
             </div>
 
             <div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" id="modal_reset" class="btn btn-danger">Reset</button>
-				<button type="button" id="modal_save" data-item_id="" data-feature_plural="" class="btn btn-success">Save</button>
-			</div>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?= lang('system.system_close') ?></button>
+                <button type="button" id="modal_reset" class="btn btn-danger"><?= lang('system.system_reset') ?></button>
+                <button type="button" id="form_save" data-item_id="" data-feature_plural="" class="btn btn-success"><?= lang('system.system_save') ?></button>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).on("click", "#form_save", function() {
+        const panelBody = $(this).closest('.panel-body');
+        const form = panelBody.find('form');
+        const data = form.serializeArray();
+        const url = form.attr('action');
+        const saveButton = $(this);
+
+        // Disable button and show loading text
+        saveButton.prop('disabled', true).text('Saving...');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                // Handle success response
+                console.log(response);
+                alert('Form submitted successfully!');
+            },
+            error: function(xhr) {
+                // Handle error response
+                console.error(xhr.responseText);
+                alert('An error occurred. Please try again.');
+            },
+            complete: function() {
+                // Re-enable button and restore text
+                saveButton.prop('disabled', false).text('Save');
+            }
+        });
+    });
+</script>

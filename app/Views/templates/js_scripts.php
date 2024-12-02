@@ -206,7 +206,7 @@
         const frm = $('#' + frm_id)
         const data = frm.serializeArray()
         const url = frm.attr('action')
-
+ 
         $.ajax({
             url,
             type: 'POST',

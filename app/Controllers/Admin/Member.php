@@ -206,20 +206,20 @@ class Member extends WebController
                     'required' => '{field} is required.',
                 ]
             ],
-            'date_of_birth' => [
-                'rules' =>'required',
-                'label' => 'Date of Birth',
-                'errors' => [
-                   'required' => 'Date of Birth is required.',
-                ]
-            ],
-            'saved_date' => [
-                'rules' =>'required',
-                'label' => 'Saved Date',
-                'errors' => [
-                   'required' => 'Saved Date is required.',
-                ]
-            ],
+            // 'date_of_birth' => [
+            //     'rules' =>'required',
+            //     'label' => 'Date of Birth',
+            //     'errors' => [
+            //        'required' => 'Date of Birth is required.',
+            //     ]
+            // ],
+            // 'saved_date' => [
+            //     'rules' =>'required',
+            //     'label' => 'Saved Date',
+            //     'errors' => [
+            //        'required' => 'Saved Date is required.',
+            //     ]
+            // ],
             'phone' => [
                 'rules' => 'required|regex_match[/^\+254\d{9}$/]',
                 'label' => 'Phone',
