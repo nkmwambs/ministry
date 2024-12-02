@@ -246,10 +246,10 @@ class WebController extends BaseController
         }
     }
 
-    public function add(): string
+    public function add($parent_id = null): string
     {
         $page_data = $this->page_data();
-        // $page_data['parent_id'] = $this->parent_id;
+        $page_data['parent_id'] = $parent_id;
 
         if (method_exists($this->library, 'addExtraData')) {
             // Note the addExtraData updates the $page_data by reference

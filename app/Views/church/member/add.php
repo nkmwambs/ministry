@@ -17,7 +17,7 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
 
       <div class="panel-body">
 
-        <form role="form" id="frm_add_member" method="post" action="<?= site_url("members/save") ?>" class="form-horizontal form-groups-bordered">
+        <form role="form" id="frm_add_member" method="post" action="<?= site_url("church/members/save") ?>" class="form-horizontal form-groups-bordered">
 
           <div class="form-group hidden error_container">
             <div class="col-xs-12 error">
@@ -132,7 +132,7 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
               <?= lang('member.member_phone') ?>
             </label>
             <div class="col-xs-6">
-              <input type="email" class="form-control" name="phone" id="phone" placeholder="Enter Phone"></i>
+              <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Phone"></i>
             </div>
           </div>
 
@@ -172,6 +172,11 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
             <?php endforeach; ?>
           <?php endif; ?>
 
+          <div class="form-group">
+            <div class="col-xs-12">
+              <input type="submit" value="submit" class="btn btn-success"/>
+            </div>
+          </div>
         </form>
 
       </div>

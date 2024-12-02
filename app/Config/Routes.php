@@ -48,6 +48,7 @@ $routes->group("church", ['namespace' => 'App\Controllers\Church'], function ($r
             $routes->get('list', "$ucfirst::index");
             $routes->get('list/(:segment)', "$ucfirst::index/$1");
             $routes->get('add', "$ucfirst::add");
+            $routes->get('add/(:segment)', "$ucfirst::add/$1");
             $routes->get('view/(:segment)', "$ucfirst::view/$1");
             $routes->get('view/(:segment)/(:segment)', "$ucfirst::view/$1");
             $routes->get('edit/(:segment)', "$ucfirst::edit/$1");

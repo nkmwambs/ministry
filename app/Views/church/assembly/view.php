@@ -50,15 +50,15 @@
                 <div class="tab-content">
 
                     <div class="active tab-pane scrollable-view" id="list_members">
-                        <?=datatable("table_list_members", 'member', $columns['member']);?>
+                        <?=datatable("table_list_members", 'member', $columns['member'],$id);?>
                     </div>
 
                     <div class="tab-pane" id="list_collections">
-                        <?=datatable("table_list_collections", 'collection',$columns['collection']);?>
+                        <?=datatable("table_list_collections", 'collection',$columns['collection'],$id);?>
                     </div>
 
                     <div class="tab-pane" id="list_tithes">
-                        <?=datatable("table_list_tithes", 'tithe',$columns['tithe']);?>
+                        <?=datatable("table_list_tithes", 'tithe',$columns['tithe'],$id);?>
                     </div>
                 </div>
             </div>
