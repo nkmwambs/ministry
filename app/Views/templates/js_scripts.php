@@ -23,7 +23,7 @@
         }).always(function () {
             $("#overlay").css("display", "none");
         });
-    }
+    };
 
 
     function postRequest(url, data, on_success) {
