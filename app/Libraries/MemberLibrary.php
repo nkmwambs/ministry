@@ -40,6 +40,7 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
             $parent_id = session()->get('user_denomination_id');
         }
 
+        // $page_data['member_is_user'] = 1;
         $page_data['parent_id'] = hash_id($parent_id,'encode');
         $page_data['designation_id'] = hash_id($designation_id,'encode');
     }

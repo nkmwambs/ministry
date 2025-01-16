@@ -133,6 +133,7 @@ class Member extends WebController
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
             'gender' => $this->request->getPost('gender'),
+            'phone' => $this->request->getPost('phone'),
             'assembly_id' => $assembly_id,
             'member_number' => $this->computeMemberNumber($assembly_id),
             'designation_id' => $this->request->getPost('designation_id'),
@@ -158,7 +159,9 @@ class Member extends WebController
 
             // Save non-null custom field values
             if (!empty($nonNullCustomFields)) {
-                $customFieldLibrary->saveCustomFieldValues($insertId, $this->tableName, $customFieldValues);
+                // $tableName = $this->tableName;
+                // log_message('error', json_encode(compact('insertId','tableName','customFieldValues')));
+                $customFieldLibrary->saveCustomFieldValues($insertId, 'members', $customFieldValues);
             }
         }
 
@@ -168,7 +171,7 @@ class Member extends WebController
             $this->feature = 'member';
             $this->action = 'list';
             $records = $this->model
-            ->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            ->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone,member_is_user')
             ->join('designations','designations.id=members.designation_id')
             ->join('assemblies','assemblies.id=members.assembly_id')
             ->orderBy("members.created_at desc")->where('assembly_id', $assembly_id)->findAll();

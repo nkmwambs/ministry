@@ -55,6 +55,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
     {
         $featureModel = new \App\Models\FeaturesModel();
         $feature = $featureModel->where('name', singular($tableName))->first();
+        // log_message('error', json_encode($feature));
         $featureId = $feature['id'];
 
         if($customFieldValues && sizeOf($customFieldValues) > 0){
