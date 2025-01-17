@@ -17,7 +17,8 @@ return [
     'minister_designation_id' => 'Designation Name',
     'minister_phone' => 'Phone',
     'minister_is_active' => 'Active',
-
+    'minister_member_id' => 'Member Name',
+    'select_member' => 'Select Member Name',
 
     'select_designation' => 'Select Designation',
     'select_assembly' => 'Select Assembly',

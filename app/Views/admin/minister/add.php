@@ -41,7 +41,7 @@ $numeric_member_id = hash_id($member_id, 'decode');
 
           <?php if (!$numeric_assembly_id) { ?>
             <div class='form-group'>
-              <label for="assembly_id" class="control-label col-xs-4"><?= lang('minister.minister_member_id') ?></label>
+              <label for="assembly_id" class="control-label col-xs-4"><?= lang('minister.minister_assembly_id') ?></label>
               <div class="col-xs-6">
                 <select class="form-control" name="assembly_id" id="assembly_id">
                   <option value=""><?= lang('minister.select_assembly') ?></option>
@@ -61,9 +61,7 @@ $numeric_member_id = hash_id($member_id, 'decode');
               <div class="col-xs-6">
                 <select class="form-control" name="member_id" id="member_id">
                   <option value=""><?= lang('minister.select_member') ?></option>
-                  <?php foreach ($members as $member) : ?>
-                    <option value="<?php echo $member['id']; ?>"><?php echo $member['first_name'].' '.$member['last_name']; ?></option>
-                  <?php endforeach; ?>
+                  
                 </select>
               </div>
             </div>
@@ -71,30 +69,32 @@ $numeric_member_id = hash_id($member_id, 'decode');
             <input type="hidden" name="member_id" id="member_id" value="<?= $member_id; ?>" />
           <?php } ?>
 
-          <!-- <div class="form-group">
-            <label class="control-label col-xs-4" for="is_active">
-              <?= lang('minister.minister_is_active') ?>
-            </label>
-            <div class="col-xs-6">
-              <select type="text" class="form-control" name="is_active" id="is_active">
-                <option value="" selected><?= lang('minister.select_status') ?></option>
-                <option value="yes">Yes</option>
-                <option value="yes">No</option>
-              </select>
-            </div>
-          </div> -->
 
           <!-- Dynamically Generated Custom Fields -->
           <?php if ($customFields): ?>
-            <?php foreach ($customFields as $field): ?>
-              <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
-                <label class="control-label col-xs-4" for="<?= $field['field_name']; ?>"><?= ucfirst($field['field_name']); ?></label>
-                <div class="col-xs-6">
-                  <input type="<?= $field['type']; ?>" name="custom_fields[<?= $field['id']; ?>]" id="<?= $field['field_name']; ?>" class="form-control">
-                </div>
-              </div>
-            <?php endforeach; ?>
-          <?php endif; ?>
+                <?php foreach ($customFields as $field): ?>
+                  <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
+                    <label class="control-label col-xs-4"
+                      for="<?= $field['field_name']; ?>"><?= ucfirst($field['field_name']); ?></label>
+                    <div class="col-xs-6">
+                      <?php if ($field['options'] != "") { ?>
+                        <select class="form-control" name="custom_fields[<?= $field['id']; ?>]"
+                          id="<?= $field['field_name']; ?>">
+                          <option value="">Select Option</option>
+                          <?php
+                          foreach (explode("\r\n", $field['options']) as $option) {
+                            ?>
+                            <option value="<?php echo $option; ?>"><?php echo $option; ?></option>
+                          <?php } ?>
+                        </select>
+                      <?php } else { ?>
+                        <input type="<?= $field['type']; ?>" name="custom_fields[<?= $field['id']; ?>]"
+                          id="<?= $field['field_name']; ?>" class="form-control" />
+                      <?php } ?>
+                    </div>
+                  </div>
+                <?php endforeach; ?>
+              <?php endif; ?>
 
         </form>
 
@@ -116,6 +116,29 @@ $numeric_member_id = hash_id($member_id, 'decode');
   })
 
   $("#assembly_id").on('change', function(){
-    alert('Hello')
+  
+    const url = '<?=site_url('ajax')?>'
+
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        controller: 'members',
+        method: 'get_assembly_minister_members', // makeUser
+        data: {
+          assembly_id: $(this).val(),
+        }
+      },
+      success: function(response) {
+    
+        const members = response.members
+        $('#member_id').html('<option value="">Select Member</option>');
+        members.forEach(member => {
+          $('#member_id').append(`<option value="${member.member_id}">${member.first_name} ${member.last_name} </option>`)
+        })
+
+      }
+    })
+
   })
 </script>

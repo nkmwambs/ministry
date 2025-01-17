@@ -220,7 +220,6 @@ class Minister extends WebController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'member_id' => 'required',
-            // 'minister_number' => 'required|min_length[3]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -229,12 +228,8 @@ class Minister extends WebController
             return response()->setJSON(['errors' => $validationErrors]);
         }
 
-        // $hashed_denomination_id = $this->request->getPost('denomination_id');
-        $assembly_id = $this->request->getPost('assembly_id');//hash_id($hashed_denomination_id, 'decode');
-
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
-        // $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
 
         if (!empty($customFieldValues)) {
             // Filter out null or empty custom fields
@@ -244,13 +239,15 @@ class Minister extends WebController
 
             // Save non-null custom field values
             if (!empty($nonNullCustomFields)) {
-                $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+                $customFieldLibrary->saveCustomFieldValues($insertId, 'ministers', $customFieldValues);
             }
         }
 
+        $member_id = $this->request->getPost('member_id');
+
         $data = [
-            'minister_number' => $this->computeMinisterNumber(),
-            'member_id' => $this->request->getPost('member_id'),
+            'minister_number' => $this->computeMinisterNumber($member_id),
+            'member_id' => $member_id,
         ];
 
         $this->model->insert((object)$data);
@@ -272,13 +269,24 @@ class Minister extends WebController
         return redirect()->to(site_url($this->session->get('user_type')."/ministers/view/".hash_id($insertId)))->with('message', 'Minister added seccessfuly!');;
     }
 
-    private function computeMinisterNumber() {
-        $ministerNumber = '';
+    private function computeMinisterNumber($member_id) {
+
+        // Member model
+        $membersModel = new \App\Models\MembersModel();
+        $member = $membersModel->select('denominations.code as denomination_code')
+        ->join('assemblies','assemblies.id=members.assembly_id')
+        ->join('entities','entities.id=assemblies.entity_id')
+        ->join('hierarchies','hierarchies.id=entities.hierarchy_id')
+        ->join('denominations','denominations.id=hierarchies.denomination_id')
+        ->where('members.id', $member_id)
+        ->first();
 
         $ministerCount = $this->model->countAllResults();
         ++$ministerCount;
 
         $ministerCount = str_pad($ministerCount,4,'0',STR_PAD_LEFT);
+
+        $ministerNumber = $member['denomination_code']."/MS/$ministerCount";
 
         while ($this->model->where('minister_number', $ministerNumber)->countAllResults() > 0) {
             ++$ministerCount;

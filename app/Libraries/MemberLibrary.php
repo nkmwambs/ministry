@@ -167,4 +167,21 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
 
         return compact('status', 'message');
     }
+
+    function get_assembly_minister_members($assembly_id){
+        $membersModel = new \App\Models\MembersModel();
+        $members = $membersModel
+        ->select('members.id as member_id, members.*')
+        ->where(['assembly_id' => $assembly_id, 'is_active' => 1])
+        ->join('designations', 'designations.id = members.designation_id')
+        ->where('designations.is_minister_title_designation', 'yes')
+        ->findAll();
+       
+        
+        $response['status'] = "success";
+        $response['message'] = "Successfully fetched members";
+        $response['members'] = $members;
+        
+        return $response;
+    }
 }

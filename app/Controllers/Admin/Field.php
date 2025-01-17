@@ -29,7 +29,7 @@ class Field extends WebController
         }
 
         // Get all custom fields for the 'users' table
-        $customFields = $this->customfieldLibrary->getCustomFieldsForTable('fields');
+        $customFields = $this->customfieldLibrary->getCustomFieldsForTable('customFields');
         $page_data['customFields'] = $customFields;
 
         return view($this->session->get('user_type')."/$this->feature/add", $page_data);
@@ -52,7 +52,7 @@ class Field extends WebController
         }
 
         // Get all custom fields for the 'users' table
-        $customFields = $this->customfieldLibrary->getCustomFieldsForTable('fields');
+        $customFields = $this->customfieldLibrary->getCustomFieldsForTable('customFields');
         $page_data['customFields'] = $customFields;
 
         return view($this->session->get('user_type')."/$this->feature/edit", $page_data);
@@ -80,7 +80,7 @@ class Field extends WebController
         $insertId = $this->model->getInsertID();
 
         if ($this->request->isAJAX()) {
-            $this->feature = 'field';
+            $this->feature = 'customfield';
             $this->action = 'list';
             $records = [];
 
@@ -92,10 +92,6 @@ class Field extends WebController
 
             return view($this->session->get('user_type').'/field/list', parent::page_data($records));
         }
-
-        // Dynamically add the new field to the database table
-        // $db = \Config\Database::connect();
-        // $db->query("ALTER TABLE users ADD {$fieldName} {$this->mapFieldType($fieldType)}");
 
         return redirect()->to(site_url('settings/view/'.hash_id($insertId)));
     }
