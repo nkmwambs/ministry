@@ -219,11 +219,16 @@ class Minister extends WebController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'member_id' => 'required',
+            'member_id' => [
+                'rules' => 'required',
+                'label' => 'Member Name',
+                'errors' => [
+                    'required' => 'Member name is required.',
+                ]
+            ]
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             $validationErrors = $validation->getErrors();
             return response()->setJSON(['errors' => $validationErrors]);
         }

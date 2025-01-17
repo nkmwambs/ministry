@@ -19,6 +19,7 @@ return [
     'minister_is_active' => 'Active',
     'minister_member_id' => 'Member Name',
     'select_member' => 'Select Member Name',
+    'member_designation' => 'Minister Designation',
 
     'select_designation' => 'Select Designation',
     'select_assembly' => 'Select Assembly',

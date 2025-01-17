@@ -169,13 +169,25 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function get_assembly_minister_members($assembly_id){
+
+        $ministersModel = new \App\Models\MinistersModel();
+        $ministers = $ministersModel->select('ministers.member_id')->findAll();
+        
+        $minister_member_ids = array_map(function($minister){
+            return $minister['member_id'];
+        }, $ministers);
+        
+
         $membersModel = new \App\Models\MembersModel();
-        $members = $membersModel
-        ->select('members.id as member_id, members.*')
+        $membersModel->select('members.id as member_id, members.*')
         ->where(['assembly_id' => $assembly_id, 'is_active' => 1])
         ->join('designations', 'designations.id = members.designation_id')
-        ->where('designations.is_minister_title_designation', 'yes')
-        ->findAll();
+        ->where('designations.is_minister_title_designation', 'yes');
+
+        if(count($minister_member_ids) > 0){
+            $membersModel->whereNotIn('members.id', $minister_member_ids);
+        }
+        $members = $membersModel->findAll();
        
         
         $response['status'] = "success";
