@@ -15,7 +15,9 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
         <div class="panel-options">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#standard" class = "nav_tabs" id = "standard_tab" data-toggle="tab">Standard</a></li>
+            <?php if ($customFields): ?>
             <li><a href="#additional" class = "nav_tabs" id = "additional_tab" data-toggle="tab">Additional Information</a></li>
+            <?php endif; ?>
           </ul>
         </div>
 
@@ -194,7 +196,10 @@ $numeric_designation_id = hash_id($designation_id, 'decode');
 
 <script>
   $(document).ready(function() {
-    $('.modal_action_buttons').addClass('disabled');
+    const countCustomFields = "<?=count($customFields);?>"
+    if(countCustomFields > 0){
+      $('.modal_action_buttons').addClass('disabled');
+    }
   })
 
   $('.nav_tabs').on('click', function () {
