@@ -21,6 +21,7 @@ return [
     'membership_date' => 'Membership Date',
     'member_is_user' => 'Membership is a User',
     'saved_date' => 'Saved Date',
+    'member_assembly_id' => 'Membership Assembly',
 
     'select_designation' => 'Select Designation',
 

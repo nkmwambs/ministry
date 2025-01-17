@@ -88,10 +88,9 @@ class Member extends WebController
 
     function post(){
         $insertId = 0;
-        // $hashed_assembly_id = $this->request->getVar('assembly_id');
 
         $validation = \Config\Services::validation();
-        $validation->setRules([
+        $rules = [
             'first_name' => [
                 'rules' =>'required|min_length[3]|max_length[255]',
                 'label' => 'First Name',
@@ -135,8 +134,18 @@ class Member extends WebController
                 'errors' => [
                     'required' => 'Date saved is required.',
                 ]
+            ],
+            'assembly_id' => [
+                'rules' => 'required',
+                'label' => 'Assembly Name',
+                'errors' => [
+                    'required' => 'Assembly Name is required.',
+                ]
             ]
-        ]);
+
+        ];
+
+        $validation->setRules($rules);
 
         if (!$this->validate($validation->getRules())) {
             return response()->setJSON(['errors' => $validation->getErrors()]);

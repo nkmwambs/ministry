@@ -12,9 +12,9 @@
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" id="modal_reset" class="btn btn-danger">Reset</button>
-				<button type="button" id="modal_save" data-item_id="" data-feature_plural="" class="btn btn-success">Save</button>
+				<button type="button" class="btn btn-default" id="modal_close" data-dismiss="modal">Close</button>
+				<button type="button" id="modal_reset" class="btn btn-danger modal_action_buttons">Reset</button>
+				<button type="button" id="modal_save" data-item_id="" data-feature_plural="" class="btn btn-success modal_action_buttons">Save</button>
 			</div>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" id="modal_close" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>

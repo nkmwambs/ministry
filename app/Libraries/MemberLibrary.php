@@ -59,8 +59,12 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
         $designationsModel = new \App\Models\DesignationsModel();
         $designations = $designationsModel->findAll();
 
+        $assembliesModel = new \App\Models\AssembliesModel();
+        $assemblies = $assembliesModel->findAll();
+
         $page_data['denominations'] = $denominations;
         $page_data['designations'] = $designations;
+        $page_data['assemblies'] = $assemblies;
 
         // $page_data['parent_id'] = hash_id($parent_id,'encode');
         $page_data['designation_id'] = hash_id($designation_id, 'encode');
