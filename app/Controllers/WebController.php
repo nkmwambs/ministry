@@ -7,9 +7,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use Psr\Log\LoggerInterface;
 
-// use CodeIgniter\Shield\Controllers\LoginController as ShieldLogin;
-// use CodeIgniter\HTTP\RedirectResponse;
-
 class WebController extends BaseController
 {
 
@@ -27,6 +24,7 @@ class WebController extends BaseController
     protected $customFields = null;
     protected $listQueryFields = [];
     protected $feature_page_data = [];
+
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
@@ -35,7 +33,9 @@ class WebController extends BaseController
         $this->session = service('session'); //\Config\Services::session();
         
         if(!$this->session->has('logged_in')){
-            redirect('logout');
+            // $this->session->destroy();
+            // return redirect('logout');
+            redirect()->to('logout');
         }
 
         // Preload any models, libraries, etc, here.

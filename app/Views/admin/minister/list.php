@@ -21,7 +21,6 @@
                 <tr>
                     <th><?= lang('minister.minister_action_col') ?></th>
                     <th><?= lang('minister.minister_number') ?></th>
-                    <!-- <th><?= lang('minister.member_number') ?></th> -->
                     <th><?= lang('minister.member_first_name') ?></th>
                     <th><?= lang('minister.member_last_name') ?></th>
                     <th><?= lang('minister.member_phone') ?></th>
@@ -58,10 +57,9 @@ $(document).ready(function (){
                 }
             },
             { data: "minister_number" },
-            // { data: "member_number" },
-            { data: "member_first_name" },
-            { data: "member_last_name" },
-            { data: "member_phone" },
+            { data: "first_name" },
+            { data: "last_name" },
+            { data: "phone" },
             { data: "is_active" },
         ]
     });

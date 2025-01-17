@@ -1,6 +1,5 @@
 <?php
 $numeric_assembly_id = hash_id($assembly_id, 'decode');
-// $numeric_designation_id = hash_id($designation_id, 'decode');
 $numeric_member_id = hash_id($member_id, 'decode');
 ?>
 
@@ -114,5 +113,9 @@ $numeric_member_id = hash_id($member_id, 'decode');
     if (visible === "no") {
       $('.custom_field_container').addClass('hidden');
     }
+  })
+
+  $("#assembly_id").on('change', function(){
+    alert('Hello')
   })
 </script>

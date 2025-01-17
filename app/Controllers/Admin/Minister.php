@@ -14,6 +14,78 @@ class Minister extends WebController
         $this->model = new \App\Models\MinistersModel();
     }
 
+    // public function index($parent_id = ''): string
+    // {
+
+    //     if(!auth()->user()->canDo("$this->feature.read")){
+    //         $page_data = $this->page_data(['errors' =>  []]);
+
+    //         if ($this->request->isAJAX()) {
+    //             return view("errors/html/error_403", $page_data);
+    //         }
+
+    //         return view('index', compact('page_data'));
+    //     }
+
+        
+    //     $ministers = [];
+
+    //     if($parent_id > 0){
+    //         $ministers = $this->model->select('ministers.id as minister_id,ministers.is_active,members.id as member_id,members.first_name,members.last_name,members.gender,members.last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,members.date_of_birth,members.email,members.phone,associated_member_id as member_is_user')
+    //         ->where('denomination_id',hash_id($parent_id,'decode') )
+    //         ->join('assemblies','assemblies.id=members.assembly_id','left')
+    //         ->join('users','users.associated_member_id = members.id','left')
+    //         ->join('designations','designations.id = members.designation_id')
+    //         ->join('ministers','ministers.member_id = members.id')
+    //         ->orderBy('ministers.created_at desc')
+    //         ->findAll();
+    //     }else{
+    //         // $members = $this->model->select('members.id,members.first_name,members.gender,members.last_name,assembly_id,member_number,designations.name as designation_name,designation_id,members.date_of_birth,members.email,members.phone,associated_member_id as member_is_user')
+    //         $ministers = $this->model->select('ministers.id as minister_id,ministers.is_active,members.id as member_id,members.first_name,members.last_name,members.gender,members.last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,members.date_of_birth,members.email,members.phone,associated_member_id as member_is_user')
+    //         ->join('assemblies','assemblies.id=members.assembly_id','left')
+    //         ->join('users','users.associated_member_id = members.id','left')
+    //         ->join('designations','designations.id = members.designation_id')
+    //         ->join('ministers','ministers.member_id = members.id')
+    //         ->orderBy('members.created_at desc')
+    //         ->findAll();
+    //     }
+       
+    //     if(!$ministers){
+    //         $page_data['result'] = [];
+    //     }else{
+    //         $page_data['result'] = $ministers;
+    //     }
+
+    //     $page_data['result'] = $ministers;
+    //     $page_data['feature'] = 'member';
+    //     $page_data['action'] = 'list';
+        
+    //     if ($this->request->isAJAX()) {
+    //         $page_data['parent_id'] = $parent_id;
+    //         return view($this->session->get('user_type').'/minister/list', $page_data);
+    //     }else{
+
+    //         $data = [];
+
+    //         if (method_exists($this->model, 'getListData')) {
+    //             $data = $this->model->getListData();
+    //         } else {
+    //             method_exists($this->model, 'getAll') ?
+    //                 $data = $this->model->getAll() :
+    //                 $data = $this->model->findAll();
+    //         }
+    //         // $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
+    //         $page_data = $this->page_data($data);
+
+    //         if (method_exists($this->library, 'listExtraData')) {
+    //             // Note the editExtraData updates the $page_data by reference
+    //             $this->library->listExtraData($page_data);
+    //         }
+    //     }
+
+    //     return view('index', compact('page_data'));
+    // }
+
     public function fetchMinisters()
     {
         $request = \Config\Services::request();
@@ -38,8 +110,31 @@ class Minister extends WebController
         $totalFiltered = $this->model->countAllResults(false);
 
         // Limit the results and fetch the data
-        $this->model->limit($length, $start);
-        $data = $this->model->find();
+        $data = $this->model->limit($length, $start)
+            ->select(
+                'ministers.id,
+                ministers.is_active,
+                members.id as member_id,
+                members.first_name,
+                members.last_name,
+                members.gender,
+                members.assembly_id,
+                assemblies.name as assembly_name,
+                members.member_number,
+                designations.name as designation_name,
+                members.designation_id,
+                members.date_of_birth,
+                members.email,
+                members.phone,
+                users.associated_member_id as member_is_user,
+                ministers.minister_number'
+                )
+            ->join('members','members.id=ministers.member_id')
+            ->join('assemblies','assemblies.id=members.assembly_id','left')
+            ->join('users','users.associated_member_id = members.id','left')
+            ->join('designations','designations.id = members.designation_id')
+            ->orderBy('ministers.created_at desc')
+            ->find();
 
         // Loop through the data to apply hash_id()
         foreach ($data as &$minister) {
