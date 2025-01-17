@@ -17,7 +17,7 @@ class MemberLibrary implements \App\Interfaces\LibraryInterface {
         $fields = [
             'members.id','first_name','last_name','gender',
             'assembly_id','member_number','designation_id','designations.name as designation_name',
-            'date_of_birth','members.email','members.phone','members.is_active','members.saved_date','members.inactivation_reason','members.membership_date'
+            'date_of_birth','members.member_is_user','assemblies.name as assembly_name','members.email','members.phone','members.is_active','members.saved_date','members.inactivation_reason','members.membership_date'
         ];
         return $fields;
     }

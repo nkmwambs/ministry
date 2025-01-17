@@ -30,8 +30,9 @@ class FeatureLibrary implements \App\Interfaces\LibraryInterface {
             "admin" => [
                 'dashboards' => ['label' => 'dashboards', 'iconClass' => 'entypo-gauge', 'uri' => ''],
                 'denominations' => ['label' => 'denominations', 'iconClass' => 'entypo-trophy', 'uri' => ''],
-                'ministers' => ['label' => 'ministers', 'iconClass' => 'entypo-book', 'uri' => ''],
                 'assemblies' => ['label' => 'assemblies', 'iconClass' => 'entypo-home', 'uri' => ''],
+                'ministers' => ['label' => 'ministers', 'iconClass' => 'entypo-book', 'uri' => ''],
+                'members' => ['label' => 'members', 'iconClass' => 'entypo-database', 'uri' => ''],
                 'events' => ['label' => 'events', 'iconClass' => 'entypo-layout', 'uri' => ''],
                 'reports' => [
                                 'label' => 'reports', 'iconClass' => 'entypo-newspaper', 'uri' => '',

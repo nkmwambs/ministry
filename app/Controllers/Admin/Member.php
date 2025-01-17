@@ -29,6 +29,7 @@ class Member extends WebController
 
             return view('index', compact('page_data'));
         }
+
         
         $members = [];
 
@@ -63,10 +64,26 @@ class Member extends WebController
             $page_data['parent_id'] = $parent_id;
             return view($this->session->get('user_type').'/member/list', $page_data);
         }else{
-            $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
+
+            $data = [];
+
+            if (method_exists($this->model, 'getListData')) {
+                $data = $this->model->getListData();
+            } else {
+                method_exists($this->model, 'getAll') ?
+                    $data = $this->model->getAll() :
+                    $data = $this->model->findAll();
+            }
+            // $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
+            $page_data = $this->page_data($data);
+
+            if (method_exists($this->library, 'listExtraData')) {
+                // Note the editExtraData updates the $page_data by reference
+                $this->library->listExtraData($page_data);
+            }
         }
 
-        return view('index', $page_data);
+        return view('index', compact('page_data'));
     }   
 
     function post(){

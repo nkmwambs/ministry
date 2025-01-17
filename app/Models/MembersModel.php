@@ -61,7 +61,8 @@ class MembersModel extends Model
         if(!empty($listQueryFields)){
             return $this->select($library->setListQueryFields())
             ->join('designations','designations.id = members.designation_id')
-            ->orderBy('created_at desc')->findAll();
+            ->join('assemblies','assemblies.id = members.assembly_id')
+            ->orderBy('members.created_at desc')->findAll();
         }else{
             return $this->orderBy('created_at desc')->findAll();
         }

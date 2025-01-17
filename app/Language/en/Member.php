@@ -19,6 +19,7 @@ return [
     'member_gender' => 'Gender',
     'member_select_gender' => 'Select a gender',
     'membership_date' => 'Membership Date',
+    'member_is_user' => 'Membership is a User',
     'saved_date' => 'Saved Date',
 
     'select_designation' => 'Select Designation',

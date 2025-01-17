@@ -6,6 +6,7 @@ return [
     'denominations' => 'Denominations',
     'ministers' => 'Ministers',
     'assemblies' => 'Assemblies',
+    'members' => 'Members',
     'my_assembly' => 'Assembly',
     "my_profile" => "Profile",
     "my_dashboard" => "Dashboard",
