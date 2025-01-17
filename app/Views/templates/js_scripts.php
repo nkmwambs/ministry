@@ -177,7 +177,7 @@
 
     $('.datatable').DataTable({
         stateSave: true,
-        scrollY: '200px',
+        scrollY: '650px',
         scrollCollapse: true,
         fixedColumns: true,
         fixedHeader: true,
