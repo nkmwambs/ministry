@@ -88,7 +88,16 @@ extract($report_metadata);
 
                                             <?php }?>
                                         </div>
+                                        
+                                        <?php if($i == count($report_fields) - 1){?>
+                                            <div class="form-group">
+                                                    <label for="paying_number" class="control-label col-xs-4">Paying Number</label>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" class = "form-control" id = "paying_number" name = "paying_number" />
+                                                    </div>
+                                            </div> 
                                         <?php
+                                        }
                                     }
                                     
                                     ?>

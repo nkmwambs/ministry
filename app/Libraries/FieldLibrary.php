@@ -237,8 +237,8 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
             if($select == 'count'){
                 $queryResult->select('count(*)');
             }elseif($select == 'sum'){
-                // log_message('error', $select);
-                $queryResult->select('sum('.$sum_field.')');
+                // log_message('error', json_encode($sum_field));
+                $queryResult->selectSum($sum_field->field);
             }
 
             // Join query part 
@@ -315,12 +315,16 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
 
             $result = '';
 
-            // if($select == 'sum'){
-                // log_message('error',$queryResult->getLastQuery());
-                // $result = $queryResult->get()->getRow()->$sum_field; 
-            // }else{
+            if($select == 'sum'){
+                $result = $queryResult->first()[$sum_field->field]; 
+                if(array_key_exists('compute',(array)$sum_field)){
+                    if(array_key_exists('percent', (array)$sum_field->compute)){
+                        $result = $result * $sum_field->compute->percent;
+                    }
+                }
+            }else{
                 $result = $queryResult->countAllResults();
-            // }
+            }
 
             $value = $result;
         }
