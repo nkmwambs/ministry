@@ -1,6 +1,7 @@
 <?php 
 
 return [
+    'dashboard_welcome' => "Welcome to the site",
     'dashboards' =>  "Dashboards",
     'logout' => "Log Out",
     'denominations' => 'Denominations',
