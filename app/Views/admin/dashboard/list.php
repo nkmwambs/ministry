@@ -2,12 +2,12 @@
 
 $mpesaLibrary = new \App\Libraries\MpesaLibrary();
 
-$denominationCode = "COGOP";
+$denominationCode = "COGOP-WC2025";
 $payment_purpose = "Payment of Women Conference";
 $paying_number = "254711808071";
-$amount = 10; 
+$amount = 1; 
 echo $mpesaLibrary->express($denominationCode, $payment_purpose, $paying_number, $amount);
-// print_r($mpesaLibrary->register_urls());
+// $mpesaLibrary->register_urls();
 ?>
 <div class="row">
 	<div class="col-sm-3 col-xs-6">

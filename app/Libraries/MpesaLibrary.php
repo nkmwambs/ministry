@@ -94,7 +94,7 @@ class MpesaLibrary  implements \App\Interfaces\LibraryInterface {
                 ]
             );
 
-        return response()->setJSON($response->getBody());
+        // return response()->setJSON($response->getBody());
     }
 
     // Interface methods to be removed later
