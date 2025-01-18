@@ -235,7 +235,10 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
 
             // Aggregation query part
             if($select == 'count'){
-                $queryResult->select('count(*');
+                $queryResult->select('count(*)');
+            }elseif($select == 'sum'){
+                // log_message('error', $select);
+                $queryResult->select('sum('.$sum_field.')');
             }
 
             // Join query part 
@@ -310,7 +313,14 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                 }
             }
 
-            $result = $queryResult->countAllResults();
+            $result = '';
+
+            // if($select == 'sum'){
+                // log_message('error',$queryResult->getLastQuery());
+                // $result = $queryResult->get()->getRow()->$sum_field; 
+            // }else{
+                $result = $queryResult->countAllResults();
+            // }
 
             $value = $result;
         }

@@ -17,6 +17,7 @@ return [
     'customfield_visible' => 'Visible',
     'customfield_code' => 'Field Code',
     'customfield_helptip' => 'Field Helptip',
+    'add_field' => 'Add Custom Field',
 
     'text' => 'Text',
     'float' => 'Float',
