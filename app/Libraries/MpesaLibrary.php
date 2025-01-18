@@ -7,21 +7,21 @@ class MpesaLibrary  implements \App\Interfaces\LibraryInterface {
     private $client;
     private $base_url;
     function __construct(){
-        $this->base_url = 'https://daba-196-223-167-234.ngrok-free.app';
+        $this->base_url = getenv('tunnellingDomain');
         $this->client = \Config\Services::curlrequest();
     }
 
     function express(string $denominationCode, string $payment_purpose, string $paying_number, int $amount){
 
-        $endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-        $BusinessShortCode = '174379';
-        $passkey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
+        $endpoint = getenv('stkPushURL');
+        $BusinessShortCode = getenv('shortCode');
+        $passkey = getenv('passKey');
         $Timestamp = date('YmdHis'); // '20240924115834'; 
-        $Password = base64_encode($BusinessShortCode . $passkey . $Timestamp); // "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwOTI0MTE1ODM0"; 
+        $Password = base64_encode($BusinessShortCode . $passkey . $Timestamp); 
         $TransactionType = 'CustomerPayBillOnline';
         $Amount = $amount;
         $PartyA = $paying_number;
-        $PartyB = '174379';
+        $PartyB = getenv('shortCode');
         $PhoneNumber = $paying_number;
         $CallBackURL = $this->base_url.'/callback/stk';
         $AccountReference = $denominationCode;
@@ -30,7 +30,6 @@ class MpesaLibrary  implements \App\Interfaces\LibraryInterface {
         $body = compact(
             'BusinessShortCode',
             'Timestamp',
-            'Password',
             'Password',
             'TransactionType',
             'Amount',
@@ -42,7 +41,7 @@ class MpesaLibrary  implements \App\Interfaces\LibraryInterface {
             'TransactionDesc',
         );
 
-        $ch = curl_init('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest');
+        $ch = curl_init(getenv('stkPushURL'));
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Authorization: Bearer '. $this->access_token(),
             'Content-Type: application/json'
@@ -61,11 +60,11 @@ class MpesaLibrary  implements \App\Interfaces\LibraryInterface {
     function access_token(){
         $response = $this->client->request(
         'GET',
-        'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
+        getenv('clientCredentialsURL'),
         [
                 'auth' => [
-                    'Akp17hzerzyCz5gQMG5ze7gMMj0AAGECFe7JzApM7iotOFIa',
-                    'pcfwKtR5AZGYwymmjsPuYInUkEY5wm60F22MNQif4hBMaktTyGx1XpUJegGRLL6J'
+                    getenv('consumerKey'),
+                    getenv('consumerSecret')
                 ],
                 'http_errors' => false,
         ]
@@ -76,13 +75,13 @@ class MpesaLibrary  implements \App\Interfaces\LibraryInterface {
     }
 
     function register_urls(){
-        $endpoint = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl';
+        $endpoint = getenv('registerURLs');
 
         $data = [
             'validationURL' => $this->base_url.'/callback/confirm',
             'confirmationURL' => $this->base_url.'/callback/pay_validate',
             'responseType' => 'Completed',
-            'shortCode' => '174379'
+            'shortCode' => getenv('shortCode')
         ];
 
         $response = $this->client->request(

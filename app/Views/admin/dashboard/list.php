@@ -1,3 +1,14 @@
+<?php
+
+$mpesaLibrary = new \App\Libraries\MpesaLibrary();
+
+$denominationCode = "COGOP";
+$payment_purpose = "Payment of Women Conference";
+$paying_number = "254711808071";
+$amount = 10; 
+echo $mpesaLibrary->express($denominationCode, $payment_purpose, $paying_number, $amount);
+// print_r($mpesaLibrary->register_urls());
+?>
 <div class="row">
 	<div class="col-sm-3 col-xs-6">
 		<?php include "components/registered_users.php"; ?>

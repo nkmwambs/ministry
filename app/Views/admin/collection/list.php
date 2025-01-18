@@ -32,12 +32,12 @@
                     <tr>
                         <td>
                             <span class='action-icons' title="View <?= hash_id($collection['id']); ?> collection">
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($designation);?>','view', '<?=hash_id($collection['id']);?>')"></i>
+                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($collection['id']);?>')"></i>
                             </span>
                             <span class='action-icons' title="Edit <?= hash_id($collection['id']); ?> collection">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($designation); ?>','edit', '<?= hash_id($collection['id']); ?>')" class='fa fa-pencil'></i>
+                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($collection['id']); ?>')" class='fa fa-pencil'></i>
                             </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($designation); ?>','delete','<?= hash_id($collection['id']); ?>')" title="Delete <?= $collection['id']; ?> participant"><i class='fa fa-trash'></i></span>
+                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($collection['id']); ?>')" title="Delete <?= $collection['id']; ?> participant"><i class='fa fa-trash'></i></span>
 
                         </td>
 
