@@ -4,13 +4,15 @@
 
 <?= $this->section('main') ?>
 
-    <div class="container d-flex justify-content-center p-5">
+    <div class="container d-flex justify-content-center p-5" style = "font-family: Georgia, serif;">
         <div class="card col-12 col-md-5 shadow-sm">
             <div class="card-body">
                 <div class="card-title mb-5" style="text-align:center;">
                     <img src="<?=base_url();?>assets/images/logo.png" width="120" alt="" />
                     <!-- <img src="images/logo.png" alt="Avatar" class="avatar"> -->
                 </div>
+
+                <h2 class="card-title mb-3" style="text-align:center;"><?=service('settings')->get('Church.orgName');?></h2>
 
                 <h5 class="card-title mb-5" style="text-align:center;"><?=service('settings')->get('Church.siteName');?></h5>
 
