@@ -19,7 +19,7 @@
 
                 <form id="frm_edit_minister" method="post" action="<?= site_url('ministers/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
 
-                    <input type="hidden" name="id" value="<?= hash_id($result['id']); ?>" />
+                    <input type="hidden" name="minister_id" value="<?= hash_id($result['id']); ?>" />
 
                     <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">
@@ -44,7 +44,7 @@
                             <?= lang('minister.member_first_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" value="<?= $result['member_first_name']; ?>" id="member_first_name"
+                            <input type="text" class="form-control" name="member_first_name" value="<?= $result['member_first_name']; ?>" id="member_first_name"
                                 placeholder="<?=lang('minister.edit_member_first_name');?>">
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="license_number" value="<?= $result['license_number']; ?>" id="license_number"
-                                placeholder="<?=lang('minister.edit_license_number');?>">
+                                placeholder="<?=lang('minister.license_number');?>">
                         </div>
                     </div>
 
@@ -85,8 +85,10 @@
                         <label for="designation_id" class="control-label col-xs-4"><?= lang('minister.minister_designation_id') ?></label>
                         <div class="col-xs-6">
                             <select class="form-control" name="designation_id" id="designation_id">
-                                <option value="<?= $result['designation_id'] ?>"><?= $result['designation_id'] ?></option>
-
+                                <option value=""><?=lang('minister.select_designation');?></option>
+                                <?php foreach($designations as $designation){?>
+                                    <option value="<?= $designation['id'];?>" <?=$result['designation_id']==$designation['id']? 'selected':'';?> ><?= $designation['name']?></option>
+                                <?php }?>
                             </select>
                         </div>
                     </div>
@@ -106,10 +108,15 @@
                             <?= lang('minister.minister_is_active') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="is_active" id="is_active" value="<?= $result['is_active']; ?>"
-                                placeholder="Edit Active Status">
+                                <select class="form-control" name="is_active" id="is_active">
+                                    <option value=""><?=lang('minister.select_status');?></option>
+                                    <option value="yes" <?=$result['is_active']== 'yes'? 'selected':'';?>><?=lang('system.system_yes');?></option>
+                                    <option value="no" <?=$result['is_active']== 'no'? 'selected':'';?>><?=lang('system.system_no');?></option>
+                                </select>
                         </div>
                     </div>
+
+                    <!-- Dynamically generated custom fields -->
 
                     <?php if (!empty($customFields)): ?>
                         <?php foreach ($customFields as $field): ?>

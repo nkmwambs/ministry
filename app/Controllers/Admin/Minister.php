@@ -145,10 +145,58 @@ class Minister extends WebController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            // 'name' => 'required|min_length[10]|max_length[255]',
-            'license_number' => 'required|min_length[3]',
-            'member_id' => 'required',
-            'is_active' => 'required|min_length[2]|max_length[3]',
+            'license_number' => [
+                'rules' => 'required|min_length[3]',
+                'label' => 'License Number',
+                'errors' => [
+                   'required' => 'License Number.',
+                   'min_length' => 'License Number must be at least {value} characters long.',
+                ]
+             ],
+             'member_first_name' => [
+                'rules' => 'required|min_length[3]',
+                'label' => 'Minister First Name',
+                'errors' => [
+                   'required' => 'Minister First Name is required.',
+                   'min_length' => 'Minister First Name must be at least {value} characters long.',
+                ]
+            ],
+            'member_last_name' => [
+                'rules' => 'required|min_length[3]',
+                'label' => 'Minister Last Name',
+                'errors' => [
+                   'required' => 'Minister Last Name is required.',
+                   'min_length' => 'Minister Last Name must be at least {value} characters long.',
+                ]
+            ],
+            'assembly_id' => [
+                'rules' => 'required',
+                'label' => 'Assembly Name',
+                'errors' => [
+                   'required' => 'Assembly Name is required.'
+                ]
+            ],
+            'designation_id' => [
+                'rules' => 'required',
+                'label' => 'Designation',
+                'errors' => [
+                   'required' => 'Designation is required.'
+                ]
+            ],
+            'member_phone' => [
+                'rules' => 'required',
+                'label' => 'Phone Number',
+                'errors' => [
+                   'required' => 'Phone Number is required.'
+                ]
+            ],
+            'is_active' => [
+                'rules' => 'required',
+                'label' => 'Minister Status',
+                'errors' => [
+                   'required' => 'Minister Status is required.'
+                ]
+            ]
         ]);
 
         if (!$this->validate($validation->getRules())) {
