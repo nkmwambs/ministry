@@ -9,7 +9,7 @@ return [
 
     'collection_action' => 'Action',
     'collection_name' => 'Collection Name',
-    'collection_return_date' => 'Return Date',
+    'collection_return_date' => 'Collection Date',
     'collection_period_start_date' => 'Period Start Date',
     'collection_period_end_date' => 'Period End Date',
     'collection_assembly_id' => 'Assembly Name',

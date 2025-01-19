@@ -17,14 +17,8 @@
                 <tr>
                     <th><?= lang('collection.collection_action') ?></th>
                     <th><?= lang('collection.collection_return_date') ?></th>
-                    <th><?= lang('collection.collection_period_start_date') ?></th>
-                    <th><?= lang('collection.collection_period_end_date') ?></th>
                     <th><?= lang('collection.collection_revenue_id') ?></th>
                     <th><?= lang('collection.collection_amount') ?></th>
-                    <th><?= lang('collection.collection_status') ?></th>
-                    <th><?= lang('collection.collection_collection_reference') ?></th>
-                    <th><?= lang('collection.collection_description') ?></th>
-                    <th><?= lang('collection.collection_collection_method') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -42,14 +36,8 @@
                         </td>
 
                         <td><?= $collection['return_date']; ?></td>
-                        <td><?= $collection['period_start_date']; ?></td>
-                        <td><?= $collection['period_end_date']; ?></td>
                         <td><?= $collection['revenue_name']; ?></td>
                         <td><?= $collection['amount']; ?></td>
-                        <td><?= $collection['status']; ?></td>
-                        <td><?= $collection['collection_reference']; ?></td>
-                        <td><?= $collection['description']; ?></td>
-                        <td><?= $collection['collection_method']; ?></td>
 
                     <?php } ?>
             </tbody>
