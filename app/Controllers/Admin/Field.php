@@ -62,6 +62,8 @@ class Field extends WebController
     {
         $insertId = 0;
 
+        $featureLibrary = new \App\Libraries\FeatureLibrary();
+
         $data = [
             'denomination_id' => $this->request->getPost('denomination_id'),
             'field_name' => $this->request->getPost('field_name'),
@@ -70,10 +72,7 @@ class Field extends WebController
             'type' => $this->request->getPost('type'),
             'options' => $this->request->getPost('options'),
             'feature_id' => $this->request->getPost('feature_id'),
-            // 'field_order' => $this->request->getPost('field_order'),
-            // 'visible' => $this->request->getPost('visible'),
-            'table_name' => plural($featureLibrary->getFeature), //$this->request->getPost('table_name'),
-            // 'created_at' => date('Y-m-d H:i:s')
+            'table_name' => plural($featureLibrary->getFeatureTableNameById($this->request->getPost('feature_id'))), //$this->request->getPost('table_name'),
         ];
 
         $this->model->insert((object)$data);

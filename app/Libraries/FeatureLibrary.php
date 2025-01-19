@@ -82,4 +82,10 @@ class FeatureLibrary implements \App\Interfaces\LibraryInterface {
 
         return $nameField;
     }
+
+    function getFeatureTableNameById($featureId){
+        $feature = new \App\Models\FeaturesModel();
+        $featureData = $feature->find($featureId);
+        return $featureData['feature_table_name'];
+    }
 }

@@ -175,7 +175,6 @@ class Member extends WebController
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
-        // $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
 
         if (!empty($customFieldValues)) {
             // Filter out null or empty custom fields
@@ -185,8 +184,6 @@ class Member extends WebController
 
             // Save non-null custom field values
             if (!empty($nonNullCustomFields)) {
-                // $tableName = $this->tableName;
-                // log_message('error', json_encode(compact('insertId','tableName','customFieldValues')));
                 $customFieldLibrary->saveCustomFieldValues($insertId, 'members', $customFieldValues);
             }
         }

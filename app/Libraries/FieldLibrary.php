@@ -55,7 +55,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
     {
         $featureModel = new \App\Models\FeaturesModel();
         $feature = $featureModel->where('name', singular($tableName))->first();
-        // log_message('error', json_encode($feature));
+
         $featureId = $feature['id'];
 
         if($customFieldValues && sizeOf($customFieldValues) > 0){
@@ -77,7 +77,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                         'record_id'   => $recordId,
                         'feature_id'  => $featureId,
                         'customfield_id'    => $fieldId,
-                        'value' => json_encode($value),
+                        'value' => $value // json_encode($value),
                     ];
                     // Insert new custom field value
                     $this->customValueModel->insert((object)$data);
