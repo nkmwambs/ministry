@@ -60,26 +60,30 @@ $numeric_revenue_id = hash_id($revenue_id, 'decode');
               for="sunday_date"><?= lang('collection.choose_sunday_button') ?></label>
             <div class="col-xs-6">
               <input type="text" class="form-control collection_datepicker" name="sunday_date" id="sunday_date"
-                placeholder="Enter a Sunday">
+                placeholder="<?=lang('collection.select_collection_date')?>">
             </div>
           </div>
 
           <section class="collection_section">
             <div class="form-group section-header">
-              <div class="collection_title col-xs-2"><?= lang('collection.add_collection_button') ?></div>
-              <div class="collection_title col-xs-5"><?= lang('collection.collection_name') ?></div>
-              <div class="collection_title col-xs-5"><?= lang('collection.collection_amount') ?></div>
+              <div class="collection_title col-xs-4"><?= lang('collection.add_collection_button') ?></div>
+              <div class="collection_title col-xs-4"><?= lang('collection.collection_name') ?></div>
+              <div class="collection_title col-xs-4"><?= lang('collection.collection_amount') ?></div>
             </div>
 
             <div class="form-group section-content">
-                <div class="col-xs-2">
+                <div class="col-xs-4">
                   <div class="btn btn-success add_collection_button">
                     <i class="fa fa-plus-circle"></i>
                   </div>
+
+                  <div class="btn btn-danger hidden remove_collection_button">
+                    <i class="fa fa-minus-circle"></i>
+                  </div>
                 </div>
                 <?php if (!$numeric_revenue_id) { ?>
-                  <div class="col-xs-5">
-                    <select class="form-control" name="revenue_id" id="revenue_id">
+                  <div class="col-xs-4">
+                    <select class="form-control" name="revenue_id[]" id="revenue_id">
                       <option value=""><?= lang('collection.select_revenue') ?></option>
                       <?php foreach ($revenues as $revenue): ?>
                         <option value="<?php echo $revenue['id']; ?>"><?php echo $revenue['name']; ?></option>
@@ -87,8 +91,8 @@ $numeric_revenue_id = hash_id($revenue_id, 'decode');
                     </select>
                   </div>
                 <?php } ?>
-                <div class="col-xs-5">
-                  <input type="number" class="form-control" name="amount" id="amount"
+                <div class="col-xs-4">
+                  <input type="number" class="form-control" name="amount[]" id="amount"
                     placeholder="<?= lang('collection.enter_amount') ?>">
                 </div>
             </div>
@@ -101,6 +105,11 @@ $numeric_revenue_id = hash_id($revenue_id, 'decode');
 </div>
 
 <script>
+
+  $(document).on("click", ".remove_collection_button", function () {
+    $(this).parent().parent().remove();
+  })
+
   $(document).on("click", ".add_collection_button", function () {
     var new_row = $('.section-content').eq(0).clone();
 
@@ -109,6 +118,7 @@ $numeric_revenue_id = hash_id($revenue_id, 'decode');
     new_row.find('input[type="number"]').val('');
 
     new_row.find('.add_collection_button').remove();
+    new_row.find('.remove_collection_button').removeClass('hidden');
 
     new_row.appendTo('.collection_section');
   })

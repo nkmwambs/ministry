@@ -84,7 +84,7 @@
                             return [false, "disabled-date", "Not a Sunday"];
                         }
                         },
-                        dateFormat: "yyyy-mm-dd", // Format for the selected date
+                        format: "yyyy-mm-dd", // Format for the selected date
                         autoclose: true
                         // minDate: 0, // Disable past dates
                         // maxDate: "+1Y" // Limit selection to 1 year ahead

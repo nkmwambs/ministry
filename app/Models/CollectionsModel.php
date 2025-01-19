@@ -13,7 +13,7 @@ class CollectionsModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','return_date','period_start_date','period_end_date','sunday_date','assembly_id','revenue_id','amount','status','collection_reference','description','collection_method'];
+    protected $allowedFields    = ['id','return_date','sunday_count','period_start_date','period_end_date','sunday_date','assembly_id','revenue_id','amount','status','collection_reference','description','collection_method'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

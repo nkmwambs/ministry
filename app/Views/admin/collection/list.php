@@ -17,6 +17,7 @@
                 <tr>
                     <th><?= lang('collection.collection_action') ?></th>
                     <th><?= lang('collection.collection_return_date') ?></th>
+                    <th><?= lang('collection.sunday_count') ?></th>
                     <th><?= lang('collection.collection_revenue_id') ?></th>
                     <th><?= lang('collection.collection_amount') ?></th>
                 </tr>
@@ -36,6 +37,7 @@
                         </td>
 
                         <td><?= $collection['return_date']; ?></td>
+                        <td><?= $collection['sunday_count']; ?></td>
                         <td><?= $collection['revenue_name']; ?></td>
                         <td><?= $collection['amount']; ?></td>
 

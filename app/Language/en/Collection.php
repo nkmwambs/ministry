@@ -19,6 +19,7 @@ return [
     'collection_collection_reference' => 'Collection Reference',
     'collection_description' => 'Description',
     'collection_collection_method' => 'Collection Method',
+    'sunday_count' => 'Sunday Count',
     
     'select_collection' => 'Select Collection',
     'select_revenue' => 'Select Revenue',
@@ -38,8 +39,9 @@ return [
     'back_button' => 'Back',
     'edit_again_button' => 'Edit Again',
     'edit_button' => 'Edit',
-    'choose_sunday_button' => 'Choose a Sunday',
+    'choose_sunday_button' => 'Choose a Collection Date',
     'add_collection_button' => 'Action',
+    'select_collection_date' => 'Select a Collection Date',
 
     'no_collections_message' => 'No collections available.'
 ];

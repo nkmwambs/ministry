@@ -73,27 +73,37 @@ class Collection extends WebController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'sunday_date' => 'required',
-            'revenue_id' => 'required',
-            'amount' => 'required',
+            'revenue_id.*' => 'required',
+            'amount.*' => 'required'
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             return response()->setJSON(['errors' => $validation->getErrors()]);
         }
-
+        
+    
         $hashed_assembly_id = $this->request->getPost('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
+        $return_data = $this->request->getPost('sunday_date');
+        $sunday_count = getSundayNumberInMonth($return_data);
+        $revenue_ids = $this->request->getPost('revenue_id');
+        $amounts = $this->request->getPost('amount');
 
-        $data = [
-            'sunday_date' => $this->request->getPost('sunday_date'),
-            'revenue_id' => $this->request->getPost('revenue_id'),
-            'assembly_id' => $assembly_id,
-            'amount' => $this->request->getPost('amount'),
-        ];
+        // log_message('error', json_encode(compact('amounts', 'revenue_ids', 'sunday_count','return_data')));
 
-        $this->model->insert((object)$data);
-        $insertId = $this->model->getInsertID();
+        // die();
+
+        foreach($revenue_ids as $key => $revenue_id){
+            $data = [
+                'return_date' => $return_data,
+                'revenue_id' => $revenue_id,
+                'assembly_id' => $assembly_id,
+                'amount' => $amounts[$key],
+                'sunday_count' => $sunday_count,
+            ];
+
+            $this->model->insert((object)$data);
+        }
 
         $this->parent_id = $hashed_assembly_id;
 

@@ -236,3 +236,55 @@ if(!function_exists('custom_field_row')){
         return $randomString;
     }
  }
+
+ if(!function_exists('getWeekNumberInMonth')){
+    function getWeekNumberInMonth($date) {
+        // Create a DateTime object for the given date
+        $dateTime = new DateTime($date);
+    
+        // Get the day of the month
+        $dayOfMonth = (int) $dateTime->format('j');
+    
+        // Get the day of the week for the first day of the month (0 = Sunday, 6 = Saturday)
+        $firstDayOfMonth = new DateTime($dateTime->format('Y-m-01'));
+        $firstDayOfWeek = (int) $firstDayOfMonth->format('w');
+    
+        // Calculate the week number
+        return (int) ceil(($dayOfMonth + $firstDayOfWeek) / 7);
+    }
+ }
+
+
+ function getSundayNumberInMonth($sundayDate) {
+    // Create a DateTime object for the given date
+    $date = new DateTime($sundayDate);
+
+    // Ensure the given date is a Sunday
+    if ($date->format('w') != 0) {
+        throw new Exception("The given date is not a Sunday.");
+        // $sundayCount = getWeekNumberInMonth($sundayDate);
+    }
+
+    // Get the first day of the month
+    $firstDayOfMonth = new DateTime($date->format('Y-m-01'));
+
+    // Initialize the Sunday counter
+    $sundayCount = 0;
+
+    // Loop through the month up to the given date
+    while ($firstDayOfMonth <= $date) {
+        // Check if the current day is a Sunday
+        if ($firstDayOfMonth->format('w') == 0) {
+            $sundayCount++;
+        }
+        // Move to the next day
+        $firstDayOfMonth->modify('+1 day');
+    }
+
+    // if($sundayCount == 0){
+    //     $sundayCount = getWeekNumberInMonth($sundayDate);
+    // }
+
+
+    return $sundayCount;
+}
