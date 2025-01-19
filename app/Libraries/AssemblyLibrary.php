@@ -71,4 +71,14 @@ class AssemblyLibrary implements \App\Interfaces\LibraryInterface {
 
         return $page_data;
     }
+
+    function getAssemblyDenominationIdByAssemblyId($assembly_id){
+        $assemblyModel = new \App\Models\AssembliesModel();
+        $assembly = $assemblyModel
+        ->join('entities', 'entities.id = assemblies.entity_id')
+        ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
+        ->join('denominations', 'denominations.id=hierarchies.denomination_id')
+        ->find($assembly_id);
+        return $assembly['denomination_id'];
+    }
 }

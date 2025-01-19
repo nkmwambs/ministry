@@ -213,8 +213,34 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function computeFieldValueByCodeBuilder($code_builder, $report){
-        log_message('error', json_encode(compact('code_builder', 'report')));
-        return 100;
+        $db = \Config\Database::connect();
+
+        $assemblyLibrary = new AssemblyLibrary();
+        $assembly_id = $report['assembly_id'];
+        $denomination_id = $assemblyLibrary->getAssemblyDenominationIdByAssemblyId($assembly_id);
+        $report_period = $report['report_period'];
+        $in_month = $report['report_period'];
+
+        // Extract column labels inside `::`
+        preg_match_all('/:([a-zA-Z_]+):/', $code_builder, $matches);
+        // Get the column labels (second group of matches)
+        $columnLabels = $matches[1];
+
+        // Compacting columns to preset values
+        $compact = [];
+        foreach ($columnLabels as $key) {
+            if(isset($$key)){
+                $compact[$key] = $$key; // Use variable variables
+            }
+        }
+
+        $query = $db->query($code_builder, $compact)->getRow();
+        
+        if($query){
+            return $query->result;
+        } else {
+            return 0;
+        }
     }
 
     function computeFieldValue(string $query_builder, array $report) {
