@@ -108,7 +108,7 @@ class MinisterLibrary implements \App\Interfaces\LibraryInterface {
         ->where('designations.is_minister_title_designation', 'yes')
         ->orderBy('members.first_name', 'ASC')->findAll();
 
-        $minister = $membersModel->select('members.*, designations.is_minister_title_designation')
+        $minister = $membersModel->select('members.*,members.id as member_id,designations.is_minister_title_designation')
         ->join('designations', 'designations.id = members.designation_id')
         ->join('ministers', 'ministers.member_id = members.id')
         ->where('ministers.id', $page_data['result']['id'])

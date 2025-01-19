@@ -20,6 +20,7 @@
                 <form id="frm_edit_minister" method="post" action="<?= site_url('ministers/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
 
                     <input type="hidden" name="minister_id" value="<?= hash_id($result['id']); ?>" />
+                    <input type="hidden" name="member_id" value="<?=hash_id($minister['member_id'],'encode');?>" />
 
                     <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">

@@ -146,7 +146,7 @@ class Minister extends WebController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'license_number' => [
-                'rules' => 'required|min_length[3]',
+                'rules' => 'required|min_length[3]|is_unique[ministers.license_number]',
                 'label' => 'License Number',
                 'errors' => [
                    'required' => 'License Number.',
@@ -199,23 +199,49 @@ class Minister extends WebController
             ]
         ]);
 
+
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             $validationErrors = $validation->getErrors();
             return response()->setJSON(['errors' => $validationErrors]);
         }
 
-        $update_data = [
-            'member_id' => $this->request->getPost('member_id'),
-            'is_active' => $this->request->getPost('is_active'),
-            // 'updated_at' => date('Y-m-d H:i:s')  // Uncomment this line if you want to update 'updated_at' field as well.
+        $hashed_minister_id = $this->request->getPost('minister_id');
+        $numeric_minister_id = hash_id($hashed_minister_id, 'decode');
+        $hashed_member_id = $this->request->getPost('member_id');
+        $numeric_member_id = hash_id($hashed_member_id, 'decode');
+
+         // Member Fields
+         $member_first_name = $this->request->getPost('member_first_name');
+         $member_last_name = $this->request->getPost('member_last_name');
+         $assembly_id = $this->request->getPost('assembly_id');
+         $designation_id = $this->request->getPost('designation_id');
+         $member_phone = $this->request->getPost('member_phone');
+
+        // Minister fields
+        $license_number = $this->request->getPost('license_number');
+        $is_active = $this->request->getPost('is_active');
+
+        $update_member = [
+            'first_name' => $member_first_name,
+            'last_name' => $member_last_name,
+            'assembly_id' => $assembly_id,
+            'designation_id' => $designation_id,
+            'phone' => $member_phone,
+        ];
+
+        $update_minister = [
+            'license_number' => $license_number,
+            'is_active' => $is_active,
         ];
         
-        $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
+        $this->model->update($numeric_minister_id, (object)$update_minister);
+
+        $membersModel = new \App\Models\MembersModel();
+        $membersModel->update($numeric_member_id, (object)$update_member);
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
-        // $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,dir: 'decode'), $this->tableName, $customFieldValues);
 
         // Only save custom fields if they are not null
         if (!empty($customFieldValues)) {
@@ -226,11 +252,11 @@ class Minister extends WebController
 
             // Save non-null custom field values
             if (!empty($nonNullCustomFields)) {
-                $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,dir: 'decode'), $this->tableName, $customFieldValues);
+                $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_minister_id,dir: 'decode'), $this->tableName, $customFieldValues);
             }
         }
 
-        $customFieldValuesInDB = $customFieldLibrary->getCustomFieldValuesForRecord(hash_id($hashed_id,dir: 'decode'), 'users');
+        $customFieldValuesInDB = $customFieldLibrary->getCustomFieldValuesForRecord(hash_id($hashed_minister_id,dir: 'decode'), 'users');
 
         if($this->request->isAJAX()){
             $this->feature = 'minister';
@@ -245,7 +271,7 @@ class Minister extends WebController
             return view($this->session->get('user_type')."/minister/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url($this->session->get('user_type')."/ministers/view/".$hashed_id))->with('message', 'Minister updated successfully!');
+        return redirect()->to(site_url($this->session->get('user_type')."/ministers/view/".$hashed_minister_id))->with('message', 'Minister updated successfully!');
     }
 
     function post(){
@@ -261,7 +287,7 @@ class Minister extends WebController
                     ]
                 ],
                 'license_number' => [
-                'rules' => 'required',
+                'rules' => 'required|min_length[3]|is_unique[ministers.license_number]',
                 'label' => 'License Number',
                 'errors' => [
                     'required' => 'License number is required.',
