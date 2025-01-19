@@ -61,8 +61,8 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                             <div class="col-xs-6">
                                 <select class="form-control select_fields" name="feature_id" id="feature_id">
                                     <option value=""><?= lang('field.select_feature') ?></option>
-                                    <?php foreach ($features as $designation) : ?>
-                                        <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
+                                    <?php foreach ($features as $feature) : ?>
+                                        <option data-feature_name = "<?=$feature['name'];?>" value="<?php echo $feature['id']; ?>"><?php echo $feature['name']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -180,11 +180,12 @@ $(document).on("change","#type", function(){
 $(document).on('change',"#feature_id", function(){
     const feature_id = $(this).val();
     const form_group_builder = $("#form_group_builder");
+    const feature_name = $(this).find(':selected').data('feature_name')
 
     form_group_builder.addClass('hidden');
     form_group_builder.find("#code_builder").val("");
 
-    if(feature_id == 18){
+    if(feature_name == 'report'){
         form_group_builder.removeClass('hidden');
     }
 })

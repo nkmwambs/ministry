@@ -193,7 +193,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         extract($field);
 
         $value = match(true){
-            $query_builder != NULL => $this->computeFieldValue($query_builder, $report),
+            $query_builder != NULL => $this->computeFieldValue($query_builder, $report), // This line is deprecated
             $code_builder != NULL => $this->computeFieldValueByCodeBuilder($code_builder, $report),
             default => NULL,
         };
@@ -256,7 +256,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
      * @param array $report
      * @return mixed
      * 
-     * This method is becoming obsolete in place of computeFieldValueByQueryBuilder
+     * This method is deprecated in place of computeFieldValueByQueryBuilder
      */
     function computeFieldValue(string $query_builder, array $report) {
         
