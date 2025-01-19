@@ -189,7 +189,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         if (!$field) {
             return false;
         }
-        
+
         extract($field);
 
         $value = match(true){
@@ -199,6 +199,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         };
 
         $fieldObj = [
+                'field_id' => $id,
                 'type' => $type,
                 'field_code' => $field_code,
                 'label' => $field_name,
@@ -206,6 +207,8 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                 'value' => $value, // $query_builder != NULL ? $this->computeFieldValue($query_builder, $report): '',
                 'visible' => $visible,
                 'class' => $field_code,
+                'computed_value' => $derived_value_builder,
+                'field_linked_to' => $field_linked_to,
                 'attributes' => []
         ];
 

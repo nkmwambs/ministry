@@ -1,5 +1,5 @@
 <?php 
-// echo json_encode($report_period);
+// echo json_encode($report_fields);
 extract($report_metadata);
 ?>
 
@@ -72,9 +72,26 @@ extract($report_metadata);
                                                                 <a href="#" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="<?=$metadata['helptip'];?>" data-original-title="Help Tip"><i class="entypo-help"></i>
                                                                 </a>
                                                             </div>
-                                                            <?php if($metadata['type'] == 'numeric' || $metadata['type'] == 'text'){?>				
-                                                                    <input class = "form-control <?=$metadata['class'];?>" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" value="<?=$metadata['value'];?>" <?=$metadata['value'] != '' ? 'readonly' : '';?> />
-                                                            <?php }else{?>
+                                                            <?php if($metadata['type'] == 'numeric' || $metadata['type'] == 'text'){
+                                                                if($metadata['type'] == 'numeric'){
+                                                                    $data_computed_value = '';
+                                                                    $data_field_linked_to = '';
+                                                                    if($metadata['computed_value']!= null){
+                                                                        $data_computed_value = 'data-computed_value="'.$metadata['computed_value'].'"';
+                                                                    }
+
+                                                                    if($metadata['field_linked_to']!= null){
+                                                                        $data_field_linked_to = 'data-field_linked_to="'.$metadata['field_linked_to'].'"';
+                                                                    }
+                                                            ?>				
+                                                                <input <?=$data_computed_value;?> <?=$data_field_linked_to;?> class = "form-control <?=$metadata['class'];?>" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" value="<?=$metadata['value'] != '' ? $metadata['value'] : 0;?>" <?=$metadata['value'] != '' ? 'readonly' : '';?> />     
+                                                            <?php 
+                                                                }else{
+                                                            ?>
+                                                                <input class = "form-control <?=$metadata['class'];?>" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" value="<?=$metadata['value'];?>" <?=$metadata['value'] != '' ? 'readonly' : '';?> />     
+                                                            <?php
+                                                                }
+                                                            }else{?>
 
                                                                 <span>
                                                                     <input type="checkbox" class = "toggle_btn" data-onstyle='success' data-offstyle='danger'   data-toggle="toggle" <?=$metadata['value'] ? 'checked' : '' ;?> <?=$metadata['value'] != '' ? 'disabled' : '';?> value="<?=$metadata['value'];?>"  data-on="Yes" data-off="No">
@@ -124,10 +141,64 @@ extract($report_metadata);
 
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function (e) {
         // Initial tab selection
         $('#<?=$type_code;?>_section_0').addClass('active');
+
+        $('.form-control').each(function () {
+            if($(this).data('computed_value')){
+                const computingTempStr = $(this).data('computed_value');
+                const computedValue = eval(computeDerivedValues(computingTempStr))
+                $(this).val(computedValue)
+                $(this).prop('readonly', true)
+            }
+
+        })
+
+        $('.form-control').on('keyup', function(e){
+            if($(this).data('field_linked_to')){
+                
+                let input = $(this).val()
+                const linkedToTempStr = $(this).data('field_linked_to');
+                const parentTempStr = $("#"+linkedToTempStr).data('computed_value')
+                
+                let key = e.key;
+                
+                // Check if the key is a comma
+                if (key === ',') {
+                    // Prevent the default action (typing the comma)
+                    input = input.replace(/,/g, '');
+                    $(this).val(input)
+                }
+
+                if(input){
+                    const parentValue = eval(computeDerivedValues(parentTempStr)) 
+                    // console.log(linkedToTempStr, parentTempStr, parentValue)
+                    $("#"+linkedToTempStr).val(parentValue)
+                }
+            }
+        })
     });
+
+    function computeDerivedValues(str){
+        let matches = str.match(/\[([^\]]+)\]/g); // Matches everything inside []
+
+        if (matches) {
+            // Iterate over each match, replace with value from jQuery selector
+            matches.forEach(match => {
+                // Remove the square brackets from the match
+                let id = match.replace(/[\[\]]/g, '');
+                
+                // Use jQuery to get the value of the element with the ID
+                let value = $(`#${id}`).val();
+                
+                // Replace the match in the string with the value
+                str = str.replace(match, value !== undefined ? value : '');
+            });
+        }
+
+        return str;
+    }
 
     $('#submit_report').on('click', function(){
         saveReport()
