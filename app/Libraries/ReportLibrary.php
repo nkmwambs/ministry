@@ -97,6 +97,7 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         ->select('id,field_name as text')
         ->where('denomination_id', $data['denomination_id'])
         ->where('feature_id', $feature_id)
+        ->where('visible', 'yes')
         ->findAll();
 
         return ['status' => 'success', 'message' => 'Fields found successful', 'fields' => $fields];
