@@ -18,6 +18,10 @@ return [
     'customfield_code' => 'Field Code',
     'customfield_helptip' => 'Field Helptip',
     'add_field' => 'Add Custom Field',
+    'enter_code' => 'Enter Field Code',
+    'customfield_sql_builder' => 'SQL Builder',
+    'enter_sql_query' => 'Enter SQL Query',
+    'enter_options' => 'Field Options',
 
     'text' => 'Text',
     'float' => 'Float',

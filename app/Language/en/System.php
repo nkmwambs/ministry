@@ -16,8 +16,7 @@ return [
     'users' => 'Users',
     'settings' => 'Settings',
     'back' => 'Back',
-    'value_not_set' => 'Value Not Set'
-    ,
+    'value_not_set' => 'Value Not Set',
     'system_yes' => 'Yes',
     'system_no' => 'No',
 

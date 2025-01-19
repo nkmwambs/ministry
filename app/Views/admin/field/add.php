@@ -71,15 +71,6 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                         <input type="hidden" name="feature_id" id="feature_id" value="<?= $feature_id; ?>" />
                     <?php } ?>
 
-                    <!-- <div class="form-group content">
-                        <label class="control-label col-xs-4" for="table_name">
-                            <?= lang("field.customfield_table_name") ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" name="table_name" id="table_name" placeholder="<?= lang('field.enter_table_name') ?>">
-                        </div>
-                    </div> -->
-
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="field_name">
                             <?= lang("field.customfield_name") ?>
@@ -90,20 +81,20 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="field_code">
-                            <?= lang("field.customfield_code") ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" name="field_code" id="field_code" placeholder="<?= lang('system.system_enter_code') ?>">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label class="control-label col-xs-4" for="helptip">
                             <?= lang("field.customfield_helptip") ?>
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="helptip" id="helptip" placeholder="<?= lang('field.enter_helptip') ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="field_code">
+                            <?= lang("field.customfield_code") ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="field_code" id="field_code" placeholder="<?= lang('field.enter_code') ?>">
                         </div>
                     </div>
 
@@ -127,35 +118,23 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label class="control-label col-xs-4" for="visible">
-                            <?= lang("field.customfield_visible") ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <select name="visible" id="visible" class="form-control" required>
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                            </select>
-                        </div>
-                    </div> -->
-
-                    <div class="form-group">
+                    <div class="form-group hidden" id = "form_group_options">
                         <label class="control-label col-xs-4" for="options">
                             <?= lang("field.customfield_options") ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="options" id="options" placeholder="Enter Options"></textarea>
+                            <textarea type="text" class="form-control" name="options" id="options" placeholder="<?=lang('field.enter_options');?>"></textarea>
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label class="control-label col-xs-4" for="field_order">
-                            <?= lang("field.customfield_field_order") ?>
+                    <div class="form-group hidden" id = "form_group_builder">
+                        <label class="control-label col-xs-4" for="code_builder">
+                            <?= lang("field.customfield_sql_builder") ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="field_order" id="field_order" placeholder="Enter Options">
+                            <textarea type="text" class="form-control" name="code_builder" id="code_builder" placeholder="<?=lang('field.enter_sql_query');?>"></textarea>
                         </div>
-                    </div> -->
+                    </div>
 
                     <!-- Dynamically Generated Custom Fields -->
                     <?php foreach ($customFields as $field): ?>
@@ -183,6 +162,30 @@ $("#feature_id").on("change", function(){
    
     if(parent_id > 0){
       form_groups.filter('#table_name').attr('disabled','disabled');
+    }
+})
+
+$(document).on("change","#type", function(){
+    const field_type = $(this).val();
+    const form_group_options = $("#form_group_options");
+
+    form_group_options.addClass('hidden');
+    form_group_options.find("#options").val("");
+
+    if(field_type == 'dropdown' || field_type == 'boolean'){
+        form_group_options.removeClass('hidden');
+    }
+});
+
+$(document).on('change',"#feature_id", function(){
+    const feature_id = $(this).val();
+    const form_group_builder = $("#form_group_builder");
+
+    form_group_builder.addClass('hidden');
+    form_group_builder.find("#code_builder").val("");
+
+    if(feature_id == 18){
+        form_group_builder.removeClass('hidden');
     }
 })
 </script>

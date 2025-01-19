@@ -212,16 +212,23 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         return $fieldObj;
     }
 
-    function computeFieldValueByCodeBuilder($code_builder, $report){
-        $db = \Config\Database::connect();
-
+    function extractReportFieldsSQLVariables($report){
         $assemblyLibrary = new AssemblyLibrary();
+        
         $assembly_id = $report['assembly_id'];
         $denomination_id = $assemblyLibrary->getAssemblyDenominationIdByAssemblyId($assembly_id);
         $report_period = $report['report_period'];
         $in_month = $report['report_period'];
 
-        // Extract column labels inside `::`
+        return compact('denomination_id','report_period', 'in_month','assembly_id');
+    }
+
+    function computeFieldValueByCodeBuilder($code_builder, $report){
+        $db = \Config\Database::connect();
+
+        extract($this->extractReportFieldsSQLVariables($report));
+
+        // Extract column labels inside `::` in code_builder
         preg_match_all('/:([a-zA-Z_]+):/', $code_builder, $matches);
         // Get the column labels (second group of matches)
         $columnLabels = $matches[1];
@@ -243,6 +250,14 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         }
     }
 
+    /**
+     * Summary of computeFieldValue
+     * @param string $query_builder
+     * @param array $report
+     * @return mixed
+     * 
+     * This method is becoming obsolete in place of computeFieldValueByQueryBuilder
+     */
     function computeFieldValue(string $query_builder, array $report) {
         
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}]}]
