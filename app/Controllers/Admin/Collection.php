@@ -37,13 +37,13 @@ class Collection extends WebController
             ->where('assembly_id',hash_id($parent_id,'decode'))
             ->join('assemblies','assemblies.id=collections.assembly_id')
             ->join('revenues','revenues.id = collections.revenue_id','left')
-            ->orderBy('collections.created_at desc')
+            ->orderBy('collections.return_date desc')
             ->findAll();
         }else{
             $collections = $this->model->select('collections.*,revenues.name as revenue_name')
             ->join('assemblies','assemblies.id=collections.assembly_id')
             ->join('revenues','revenues.id = collections.revenue_id','left')
-            ->orderBy('collections.created_at desc')
+            ->orderBy('collections.return_date desc')
             ->findAll();
         }
        
@@ -84,18 +84,14 @@ class Collection extends WebController
     
         $hashed_assembly_id = $this->request->getPost('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
-        $return_data = $this->request->getPost('sunday_date');
-        $sunday_count = getSundayNumberInMonth($return_data);
+        $return_date = $this->request->getPost('sunday_date');
+        $sunday_count = getSundayNumberInMonth($return_date);
         $revenue_ids = $this->request->getPost('revenue_id');
         $amounts = $this->request->getPost('amount');
 
-        // log_message('error', json_encode(compact('amounts', 'revenue_ids', 'sunday_count','return_data')));
-
-        // die();
-
         foreach($revenue_ids as $key => $revenue_id){
             $data = [
-                'return_date' => $return_data,
+                'return_date' => $return_date,
                 'revenue_id' => $revenue_id,
                 'assembly_id' => $assembly_id,
                 'amount' => $amounts[$key],
@@ -114,7 +110,7 @@ class Collection extends WebController
             $records = $this->model->select('collections.*,revenues.name as revenue_name')
             ->join('assemblies', 'assemblies.id = collections.assembly_id')
             ->join('revenues', 'revenues.id = collections.revenue_id')
-            ->orderBy("collections.created_at desc")
+            ->orderBy("collections.return_date desc")
             ->where('assembly_id', $assembly_id)
             ->findAll();
             
@@ -130,7 +126,7 @@ class Collection extends WebController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'sunday_date' => 'required',
+            'return_date' => 'required',
             'revenue_id' => 'required',
             'amount' => 'required',
         ]);
@@ -143,11 +139,13 @@ class Collection extends WebController
         
         $hashed_id = $this->request->getVar('id');
         $hashed_assembly_id = $this->request->getVar('assembly_id');
+        $return_date = $this->request->getPost('return_date');
 
         $update_data = [
-            'return_date' => $this->request->getPost('return_date'),
+            'return_date' => $return_date,
             'revenue_id' => $this->request->getPost('revenue_id'),
             'amount' => $this->request->getPost('amount'),
+            'sunday_count' => getSundayNumberInMonth($return_date)
         ];
         
         $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
@@ -156,10 +154,10 @@ class Collection extends WebController
             $this->feature = 'collection';
             $this->action = 'list';
 
-            $records = $this->model->select('return_date,period_start_date,period_end_Date,assembly_id,assemblies.name as assembly_name,revenue_id,revenues.name as revenue_name,designations.amount,designations.status,collection_reference,designations.description,collection_method')
+            $records = $this->model->select('collections.id,return_date,sunday_count,period_start_date,period_end_date,assembly_id,assemblies.name as assembly_name,revenue_id,revenues.name as revenue_name,collections.amount,collections.status,collection_reference,collections.description,collection_method')
             ->join('assemblies', 'assemblies.id = collections.assembly_id')
             ->join('revenues', 'revenues.id = collections.revenue_id')
-            ->orderBy("collections.created_at desc")
+            ->orderBy("collections.return_date desc")
             ->where('assembly_id', hash_id($hashed_assembly_id, 'decode'))
             ->findAll();
 
