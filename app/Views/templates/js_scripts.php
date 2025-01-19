@@ -77,16 +77,14 @@
 
                     $('.collection_datepicker').datepicker({
                         beforeShowDay: function (date) {
-                            var today = new Date()
-                            var day = date.getDay();
-
-                            if (day === 0 && date <= today) {
-                                return [true, '', "Available"];
-                            } else {
-                                return [false, '', 'Unavailable'];
-                            }
+                        // Check if the day is Sunday (0 = Sunday, 6 = Saturday)
+                        if (date.getDay() === 0) {
+                            return [true, "", "Selectable"];
+                        } else {
+                            return [false, "disabled-date", "Not a Sunday"];
+                        }
                         },
-                        dateFormat: "yy-mm-dd", // Format for the selected date
+                        dateFormat: "yyyy-mm-dd", // Format for the selected date
                         autoclose: true
                         // minDate: 0, // Disable past dates
                         // maxDate: "+1Y" // Limit selection to 1 year ahead

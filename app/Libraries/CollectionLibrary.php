@@ -62,7 +62,7 @@ class CollectionLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['denominations'] = $denominations;
         $page_data['revenues'] = $revenues;
 
-        $page_data['parent_id'] = hash_id($parent_id,'encode');
+        $page_data['parent_id'] = $parent_id == 0 ? $page_data['parent_id'] :hash_id($parent_id,'encode');
         $page_data['revenue_id'] = hash_id($revenue_id, 'encode');
     }
 
