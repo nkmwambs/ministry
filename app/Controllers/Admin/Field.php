@@ -61,18 +61,23 @@ class Field extends WebController
     public function post()
     {
         $insertId = 0;
-
+        $feature_id = $this->request->getPost('feature_id');
+        $fieldType = $this->request->getPost('type');
+        
         $featureLibrary = new \App\Libraries\FeatureLibrary();
+        $table_name = plural($featureLibrary->getFeatureTableNameById($feature_id));
+        
 
         $data = [
             'denomination_id' => $this->request->getPost('denomination_id'),
             'field_name' => $this->request->getPost('field_name'),
             'field_code' => $this->request->getPost('field_code'),
             'helptip' => $this->request->getPost('helptip'),
-            'type' => $this->request->getPost('type'),
-            'options' => $this->request->getPost('options'),
+            'type' => $fieldType,
+            'options' => $fieldType == "dropdown" || $fieldType == "boolean" ? $this->request->getPost('options'): NULL,
+            'code_builder' => $table_name == 'reports' ? $this->request->getPost('code_builder'): NULL,
             'feature_id' => $this->request->getPost('feature_id'),
-            'table_name' => plural($featureLibrary->getFeatureTableNameById($this->request->getPost('feature_id'))), //$this->request->getPost('table_name'),
+            'table_name' => $table_name,
         ];
 
         $this->model->insert((object)$data);
@@ -100,18 +105,18 @@ class Field extends WebController
 
         $validation = \Config\Services::validate();
 
+        $feature_name = $this->request->getPost('feature_name');
+        $fieldType = $this->request->getPost('type');
+        
+        $table_name = plural($feature_name);
+
         $update_data = [
-            'denomination_id' => $this->request->getPost('denomination_id'),
             'field_name' => $this->request->getPost('field_name'),
-            'field_code' => $this->request->getPost('field_code'),
             'helptip' => $this->request->getPost('helptip'),
-            'type' => $this->request->getPost('type'),
-            'options' => $this->request->getPost('options'),
-            'feature_id' => $this->request->getPost('feature_id'),
-            // 'field_order' => $this->request->getPost('field_order'),
+            'type' => $fieldType,
+            'options' => $fieldType == "dropdown" || $fieldType == "boolean" ? $this->request->getPost('options'): NULL,
+            'code_builder' => $table_name == 'reports' ? $this->request->getPost('code_builder'): NULL,
             'visible' => $this->request->getPost('visible'),
-            'table_name' => $this->request->getPost('table_name'),
-            // 'created_at' => date('Y-m-d H:i:s')
         ];
 
         $this->model->update(hash_id($hashed_id, 'decode'), (object)$update_data);

@@ -54,16 +54,17 @@ class WebController extends BaseController
 
         if (class_exists("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")) {
             $this->model = new ("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")();
+
+            $reflectionClass = new \ReflectionClass($this->model);
+            $this->tableName = $reflectionClass->getProperty('table')->getValue($this->model);
+        }else{
+            $this->tableName = plural($this->feature);
         }
 
         if (class_exists("App\\Libraries\\" . ucfirst($this->feature) . "Library")) {
             $this->library = new ("App\\Libraries\\" . ucfirst($this->feature) . "Library")();
             $this->listQueryFields = $this->library->setListQueryFields();
         }
-
-        $this->tableName = plural($this->feature);
-
-        
     }
 
 
@@ -111,7 +112,11 @@ class WebController extends BaseController
         if (!empty($this->listQueryFields)) {
             $page_data['fields'] = $this->listQueryFields;
         } else {
-            $table_field = $this->model->getFieldNames(plural($this->feature));
+            $reflectionClass = new \ReflectionClass($this->model);
+            $tableName = $reflectionClass->getProperty('table')->getValue($this->model);
+
+            // $table_field = $this->model->getFieldNames(plural($this->feature));
+            $table_field = $this->model->getFieldNames($tableName);
             $table_field = array_filter($table_field, function ($elem) {
                 if (!in_array($elem, $this->history_fields())) {
                     return $elem;

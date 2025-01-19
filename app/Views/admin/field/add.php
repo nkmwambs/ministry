@@ -132,7 +132,7 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                             <?= lang("field.customfield_sql_builder") ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="code_builder" id="code_builder" placeholder="<?=lang('field.enter_sql_query');?>"></textarea>
+                            <textarea type="text" rows="10" class="form-control" name="code_builder" id="code_builder" placeholder="<?=lang('field.enter_sql_query');?>"></textarea>
                         </div>
                     </div>
 

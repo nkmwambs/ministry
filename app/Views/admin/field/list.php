@@ -14,7 +14,6 @@
                     <th><?= lang('field.customfield_action_col') ?></th>
                     <th><?= lang('field.customfield_name') ?></th>
                     <th><?= lang('field.customfield_type') ?></th>
-                    <th><?= lang('field.customfield_options') ?></th>
                     <th><?= lang('field.customfield_feature_id') ?></th>
                     <th><?= lang('field.customfield_field_order') ?></th>
                     <th><?= lang('field.customfield_visible') ?></th>
@@ -35,7 +34,6 @@
 
                         <td><?= ucfirst($customField['field_name']); ?></td>
                         <td><?= ucfirst($customField['type']); ?></td>
-                        <td><?= ucfirst($customField['options']); ?></td>
                         <td><?= ucfirst($customField['feature_name']); ?></td>
                         <td><?= ucfirst($customField['field_order']); ?></td>
                         <td><?= ucfirst($customField['visible']); ?></td>
