@@ -146,7 +146,7 @@ class Minister extends WebController
         $validation = \Config\Services::validation();
         $validation->setRules([
             // 'name' => 'required|min_length[10]|max_length[255]',
-            // 'minister_number' => 'required|min_length[3]',
+            'license_number' => 'required|min_length[3]',
             'member_id' => 'required',
             'is_active' => 'required|min_length[2]|max_length[3]',
         ]);

@@ -26,6 +26,7 @@
                     <th><?= lang('minister.license_number') ?></th>
                     <th><?= lang('minister.member_designation') ?></th>
                     <th><?= lang('minister.member_phone') ?></th>
+                    <th><?= lang('minister.minister_assembly_id') ?></th>
                     <th><?= lang('minister.minister_is_active') ?></th>
                 </tr>
             </thead>
@@ -64,6 +65,7 @@ $(document).ready(function (){
             { data: "license_number" },
             { data: "designation_name" },
             { data: "member_phone" },
+            { data: "assembly_name" },
             { data: "is_active" },
         ]
     });

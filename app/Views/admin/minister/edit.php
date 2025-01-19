@@ -73,8 +73,10 @@
                         <label for="assembly_id" class="control-label col-xs-4"><?= lang('minister.minister_assembly_id') ?></label>
                         <div class="col-xs-6">
                             <select class="form-control" name="assembly_id" id="assembly_id">
-                                <option value="<?= $result['assembly_id'] ?>"><?= $result['assembly_id'] ?></option>
-
+                                <option value=""><?=lang('minister.select_assembly');?></option>
+                                <?php foreach($assemblies as $assembly){?>
+                                    <option value="<?= $assembly['id'];?>" <?=$result['assembly_id']==$assembly['id'] ? 'selected':'';?> ><?= $assembly['name'] ?></option>
+                                <?php }?>
                             </select>
                         </div>
                     </div>
