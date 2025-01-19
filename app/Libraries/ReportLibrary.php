@@ -125,7 +125,7 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         for($i = 0; $i < count($reportLayout); $i++){
             for($j = 0; $j < count($reportLayout[$i]['section_parts']); $j++){
                 // Taking the string of custom fields Ids to an individual array element
-                $reportLayout[$i]['section_parts'][$j]['part_fields'] = explode(',',$reportLayout[$i]['section_parts'][$j]['part_fields'][0]);
+                $reportLayout[$i]['section_parts'][$j]['part_fields'] = $this->sortPartFields($reportLayout[$i]['section_parts'][$j]['part_fields'][0]);
                 // $reportLayout[$i]['section_parts'][$j]['part_fields'] is an array of custom fields Ids
                 $reportLayout[$i]['section_parts'][$j]['part_fields'] = array_map(function($fieldTypeId) use($fieldLibrary, $fieldModel, $report){
                     return $fieldLibrary->getFieldUIElementProperties($fieldTypeId, $fieldModel, $report);
@@ -139,6 +139,21 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['report_period'] = $report['report_period'];
 
         return $page_data;
+    }
+
+    function sortPartFields($partFieldsStr){
+        $partFieldsIds = explode(',', $partFieldsStr);
+
+        // Sorting the fields based on their field_order column
+        $fieldsModel = new \App\Models\FieldsModel();
+        $fields = $fieldsModel->select('id,field_order')
+        ->whereIn('id', $partFieldsIds)
+        ->orderBy('field_order', 'asc')
+        ->findAll();
+
+        $orderedPartFieldsIds = array_column($fields, 'id');
+
+        return $orderedPartFieldsIds;
     }
 
 
