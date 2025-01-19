@@ -34,8 +34,8 @@
                         <div class="col-xs-6">
                             <select type="text" class="form-control" name="is_active" id="is_active">
                                 <option value="" selected><?= lang('member.member_select_is_active')?></option>
-                                <option value="yes" <?=$result['is_active'] == 'yes'? "selected": "";?> ><?php echo lang('system.yes');?></option>
-                                <option value="no" <?=$result['is_active'] == 'no'? "selected": "";?> ><?php echo lang('system.no');?></option>
+                                <option value="yes" <?=$result['is_active'] == 'yes'? "selected": "";?> ><?php echo lang('system.system_yes');?></option>
+                                <option value="no" <?=$result['is_active'] == 'no'? "selected": "";?> ><?php echo lang('system.system_no');?></option>
                             </select>
                         </div>
                     </div>

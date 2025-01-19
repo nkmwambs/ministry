@@ -25,9 +25,7 @@ class CollectionLibrary implements \App\Interfaces\LibraryInterface {
 
     function setViewQueryFields(){
         $fields = [
-            'collections.id','return_date','period_start_date','sunday_date',
-            'period_end_date','assembly_id','revenue_id','collections.amount',
-            'status', 'collection_reference','collections.description','collection_method',
+            'collections.id','return_date','collections.amount',
             'revenues.name as revenue_name'
         ];
         return $fields;

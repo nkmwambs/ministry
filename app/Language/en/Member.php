@@ -6,6 +6,7 @@ return [
     'edit_member' => 'Edit Member',
     'view_member' => 'View Member',
     'delete_member' => 'Delete Member',
+    'member_is_active' => 'Member is active',
 
     'member_action'=> 'Action',
     'member_first_name' => 'First Name',
