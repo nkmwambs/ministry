@@ -72,7 +72,7 @@ class Field extends WebController
             'feature_id' => $this->request->getPost('feature_id'),
             // 'field_order' => $this->request->getPost('field_order'),
             // 'visible' => $this->request->getPost('visible'),
-            'table_name' => $this->request->getPost('table_name'),
+            'table_name' => plural($featureLibrary->getFeature), //$this->request->getPost('table_name'),
             // 'created_at' => date('Y-m-d H:i:s')
         ];
 

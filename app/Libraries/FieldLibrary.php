@@ -191,18 +191,30 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         }
         
         extract($field);
+
+        $value = match(true){
+            $query_builder != NULL => $this->computeFieldValue($query_builder, $report),
+            $code_builder != NULL => $this->computeFieldValueByCodeBuilder($code_builder, $report),
+            default => NULL,
+        };
+
         $fieldObj = [
                 'type' => $type,
                 'field_code' => $field_code,
                 'label' => $field_name,
                 'helptip' => $helptip,
-                'value' => $query_builder != NULL ? $this->computeFieldValue($query_builder, $report): '',
+                'value' => $value, // $query_builder != NULL ? $this->computeFieldValue($query_builder, $report): '',
                 'visible' => $visible,
                 'class' => $field_code,
                 'attributes' => []
         ];
 
         return $fieldObj;
+    }
+
+    function computeFieldValueByCodeBuilder($code_builder, $report){
+        log_message('error', json_encode(compact('code_builder', 'report')));
+        return 100;
     }
 
     function computeFieldValue(string $query_builder, array $report) {

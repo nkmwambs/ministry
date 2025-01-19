@@ -71,14 +71,14 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                         <input type="hidden" name="feature_id" id="feature_id" value="<?= $feature_id; ?>" />
                     <?php } ?>
 
-                    <div class="form-group content">
+                    <!-- <div class="form-group content">
                         <label class="control-label col-xs-4" for="table_name">
                             <?= lang("field.customfield_table_name") ?>
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="table_name" id="table_name" placeholder="<?= lang('field.enter_table_name') ?>">
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="field_name">
