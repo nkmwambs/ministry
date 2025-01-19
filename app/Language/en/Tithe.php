@@ -16,6 +16,7 @@ return [
     'tithe_choose_tithing_date' => "Choose tithing date",
     'select_tithing_date' => "Select tithing date",
     'add_tithe_button' => 'Action',
+    'tithing_date' => 'Tithing date',
     // 'tithe_default' => 'Default Role',
     // 'tithe_denomination_name' => 'Denomination Name',
 

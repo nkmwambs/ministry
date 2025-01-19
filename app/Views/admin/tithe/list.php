@@ -20,6 +20,7 @@
                     <th><?= lang('tithe.tithe_action') ?></th>
                     <th><?= lang('tithe.tithe_member_first_name') ?></th>
                     <th><?= lang('tithe.tithe_member_last_name') ?></th>
+                    <th><?= lang('tithe.tithing_date') ?></th>
                     <th><?= lang('tithe.tithe_amount') ?></th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@
 
                         <td><?= $tithe['member_first_name']; ?></td>
                         <td><?= $tithe['member_last_name']; ?></td>
+                        <td><?= $tithe['tithing_date']; ?></td>
                         <td><?= $tithe['amount']; ?></td>
 
                     <?php } ?>
