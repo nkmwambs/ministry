@@ -40,12 +40,32 @@
                     <?php endif ?>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="name">
-                            <?= lang('minister.minister_name') ?>
+                        <label class="control-label col-xs-4" for="member_first_name">
+                            <?= lang('minister.member_first_name') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="name" value="<?= $result['name']; ?>" id="name"
-                                placeholder="Edit Name">
+                            <input type="text" class="form-control" name="name" value="<?= $result['member_first_name']; ?>" id="member_first_name"
+                                placeholder="<?=lang('minister.edit_member_first_name');?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="member_last_name">
+                            <?= lang('minister.member_last_name') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="member_last_name" value="<?= $result['member_last_name']; ?>" id="member_last_name"
+                                placeholder="<?=lang('minister.edit_member_last_name');?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="license_number">
+                            <?= lang('minister.license_number') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="license_number" value="<?= $result['license_number']; ?>" id="license_number"
+                                placeholder="<?=lang('minister.edit_license_number');?>">
                         </div>
                     </div>
 
@@ -70,12 +90,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="phone">
-                            <?= lang('minister.minister_number') ?>
+                        <label class="control-label col-xs-4" for="member_phone">
+                            <?= lang('minister.member_phone') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="phone" id="phone" value="<?= $result['phone']; ?>"
-                                placeholder="Edit Phone">
+                            <input type="text" class="form-control" name="member_phone" id="member_phone" value="<?= $result['member_phone']; ?>"
+                                placeholder="<?=lang('minister.edit_phone');?>">
                         </div>
                     </div>
 

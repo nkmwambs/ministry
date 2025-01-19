@@ -109,26 +109,12 @@ class Minister extends WebController
         // Get the filtered total
         $totalFiltered = $this->model->countAllResults(false);
 
+        $library = new \App\Libraries\MinisterLibrary();
+        $listQueryFields = $library->setListQueryFields();
+
         // Limit the results and fetch the data
         $data = $this->model->limit($length, $start)
-            ->select(
-                'ministers.id,
-                ministers.is_active,
-                members.id as member_id,
-                members.first_name,
-                members.last_name,
-                members.gender,
-                members.assembly_id,
-                assemblies.name as assembly_name,
-                members.member_number,
-                designations.name as designation_name,
-                members.designation_id,
-                members.date_of_birth,
-                members.email,
-                members.phone,
-                users.associated_member_id as member_is_user,
-                ministers.minister_number'
-                )
+            ->select($listQueryFields)
             ->join('members','members.id=ministers.member_id')
             ->join('assemblies','assemblies.id=members.assembly_id','left')
             ->join('users','users.associated_member_id = members.id','left')
@@ -224,14 +210,40 @@ class Minister extends WebController
                 'label' => 'Member Name',
                 'errors' => [
                     'required' => 'Member name is required.',
+                    ]
+                ],
+                'license_number' => [
+                'rules' => 'required',
+                'label' => 'License Number',
+                'errors' => [
+                    'required' => 'License number is required.',
+                ]
+            ],
+            'assembly_id' => [
+                'rules' => 'required',
+                'label' => 'Assembly Name',
+                'errors' => [
+                    'required' => 'Assembly is required.',
                 ]
             ]
         ]);
-
+    
         if (!$this->validate($validation->getRules())) {
             $validationErrors = $validation->getErrors();
             return response()->setJSON(['errors' => $validationErrors]);
         }
+
+        
+        $member_id = $this->request->getPost('member_id');
+
+        $data = [
+            'minister_number' => $this->computeMinisterNumber($member_id),
+            'member_id' => $member_id,
+            'license_number' => $this->request->getPost('license_number'),        ];
+
+        $this->model->insert((object)$data);
+        $insertId = $this->model->getInsertID();
+
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
@@ -247,16 +259,6 @@ class Minister extends WebController
                 $customFieldLibrary->saveCustomFieldValues($insertId, 'ministers', $customFieldValues);
             }
         }
-
-        $member_id = $this->request->getPost('member_id');
-
-        $data = [
-            'minister_number' => $this->computeMinisterNumber($member_id),
-            'member_id' => $member_id,
-        ];
-
-        $this->model->insert((object)$data);
-        $insertId = $this->model->getInsertID();
 
         if($this->request->isAJAX()){
             $this->feature = 'minister';

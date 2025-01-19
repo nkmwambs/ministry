@@ -23,6 +23,7 @@
                     <th><?= lang('minister.minister_number') ?></th>
                     <th><?= lang('minister.member_first_name') ?></th>
                     <th><?= lang('minister.member_last_name') ?></th>
+                    <th><?= lang('minister.license_number') ?></th>
                     <th><?= lang('minister.member_designation') ?></th>
                     <th><?= lang('minister.member_phone') ?></th>
                     <th><?= lang('minister.minister_is_active') ?></th>
@@ -58,10 +59,11 @@ $(document).ready(function (){
                 }
             },
             { data: "minister_number" },
-            { data: "first_name" },
-            { data: "last_name" },
+            { data: "member_first_name" },
+            { data: "member_last_name" },
+            { data: "license_number" },
             { data: "designation_name" },
-            { data: "phone" },
+            { data: "member_phone" },
             { data: "is_active" },
         ]
     });

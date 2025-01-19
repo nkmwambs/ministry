@@ -82,6 +82,14 @@ $numeric_member_id = hash_id($member_id, 'decode');
               <?php } else { ?>
                 <input type="hidden" name="member_id" id="member_id" value="<?= $member_id; ?>" />
               <?php } ?>
+
+              <div class='form-group'>
+                  <label for="license_number"
+                    class="control-label col-xs-4"><?= lang('minister.license_number') ?></label>
+                  <div class="col-xs-6">
+                    <input type="text" class="form-control" name="license_number" id="license_number" placeholder="<?=lang('minister.enter_license_number');?>" />
+                  </div>
+                </div>
             </div>
 
             <div class="tab-pane" id="additional">

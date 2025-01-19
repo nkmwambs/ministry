@@ -20,6 +20,8 @@ return [
     'minister_member_id' => 'Member Name',
     'select_member' => 'Select Member Name',
     'member_designation' => 'Minister Designation',
+    'license_number' => 'License Number',
+    'enter_license_number' => 'Enter License Number',
 
     'select_designation' => 'Select Designation',
     'select_assembly' => 'Select Assembly',

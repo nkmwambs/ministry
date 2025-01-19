@@ -15,9 +15,9 @@ class MinisterLibrary implements \App\Interfaces\LibraryInterface {
         $fields = [
             'ministers.id','minister_number','member_id','ministers.is_active',
             'members.first_name as member_first_name','members.last_name as member_last_name','members.gender',
-            'members.assembly_id','members.member_number as member_number','members.designation_id',
+            'members.assembly_id','members.member_number as member_number','members.designation_id','members.is_active',
             'members.date_of_birth','members.email','members.phone as member_phone','members.saved_date',
-            'members.inactivation_reason','members.membership_date'
+            'members.inactivation_reason','members.membership_date','license_number','designations.name as designation_name'
         ];
         return $fields;
     }
@@ -28,7 +28,7 @@ class MinisterLibrary implements \App\Interfaces\LibraryInterface {
             'members.first_name as member_first_name','members.last_name as member_last_name','members.gender',
             'members.assembly_id','members.member_number as member_number','members.designation_id',
             'members.date_of_birth','members.email','members.phone as member_phone','members.saved_date',
-            'members.inactivation_reason','members.membership_date'
+            'members.inactivation_reason','members.membership_date','license_number'
         ];
         return $fields;
     }
