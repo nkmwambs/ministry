@@ -38,7 +38,7 @@ $collection_sections = array_pop($result);
                     <div class="tab-pane active" id="view_event">
                         <form class="form-horizontal form-groups-bordered" role="form">
                             <?php foreach ($result as $record_key => $field_value) { 
-                                if($record_key == 'id') continue;
+                                if(in_array($record_key,['id', 'revenue_id','assembly_id'])) continue;
                                 ?>
                                 <div class="form-group">
                                     <label for="" class="control-label col-xs-4"><?= humanize($record_key); ?></label>

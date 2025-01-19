@@ -100,8 +100,11 @@
                             <?= lang('assembly.assembly_leader') ?>
                         </label>
                         <div class="col-xs-6">
-                            <select class="form-control" name="assembly_leader" value="<?=$result['assembly_leader'];?>" id="assembly_leader">
+                            <select class="form-control" name="assembly_leader" id="assembly_leader">
                                 <option value=""><?= lang('assembly.select_leader') ?></option>
+                                <?php foreach($ministers as $minister){?>
+                                    <option value = "<?=$minister['id'];?>" <?=$result['assembly_leader'] == $minister['id'] ? 'selected': '';?>><?=$minister['first_name'];?> <?=$minister['last_name'];?></option>
+                                <?php }?>
                             </select>
                         </div>
                     </div>

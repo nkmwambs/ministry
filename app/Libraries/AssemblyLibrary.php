@@ -59,7 +59,14 @@ class AssemblyLibrary implements \App\Interfaces\LibraryInterface {
         ->join('assemblies','assemblies.entity_id=entities.id')
         ->find($page_data['result']['entity_id'])['id'];
 
+        $ministersModel = new \App\Models\MinistersModel();
+        $ministersModel->select('ministers.id,members.first_name,members.last_name')
+        ->join('members','members.id=ministers.member_id')
+        ->where('ministers.is_active', 'yes');
+        $ministers = $ministersModel->findAll();
+
         $page_data['parent_id'] = $denomination_id;
+        $page_data['ministers'] = $ministers;
 
         $entities = $entitiesModel->getLowestEntities($page_data['parent_id']);
         $page_data['lowest_entities'] = $entities;
