@@ -13,6 +13,7 @@
                 <tr>
                     <th><?= lang('field.customfield_action_col') ?></th>
                     <th><?= lang('field.customfield_name') ?></th>
+                    <th><?= lang('field.customfield_code') ?></th>
                     <th><?= lang('field.customfield_type') ?></th>
                     <th><?= lang('field.customfield_feature_id') ?></th>
                     <th><?= lang('field.customfield_field_order') ?></th>
@@ -33,6 +34,7 @@
                         </td>
 
                         <td><?= ucfirst($customField['field_name']); ?></td>
+                        <td><?= $customField['field_code'];?></td>
                         <td><?= ucfirst($customField['type']); ?></td>
                         <td><?= ucfirst($customField['feature_name']); ?></td>
                         <td><?= ucfirst($customField['field_order']); ?></td>
