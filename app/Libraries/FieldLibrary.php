@@ -209,10 +209,21 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                 'class' => $field_code,
                 'computed_value' => $derived_value_builder,
                 'field_linked_to' => $field_linked_to,
+                'options' => $options != "" ? $this->createOptionsArray($options) : null,
                 'attributes' => []
         ];
 
         return $fieldObj;
+    }
+
+    function createOptionsArray($optionsString){
+        // Convert the string into an array, splitting by newline characters
+        $lines = preg_split("/\r\n|\r|\n/", $optionsString);
+
+        // Create an associative array with the same key and value for each element
+        $result = array_combine($lines, $lines);
+
+        return $result;
     }
 
     function extractReportFieldsSQLVariables($report){

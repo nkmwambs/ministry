@@ -91,13 +91,23 @@ extract($report_metadata);
                                                                 <input class = "form-control <?=$metadata['class'];?>" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" value="<?=$metadata['value'];?>" <?=$metadata['value'] != '' ? 'readonly' : '';?> />     
                                                             <?php
                                                                 }
-                                                            }else{?>
+                                                            }elseif($metadata['type'] == 'boolean'){?>
 
                                                                 <span>
                                                                     <input type="checkbox" class = "toggle_btn" data-onstyle='success' data-offstyle='danger'   data-toggle="toggle" <?=$metadata['value'] ? 'checked' : '' ;?> <?=$metadata['value'] != '' ? 'disabled' : '';?> value="<?=$metadata['value'];?>"  data-on="Yes" data-off="No">
                                                                     <input type="hidden" class = "toggle_btn_value" id = "<?=$metadata['field_code'];?>" name="<?=$metadata['field_code'];?>" value="<?=$metadata['value'];?>"  />
                                                                 </span>
                                                                 
+                                                            <?php }elseif($metadata['type'] == 'dropdown'){ ?>
+                                                                <select class = "form-control" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>">
+                                                                    <option value=""><?=lang('report.select_option');?></option>
+                                                                    <?php foreach($metadata['options'] as $key => $value){?>
+                                                                        <option value="<?php echo $key;?>"><?php echo $value;?></option>
+                                                                    <?php }?>
+                                                                </select>
+                                                            
+                                                            <?php }else{?>
+                                                                <input class = "form-control <?=$metadata['class'];?>" name="<?=$metadata['field_code'];?>" id = "<?=$metadata['field_code'];?>" value="<?=$metadata['value'];?>" <?=$metadata['value'] != '' ? 'readonly' : '';?> />     
                                                             <?php }?>
                                                         </div>
                                                     </div>
@@ -157,11 +167,9 @@ extract($report_metadata);
 
         $('.form-control').on('keyup', function(e){
             if($(this).data('field_linked_to')){
-                
-                let input = $(this).val()
                 const linkedToTempStr = $(this).data('field_linked_to');
-                const parentTempStr = $("#"+linkedToTempStr).data('computed_value')
-                
+                const linkedIds = linkedToTempStr.split(",", )
+                let input = $(this).val()
                 let key = e.key;
                 
                 // Check if the key is a comma
@@ -171,10 +179,13 @@ extract($report_metadata);
                     $(this).val(input)
                 }
 
-                if(input){
-                    const parentValue = eval(computeDerivedValues(parentTempStr)) 
-                    // console.log(linkedToTempStr, parentTempStr, parentValue)
-                    $("#"+linkedToTempStr).val(parentValue)
+                for(let i = 0; i < linkedIds.length; i++){
+                    let parentTempStr = $("#"+linkedIds[i]).data('computed_value')
+
+                    if(input){
+                    let parentValue = eval(computeDerivedValues(parentTempStr)) 
+                    $("#"+linkedIds[i]).val(parentValue)
+                }
                 }
             }
         })
