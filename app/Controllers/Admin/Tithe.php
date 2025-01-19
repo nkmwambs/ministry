@@ -71,14 +71,14 @@ class Tithe extends WebController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'member_id' => [
+            'member_id.*' => [
                 'rules' =>'required',
                 'label' => 'Member Name',
                 'errors' => [
                     'required' => 'First Name is required.',
                 ]
             ],
-            'amount' => [
+            'amount.*' => [
                 'rules' =>'required',
                 'label' => 'Tithe Amount',
                 'errors' => [
@@ -93,14 +93,20 @@ class Tithe extends WebController
 
         $hashed_assembly_id = $this->request->getPost('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
+        $tithing_date = $this->request->getPost('tithing_date');
+        $member_ids = $this->request->getPost('member_id');
+        $amounts = $this->request->getPost('amount');
 
-        $data = [
-            'member_id' => $this->request->getPost('member_id'),
-            'amount' => $this->request->getPost('amount'),
-        ];
+        foreach($member_ids as $key => $member_id){
+            $data = [
+               'member_id' => $member_id,
+                'amount' => $amounts[$key],
+                'assembly_id' => $assembly_id,
+                'tithing_date' => $tithing_date,
+            ];
 
-        $this->model->insert((object)$data);
-        $insertId = $this->model->getInsertID();
+            $this->model->insert((object)$data);
+        }
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
@@ -123,7 +129,7 @@ class Tithe extends WebController
             $this->feature = 'tithe';
             $this->action = 'list';
             $records = $this->model
-            ->select('tithes.id,tithes.member_id,members.assembly_id as assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
+            ->select('tithes.id,tithing_date,tithes.member_id,members.assembly_id as assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
             ->join('members','members.id = tithes.member_id')
             ->join('assemblies','assemblies.id=members.assembly_id')
             ->orderBy("tithes.created_at desc")->where('assembly_id', $assembly_id)->findAll();
@@ -193,7 +199,7 @@ class Tithe extends WebController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('tithes.id,tithes.member_id,members.assembly_id as assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
+            ->select('tithes.id,tithing_date,tithes.member_id,members.assembly_id as assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
             ->join('members','members.id = tithes.member_id')
             ->join('assemblies','assemblies.id=members.assembly_id')
             ->orderBy("tithes.created_at desc")

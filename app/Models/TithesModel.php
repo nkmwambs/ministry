@@ -13,7 +13,7 @@ class TithesModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','member_id','amount'];
+    protected $allowedFields    = ['id','member_id','amount','tithing_date'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
