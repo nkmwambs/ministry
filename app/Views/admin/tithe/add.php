@@ -18,7 +18,8 @@ $numeric_member_id = hash_id($member_id, 'decode');
 
             <div class="panel-body">
 
-                <form role="form" id="frm_add_tithe" method="post" action="<?= site_url("tithes/save") ?>" class="form-horizontal form-groups-bordered">
+                <form role="form" id="frm_add_tithe" method="post" action="<?= site_url("tithes/save") ?>"
+                    class="form-horizontal form-groups-bordered">
 
                     <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">
@@ -40,13 +41,14 @@ $numeric_member_id = hash_id($member_id, 'decode');
 
                     <?php
                     if (isset($parent_id)) {
-                    ?>
+                        ?>
                         <input type="hidden" name="assembly_id" value="<?= $parent_id; ?>" />
-                    <?php
+                        <?php
                     } else {
-                    ?>
+                        ?>
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="assembly_id"><?= lang('member.member_assembly_id') ?></label>
+                            <label class="control-label col-xs-4"
+                                for="assembly_id"><?= lang('member.member_assembly_id') ?></label>
                             <div class="col-xs-6">
                                 <select class="form-control" name="assembly_id" id="assembly_id">
                                     <option value=""><?= lang('assembly.select_assembly') ?></option>
@@ -54,75 +56,74 @@ $numeric_member_id = hash_id($member_id, 'decode');
                                 </select>
                             </div>
                         </div>
-                    <?php
+                        <?php
                     }
                     ?>
 
-                    <?php if (!$numeric_member_id) { ?>
-                        <div class='form-group'>
-                            <label for="member_id" class="control-label col-xs-4"><?= lang('tithe.tithe_member_id') ?></label>
-                            <div class="col-xs-6">
-                                <select class="form-control" name="member_id" id="member_id">
-                                    <option value=""><?= lang('tithe.select_member') ?></option>
-                                    <?php foreach ($members as $member) : ?>
-                                        <option value="<?php echo $member['id']; ?>"><?php echo $member['first_name'] . ' ' . $member['last_name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                    <?php } else { ?>
-                        <input type="hidden" name="member_id" id="member_id" value="<?= $member_id; ?>" />
-                    <?php } ?>
-
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="amount">
-                            <?= lang('tithe.tithe_amount') ?>
-                        </label>
+                        <label class="control-label col-xs-4"
+                            for="tithing_date"><?= lang('tithe.tithe_choose_tithing_date') ?></label>
                         <div class="col-xs-6">
-                            <!-- onkeydown="return false;" -->
-                            <input type="text" class="form-control" name="amount" id="amount"
-                                placeholder="<?= lang('tithe.enter_tithe_amount') ?>">
+                            <input type="text" class="form-control collection_datepicker" name="tithing_date"
+                                id="tithing_date" placeholder="<?= lang('tithe.select_tithing_date') ?>">
                         </div>
                     </div>
 
-                    <!-- Dynamically Generated Custom Fields -->
-                    <?php if ($customFields): ?>
-                        <?php foreach ($customFields as $field): ?>
-                            <div class="form-group custom_field_container" id="<?= $field['visible']; ?>">
-                                <label class="control-label col-xs-4" for="<?= $field['field_name']; ?>"><?= ucfirst($field['field_name']); ?></label>
-                                <div class="col-xs-6">
-                                    <input type="<?= $field['type']; ?>" name="custom_fields[<?= $field['id']; ?>]" id="<?= $field['field_name']; ?>" class="form-control">
+                    <section class="tithe_section">
+                        <div class="form-group section-header">
+                            <div class="collection_title col-xs-4"><?= lang('tithe.add_tithe_button') ?></div>
+                            <div class="collection_title col-xs-4"><?= lang('tithe.tithe_member_name') ?></div>
+                            <div class="collection_title col-xs-4"><?= lang('tithe.tithe_amount') ?></div>
+                        </div>
+
+                        <div class="form-group section-content">
+                            <div class="col-xs-4">
+                                <div class="btn btn-success add_tithe_button">
+                                    <i class="fa fa-plus-circle"></i>
+                                </div>
+
+                                <div class="btn btn-danger hidden remove_tithe_button">
+                                    <i class="fa fa-minus-circle"></i>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-
+                            <?php if (!$numeric_member_id) { ?>
+                                <div class="col-xs-4">
+                                    <select class="form-control" name="member_id[]" id="member_id">
+                                        <option value=""><?= lang('tithe.select_member') ?></option>
+                                        <?php foreach ($members as $member): ?>
+                                            <option value="<?php echo $member['id']; ?>">
+                                                <?php echo $member['first_name'] . ' ' . $member['last_name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            <?php } ?>
+                            <div class="col-xs-4">
+                                <input type="number" class="form-control" name="amount[]" id="amount"
+                                    placeholder="<?= lang('collection.enter_amount') ?>">
+                            </div>
+                        </div>
+                    </section>
                 </form>
-
             </div>
-
         </div>
-
     </div>
 </div>
 
 <script>
-    // $("#denomination_id").on("change", function() {
-    //     const numeric_denomination_id = $(this).val()
+     $(document).on("click", ".remove_tithe_button", function () {
+    $(this).parent().parent().remove();
+  })
 
-    //     $.ajax({
-    //         url: "<?= site_url('entities/lowestEntities') ?>/" + numeric_denomination_id,
-    //         type: 'GET',
-    //         success: function(response) {
-    //             let options = "<option value='0'>Select Entity</option>"
+  $(document).on("click", ".add_tithe_button", function () {
+    var new_row = $('.section-content').eq(0).clone();
 
-    //             $.each(response, function(index, elem) {
-    //                 options += "<option value='" + elem.id + "'>" + elem.name + "</option>";
-    //             })
+    // new_row.find('input').val('');
+    new_row.find('input[type="text"]').val('');
+    new_row.find('input[type="number"]').val('');
 
-    //             $("#entity_id").html(options)
-    //             // console.log(response)
-    //         }
-    //     })
-    // })
+    new_row.find('.add_tithe_button').remove();
+    new_row.find('.remove_tithe_button').removeClass('hidden');
+
+    new_row.appendTo('.tithe_section');
+  })
 </script>
