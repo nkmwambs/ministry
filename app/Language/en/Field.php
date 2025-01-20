@@ -6,6 +6,11 @@ return [
     'edit_customfield' => 'Edit Custom Field',
     'view_customfield' => 'View Custom Field',
     'delete_customfield' => 'Delete Custom Field',
+    'customfield_builder_type' => 'Query Builder Type',
+    'select_builder_type' => 'Select Builder Type',
+    'code_builder' => 'SQL Query Builder',
+    'derived_value_builder' => "Field Code Expression",
+    'field_linked_to' => 'Field Linked To',
 
     'customfield_action_col' => 'Action',
     'customfield_table_name' => 'Table Name',

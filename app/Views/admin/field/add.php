@@ -127,12 +127,46 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                         </div>
                     </div>
 
-                    <div class="form-group hidden" id = "form_group_builder">
+                    <div class="form-group hidden" id = "form_group_builder_type">
+                        <label class="control-label col-xs-4" for="builder_type">
+                            <?= lang("field.customfield_builder_type") ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <select class = "form-control" id ="builder_type">
+                                <option value = ""><?=lang('field.select_builder_type');?></option>
+                                <option value = "code_builder"><?=lang('field.code_builder');?></option>
+                                <option value = "derived_value_builder"><?=lang('field.derived_value_builder');?></option>
+                                <option value = "field_linked_to"><?=lang('field.field_linked_to');?></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden" id = "form_group_sql_builder">
                         <label class="control-label col-xs-4" for="code_builder">
                             <?= lang("field.customfield_sql_builder") ?>
                         </label>
                         <div class="col-xs-6">
                             <textarea type="text" rows="10" class="form-control" name="code_builder" id="code_builder" placeholder="<?=lang('field.enter_sql_query');?>"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group hidden" id = "form_group_derived_value_builder">
+                        <label class="control-label col-xs-4" for="derived_value_builder">
+                            <?= lang("field.derived_value_builder") ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <textarea type="text" rows="5" class="form-control" name="derived_value_builder" id="derived_value_builder" placeholder="<?=lang('field.derived_value_builder');?>"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group hidden" id = "form_group_field_linked_to">
+                        <label class="control-label col-xs-4" for="field_linked_to">
+                            <?= lang("field.field_linked_to") ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <textarea type="text" rows="5" class="form-control" name="field_linked_to" id="field_linked_to" placeholder="<?=lang('field.field_linked_to');?>"></textarea>
                         </div>
                     </div>
 
@@ -168,25 +202,50 @@ $("#feature_id").on("change", function(){
 $(document).on("change","#type", function(){
     const field_type = $(this).val();
     const form_group_options = $("#form_group_options");
+    const form_group_builder_type = $("#form_group_builder_type");
+    const feature = $("#feature_id");
+    const feature_name = feature.find(':selected').data('feature_name')
 
     form_group_options.addClass('hidden');
+    form_group_builder_type.addClass('hidden');
     form_group_options.find("#options").val("");
 
     if(field_type == 'dropdown' || field_type == 'boolean'){
         form_group_options.removeClass('hidden');
     }
+
+    if(field_type == 'numeric' && feature_name == 'report'){
+        form_group_builder_type.removeClass('hidden');
+    }
 });
 
-$(document).on('change',"#feature_id", function(){
-    const feature_id = $(this).val();
-    const form_group_builder = $("#form_group_builder");
-    const feature_name = $(this).find(':selected').data('feature_name')
+$(document).on('change',"#builder_type", function(){
+    const builder_type = $(this).val();
+    const feature = $("#feature_id");
+    const form_group_sql_builder = $("#form_group_sql_builder");
+    const form_group_derived_value_builder = $("#form_group_derived_value_builder");
+    const form_group_field_linked_to = $("#form_group_field_linked_to");
+    const feature_name = feature.find(':selected').data('feature_name')
+    
+    form_group_sql_builder.addClass('hidden');
+    form_group_sql_builder.find("#code_builder").val("");
 
-    form_group_builder.addClass('hidden');
-    form_group_builder.find("#code_builder").val("");
+    form_group_derived_value_builder.addClass('hidden');
+    form_group_derived_value_builder.find("#derived_value_builder").val("");
 
-    if(feature_name == 'report'){
-        form_group_builder.removeClass('hidden');
+    form_group_field_linked_to.addClass('hidden');
+    form_group_field_linked_to.find("#field_linked_to").val("");
+
+    if(builder_type == 'code_builder' && feature_name == 'report') {
+        form_group_sql_builder.removeClass('hidden');
+    }
+
+    if(builder_type == 'derived_value_builder' && feature_name == 'report') {
+        form_group_derived_value_builder.removeClass('hidden');
+    }
+
+    if(builder_type == 'field_linked_to' && feature_name == 'report') {
+        form_group_field_linked_to.removeClass('hidden');
     }
 })
 </script>
