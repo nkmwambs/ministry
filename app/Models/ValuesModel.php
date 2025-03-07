@@ -83,4 +83,14 @@ class ValuesModel extends Model
             }
         }
     }
+
+    public function viewAdditionalInformation($tableName, $recordId){
+        $this->select(['customfields.field_name as field_name','customvalues.value as field_value']);
+        $this->join('customfields','customfields.id=customvalues.customfield_id');
+        $this->join($tableName,$tableName.'.id=customvalues.record_id');
+        $this->where('record_id', $recordId);
+        $customValues = $this->findAll();
+
+        return $customValues;
+    }
 }

@@ -9,7 +9,7 @@ class MPesa extends WebController
     private $client;
     private $base_url;
     function __construct(){
-        $this->base_url = 'https://daba-196-223-167-234.ngrok-free.app';
+        $this->base_url = 'https://e9c9-197-232-60-104.ngrok-free.app';
         $this->client = \Config\Services::curlrequest();
     }
     public function getIndex()
@@ -19,19 +19,19 @@ class MPesa extends WebController
 
     function getExpress(string $paying_number, int $amount){
         
-        $endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-        $BusinessShortCode = '174379';
-        $passkey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
+        $endpoint = 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
+        $BusinessShortCode = '4146601';
+        $passkey = "7ce5d0234d846f90f3fd96cc370682974151587fb3cc980ca9924b3d2c8af7e0";
         $Timestamp = date('YmdHis'); // '20240924115834'; 
         $Password = base64_encode($BusinessShortCode . $passkey . $Timestamp); // "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwOTI0MTE1ODM0"; 
         $TransactionType = 'CustomerPayBillOnline';
         $Amount = $amount;
         $PartyA = $paying_number;
-        $PartyB = '174379';
+        $PartyB = '4146601';
         $PhoneNumber = $paying_number;
         $CallBackURL = $this->base_url.'/callback/stk';
-        $AccountReference = 'CompanyXLTD';
-        $TransactionDesc = 'Payment of X';
+        $AccountReference = 'CHURCH MONTHLY RETURNS';
+        $TransactionDesc = 'Payment of Monthly Returns';
 
         $body = compact(
             'BusinessShortCode',
@@ -48,7 +48,7 @@ class MPesa extends WebController
             'TransactionDesc',
         );
 
-        $ch = curl_init('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest');
+        $ch = curl_init('https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest');
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Authorization: Bearer '. $this->getAccess_token(),
             'Content-Type: application/json'
@@ -67,11 +67,11 @@ class MPesa extends WebController
     function getAccess_token(){
         $response = $this->client->request(
         'GET',
-        'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
+        'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
         [
                 'auth' => [
-                    'Akp17hzerzyCz5gQMG5ze7gMMj0AAGECFe7JzApM7iotOFIa',
-                    'pcfwKtR5AZGYwymmjsPuYInUkEY5wm60F22MNQif4hBMaktTyGx1XpUJegGRLL6J'
+                    'YinBARfRAiYIpl30p9VQEB5uTNSR4AhO0WKDIN47bGAV2WYA',
+                    '7RsGrWaQgfYn19AAhdtpE8A71T3w86JdgZ7ycU28rdS2YFaeo54mHdZHTVMgOXJO'
                 ],
                 'http_errors' => false,
         ]
@@ -82,13 +82,13 @@ class MPesa extends WebController
     }
 
     function getRegister_urls(){
-        $endpoint = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl';
+        $endpoint = 'https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl';
 
         $data = [
             'validationURL' => $this->base_url.'/callback/confirmation',
             'confirmationURL' => $this->base_url.'/callback/pay_validation',
             'responseType' => 'completed',
-            'shortCode' => '174379'
+            'shortCode' => '4146601'
         ];
 
         $response = $this->client->request(

@@ -11,11 +11,13 @@ use Psr\Log\LoggerInterface;
 class User extends WebController
 {
     protected $model = null;
+    protected $library = null;
     function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
 
         $this->model = new \App\Models\UsersModel();
+        $this->library = new \App\Libraries\UserLibrary();
     }
 
     public function fetchUsers()
@@ -49,28 +51,24 @@ class User extends WebController
         // Limit the results and fetch the data
         $this->model->limit($length, $start);
         $data = $this->model
-        ->select('users.id,users.first_name,users.last_name,users.phone,auth_identities.secret as email,users.active')
+        ->select('users.id,users.first_name,users.last_name,users.phone,auth_identities.secret as email,users.active,users.permitted_assemblies')
         ->join('auth_identities','auth_identities.user_id=users.id')
         ->where('auth_identities.type','email_password')
+        ->where('users.id<>', $this->session->get('user_id'))
         ->find();
 
         // Database connection
         $db = \Config\Database::connect();
-        $builder = $db->table('auth_groups_users');
+        $auth_builder = $db->table('auth_groups_users');
         // Loop through the data to apply hash_id()
         foreach ($data as &$user) {
             $user->hash_id = hash_id($user->id);  // Add hashed ID to each record
 
-            $builder->where('user_id', $user->id);
-            $rolesArray = $builder->get()->getResultArray();
-
-            $userGroups = array_column($rolesArray, 'group');
-            
-            $userGroups = array_map(function($role){
-                return humanize($role);
-            },$userGroups);
-            
+            $userGroups = $this->library->getUserRoleNames($auth_builder, $user->id);            
             $user->roles = implode(', ', $userGroups);
+            
+            $userAssemblies = $this->library->getUserAssemblyName(json_decode($user->permitted_assemblies));
+            $user->permitted_assemblies = implode(', ', $userAssemblies);
         }
 
         // Prepare response data for DataTables
@@ -83,19 +81,6 @@ class User extends WebController
 
         // Return JSON response
         return $this->response->setJSON($response);
-    }
-
-    function generateRandomString($length = 10)
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[random_int(0, $charactersLength - 1)];
-        }
-
-        return $randomString;
     }
 
     /// Posting Controllers
@@ -121,7 +106,7 @@ class User extends WebController
         $numeric_denomination_id = hash_id($this->request->getPost('denomination_id'), 'decode');
 
         // Generate random password with password hash in php 
-        $password = $this->generateRandomString(8);
+        $password = generateRandomString(8);
         // $hashed_password = password_hash($this->generateRandomString(8), PASSWORD_DEFAULT);
 
         $templateLibrary =  new \App\Libraries\TemplateLibrary();
@@ -241,7 +226,7 @@ class User extends WebController
         ];
 
         // $user = new \CodeIgniter\Shield\Entities\User($data);
-
+        // log_message('error', json_encode(hash_id($this->request->getPost('user_id'),'decode')));
         $this->model->save($data);
         // $insertId = $this->model->getInsertID();
 

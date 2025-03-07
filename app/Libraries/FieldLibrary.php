@@ -21,12 +21,12 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
     }
 
     function setListQueryFields(){
-        $fields = ['customfields.id','field_name','field_code','helptip','denomination_id','table_name','type','options','feature_id','field_order','visible','features.name as feature_name'];
+        $fields = ['customfields.id','field_name','field_code','helptip','denomination_id','table_name','type','options','code_builder','feature_id','field_order','visible','features.name as feature_name'];
         return $fields;
     }
 
     function setViewQueryFields(){
-        $fields = ['customfields.id','field_name','field_code','helptip','denomination_id','table_name','type','options','feature_id','field_order','visible','features.name as feature_name'];
+        $fields = ['customfields.id','field_name','field_code','helptip','denomination_id','table_name','type','options','code_builder','feature_id','field_order','visible','features.name as feature_name'];
         return $fields;
     }
 
@@ -55,6 +55,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
     {
         $featureModel = new \App\Models\FeaturesModel();
         $feature = $featureModel->where('name', singular($tableName))->first();
+        
         $featureId = $feature['id'];
 
         if($customFieldValues && sizeOf($customFieldValues) > 0){
@@ -65,10 +66,9 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                     ->where('feature_id', $featureId)
                     ->where('customfield_id', $fieldId)
                     ->first();
-    
+
                 if ($existing) {
-                    $update_data = [
-                        'value' => $value,                    ];
+                    $update_data = ['value' => $value];
                     // Update existing custom field value
                     $this->customValueModel->update($existing['id'], (object)$update_data);
                 } else {
@@ -76,7 +76,7 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                         'record_id'   => $recordId,
                         'feature_id'  => $featureId,
                         'customfield_id'    => $fieldId,
-                        'value' => json_encode($value),
+                        'value' => $value // json_encode($value),
                     ];
                     // Insert new custom field value
                     $this->customValueModel->insert((object)$data);
@@ -188,22 +188,103 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
         if (!$field) {
             return false;
         }
-        
+   
         extract($field);
+
+        $value = match(true){
+            $query_builder != NULL => $this->computeFieldValue($query_builder, $report), // This line is deprecated
+            $code_builder != NULL => $this->computeFieldValueByCodeBuilder($code_builder, $report),
+            default => NULL,
+        };
+
         $fieldObj = [
+                'field_id' => $id,
                 'type' => $type,
                 'field_code' => $field_code,
                 'label' => $field_name,
                 'helptip' => $helptip,
-                'value' => $query_builder != NULL ? $this->computeFieldValue($query_builder, $report): '',
+                'value' => $value,
                 'visible' => $visible,
                 'class' => $field_code,
+                'computed_value' => $derived_value_builder,
+                'field_linked_to' =>  $field_linked_to != NULL ? preg_replace('/\s+/', '', $field_linked_to): NULL,
+                'options' => $options != "" ? $this->createOptionsArray($options) : null,
                 'attributes' => []
         ];
 
         return $fieldObj;
     }
 
+    function createOptionsArray($optionsString){
+        // Convert the string into an array, splitting by newline characters
+        $lines = preg_split("/\r\n|\r|\n/", $optionsString);
+
+        // Create an associative array with the same key and value for each element
+        $result = array_combine($lines, $lines);
+
+        return $result;
+    }
+
+    function extractReportFieldsSQLVariables($report){
+        $assemblyLibrary = new AssemblyLibrary();
+        $assembly_id = $report['assembly_id'];
+        
+        $minister = $this->getAssemblyMinisterIdByAssemblyId($assembly_id);
+        $denomination_id = $assemblyLibrary->getAssemblyDenominationIdByAssemblyId($assembly_id);
+        $report_period = $report['report_period'];
+        $in_month = $report['report_period'];
+        $minister_id = $minister['minister_id'];
+        $minister_member_id = $minister['member_id'];
+
+        return compact('denomination_id','report_period', 'in_month','assembly_id','minister_id','minister_member_id');
+    }
+
+    function getAssemblyMinisterIdByAssemblyId($assembly_id){
+        $ministersModel = new \App\Models\MinistersModel();
+        $ministersModel->select('ministers.id as minister_id, member_id');
+        $ministersModel->join('members',"ministers.member_id=members.id");
+        $ministersModel->where('members.assembly_id', $assembly_id);
+        $minister = $ministersModel->first();
+        return $minister;
+    }
+
+    function computeFieldValueByCodeBuilder($code_builder, $report){
+        $db = \Config\Database::connect();
+
+        extract($this->extractReportFieldsSQLVariables($report));
+
+        // log_message('error', json_encode($minister_id));
+
+        // Extract column labels inside `::` in code_builder
+        preg_match_all('/:([a-zA-Z_]+):/', $code_builder, $matches);
+        // Get the column labels (second group of matches)
+        $columnLabels = $matches[1];
+
+        // Compacting columns to preset values
+        $compact = [];
+        foreach ($columnLabels as $key) {
+            if(isset($$key)){
+                $compact[$key] = $$key; // Use variable variables
+            }
+        }
+
+        $query = $db->query($code_builder, $compact)->getRow();
+        
+        if($query){
+            return $query->result;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Summary of computeFieldValue
+     * @param string $query_builder
+     * @param array $report
+     * @return mixed
+     * 
+     * This method is deprecated in place of computeFieldValueByQueryBuilder
+     */
     function computeFieldValue(string $query_builder, array $report) {
         
         // [{"table": "members", "select": "count", "conditions": [{"key": "assembly_id", "operator": "equals"}]}]
@@ -234,7 +315,10 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
 
             // Aggregation query part
             if($select == 'count'){
-                $queryResult->select('count(*');
+                $queryResult->select('count(*)');
+            }elseif($select == 'sum'){
+                // log_message('error', json_encode($sum_field));
+                $queryResult->selectSum($sum_field->field);
             }
 
             // Join query part 
@@ -309,7 +393,18 @@ class FieldLibrary implements \App\Interfaces\LibraryInterface {
                 }
             }
 
-            $result = $queryResult->countAllResults();
+            $result = '';
+
+            if($select == 'sum'){
+                $result = $queryResult->first()[$sum_field->field]; 
+                if(array_key_exists('compute',(array)$sum_field)){
+                    if(array_key_exists('percent', (array)$sum_field->compute)){
+                        $result = $result * $sum_field->compute->percent;
+                    }
+                }
+            }else{
+                $result = $queryResult->countAllResults();
+            }
 
             $value = $result;
         }

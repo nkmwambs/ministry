@@ -12,7 +12,7 @@ class RevenuesModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','denomination_id','name','description'];
+    protected $allowedFields    = ['id','denomination_id','revenue_code','name','description'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

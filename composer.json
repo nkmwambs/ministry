@@ -15,6 +15,7 @@
         "codeigniter4/settings": "^2.2",
         "codeigniter4/shield": "^1.1",
         "codeigniter4/tasks": "dev-develop",
+        "gravatarphp/gravatar": "^1.0",
         "hashids/hashids": "^5.0",
         "tatter/permits": "^2.1",
         "tecnickcom/tcpdf": "^6.7"

@@ -61,8 +61,8 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                             <div class="col-xs-6">
                                 <select class="form-control select_fields" name="feature_id" id="feature_id">
                                     <option value=""><?= lang('field.select_feature') ?></option>
-                                    <?php foreach ($features as $designation) : ?>
-                                        <option value="<?php echo $designation['id']; ?>"><?php echo $designation['name']; ?></option>
+                                    <?php foreach ($features as $feature) : ?>
+                                        <option data-feature_name = "<?=$feature['name'];?>" value="<?php echo $feature['id']; ?>"><?php echo $feature['name']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -70,15 +70,6 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                     <?php } else { ?>
                         <input type="hidden" name="feature_id" id="feature_id" value="<?= $feature_id; ?>" />
                     <?php } ?>
-
-                    <div class="form-group content">
-                        <label class="control-label col-xs-4" for="table_name">
-                            <?= lang("field.customfield_table_name") ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" name="table_name" id="table_name" placeholder="<?= lang('field.enter_table_name') ?>">
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="field_name">
@@ -90,20 +81,20 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="field_code">
-                            <?= lang("field.customfield_code") ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" name="field_code" id="field_code" placeholder="<?= lang('system.system_enter_code') ?>">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label class="control-label col-xs-4" for="helptip">
                             <?= lang("field.customfield_helptip") ?>
                         </label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" name="helptip" id="helptip" placeholder="<?= lang('field.enter_helptip') ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="field_code">
+                            <?= lang("field.customfield_code") ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" name="field_code" id="field_code" placeholder="<?= lang('field.enter_code') ?>">
                         </div>
                     </div>
 
@@ -127,35 +118,57 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label class="control-label col-xs-4" for="visible">
-                            <?= lang("field.customfield_visible") ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <select name="visible" id="visible" class="form-control" required>
-                                <option value="no">No</option>
-                                <option value="yes">Yes</option>
-                            </select>
-                        </div>
-                    </div> -->
-
-                    <div class="form-group">
+                    <div class="form-group hidden" id = "form_group_options">
                         <label class="control-label col-xs-4" for="options">
                             <?= lang("field.customfield_options") ?>
                         </label>
                         <div class="col-xs-6">
-                            <textarea type="text" class="form-control" name="options" id="options" placeholder="Enter Options"></textarea>
+                            <textarea type="text" class="form-control" name="options" id="options" placeholder="<?=lang('field.enter_options');?>"></textarea>
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label class="control-label col-xs-4" for="field_order">
-                            <?= lang("field.customfield_field_order") ?>
+                    <div class="form-group hidden" id = "form_group_builder_type">
+                        <label class="control-label col-xs-4" for="builder_type">
+                            <?= lang("field.customfield_builder_type") ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="field_order" id="field_order" placeholder="Enter Options">
+                            <select class = "form-control" id ="builder_type">
+                                <option value = ""><?=lang('field.select_builder_type');?></option>
+                                <option value = "code_builder"><?=lang('field.code_builder');?></option>
+                                <option value = "derived_value_builder"><?=lang('field.derived_value_builder');?></option>
+                                <option value = "field_linked_to"><?=lang('field.field_linked_to');?></option>
+                            </select>
                         </div>
-                    </div> -->
+                    </div>
+
+                    <div class="form-group hidden" id = "form_group_sql_builder">
+                        <label class="control-label col-xs-4" for="code_builder">
+                            <?= lang("field.customfield_sql_builder") ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <textarea type="text" rows="10" class="form-control" name="code_builder" id="code_builder" placeholder="<?=lang('field.enter_sql_query');?>"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group hidden" id = "form_group_derived_value_builder">
+                        <label class="control-label col-xs-4" for="derived_value_builder">
+                            <?= lang("field.derived_value_builder") ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <textarea type="text" rows="5" class="form-control" name="derived_value_builder" id="derived_value_builder" placeholder="<?=lang('field.derived_value_builder');?>"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group hidden" id = "form_group_field_linked_to">
+                        <label class="control-label col-xs-4" for="field_linked_to">
+                            <?= lang("field.field_linked_to") ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <textarea type="text" rows="5" class="form-control" name="field_linked_to" id="field_linked_to" placeholder="<?=lang('field.field_linked_to');?>"></textarea>
+                        </div>
+                    </div>
 
                     <!-- Dynamically Generated Custom Fields -->
                     <?php foreach ($customFields as $field): ?>
@@ -180,9 +193,72 @@ $numeric_feature_id = hash_id($feature_id, 'decode');
 $("#feature_id").on("change", function(){
     const parent_id = $(this).val();
     const form_groups = $('.content');
+    const feature_name = $(this).find(':selected').data('feature_name')
    
     if(parent_id > 0){
       form_groups.filter('#table_name').attr('disabled','disabled');
+    }
+
+    if(feature_name != 'report'){
+        const form_group_builder_type = $("#form_group_builder_type");
+        const form_group_sql_builder = $("#form_group_sql_builder");
+        const form_group_derived_value_builder = $("#form_group_derived_value_builder");
+        const form_group_field_linked_to = $("#form_group_field_linked_to");
+
+        form_group_sql_builder.addClass('hidden');
+        form_group_derived_value_builder.addClass('hidden');
+        form_group_field_linked_to.addClass('hidden');
+    }
+    
+})
+
+$(document).on("change","#type", function(){
+    const field_type = $(this).val();
+    const form_group_options = $("#form_group_options");
+    const form_group_builder_type = $("#form_group_builder_type");
+    const feature = $("#feature_id");
+    const feature_name = feature.find(':selected').data('feature_name')
+
+    form_group_options.addClass('hidden');
+    form_group_builder_type.addClass('hidden');
+    form_group_options.find("#options").val("");
+
+    if(field_type == 'dropdown' || field_type == 'boolean'){
+        form_group_options.removeClass('hidden');
+    }
+
+    if(field_type == 'numeric' && feature_name == 'report'){
+        form_group_builder_type.removeClass('hidden');
+    }
+});
+
+$(document).on('change',"#builder_type", function(){
+    const builder_type = $(this).val();
+    const feature = $("#feature_id");
+    const form_group_sql_builder = $("#form_group_sql_builder");
+    const form_group_derived_value_builder = $("#form_group_derived_value_builder");
+    const form_group_field_linked_to = $("#form_group_field_linked_to");
+    const feature_name = feature.find(':selected').data('feature_name')
+    
+    form_group_sql_builder.addClass('hidden');
+    form_group_sql_builder.find("#code_builder").val("");
+
+    form_group_derived_value_builder.addClass('hidden');
+    form_group_derived_value_builder.find("#derived_value_builder").val("");
+
+    form_group_field_linked_to.addClass('hidden');
+    form_group_field_linked_to.find("#field_linked_to").val("");
+
+    if(builder_type == 'code_builder' && feature_name == 'report') {
+        form_group_sql_builder.removeClass('hidden');
+    }
+
+    if(builder_type == 'derived_value_builder' && feature_name == 'report') {
+        form_group_derived_value_builder.removeClass('hidden');
+    }
+
+    if(builder_type == 'field_linked_to' && feature_name == 'report') {
+        form_group_field_linked_to.removeClass('hidden');
     }
 })
 </script>

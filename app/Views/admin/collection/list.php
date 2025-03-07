@@ -1,8 +1,39 @@
 <?php 
-// echo $parent_id;
+$tableName = "collections";
+$feature = "collection";
 ?>
+<div class="row">
+    <div class="col-xs-12 btn-container">
+        <div class='btn btn-primary' onclick="showAjaxModal('<?=$tableName;?>','add', '<?= $parent_id; ?>')">
+            <?= lang($feature.'.add_'.$feature); ?>
+        </div>
 
-<?=button_row($feature, $parent_id)?>
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('<?=$tableName;?>','delete')">
+            <i class="fa fa-trash-o"></i>
+            <?= lang($feature.'.delete_'.$tableName); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('<?=$tableName;?>','edit')">
+            <i class="fa fa-pencil-square-o"></i>
+            <?= lang($feature.'.edit_'.$tableName); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('<?=$tableName;?>','view')">
+            <i class="fa fa-eye"></i>
+            <?= lang($feature.'.view_'.$tableName); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('<?=$tableName;?>','print')">
+            <i class="fa fa-print"></i>
+            <?= lang($feature.'.print_'.$tableName); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('<?=$tableName;?>','export')">
+            <i class="fa fa-download"></i>
+            <?= lang($feature.'.export_'.$tableName); ?>
+        </div>
+    </div>
+</div>
 
 <div class='row list-alert-container hidden'>
     <div class='col-xs-12 info'>
@@ -12,45 +43,51 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <table class="table table-striped scrollable-x-datatable">
+        <table class="table table-striped datatable">
             <thead>
                 <tr>
-                    <th><?= lang('collection.collection_action') ?></th>
-                    <th><?= lang('collection.collection_return_date') ?></th>
-                    <th><?= lang('collection.collection_period_start_date') ?></th>
-                    <th><?= lang('collection.collection_period_end_date') ?></th>
-                    <th><?= lang('collection.collection_revenue_id') ?></th>
-                    <th><?= lang('collection.collection_amount') ?></th>
-                    <th><?= lang('collection.collection_status') ?></th>
-                    <th><?= lang('collection.collection_collection_reference') ?></th>
-                    <th><?= lang('collection.collection_description') ?></th>
-                    <th><?= lang('collection.collection_collection_method') ?></th>
+                    <th><input type="checkbox" id="select_all" ></th>
+                    <th><?= lang($feature.'.'.$feature.'_action') ?></th>
+                    <th><?= lang($feature.'.assembly_name') ?></th>
+                    <th><?= lang($feature.'.collection_return_date') ?></th>
+                    <th><?= lang($feature.'.sunday_count') ?></th>
+                    <th><?= lang($feature.'.collection_revenue_id') ?> </th>
+                    <th><?= lang($feature.'.collection_amount') ?></th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($result as $collection) { ?>
+                <?php foreach ($result as $item) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= hash_id($collection['id']); ?> collection">
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($designation);?>','view', '<?=hash_id($collection['id']);?>')"></i>
+                            <span class='action-icons'>
+                                <input type="checkbox" class = "select_item" name="item_id[]" value="<?php echo $item['id'];?>">
                             </span>
-                            <span class='action-icons' title="Edit <?= hash_id($collection['id']); ?> collection">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($designation); ?>','edit', '<?= hash_id($collection['id']); ?>')" class='fa fa-pencil'></i>
-                            </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($designation); ?>','delete','<?= hash_id($collection['id']); ?>')" title="Delete <?= $collection['id']; ?> participant"><i class='fa fa-trash'></i></span>
-
                         </td>
-
-                        <td><?= $collection['return_date']; ?></td>
-                        <td><?= $collection['period_start_date']; ?></td>
-                        <td><?= $collection['period_end_date']; ?></td>
-                        <td><?= $collection['revenue_name']; ?></td>
-                        <td><?= $collection['amount']; ?></td>
-                        <td><?= $collection['status']; ?></td>
-                        <td><?= $collection['collection_reference']; ?></td>
-                        <td><?= $collection['description']; ?></td>
-                        <td><?= $collection['collection_method']; ?></td>
-
+                        <td>
+                        <div class="btn-group">
+								<button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown">
+									Action <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-blue" role="menu">
+									<li>
+                                        <a href="#" onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($item['id']);?>')" >View</a>
+									</li>
+                                    <li class="divider"></li>
+									<li>
+                                        <a href="#" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($item['id']); ?>')">Edit</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+                                        <a href="#" onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($item['id']); ?>')">Delete</a>
+									</li>
+								</ul>
+							</div>
+                        </td>
+                        <td><?= $item['assembly_name']; ?></td>
+                        <td><?= $item['return_date']; ?></td>
+                        <td><?= $item['sunday_count']; ?></td>
+                        <td><?= $item['revenue_name']; ?></td>
+                        <td><?= number_format($item['amount'],2); ?></td>
                     <?php } ?>
             </tbody>
         </table>
@@ -58,33 +95,33 @@
 </div>
 
 <script>
-    $('.scrollable-x-datatable').DataTable({
-        stateSave: true,
-        scrollX: true,
-        scrollY: 200,
-        scrollCollapse: true,
-        fixedColumns: true,
-        fixedHeader: true,
-        responsive: true,
-        // dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
-        columnDefs: [{
-            targets: [0],
-            orderable: false
-        }],
-        // deferLoading: true,
-        // processing: true,
-        // serverSide: true,
-        // "ajax": {
-        //     'url': "<?=site_url();?>/api/users/getAll",
-        //     "method": "POST"
-        // },
-        // "columns": [
-        //     { "data": "id" },
-        //     { "data": "name" },
-        //     { "data": "email" }
-        // ]
+
+    $('#select_all').click(function(){
+        $('.select_item').prop('checked', $(this).prop('checked'));
+    });
+
+    $(".select_item, #select_all").on('change', function(){
+        // Show mass_action buttons if checked 
+        if($('.select_item:checked').length > 0){
+            $('.mass_action').removeClass('hidden');
+        } else {
+            $('.mass_action').addClass('hidden');
+        }
+
+        // If .select_item are all unchecked also uncheck #select_all
+        if($('.select_item:checked').length === 0){
+            $('#select_all').prop('checked', false);
+        }
     })
+
+    function bulkAction(tableName, actionOnItem){
+        var selectedItems = [];
+        $('.select_item:checked').each(function(i, el){
+            selectedItems.push($(el).val());
+        });
+        
+        showAjaxBulkAction(tableName, actionOnItem, selectedItems)
+    }
+
+
 </script>

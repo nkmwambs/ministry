@@ -47,6 +47,15 @@
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="amount">
+                            <?= lang('tithe.tithing_date') ?>
+                        </label>
+                        <div class="col-xs-6">
+                            <input type="date" class="form-control" name="tithing_date" id="tithing_date" value="<?= $result['tithing_date']; ?>" placeholder="<?= lang('tithe.edit_tithe_amount') ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="amount">
                             <?= lang('tithe.tithe_amount') ?>
                         </label>
                         <div class="col-xs-6">

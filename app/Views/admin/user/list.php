@@ -27,6 +27,7 @@
             <th><?= lang('user.user_email') ?></th>
             <th><?= lang('user.user_is_active') ?></th>
             <th><?= lang('user.roles') ?></th>
+            <th><?= lang('user.permitted_assemblies') ?></th>
           </tr>
         </thead>
         <tbody>
@@ -63,7 +64,8 @@ $(document).ready(function (){
             { data: "phone" },
             { data: "email"},
             { data: "active"},
-            { data: "roles"}
+            { data: "roles"},
+            { data: "permitted_assemblies"}
         ]
     });
 });

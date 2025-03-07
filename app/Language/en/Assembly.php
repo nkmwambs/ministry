@@ -17,6 +17,7 @@ return [
     'assembly_denomination_id' => 'Denomination Name',
     'assembly_code' => 'Assembly Code',
     'denomination_name' => 'Denomination Name',
+    'select_assembly' => 'Select Assembly',
 
     'enter_planted_date' => 'Enter Planted Date',
     'enter_location' => 'Enter Location',

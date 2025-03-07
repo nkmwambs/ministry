@@ -54,6 +54,7 @@ class Revenue extends WebController
 
         $data = [
             'name' => $this->request->getPost('name'),
+            'revenue_code' => strtolower(underscore($this->request->getPost('name'))),
             'description' => $this->request->getPost('description'),
             'denomination_id' => $this->request->getPost('denomination_id')
         ];

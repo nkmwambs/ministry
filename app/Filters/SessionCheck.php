@@ -26,7 +26,7 @@ public function before(RequestInterface $request, $arguments = null)
     // Check if the user is authenticated
     if (!$session->has('logged_in')) {
         // Redirect to the login page if the user is not authenticated
-        return redirect()->to('/');
+        return redirect()->to('logout');
     }else{
         $user_id = session()->get('user_id');
         $uri = service('uri');

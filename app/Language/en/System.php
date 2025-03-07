@@ -1,11 +1,13 @@
 <?php 
 
 return [
+    'dashboard_welcome' => "Welcome to the site",
     'dashboards' =>  "Dashboards",
     'logout' => "Log Out",
     'denominations' => 'Denominations',
     'ministers' => 'Ministers',
     'assemblies' => 'Assemblies',
+    'members' => 'Members',
     'my_assembly' => 'Assembly',
     "my_profile" => "Profile",
     "my_dashboard" => "Dashboard",
@@ -14,10 +16,13 @@ return [
     'users' => 'Users',
     'settings' => 'Settings',
     'back' => 'Back',
-    'value_not_set' => 'Value Not Set'
-    ,
+    'value_not_set' => 'Value Not Set',
     'system_yes' => 'Yes',
     'system_no' => 'No',
+    'make_pay' => 'Make Payment',
+    'cancel' => 'Cancel',
+    'collections' => 'Collections',
+    'tithes' => 'Tithes',
 
     'gender_male' => 'Male',
     'gender_female' => 'Female',

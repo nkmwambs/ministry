@@ -12,7 +12,7 @@ class MinistersModel extends Model  implements \App\Interfaces\ModelInterface
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','minister_number','member_id','is_active'];
+    protected $allowedFields    = ['id','minister_number','member_id','is_active','license_number'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,15 +44,23 @@ class MinistersModel extends Model  implements \App\Interfaces\ModelInterface
     protected $beforeDelete   = [];
     protected $afterDelete    = ['updateRecycleBin'];
 
+    function listAssemblyCondition(){
+        if(!empty(session()->user_permitted_assemblies)){
+            $this->whereIn('assemblies.id', session()->user_permitted_assemblies);
+        }
+    }
+
     public function getAll(){
         $library = new \App\Libraries\MinisterLibrary();
         $listQueryFields = $library->setListQueryFields();
 
+        $this->listAssemblyCondition();
+        
         if(!empty($listQueryFields)){
             return $this->select($library->setListQueryFields())
             ->join('members', 'members.id = ministers.member_id')
-            // ->join('assemblies', 'assemblies.id = members.assembly_id')
-            // ->join('designations', 'designations.id = members.designation_id')
+            ->join('assemblies', 'assemblies.id = members.assembly_id')
+            ->join('designations', 'designations.id = members.designation_id')
             ->findAll();
         }else{
             return $this->findAll();

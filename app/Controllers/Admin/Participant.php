@@ -168,16 +168,16 @@ class Participant extends WebController
         $denomination_code = "COGOP";
         $payment_purpose = "Payment of Women Conference";
 
-        // $mpesaLibrary = new \App\Libraries\MpesaLibrary();
-        // $res = $mpesaLibrary->express($denomination_code,$payment_purpose, $phone_number, $amount);
+        $mpesaLibrary = new \App\Libraries\MpesaLibrary();
+        $res = $mpesaLibrary->express($denomination_code,$payment_purpose, $phone_number, $amount);
 
-        $res = '{
-            "MerchantRequestID":"8ed5-4489-a67f-881890b925f2938781",
-            "CheckoutRequestID":"ws_CO_07102024133119073711808071",
-            "ResponseCode": "0",
-            "ResponseDescription":"Success. Request accepted for processing",
-            "CustomerMessage":"Success. Request accepted for processing"
-        }';
+        // $res = '{
+        //     "MerchantRequestID":"8ed5-4489-a67f-881890b925f2938781",
+        //     "CheckoutRequestID":"ws_CO_07102024133119073711808071",
+        //     "ResponseCode": "0",
+        //     "ResponseDescription":"Success. Request accepted for processing",
+        //     "CustomerMessage":"Success. Request accepted for processing"
+        // }';
 
         $response = json_decode($res,true);
         

@@ -46,6 +46,7 @@
                     <th><?= lang('member.member_action') ?></th>
                     <th><?= lang('member.member_first_name') ?></th>
                     <th><?= lang('member.member_last_name') ?></th>
+                    <th><?= lang('member.member_is_user') ?></th>
                     <th><?= lang('member.member_gender') ?></th>
                     <th><?= lang('member.member_member_number') ?></th>
                     <th><?= lang('member.member_designation_id') ?></th>
@@ -63,18 +64,33 @@
                             </span>
                         </td>
                         <td>
-                            <span class='action-icons' title="View <?=singular($member['first_name']);?> member">
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($member['id']);?>')"></i>
-                            </span>
-                            <span class='action-icons' title="Edit <?= $member['first_name']; ?> member">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($member['id']); ?>')" class='fa fa-pencil'></i>
-                            </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($member['id']); ?>')" title="Delete <?= $member['id']; ?> participant"><i class='fa fa-trash'></i></span>
-
+                        <div class="btn-group">
+								<button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown">
+									Action <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-blue" role="menu">
+									<li>
+                                        <a href="#" onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($member['id']);?>')" >View</a>
+									</li>
+                                    <li class="divider"></li>
+									<li>
+                                        <a href="#" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($member['id']); ?>')">Edit</a>
+									</li>
+                                    <li class="divider"></li>
+									<li>
+                                        <a href="#" class="make_user" data-member_id="<?=$member['id'];?>">Make a User</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+                                        <a href="#" onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($member['id']); ?>')">Delete</a>
+									</li>
+								</ul>
+							</div>
                         </td>
 
                         <td><?= $member['first_name']; ?></td>
                         <td><?= $member['last_name']; ?></td>
+                        <td><?= isset($member['member_is_user']) && $member['member_is_user'] ? lang('system.system_yes'): lang('system.system_no'); ?></td>
                         <td><?= $member['gender']; ?></td>
                         <td><?= $member['member_number']; ?></td>
                         <td><?= $member['designation_name']; ?></td>
@@ -89,6 +105,29 @@
 </div>
 
 <script>
+
+    $(".make_user").on("click", function(){
+        const member_id = $(this).data("member_id");
+        
+        $.ajax({
+            url: '<?=site_url('ajax')?>',
+            type: 'POST',
+            data: {
+                    controller: 'members',
+                    method: 'makeUser',
+                    data: {
+                        member_id: member_id
+                    }
+            },
+            success: function(response) {
+                alert(response.message)
+            },
+            error: function(xhr, status, error) {
+                alert('error', 'An error occurred while making user. Please try again.');
+            }
+        })
+    });
+
     $('#select_all').click(function(){
         $('.select_item').prop('checked', $(this).prop('checked'));
     });

@@ -9,7 +9,7 @@
 	<meta name="description" content="Church Management System" />
 	<meta name="author" content="" />
 
-	<link rel="icon" href="assets/images/favicon.ico">
+	<link rel="icon" href="<?php echo base_url(); ?>assets/images/favicon.ico">
 
 	<title><?=humanize($feature);?> | <?=humanize($action);?></title>
 	
@@ -50,6 +50,7 @@
 
 	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 </head>
 <body class="page-body  page-fade" data-url="http://neon.dev">
 

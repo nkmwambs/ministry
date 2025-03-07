@@ -44,6 +44,17 @@ class AssembliesModel extends Model implements \App\Interfaces\ModelInterface
     protected $beforeDelete   = [];
     protected $afterDelete    = ['updateRecycleBin'];
 
+    public function loggedUserPermittedAssemblies(): array{
+        if(!empty(session()->user_permitted_assemblies)){
+            return $this->whereIn('id', session()->user_permitted_assemblies)
+            ->findAll();
+        }elseif(session()->user_is_system_admin){
+            return $this->findAll();
+        }else{
+            return [];
+        }
+    }
+
     public function getAll(){
         $library = new \App\Libraries\AssemblyLibrary();
         $listQueryFields = $library->setListQueryFields();

@@ -1,7 +1,36 @@
+<?php 
+$tableName = "tithes";
+$feature = "tithe";
+?>
 <div class="row">
     <div class="col-xs-12 btn-container">
-        <div class='btn btn-primary' onclick="showAjaxModal('tithes','add', '<?= $parent_id; ?>')">
-            <?= lang('tithe.add_tithe'); ?>
+        <div class='btn btn-primary' onclick="showAjaxModal('<?=$tableName;?>','add', '<?= $parent_id; ?>')">
+            <?= lang($feature.'.add_'.$feature); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('<?=$tableName;?>','delete')">
+            <i class="fa fa-trash-o"></i>
+            <?= lang($feature.'.delete_'.$tableName); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('<?=$tableName;?>','edit')">
+            <i class="fa fa-pencil-square-o"></i>
+            <?= lang($feature.'.edit_'.$tableName); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('<?=$tableName;?>','view')">
+            <i class="fa fa-eye"></i>
+            <?= lang($feature.'.view_'.$tableName); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('<?=$tableName;?>','print')">
+            <i class="fa fa-print"></i>
+            <?= lang($feature.'.print_'.$tableName); ?>
+        </div>
+
+        <div class='btn btn-primary hidden mass_action' onclick="bulkAction('<?=$tableName;?>','export')">
+            <i class="fa fa-download"></i>
+            <?= lang($feature.'.export_'.$tableName); ?>
         </div>
     </div>
 </div>
@@ -17,32 +46,80 @@
         <table class="table table-striped datatable">
             <thead>
                 <tr>
-                    <th><?= lang('tithe.tithe_action') ?></th>
-                    <th><?= lang('tithe.tithe_member_first_name') ?></th>
-                    <th><?= lang('tithe.tithe_member_last_name') ?></th>
-                    <th><?= lang('tithe.tithe_amount') ?></th>
+                    <th><input type="checkbox" id="select_all" ></th>
+                    <th><?= lang($feature.'.'.$feature.'_action') ?></th>
+                    <th><?= lang($feature.'.tithe_member_first_name') ?></th>
+                    <th><?= lang($feature.'.tithe_member_last_name') ?></th>
+                    <th><?= lang($feature.'.tithing_date') ?></th>
+                    <th><?= lang($feature.'.tithe_amount') ?> </th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($result as $tithe) { ?>
+                <?php foreach ($result as $item) { ?>
                     <tr>
                         <td>
-                            <span class='action-icons' title="View <?= $tithe['member_first_name'].' '.$tithe['member_last_name']; ?> tithe">
-                                <i class='fa fa-search' onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($tithe['id']);?>')"></i>
+                            <span class='action-icons'>
+                                <input type="checkbox" class = "select_item" name="item_id[]" value="<?php echo $item['id'];?>">
                             </span>
-                            <span class='action-icons' title="Edit <?= $tithe['member_first_name'].' '.$tithe['member_last_name']; ?> tithe">
-                                <i style="cursor:pointer" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($tithe['id']); ?>')" class='fa fa-pencil'></i>
-                            </span>
-                            <span class='action-icons' onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($tithe['id']); ?>')" title="Delete <?= $tithe['member_first_name'].' '.$tithe['member_last_name']; ?> tithe"><i class='fa fa-trash'></i></span>
-
                         </td>
-
-                        <td><?= $tithe['member_first_name']; ?></td>
-                        <td><?= $tithe['member_last_name']; ?></td>
-                        <td><?= $tithe['amount']; ?></td>
-
+                        <td>
+                        <div class="btn-group">
+								<button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown">
+									Action <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-blue" role="menu">
+									<li>
+                                        <a href="#" onclick="showAjaxListModal('<?=plural($feature);?>','view', '<?=hash_id($item['id']);?>')" >View</a>
+									</li>
+                                    <li class="divider"></li>
+									<li>
+                                        <a href="#" onclick="showAjaxModal('<?= plural($feature); ?>','edit', '<?= hash_id($item['id']); ?>')">Edit</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+                                        <a href="#" onclick="deleteItem('<?= plural($feature); ?>','delete','<?= hash_id($item['id']); ?>')">Delete</a>
+									</li>
+								</ul>
+							</div>
+                        </td>
+                        <td><?= $item['member_first_name']; ?></td>
+                        <td><?= $item['member_last_name']; ?></td>
+                        <td><?= $item['tithing_date']; ?></td>
+                        <td><?= number_format($item['amount'],2); ?></td>
                     <?php } ?>
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+
+    $('#select_all').click(function(){
+        $('.select_item').prop('checked', $(this).prop('checked'));
+    });
+
+    $(".select_item, #select_all").on('change', function(){
+        // Show mass_action buttons if checked 
+        if($('.select_item:checked').length > 0){
+            $('.mass_action').removeClass('hidden');
+        } else {
+            $('.mass_action').addClass('hidden');
+        }
+
+        // If .select_item are all unchecked also uncheck #select_all
+        if($('.select_item:checked').length === 0){
+            $('#select_all').prop('checked', false);
+        }
+    })
+
+    function bulkAction(tableName, actionOnItem){
+        var selectedItems = [];
+        $('.select_item:checked').each(function(i, el){
+            selectedItems.push($(el).val());
+        });
+        
+        showAjaxBulkAction(tableName, actionOnItem, selectedItems)
+    }
+
+
+</script>

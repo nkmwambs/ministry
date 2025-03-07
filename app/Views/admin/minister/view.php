@@ -28,8 +28,10 @@
                     <div class="panel-options">
 
                         <ul class="nav nav-tabs" id="myTabs">
-                            <li class="active"><a href="#view_minister" id="view_minister_tab" data-toggle="tab"><?= lang('minister.view_minister'); ?></a></li>
-                            <!-- <li><a href="#list_hierarchies" data-item_id="<?= $id; ?>" data-feature_plural="hierarchies" onclick="childrenAjaxLists(this)" id="list_hierarchies_tab" data-toggle="tab"><?= lang('hierarchy.list_hierarchies'); ?></a></li> -->
+                            <li class="nav-item active"><a class="nav-link" href="#view_minister_basic" id="view_minister_tab_basic" data-toggle="tab"><?= lang('minister.view_minister_basic'); ?></a></li>
+                            <?php if(!empty($custom_data)) { ?>
+                                <li class="nav-item"><a class = "nav-link" href="#view_minister_additional" id="view_minister_tab_additional" data-toggle="tab"><?= lang('minister.view_minister_additional'); ?></a></li>
+                            <?php }?>
                         </ul>
                     </div>
                 </div>
@@ -37,31 +39,40 @@
             <div class="panel-body">
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="view_minister">
+                    <div class="tab-pane active" id="view_minister_basic">
                         <form class="form-horizontal form-groups-bordered" role="form">
-                            <?php foreach ($result as $department => $field_value) { ?>
+                            <?php 
+                                foreach ($result as $label => $field_value) { 
+                                    if($label == 'id') continue;
+                                    if($label == 'member_id') continue;
+                                    if($label == 'assembly_id') continue;
+                                    if($label == 'designation_id') continue;
+                                    if($label == 'inactivation_reason' && !$field_value) continue;
+                                ?>
                                 <div class="form-group">
-                                    <label for="" class="control-label col-xs-4"><?= humanize($department); ?></label>
+                                    <label for="" class="control-label col-xs-4"><?= humanize($label); ?></label>
                                     <div class="col-xs-6">
                                         <div class="form_view_field"><?= $field_value; ?></div>
                                     </div>
                                 </div>
                             <?php } ?>
-
-                            <!-- <div class="form-group">
-                                <div class="col-xs-offset-4 col-xs-6">
-                                    <a href="<?= site_url(plural($feature) . '/edit/' . $id) ?>" class="btn btn-primary">
-                                        <?= lang('minister.edit_button') ?>
-                                    </a>
-                                </div>
-                            </div> -->
                         </form>
                     </div>
 
-                    <div class="tab-pane ajax_main" id="list_hierarchies">
-                        <div class='info'><?= lang('hierarchy.no_hierarchies_message') ?></div>
-                    </div>
-
+                    <?php if(!empty($custom_data)) { ?>
+                        <div class="tab-pane" id = "view_minister_additional">
+                            <form class="form-horizontal form-groups-bordered" role="form">
+                                <?php foreach ($custom_data as $row) { ?>
+                                        <div class="form-group">
+                                            <label for="" class="control-label col-xs-4"><?= $row['field_name']; ?></label>
+                                            <div class="col-xs-6">
+                                                <div class="form_view_field"><?= $row['field_value']; ?></div>
+                                            </div>
+                                        </div>
+                                <?php } ?>
+                            </form>
+                        </div>
+                   <?php } ?>
                 </div>
             </div>
 

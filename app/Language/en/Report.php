@@ -14,10 +14,12 @@ return [
     'report_period' => 'Report Period',
     'report_date' => 'Report Date',
     'report_status' => 'Status',
+    'paying_mobile_number' => 'Paying Mobile Number',
 
     'select_report_type' => 'Select Report Type',
     'select_assembly' => 'Select an Assembly',
     'select_denomination' => 'Select a denomination',
+    'select_option' => 'Select an option',
 
     'section_A' => 'Section A',
     'section_B' => 'Section B',

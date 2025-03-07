@@ -54,14 +54,22 @@ class MembersModel extends Model
         'assembly_id' => ['tableName' => 'assemblies', 'nameField' => 'assembly_name']
     ];
 
+    function listAssemblyCondition(){
+        if(!empty(session()->user_permitted_assemblies)){
+            $this->whereIn('assemblies.id', session()->user_permitted_assemblies);
+        }
+    }
+
     public function getAll(){
         $library = new \App\Libraries\MemberLibrary();
         $listQueryFields = $library->setListQueryFields();
 
+        $this->listAssemblyCondition();
         if(!empty($listQueryFields)){
             return $this->select($library->setListQueryFields())
             ->join('designations','designations.id = members.designation_id')
-            ->orderBy('created_at desc')->findAll();
+            ->join('assemblies','assemblies.id = members.assembly_id')
+            ->orderBy('members.created_at desc')->findAll();
         }else{
             return $this->orderBy('created_at desc')->findAll();
         }
@@ -70,7 +78,7 @@ class MembersModel extends Model
     public function getOne($id){
         $library = new \App\Libraries\MemberLibrary();
         $viewQueryFields = $library->setViewQueryFields();
-
+        
         if(!empty($viewQueryFields)){
             return $this->select($library->setViewQueryFields())->where('id', $id)->first();
         }else{
@@ -81,6 +89,8 @@ class MembersModel extends Model
     public function getEditData($member_id){
         $library = new \App\Libraries\MemberLibrary();
         $viewQueryFields = $library->setViewQueryFields();
+
+        $this->listAssemblyCondition();
 
         if (!empty($viewQueryFields)) {
             return $this->select($library->setViewQueryFields())
@@ -97,6 +107,8 @@ class MembersModel extends Model
     public function getViewData($member_id){
         $library = new \App\Libraries\MemberLibrary();
         $viewQueryFields = $library->setViewQueryFields();
+
+        $this->listAssemblyCondition();
 
         if (!empty($viewQueryFields)) {
             $result = $this->select($library->setViewQueryFields()) 

@@ -41,8 +41,10 @@ class Assembly extends WebController
 
         // Limit the results and fetch the data
         $this->model->limit($length, $start);
-        $data = $this->model->select('assemblies.*,entities.name as entity_name')
+        $data = $this->model->select('assemblies.*,CONCAT(members.first_name, " ", members.last_name) as assembly_leader,entities.name as entity_name')
         ->join('entities','entities.id=assemblies.entity_id', 'left')
+        ->join('ministers', 'ministers.id=assemblies.assembly_leader', 'left')
+        ->join('members', 'members.id=ministers.member_id', 'left')
         ->find();
 
         // Loop through the data to apply hash_id()

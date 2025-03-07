@@ -4,8 +4,15 @@ return [
     "list_members" => "List Members",
     'add_member' => 'Add Member',
     'edit_member' => 'Edit Member',
+    'edit_member_basic' => 'Edit Member Basic Information',
+    'edit_member_additional' => 'Edit Member Additional Information',
     'view_member' => 'View Member',
+    'view_member_basic' => 'Member Basic Information',
+    'view_member_additional' => 'Member Additional Information',
     'delete_member' => 'Delete Member',
+    'member_is_active' => 'Member is active',
+    'add_member_basic' => 'Member Basic Infomation',
+    'add_member_additional' => 'Member Additional Infomation',
 
     'member_action'=> 'Action',
     'member_first_name' => 'First Name',
@@ -19,7 +26,9 @@ return [
     'member_gender' => 'Gender',
     'member_select_gender' => 'Select a gender',
     'membership_date' => 'Membership Date',
+    'member_is_user' => 'Member is a User',
     'saved_date' => 'Saved Date',
+    'member_assembly_id' => 'Membership Assembly',
 
     'select_designation' => 'Select Designation',
 

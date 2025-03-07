@@ -12,6 +12,7 @@ class Minister extends WebController
         parent::initController($request, $response, $logger);
         
         $this->model = new \App\Models\MinistersModel();
+        $this->tableName = "ministers";
     }
 
     public function fetchMinisters()
@@ -37,9 +38,18 @@ class Minister extends WebController
         // Get the filtered total
         $totalFiltered = $this->model->countAllResults(false);
 
+        $library = new \App\Libraries\MinisterLibrary();
+        $listQueryFields = $library->setListQueryFields();
+
         // Limit the results and fetch the data
-        $this->model->limit($length, $start);
-        $data = $this->model->find();
+        $data = $this->model->limit($length, $start)
+            ->select($listQueryFields)
+            ->join('members','members.id=ministers.member_id')
+            ->join('assemblies','assemblies.id=members.assembly_id','left')
+            ->join('users','users.associated_member_id = members.id','left')
+            ->join('designations','designations.id = members.designation_id')
+            ->orderBy('ministers.created_at desc')
+            ->find();
 
         // Loop through the data to apply hash_id()
         foreach ($data as &$minister) {
@@ -64,11 +74,60 @@ class Minister extends WebController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            // 'name' => 'required|min_length[10]|max_length[255]',
-            // 'minister_number' => 'required|min_length[3]',
-            'member_id' => 'required',
-            'is_active' => 'required|min_length[2]|max_length[3]',
+            // 'license_number' => [
+            //     'rules' => 'required|min_length[3]|is_unique[ministers.license_number]',
+            //     'label' => 'License Number',
+            //     'errors' => [
+            //        'required' => 'License Number.',
+            //        'min_length' => 'License Number must be at least {value} characters long.',
+            //     ]
+            //  ],
+             'member_first_name' => [
+                'rules' => 'required|min_length[3]',
+                'label' => 'Minister First Name',
+                'errors' => [
+                   'required' => 'Minister First Name is required.',
+                   'min_length' => 'Minister First Name must be at least {value} characters long.',
+                ]
+            ],
+            'member_last_name' => [
+                'rules' => 'required|min_length[3]',
+                'label' => 'Minister Last Name',
+                'errors' => [
+                   'required' => 'Minister Last Name is required.',
+                   'min_length' => 'Minister Last Name must be at least {value} characters long.',
+                ]
+            ],
+            'assembly_id' => [
+                'rules' => 'required',
+                'label' => 'Assembly Name',
+                'errors' => [
+                   'required' => 'Assembly Name is required.'
+                ]
+            ],
+            'designation_id' => [
+                'rules' => 'required',
+                'label' => 'Designation',
+                'errors' => [
+                   'required' => 'Designation is required.'
+                ]
+            ],
+            'member_phone' => [
+                'rules' => 'required',
+                'label' => 'Phone Number',
+                'errors' => [
+                   'required' => 'Phone Number is required.'
+                ]
+            ],
+            'is_active' => [
+                'rules' => 'required',
+                'label' => 'Minister Status',
+                'errors' => [
+                   'required' => 'Minister Status is required.'
+                ]
+            ]
         ]);
+
 
         if (!$this->validate($validation->getRules())) {
             // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
@@ -76,17 +135,42 @@ class Minister extends WebController
             return response()->setJSON(['errors' => $validationErrors]);
         }
 
-        $update_data = [
-            'member_id' => $this->request->getPost('member_id'),
-            'is_active' => $this->request->getPost('is_active'),
-            // 'updated_at' => date('Y-m-d H:i:s')  // Uncomment this line if you want to update 'updated_at' field as well.
+        $hashed_minister_id = $this->request->getPost('minister_id');
+        $numeric_minister_id = hash_id($hashed_minister_id, 'decode');
+        $hashed_member_id = $this->request->getPost('member_id');
+        $numeric_member_id = hash_id($hashed_member_id, 'decode');
+
+         // Member Fields
+         $member_first_name = $this->request->getPost('member_first_name');
+         $member_last_name = $this->request->getPost('member_last_name');
+         $assembly_id = $this->request->getPost('assembly_id');
+         $designation_id = $this->request->getPost('designation_id');
+         $member_phone = $this->request->getPost('member_phone');
+
+        // Minister fields
+        $license_number = $this->request->getPost('license_number');
+        $is_active = $this->request->getPost('is_active');
+
+        $update_member = [
+            'first_name' => $member_first_name,
+            'last_name' => $member_last_name,
+            'assembly_id' => $assembly_id,
+            'designation_id' => $designation_id,
+            'phone' => $member_phone,
+        ];
+
+        $update_minister = [
+            'license_number' => $license_number,
+            'is_active' => $is_active,
         ];
         
-        $this->model->update(hash_id($hashed_id,'decode'), (object)$update_data);
+        $this->model->update($numeric_minister_id, (object)$update_minister);
+
+        $membersModel = new \App\Models\MembersModel();
+        $membersModel->update($numeric_member_id, (object)$update_member);
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
-        // $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,dir: 'decode'), $this->tableName, $customFieldValues);
 
         // Only save custom fields if they are not null
         if (!empty($customFieldValues)) {
@@ -97,11 +181,11 @@ class Minister extends WebController
 
             // Save non-null custom field values
             if (!empty($nonNullCustomFields)) {
-                $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_id,dir: 'decode'), $this->tableName, $customFieldValues);
+                $customFieldLibrary->saveCustomFieldValues(hash_id($hashed_minister_id,dir: 'decode'), $this->tableName, $customFieldValues);
             }
         }
 
-        $customFieldValuesInDB = $customFieldLibrary->getCustomFieldValuesForRecord(hash_id($hashed_id,dir: 'decode'), 'users');
+        $customFieldValuesInDB = $customFieldLibrary->getCustomFieldValuesForRecord(hash_id($hashed_minister_id,dir: 'decode'), 'users');
 
         if($this->request->isAJAX()){
             $this->feature = 'minister';
@@ -116,7 +200,7 @@ class Minister extends WebController
             return view($this->session->get('user_type')."/minister/list", parent::page_data($records));
         }
         
-        return redirect()->to(site_url($this->session->get('user_type')."/ministers/view/".$hashed_id))->with('message', 'Minister updated successfully!');
+        return redirect()->to(site_url($this->session->get('user_type')."/ministers/view/".$hashed_minister_id))->with('message', 'Minister updated successfully!');
     }
 
     function post(){
@@ -124,22 +208,48 @@ class Minister extends WebController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'member_id' => 'required',
-            // 'minister_number' => 'required|min_length[3]',
+            'member_id' => [
+                'rules' => 'required',
+                'label' => 'Member Name',
+                'errors' => [
+                    'required' => 'Member name is required.',
+                    ]
+                ],
+                'license_number' => [
+                'rules' => 'required|min_length[3]|is_unique[ministers.license_number]',
+                'label' => 'License Number',
+                'errors' => [
+                    'required' => 'License number is required.',
+                ]
+            ],
+            'assembly_id' => [
+                'rules' => 'required',
+                'label' => 'Assembly Name',
+                'errors' => [
+                    'required' => 'Assembly is required.',
+                ]
+            ]
         ]);
-
+    
         if (!$this->validate($validation->getRules())) {
-            // return redirect()->back()->withInput()->with('errors', $validation->getErrors());
             $validationErrors = $validation->getErrors();
             return response()->setJSON(['errors' => $validationErrors]);
         }
 
-        // $hashed_denomination_id = $this->request->getPost('denomination_id');
-        $assembly_id = $this->request->getPost('assembly_id');//hash_id($hashed_denomination_id, 'decode');
+        
+        $member_id = $this->request->getPost('member_id');
+
+        $data = [
+            'minister_number' => $this->computeMinisterNumber($member_id),
+            'member_id' => $member_id,
+            'license_number' => $this->request->getPost('license_number'),        ];
+
+        $this->model->insert((object)$data);
+        $insertId = $this->model->getInsertID();
+
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
-        // $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
 
         if (!empty($customFieldValues)) {
             // Filter out null or empty custom fields
@@ -149,17 +259,9 @@ class Minister extends WebController
 
             // Save non-null custom field values
             if (!empty($nonNullCustomFields)) {
-                $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
+                $customFieldLibrary->saveCustomFieldValues($insertId, 'ministers', $customFieldValues);
             }
         }
-
-        $data = [
-            'minister_number' => $this->computeMinisterNumber(),
-            'member_id' => $this->request->getPost('member_id'),
-        ];
-
-        $this->model->insert((object)$data);
-        $insertId = $this->model->getInsertID();
 
         if($this->request->isAJAX()){
             $this->feature = 'minister';
@@ -177,13 +279,24 @@ class Minister extends WebController
         return redirect()->to(site_url($this->session->get('user_type')."/ministers/view/".hash_id($insertId)))->with('message', 'Minister added seccessfuly!');;
     }
 
-    private function computeMinisterNumber() {
-        $ministerNumber = '';
+    private function computeMinisterNumber($member_id) {
+
+        // Member model
+        $membersModel = new \App\Models\MembersModel();
+        $member = $membersModel->select('denominations.code as denomination_code')
+        ->join('assemblies','assemblies.id=members.assembly_id')
+        ->join('entities','entities.id=assemblies.entity_id')
+        ->join('hierarchies','hierarchies.id=entities.hierarchy_id')
+        ->join('denominations','denominations.id=hierarchies.denomination_id')
+        ->where('members.id', $member_id)
+        ->first();
 
         $ministerCount = $this->model->countAllResults();
         ++$ministerCount;
 
         $ministerCount = str_pad($ministerCount,4,'0',STR_PAD_LEFT);
+
+        $ministerNumber = $member['denomination_code']."/MS/$ministerCount";
 
         while ($this->model->where('minister_number', $ministerNumber)->countAllResults() > 0) {
             ++$ministerCount;

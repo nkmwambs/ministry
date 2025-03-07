@@ -35,30 +35,17 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-xs-4" for="period_start_date">
-                            <?= lang('collection.collection_period_start_date') ?> 
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control datepicker" name="period_start_date" id="period_start_date" 
-                                value="<?=$result['period_start_date'];?>">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-xs-4" for="period_end_date">
-                            <?= lang('collection.collection_period_end_date') ?> 
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control datepicker" name="period_end_date" value="<?=$result['period_end_date'];?>" id="period_end_date">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label class="control-label col-xs-4" for="revenue_id">
                             <?= lang('collection.collection_revenue_id') ?> 
                         </label>
                         <div class="col-xs-6">
-                            <input type="email" class="form-control" name="revenue_id" value="<?=$result['revenue_id'];?>" id="revenue_id">
+                            <!-- <input type="email" class="form-control" name="revenue_id" value="<?=$result['revenue_id'];?>" id="revenue_id"> -->
+                            <select class="form-control" name="revenue_id[]" id="revenue_id">
+                                <option value=""><?= lang('collection.select_revenue') ?></option>
+                                <?php foreach ($revenues as $revenue): ?>
+                                    <option value="<?php echo $revenue['id'];?>" <?=$result['revenue_id'] == $revenue['id'] ? 'selected' : '';?>><?php echo $revenue['name']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
 
@@ -70,44 +57,6 @@
                             <input type="text" class="form-control" name="amount" value="<?=$result['amount'];?>" id="amount">
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-xs-4" for="status">
-                            <?= lang('collection.collection_status') ?> 
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control datepicker" name="status" value="<?=$result['status'];?>" id="status" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-xs-4" for="collection_reference">
-                            <?= lang('collection.collection_collection_reference') ?> 
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" name="collection_reference" 
-                                value="<?=$result['collection_reference'];?>" id="collection_reference">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-xs-4" for="description">
-                            <?= lang('collection.collection_description') ?> 
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" name="description" value="<?=$result['description'];?>" id="description">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-xs-4" for="collection_method">
-                            <?= lang('collection.collection_collection_method') ?> 
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" name="collection_method" value="<?=$result['collection_method'];?>" id="collection_method">
-                        </div>
-                    </div>
-
                 </form>
             </div>
         </div>

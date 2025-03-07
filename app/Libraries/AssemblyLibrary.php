@@ -59,7 +59,14 @@ class AssemblyLibrary implements \App\Interfaces\LibraryInterface {
         ->join('assemblies','assemblies.entity_id=entities.id')
         ->find($page_data['result']['entity_id'])['id'];
 
+        $ministersModel = new \App\Models\MinistersModel();
+        $ministersModel->select('ministers.id,members.first_name,members.last_name')
+        ->join('members','members.id=ministers.member_id')
+        ->where('ministers.is_active', 'yes');
+        $ministers = $ministersModel->findAll();
+
         $page_data['parent_id'] = $denomination_id;
+        $page_data['ministers'] = $ministers;
 
         $entities = $entitiesModel->getLowestEntities($page_data['parent_id']);
         $page_data['lowest_entities'] = $entities;
@@ -70,5 +77,15 @@ class AssemblyLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['denominations'] = $denominations;
 
         return $page_data;
+    }
+
+    function getAssemblyDenominationIdByAssemblyId($assembly_id){
+        $assemblyModel = new \App\Models\AssembliesModel();
+        $assembly = $assemblyModel
+        ->join('entities', 'entities.id = assemblies.entity_id')
+        ->join('hierarchies', 'hierarchies.id=entities.hierarchy_id')
+        ->join('denominations', 'denominations.id=hierarchies.denomination_id')
+        ->find($assembly_id);
+        return $assembly['denomination_id'];
     }
 }

@@ -31,8 +31,6 @@ class Home extends WebController
     }
 
     private function create_user_session($user) {
-
-        // log_message('error', json_encode($user));
         
         $this->session->set('logged_in', true);
         $this->session->set('user_id', $user['id']);
@@ -47,8 +45,24 @@ class Home extends WebController
         // Update log count
         $userModel = new \App\Models\UsersModel();
         $userModel->update($user['id'], (object)['access_count' => $user['access_count'] + 1]);
-        
+
+        // Check if a member role is available or create a new one
+        if (!$this->checkMemberRole()) {
+            $this->createMemberRole();
+        }
+
         return redirect()->to(site_url($this->session->get('user_type').'/dashboards/list'));
+    }
+
+    private function checkMemberRole() {
+        $roleModel = new \App\Models\RolesModel();
+        $memberRole = $roleModel->where('name', 'member')->first();
+        return $memberRole!= NULL;
+    }
+
+    private function createMemberRole() {
+        $roleModel = new \App\Models\RolesModel();
+        $roleModel->insert((object)['name' =>'member', 'default_role' => 'yes', 'permissions' => '["dashboard.read"]']);
     }
 
     public function logout() {

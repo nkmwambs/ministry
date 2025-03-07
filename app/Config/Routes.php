@@ -177,6 +177,7 @@ $routes->group("", ['namespace' => 'App\Controllers\Admin'], function ($routes) 
 
     $routes->get('reports/details/(:any)', 'Report::viewDetails/$1');
     $routes->post('reports/save_report', 'Report::saveReport');
+    $routes->post('reports/complete_transaction', 'Report::completeTransaction');
 });
 
 

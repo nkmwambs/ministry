@@ -97,6 +97,7 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         ->select('id,field_name as text')
         ->where('denomination_id', $data['denomination_id'])
         ->where('feature_id', $feature_id)
+        ->where('visible', 'yes')
         ->findAll();
 
         return ['status' => 'success', 'message' => 'Fields found successful', 'fields' => $fields];
@@ -107,8 +108,19 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         // Get report Type 
         $reportModel = new \App\Models\ReportsModel();
         $report = $reportModel
-        ->select('reports.id, assembly_id, reports_type_id, reporttypes.name as report_type_name,reporttypes.type_code, reports.report_date, reports.report_period')
+        ->select(
+            'reports.id, 
+            assembly_id, 
+            reports_type_id, 
+            reporttypes.name as report_type_name,
+            reporttypes.type_code, 
+            reports.report_date, 
+            reports.report_period,
+            reporttypes.requires_mobile_money,
+            reporttypes.remittance_amount_builder,
+            assemblies.name as assembly_name')
         ->join('reporttypes','reporttypes.id=reports.reports_type_id')
+        ->join('assemblies','assemblies.id=reports.assembly_id')
         ->find($numericReportId);
         
         $reportTypeId = $report['reports_type_id'];
@@ -124,7 +136,7 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         for($i = 0; $i < count($reportLayout); $i++){
             for($j = 0; $j < count($reportLayout[$i]['section_parts']); $j++){
                 // Taking the string of custom fields Ids to an individual array element
-                $reportLayout[$i]['section_parts'][$j]['part_fields'] = explode(',',$reportLayout[$i]['section_parts'][$j]['part_fields'][0]);
+                $reportLayout[$i]['section_parts'][$j]['part_fields'] = $this->sortPartFields($reportLayout[$i]['section_parts'][$j]['part_fields'][0]);
                 // $reportLayout[$i]['section_parts'][$j]['part_fields'] is an array of custom fields Ids
                 $reportLayout[$i]['section_parts'][$j]['part_fields'] = array_map(function($fieldTypeId) use($fieldLibrary, $fieldModel, $report){
                     return $fieldLibrary->getFieldUIElementProperties($fieldTypeId, $fieldModel, $report);
@@ -136,8 +148,26 @@ class ReportLibrary implements \App\Interfaces\LibraryInterface {
         $page_data['type_code'] = $report['type_code'];
         $page_data['report_type_name'] = $report['report_type_name'];
         $page_data['report_period'] = $report['report_period'];
+        $page_data['requires_mobile_money'] = $report['requires_mobile_money'];
+        $page_data['remittance_amount_builder'] = $report['remittance_amount_builder'];
+        $page_data['assembly_name'] = $report['assembly_name'];
 
         return $page_data;
+    }
+
+    function sortPartFields($partFieldsStr){
+        $partFieldsIds = explode(',', $partFieldsStr);
+
+        // Sorting the fields based on their field_order column
+        $fieldsModel = new \App\Models\FieldsModel();
+        $fields = $fieldsModel->select('id,field_order')
+        ->whereIn('id', $partFieldsIds)
+        ->orderBy('field_order', 'asc')
+        ->findAll();
+
+        $orderedPartFieldsIds = array_column($fields, 'id');
+
+        return $orderedPartFieldsIds;
     }
 
 

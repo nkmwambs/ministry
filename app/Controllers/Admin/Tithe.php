@@ -15,92 +15,32 @@ class Tithe extends WebController
         
         $this->model = new \App\Models\TithesModel();
     }
-    
-   
-    public function index($parent_id = ''): string
-    {
-        if(!auth()->user()->canDo("$this->feature.read")){
-            $page_data = $this->page_data(['errors' =>  []]);
-
-            if ($this->request->isAJAX()) {
-                return view("errors/html/error_403", $page_data);
-            }
-
-            return view('index', compact('page_data'));
-        }
-
-        $tithes = [];
-
-        if($parent_id > 0){
-            $tithes = $this->model->select('tithes.*,members.assembly_id as assembly_id,members.first_name as member_first_name,members.last_name as member_last_name')
-            ->join('members','members.id = tithes.member_id','left')
-            ->join('assemblies','assemblies.id=members.assembly_id','left')
-            ->where('assembly_id',hash_id($parent_id,'decode'))
-            ->orderBy('tithes.created_at desc')
-            ->findAll();
-        }else{
-            $tithes = $this->model->select('tithes.*,members.assembly_id as assembly_id,members.first_name as member_first_name,members.last_name as member_last_name')
-            ->join('assemblies','assemblies.id=members.assembly_id','left')
-            ->join('members','members.id = tithes.member_id','left')
-            ->orderBy('tithes.created_at desc')
-            ->findAll();
-        }
-       
-        if(!$tithes){
-            $page_data['result'] = [];
-        }else{
-            $page_data['result'] = $tithes;
-        }
-
-        $page_data['result'] = $tithes;
-        $page_data['feature'] = 'tithe';
-        $page_data['action'] = 'list';
-        
-        if ($this->request->isAJAX()) {
-            $page_data['parent_id'] = $parent_id;
-            return view($this->session->get('user_type').'/tithe/list', $page_data);
-        }else{
-            $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
-        }
-
-        return view('index', $page_data);
-    }   
 
     function post(){
         $insertId = 0;
 
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'member_id' => [
-                'rules' =>'required',
-                'label' => 'Member Name',
-                'errors' => [
-                    'required' => 'First Name is required.',
-                ]
-            ],
-            'amount' => [
-                'rules' =>'required',
-                'label' => 'Tithe Amount',
-                'errors' => [
-                    'required' => 'Tithe Amount is required.',
-                ]
-            ],
-        ]);
+        $data = $this->request->getPost();
 
-        if (!$this->validate($validation->getRules())) {
-            return response()->setJSON(['errors' => $validation->getErrors()]);
+        if (!$this->validateData($data, 'addTithe')) {
+            return response()->setJSON(['errors' => $this->validator->getErrors()]);
         }
 
-        $hashed_assembly_id = $this->request->getPost('assembly_id');
-        $assembly_id = hash_id($hashed_assembly_id, 'decode');
+        // $hashed_assembly_id = $this->request->getPost('assembly_id');
+        $assembly_id = $this->request->getPost('assembly_id');
+        $tithing_date = $this->request->getPost('tithing_date');
+        $member_ids = $this->request->getPost('member_id');
+        $amounts = $this->request->getPost('amount');
 
-        $data = [
-            'member_id' => $this->request->getPost('member_id'),
-            'amount' => $this->request->getPost('amount'),
-        ];
+        foreach($member_ids as $key => $member_id){
+            $data = [
+               'member_id' => $member_id,
+                'amount' => $amounts[$key],
+                'assembly_id' => $assembly_id,
+                'tithing_date' => $tithing_date,
+            ];
 
-        $this->model->insert((object)$data);
-        $insertId = $this->model->getInsertID();
+            $this->model->insert((object)$data);
+        }
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
@@ -117,19 +57,17 @@ class Tithe extends WebController
             }
         }
 
-        $this->parent_id = $hashed_assembly_id;
-
         if($this->request->isAJAX()){
             $this->feature = 'tithe';
             $this->action = 'list';
-            $records = $this->model
-            ->select('tithes.id,tithes.member_id,members.assembly_id as assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
-            ->join('members','members.id = tithes.member_id')
-            ->join('assemblies','assemblies.id=members.assembly_id')
-            ->orderBy("tithes.created_at desc")->where('assembly_id', $assembly_id)->findAll();
+            $records = [];
 
-            $page_data = parent::page_data($records, $hashed_assembly_id);
-            return view($this->session->get('user_type')."/tithe/list", $page_data);
+            if(method_exists($this->model, 'getAll')){
+                $records = $this->model->getAll();
+            }else{
+                $records = $this->model->findAll();
+            }
+            return view($this->session->get('user_type')."/tithe/list", parent::page_data($records));
         }
 
         return redirect()->to(site_url($this->session->get('user_type')."/tithes/view/".hash_id($insertId)));
@@ -193,7 +131,7 @@ class Tithe extends WebController
             $this->action = 'list';
 
             $records = $this->model
-            ->select('tithes.id,tithes.member_id,members.assembly_id as assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
+            ->select('tithes.id,tithing_date,tithes.member_id,members.assembly_id as assembly_id,tithes.amount,members.first_name as member_first_name,members.last_name as member_last_name')
             ->join('members','members.id = tithes.member_id')
             ->join('assemblies','assemblies.id=members.assembly_id')
             ->orderBy("tithes.created_at desc")

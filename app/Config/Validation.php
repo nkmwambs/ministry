@@ -34,7 +34,7 @@ class Validation extends BaseConfig
      * @var array<string, string>
      */
     public array $templates = [
-        'list'   => 'CodeIgniter\Validation\Views\list',
+        'list' => 'CodeIgniter\Validation\Views\list',
         'single' => 'CodeIgniter\Validation\Views\single',
     ];
 
@@ -87,13 +87,13 @@ class Validation extends BaseConfig
             'rules' => 'required|matches[password]',
         ],
     ];
-     
+
     public $addEvent = [
-            'name' => 'required|min_length[10]|max_length[255]',
-            'meeting_id' => 'required',
-            'location' => 'required|max_length[255]',
-            'description' => 'required|max_length[255]',
-            'denomination_id' => 'required',
+        'name' => 'required|min_length[10]|max_length[255]',
+        'meeting_id' => 'required',
+        'location' => 'required|max_length[255]',
+        'description' => 'required|max_length[255]',
+        'denomination_id' => 'required',
     ];
 
     public $editEvent = [
@@ -102,5 +102,132 @@ class Validation extends BaseConfig
         'location' => 'required|max_length[255]',
         'description' => 'required|max_length[255]',
         'denomination_id' => 'required',
+    ];
+
+    public $addCollection = [
+        'sunday_date' => [
+            'rules' => 'required',
+            'label' => 'Sunday Date',
+            'errors' => [
+                'required' => '{field} is required.',
+            ]
+        ],
+        'assembly_id' => [
+            'rules' => 'required|numeric',
+            'label' => 'Assembly Name',
+            'errors' => [
+                'required' => '{field} is required.',
+                'numeric' => '{field} cannot be empty'
+            ]
+        ],
+        'revenue_id.*' => [
+            'rules' => 'required|numeric',
+            'label' => 'Revenue Category',
+            'errors' => [
+                'required' => '{field} is required.',
+                'numeric' => '{field} cannot be empty.'
+            ]
+        ],
+        'amount.*' => [
+            'rules' => 'required|numeric',
+            'label' => 'Collection Amount',
+            'errors' => [
+                'required' => '{field} is required.',
+                'numeric' => '{field} cannot be empty.'
+            ]
+        ],
+        'sunday_count' => [
+            'rules' => 'numeric',
+            'label' => 'Sunday Date',
+            'errors' => [
+                'numeric' => 'The field {field} MUST be a Sunday.',
+            ]
+        ]
+    ];
+
+    public $addTithe = [
+        'member_id.*' => [
+            'rules' => 'required',
+            'label' => 'Member Name',
+            'errors' => [
+                'required' => 'First Name is required.',
+            ]
+        ],
+        'amount.*' => [
+            'rules' => 'required',
+            'label' => 'Tithe Amount',
+            'errors' => [
+                'required' => 'Tithe Amount is required.',
+            ]
+        ],
+        'tithing_date' => [
+            'rules' => 'required',
+            'label' => 'Tithe Date',
+            'errors' => [
+                'required' => '{field} is required.',
+            ]
+        ],
+        'assembly_id' => [
+            'rules' => 'required',
+            'label' => 'Assembly Name',
+            'errors' => [
+                'required' => '{field} is required.',
+            ]
+        ],
+    ];
+
+    public $addMember = [
+        'first_name' => [
+            'rules' => 'required|min_length[3]|max_length[255]',
+            'label' => 'First Name',
+            'errors' => [
+                'required' => 'First Name is required.',
+                'min_length' => 'First Name must be at least {value} characters long.',
+            ]
+        ],
+        'last_name' => [
+            'rules' => 'required|min_length[3]|max_length[255]',
+            'label' => 'Last Name',
+            'errors' => [
+                'required' => 'Last Name is required.',
+                'min_length' => 'Last Name must be at least {value} characters long.',
+            ]
+        ],
+        'gender' => [
+            'rules' => 'required',
+            'label' => 'Member.member_gender',
+            'errors' => [
+                'required' => '{field} is required.',
+            ]
+        ],
+        'date_of_birth' => [
+            'rules' => 'required',
+            'label' => 'Date of Birth',
+            'errors' => [
+                'required' => 'Date of Birth is required.',
+            ]
+        ],
+        'phone' => [
+            'rules' => 'required|regex_match[/^\+254\d{9}$/]',
+            'label' => 'Phone',
+            'errors' => [
+                'regex_match' => 'Phone number should be in the format +254XXXXXXXX',
+            ]
+        ],
+        'saved_date' => [
+            'rules' => 'required',
+            'label' => 'Date Saved',
+            'errors' => [
+                'required' => 'Date saved is required.',
+            ]
+        ],
+        'assembly_id' => [
+            'rules' => 'required',
+            'label' => 'Assembly Name',
+            'errors' => [
+                'required' => 'Assembly Name is required.',
+            ]
+        ]
+
     ];
 }

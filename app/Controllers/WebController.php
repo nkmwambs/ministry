@@ -7,9 +7,6 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use Psr\Log\LoggerInterface;
 
-// use CodeIgniter\Shield\Controllers\LoginController as ShieldLogin;
-// use CodeIgniter\HTTP\RedirectResponse;
-
 class WebController extends BaseController
 {
 
@@ -27,6 +24,7 @@ class WebController extends BaseController
     protected $customFields = null;
     protected $listQueryFields = [];
     protected $feature_page_data = [];
+
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
@@ -35,7 +33,9 @@ class WebController extends BaseController
         $this->session = service('session'); //\Config\Services::session();
         
         if(!$this->session->has('logged_in')){
-            redirect('logout');
+            // $this->session->destroy();
+            // return redirect('logout');
+            redirect()->to('logout');
         }
 
         // Preload any models, libraries, etc, here.
@@ -54,18 +54,18 @@ class WebController extends BaseController
 
         if (class_exists("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")) {
             $this->model = new ("App\\Models\\" . plural(ucfirst($this->feature)) . "Model")();
+
+            $reflectionClass = new \ReflectionClass($this->model);
+            $this->tableName = $reflectionClass->getProperty('table')->getValue($this->model);
+        }else{
+            $this->tableName = plural($this->feature);
         }
 
         if (class_exists("App\\Libraries\\" . ucfirst($this->feature) . "Library")) {
             $this->library = new ("App\\Libraries\\" . ucfirst($this->feature) . "Library")();
             $this->listQueryFields = $this->library->setListQueryFields();
         }
-
-        $this->tableName = plural($this->feature);
-
-        
     }
-
 
     private function history_fields()
     {
@@ -79,7 +79,7 @@ class WebController extends BaseController
         ];
     }
 
-    final protected function page_data(object|array $data = null, $id = '')
+    final protected function page_data(object|array $data = null, $id = ''): array
     {
         $data = is_object($data) ? $data->toArray() : $data;
         $page_data['result'] = $data;
@@ -111,7 +111,11 @@ class WebController extends BaseController
         if (!empty($this->listQueryFields)) {
             $page_data['fields'] = $this->listQueryFields;
         } else {
-            $table_field = $this->model->getFieldNames(plural($this->feature));
+            $reflectionClass = new \ReflectionClass($this->model);
+            $tableName = $reflectionClass->getProperty('table')->getValue($this->model);
+
+            // $table_field = $this->model->getFieldNames(plural($this->feature));
+            $table_field = $this->model->getFieldNames($tableName);
             $table_field = array_filter($table_field, function ($elem) {
                 if (!in_array($elem, $this->history_fields())) {
                     return $elem;
@@ -140,7 +144,6 @@ class WebController extends BaseController
 
             return view('index', compact('page_data'));
         }
-
 
         $data = [];
 
@@ -195,10 +198,13 @@ class WebController extends BaseController
             unset($data['id']);
         }
 
+        $customValuesModel = new \App\Models\ValuesModel();
+        $page_data['custom_data'] = $customValuesModel->viewAdditionalInformation($this->tableName,$numeric_id);
+
         if ($this->request->isAJAX()) {
             return view($this->session->get('user_type') . "/$this->feature/view", $page_data);
         }
-
+        
         return view('index', compact('page_data'));
     }
 
@@ -226,6 +232,9 @@ class WebController extends BaseController
         $page_data['customFields'] = $customFields;
         $page_data['customValues'] = $customValues;
         // }
+
+        // $customValuesModel = new \App\Models\ValuesModel();
+        // $page_data['custom_data'] = $customValuesModel->viewAdditionalInformation($this->tableName,$numeric_id);
 
         if ($this->request->isAJAX()) {
             return view($this->session->get('user_type') . "/$this->feature/edit", $page_data);

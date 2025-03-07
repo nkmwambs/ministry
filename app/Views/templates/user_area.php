@@ -4,7 +4,10 @@
 					<li class="profile-info dropdown"><!-- add class "pull-right" if you want to place this from right -->
 		
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<img src="<?=base_url();?>assets/images/thumb-1@2x.png" alt="" class="img-circle" width="44" />
+							<?php 
+								$userAvatar = gravatar(get_user_email_identity(service('session')->get('user_id')));
+							?>
+							<img src="<?=$userAvatar['imageURL'];?>" alt="" class="img-circle" width="44" />
 							<?=session()->get('user_fullname');?>
 						</a>
 		

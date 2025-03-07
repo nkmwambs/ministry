@@ -136,3 +136,8 @@ table {
     background-color: #fff;
     border-bottom: 1px solid #e5e9f2;
 }
+
+.nav-tabs .nav-item.active .nav-link {
+    background-color: #007bff;
+    color: #fff;
+}

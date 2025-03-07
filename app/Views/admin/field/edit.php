@@ -19,8 +19,6 @@
 
                 <form id="frm_edit_minister" method="post" action="<?= site_url('fields/update/'); ?>" role="form" class="form-horizontal form-groups-bordered">
 
-                    <input type="hidden" name="id" value="<?= hash_id($result['id']); ?>" />
-
                     <div class="form-group hidden error_container">
                         <div class="col-xs-12 error">
 
@@ -41,26 +39,8 @@
 
                     <input type="hidden" name="id" value="<?= hash_id($result['id']); ?>" />
 
-                    <div class='form-group'>
-                        <label for="feature_id" class="control-label col-xs-4">
-                            <?= lang('field.customfield_feature_id') ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <select class="form-control" name="feature_id" id="feature_id">
-                                <option value="<?= $result['feature_id'] ?>"><?= $result['feature_id'] ?></option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-xs-4" for="table_name">
-                            <?= lang('field.customfield_table_name') ?>
-                        </label>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" name="table_name" value="<?= $result['table_name']; ?>" id="table_name">
-                        </div>
-                    </div>
+                    <input type="hidden" name="feature_name" id="feature_name" value="<?= $result['feature_name']; ?>" />
+                    <!-- <input type="hidden" name="table_name" id="table_name" value="<?= $result['table_name']; ?>" /> -->
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="field_name">
@@ -76,7 +56,7 @@
                             <?= lang('field.customfield_code') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="field_code" value="<?= $result['field_code']; ?>" id="field_code">
+                            <input disabled type="text" class="form-control" name="field_code" value="<?= $result['field_code']; ?>" id="field_code">
                         </div>
                     </div>
 
@@ -119,15 +99,14 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label class="control-label col-xs-4" for="field_order">
-                            <?= lang('field.customfield_field_order') ?>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4" for="code_builder">
+                            <?= lang('field.customfield_sql_builder') ?>
                         </label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="field_order" value="<?= $result['field_order']; ?>" id="field_order"
-                                placeholder="Edit Field Order">
+                            <textarea type="text" rows="10" class="form-control" name="code_builder" value="<?= $result['code_builder']; ?>" id="code_builder"><?= $result['code_builder']; ?></textarea>
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="form-group">
                         <label class="control-label col-xs-4" for="visible">
@@ -159,3 +138,32 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        const type = $("#type")
+        const feature_name = $("#feature_name")
+        const options = $("#options")
+        const code_builder = $("#code_builder")
+
+        if(type.val() != "dropdown" && type.val() != "boolean"){
+            options.closest(".form-group").addClass('hidden');
+        }
+
+        if(feature_name.val() != 'report'){
+            code_builder.closest(".form-group").addClass('hidden');
+        }
+    })
+
+$(document).on("change","#type", function(){
+    const field_type = $(this).val();
+    const form_group_options = $("#options").closest(".form-group");
+
+    form_group_options.addClass('hidden');
+    form_group_options.find("#options").val("");
+
+    if(field_type == 'dropdown' || field_type == 'boolean'){
+        form_group_options.removeClass('hidden');
+    }
+});
+</script>

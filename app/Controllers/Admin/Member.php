@@ -14,6 +14,7 @@ class Member extends WebController
         parent::initController($request, $response, $logger);
         
         $this->model = new \App\Models\MembersModel();
+        $this->tableName ='members';
     }
     
    
@@ -29,19 +30,22 @@ class Member extends WebController
 
             return view('index', compact('page_data'));
         }
+
         
         $members = [];
 
         if($parent_id > 0){
-            $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            $members = $this->model->select('members.id,members.first_name,members.gender,members.last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,members.date_of_birth,members.email,members.phone,associated_member_id as member_is_user')
             ->where('assembly_id',hash_id($parent_id,'decode') )
             ->join('assemblies','assemblies.id=members.assembly_id','left')
+            ->join('users','users.associated_member_id = members.id','left')
             ->join('designations','designations.id = members.designation_id')
             ->orderBy('members.created_at desc')
             ->findAll();
         }else{
-            $members = $this->model->select('members.id,first_name,gender,last_name,assembly_id,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            $members = $this->model->select('members.id,members.first_name,members.gender,members.last_name,assembly_id,member_number,designations.name as designation_name,designation_id,members.date_of_birth,members.email,members.phone,associated_member_id as member_is_user')
             ->join('assemblies','assemblies.id=members.assembly_id','left')
+            ->join('users','users.associated_member_id = members.id','left')
             ->join('designations','designations.id = members.designation_id')
             ->orderBy('members.created_at desc')
             ->findAll();
@@ -61,76 +65,44 @@ class Member extends WebController
             $page_data['parent_id'] = $parent_id;
             return view($this->session->get('user_type').'/member/list', $page_data);
         }else{
-            $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
+
+            $data = [];
+
+            if (method_exists($this->model, 'getListData')) {
+                $data = $this->model->getListData();
+            } else {
+                method_exists($this->model, 'getAll') ?
+                    $data = $this->model->getAll() :
+                    $data = $this->model->findAll();
+            }
+            // $page_data['content'] = view($this->feature.DS.$this->action, $page_data);
+            $page_data = $this->page_data($data);
+
+            if (method_exists($this->library, 'listExtraData')) {
+                // Note the editExtraData updates the $page_data by reference
+                $this->library->listExtraData($page_data);
+            }
         }
 
-        return view('index', $page_data);
+        return view('index', compact('page_data'));
     }   
 
     function post(){
         $insertId = 0;
-        // $hashed_assembly_id = $this->request->getVar('assembly_id');
 
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'first_name' => [
-                'rules' =>'required|min_length[3]|max_length[255]',
-                'label' => 'First Name',
-                'errors' => [
-                    'required' => 'First Name is required.',
-                    'min_length' => 'First Name must be at least {value} characters long.',
-                ]
-            ],
-            'last_name' => [
-                'rules' =>'required|min_length[3]|max_length[255]',
-                'label' => 'Last Name',
-                'errors' => [
-                    'required' => 'Last Name is required.',
-                    'min_length' => 'Last Name must be at least {value} characters long.',
-                ]
-            ],
-            'gender' => [
-                'rules' =>'required',
-                'label' => 'Member.member_gender',
-                'errors' => [
-                    'required' => '{field} is required.',
-                ]
-            ],
-            'date_of_birth' => [
-                'rules' => 'required',
-                'label' => 'Date of Birth',
-                'errors' => [
-                    'required' => 'Date of Birth is required.',
-                ]
-            ],
-            'phone' => [
-                'rules' => 'required|regex_match[/^\+254\d{9}$/]',
-                'label' => 'Phone',
-                'errors' => [
-                    'regex_match' => 'Phone number should be in the format +254XXXXXXXX',
-                ]
-            ],
-            'saved_date' => [
-                'rules' => 'required',
-                'label' => 'Date Saved',
-                'errors' => [
-                    'required' => 'Date saved is required.',
-                ]
-            ]
-        ]);
-
-        if (!$this->validate($validation->getRules())) {
-            return response()->setJSON(['errors' => $validation->getErrors()]);
+        $data = $this->request->getPost();
+        if (!$this->validateData($data, 'addMember')) {
+            return response()->setJSON(['errors' => $this->validator->getErrors()]);
         }
 
         $hashed_assembly_id = $this->request->getPost('assembly_id');
         $assembly_id = hash_id($hashed_assembly_id, 'decode');
-        // $parent_id = $this->request->getPost('parent_id');
 
         $data = [
             'first_name' => $this->request->getPost('first_name'),
             'last_name' => $this->request->getPost('last_name'),
             'gender' => $this->request->getPost('gender'),
+            'phone' => $this->request->getPost('phone'),
             'assembly_id' => $assembly_id,
             'member_number' => $this->computeMemberNumber($assembly_id),
             'designation_id' => $this->request->getPost('designation_id'),
@@ -146,7 +118,6 @@ class Member extends WebController
 
         $customFieldLibrary = new \App\Libraries\FieldLibrary();
         $customFieldValues = $this->request->getPost('custom_fields');
-        // $customFieldLibrary->saveCustomFieldValues(hash_id($insertId,'decode'), $this->tableName, $customFieldValues);
 
         if (!empty($customFieldValues)) {
             // Filter out null or empty custom fields
@@ -156,7 +127,7 @@ class Member extends WebController
 
             // Save non-null custom field values
             if (!empty($nonNullCustomFields)) {
-                $customFieldLibrary->saveCustomFieldValues($insertId, $this->tableName, $customFieldValues);
+                $customFieldLibrary->saveCustomFieldValues($insertId, 'members', $customFieldValues);
             }
         }
 
@@ -166,7 +137,7 @@ class Member extends WebController
             $this->feature = 'member';
             $this->action = 'list';
             $records = $this->model
-            ->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone')
+            ->select('members.id,first_name,gender,last_name,assembly_id,assemblies.name as assembly_name,member_number,designations.name as designation_name,designation_id,date_of_birth,email,phone,member_is_user')
             ->join('designations','designations.id=members.designation_id')
             ->join('assemblies','assemblies.id=members.assembly_id')
             ->orderBy("members.created_at desc")->where('assembly_id', $assembly_id)->findAll();
@@ -322,4 +293,5 @@ class Member extends WebController
 
         return $memberNumber;
     }
+
 }
